@@ -1,0 +1,259 @@
+<main class="main-container">
+  <div class="content-wrapper">
+    <h2 class="page-title">{{ titulo | translate }}</h2>
+
+    <div class="form-container">
+      <form>
+        <div class="form-section">
+          <h3 class="section-title">
+            {{ "LABLE_DADOS_PESSOAIS" | translate }}
+          </h3>
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_NOME" | translate }}</mat-label>
+              <input
+                matInput
+                [(ngModel)]="nome"
+                name="nome"
+                maxlength="100"
+                [readonly]="!isEditMode"
+                required
+              />
+              <mat-error *ngIf="nomeErro">{{ nomeErro }}</mat-error>
+              <mat-hint align="end">{{ nome?.length || 0 }}/100</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_EMAIL" | translate }}</mat-label>
+              <input
+                matInput
+                [(ngModel)]="emailUsuarioInput"
+                name="email"
+                type="email"
+                maxlength="100"
+                [readonly]="!isEditMode"
+                required
+                autocomplete="off"
+              />
+              <mat-error *ngIf="emailErro">{{ emailErro }}</mat-error>
+              <mat-hint align="end"
+                >{{ emailUsuarioInput?.length || 0 }}/100</mat-hint
+              >
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_DATA_NASCIMENTO" | translate }}</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                [(ngModel)]="dataNascimento"
+                name="dataNascimento"
+                [readonly]="!isEditMode"
+                required
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="dataNascimentoErro">{{
+                dataNascimentoErro
+              }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_PERFIL" | translate }}</mat-label>
+              <mat-select
+                [(ngModel)]="perfilSelecionadoId"
+                name="perfil"
+                [disabled]="!isEditMode"
+                required
+              >
+                <mat-option *ngFor="let p of lstPerfis" [value]="p.id">
+                  {{ p.nome }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="perfilErro">{{ perfilErro }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row" *ngIf="isCreateMode">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_SENHA" | translate }}</mat-label>
+              <input
+                matInput
+                type="password"
+                [(ngModel)]="senha"
+                name="senha"
+                maxlength="100"
+                required
+              />
+              <mat-error *ngIf="senhaErro">{{ senhaErro }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_CONFIRMAR_SENHA" | translate }}</mat-label>
+              <input
+                matInput
+                type="password"
+                [(ngModel)]="confirmarSenha"
+                name="confirmarSenha"
+                maxlength="100"
+                required
+              />
+              <mat-error *ngIf="confirmarSenhaErro">{{
+                confirmarSenhaErro
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">{{ "LABLE_ENDERECO" | translate }}</h3>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="logradouro-field">
+              <mat-label>{{ "LABLE_LOGRADOURO" | translate }}</mat-label>
+              <input
+                matInput
+                [(ngModel)]="endereco.logradouro"
+                name="logradouro"
+                maxlength="100"
+                [readonly]="!isEditMode"
+                required
+              />
+              <mat-error *ngIf="logradouroErro">{{ logradouroErro }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="numero-field">
+              <mat-label>{{ "LABLE_NUMERO" | translate }}</mat-label>
+              <input
+                matInput
+                [(ngModel)]="endereco.numero"
+                name="numero"
+                maxlength="10"
+                [readonly]="!isEditMode"
+                required
+              />
+              <mat-error *ngIf="numeroErro">{{ numeroErro }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_BAIRRO" | translate }}</mat-label>
+              <input
+                matInput
+                [(ngModel)]="endereco.bairro"
+                name="bairro"
+                maxlength="100"
+                [readonly]="!isEditMode"
+                required
+              />
+              <mat-error *ngIf="bairroErro">{{ bairroErro }}</mat-error>
+            </mat-form-field>
+
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_PAIS" | translate }}</mat-label>
+              <mat-select
+                [(ngModel)]="paisId"
+                name="Pais"
+                [disabled]="!isEditMode"
+                (selectionChange)="getEstados()"
+                required
+              >
+                <mat-option *ngFor="let pais of lstPaises" [value]="pais.id">
+                  {{ pais.nome }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="paisErro">{{ paisErro }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_ESTADO" | translate }}</mat-label>
+              <mat-select
+                [(ngModel)]="estadoId"
+                name="estado"
+                [disabled]="!isEditMode"
+                (selectionChange)="getCidades()"
+                required
+              >
+                <mat-option
+                  *ngFor="let estado of lstEstados ?? []"
+                  [value]="estado.id"
+                >
+                  {{ estado.nome }}
+                </mat-option>
+                <mat-option *ngIf="!lstEstados?.length" [value]="null" disabled>
+                  {{ "MENSAGEM_NENHUM_ESTADO_DISPONIVEL" | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="estadoErro">{{ estadoErro }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_CIDADE" | translate }}</mat-label>
+              <mat-select
+                [(ngModel)]="cidadeId"
+                (selectionChange)="selecionarCidade()"
+                name="cidade"
+                [disabled]="!isEditMode"
+                required
+              >
+                <mat-option
+                  *ngFor="let cidade of lstCidades ?? []"
+                  [value]="cidade.id"
+                >
+                  {{ cidade.nome }}
+                </mat-option>
+                <mat-option *ngIf="!lstCidades?.length" [value]="null" disabled>
+                  {{ "MENSAGEM_NENHUMA_CIDADE_DISPONIVEL" | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="cidadeErro">{{ cidadeErro }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "LABLE_CEP" | translate }}</mat-label>
+              <input
+                matInput
+                [(ngModel)]="endereco.cep"
+                name="cep"
+                maxlength="9"
+                [readonly]="!isEditMode"
+                required
+              />
+              <mat-error *ngIf="cepErro">{{ cepErro }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button type="button" (click)="cancelar()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ "LABLE_VOLTAR" | translate }}
+          </button>
+
+          <button
+            *ngIf="isEditMode"
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="salvarUsuario()"
+          >
+            <mat-icon>save</mat-icon>
+            {{
+              isCreateMode
+                ? ("LABLE_CADASTRAR" | translate)
+                : ("LABLE_ATUALIZAR" | translate)
+            }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

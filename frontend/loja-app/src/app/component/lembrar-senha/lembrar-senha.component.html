@@ -1,0 +1,50 @@
+<main class="main-container">
+  <div class="lembrar-senha-container">
+    <h2>{{ "TITLE_REDEFINICAO_SENHA" | translate }}</h2>
+    <p>
+      {{ "LABLE_TEXTO_RECUPERACAO_SENHA" | translate }}
+    </p>
+    <br />
+    <form
+      [formGroup]="lembrarSenhaForm"
+      (ngSubmit)="onSubmit()"
+      class="form-submit"
+    >
+      <div class="email-field">
+        <label for="email" class="email-label">E-mail:</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          class="email-input"
+          placeholder="{{ 'LABLE_DIGITE_SEU_EMAIL' | translate }}"
+        />
+        <div
+          *ngIf="
+            lembrarSenhaForm.get('email').invalid &&
+            lembrarSenhaForm.get('email').touched
+          "
+        >
+          <small
+            *ngIf="lembrarSenhaForm.get('email').errors.required"
+            class="error-text"
+            >{{ "LABLE_EMAIL_OBRIGATORIO" | translate }}</small
+          >
+          <small
+            *ngIf="lembrarSenhaForm.get('email').errors.email"
+            class="error-text"
+            >{{ "LABLE_EMAIL_INVALIDO" | translate }}</small
+          >
+        </div>
+      </div>
+      <button
+        type="submit"
+        [disabled]="lembrarSenhaForm.invalid"
+        class="submit-button"
+      >
+        {{ "LABLE_ENVIAR_LINK_RECUPERACAO" | translate }}
+      </button>
+    </form>
+    <div *ngIf="mensagem">{{ mensagem }}</div>
+  </div>
+</main>
