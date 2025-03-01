@@ -1,0 +1,61 @@
+<div class="menu-wrapper">
+  <div
+    #menu
+    class="menu-container"
+    [ngClass]="{ expanded: isExpanded, collapsed: !isExpanded }"
+  >
+    <mat-nav-list class="menu-items">
+      <div class="menu-item-wrapper" *ngFor="let item of menuItems">
+        <a
+          mat-list-item
+          (click)="item.action()"
+          (keydown.enter)="item.action()"
+          (keydown.space)="item.action()"
+          [title]="item.label"
+          class="menu-item"
+          [ngClass]="{ active: isActive(item.route) }"
+          tabindex="0"
+        >
+          <mat-icon mat-list-icon>{{ item.icon }}</mat-icon>
+          <span mat-line *ngIf="isExpanded">{{ item.label }}</span>
+        </a>
+      </div>
+      <div class="menu-item-wrapper">
+        <a
+          mat-list-item
+          routerLink="/categorias"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          title="Categorias"
+          class="menu-item"
+          tabindex="0"
+        >
+          <mat-icon mat-list-icon>category</mat-icon>
+          <span mat-line>Categorias</span>
+        </a>
+      </div>
+      <div class="menu-item-wrapper">
+        <a
+          mat-list-item
+          routerLink="/usuarios"
+          routerLinkActive="active"
+          [appPerfilAcesso]="['ADMINISTRADOR', 'GERENTE']"
+          title="Usuários"
+          class="menu-item"
+          tabindex="0"
+        >
+          <mat-icon mat-list-icon>people</mat-icon>
+          <span mat-line>{{ "TITLE_USUARIOS" | translate }}</span>
+        </a>
+      </div>
+      <button
+        *ngIf="!isHandset"
+        mat-icon-button
+        (click)="toggleExpansion()"
+        class="open-btn"
+      >
+        <mat-icon>{{ isExpanded ? "chevron_left" : "chevron_right" }}</mat-icon>
+      </button>
+    </mat-nav-list>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="dashboard">
+  <div class="card" *ngFor="let func of functionalities">
+    <img [src]="func.image" alt="{{ func.name }}" />
+    <h3>
+      <a [routerLink]="func.route">{{ func.name }}</a>
+    </h3>
+  </div>
+</div>

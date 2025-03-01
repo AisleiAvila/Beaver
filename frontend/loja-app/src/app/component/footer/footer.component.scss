@@ -1,0 +1,51 @@
+.app-footer {
+  padding-top: 10px;
+  width: 100%;
+}
+
+.footer-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0b2931;
+  color: white;
+  width: 100%;
+  height: 40px; /* Define a altura do footer */
+  padding: 0 10px; /* Adiciona padding horizontal */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-content a {
+  color: white; /* Altere a cor da fonte aqui */
+  text-decoration: none; /* Remove o sublinhado */
+  margin: 0 10px; /* Espaçamento entre os links */
+}
+
+.footer-content a:hover {
+  text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+.language-icons {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.flag-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.flag-icon:hover {
+  opacity: 0.8;
+  width: 36px;
+  height: 36px;
+}
