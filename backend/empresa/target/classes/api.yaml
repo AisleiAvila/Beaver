@@ -1,0 +1,1154 @@
+openapi: "3.0.3"
+info:
+  title: Biblioteca API
+  description: API para gerenciar organizações
+  version: 1.0.0
+
+tags:
+  - name: Auth
+    description: Operações relacionadas a autenticação
+  - name: chat
+    description: Operações relacionadas a chat
+  - name: Endereço
+    description: Operações relacionadas a endereços
+  - name: Estado
+    description: Operações relacionadas a estados
+  - name: Organização
+    description: Operações relacionadas a organizações
+  - name: País
+    description: Operações relacionadas a países
+  - name: Perfil
+    description: Operações relacionadas a perfis
+  - name: Produto
+    description: Operações relacionadas a produtos
+  - name: Senha
+    description: Operações relacionadas a senha de acesso do usuário
+  - name: Usuario
+    description: Operações relacionadas a usuários
+
+paths:
+  /auth/revoke:
+    post:
+      summary: Revoke token
+      description: Revoke the authorization token.
+      tags:
+        - Auth
+      operationId: revokeToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  example: "eyJhbGciOi"
+      responses:
+        '200':
+          description: Token revoked successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Token revoked successfully."
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid request."
+  /auth/verify-authorization:
+    get:
+      summary: Verify authorization endpoint
+      description: Verifica a autorização do token.
+      tags:
+        - Auth
+      operationId: verifyAuthorization
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Token válido
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        '400':
+          description: Token inválido ou ausente
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: false
+  /auth/login:
+    post:
+      summary: Login endpoint
+      description: Endpoint para autenticação de usuários.
+      tags:
+        - Auth
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+      responses:
+        '200':
+          description: Login bem-sucedido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDTO'
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Credenciais inválidas."
+  /auth/register:
+    post:
+      summary: Register endpoint
+      description: Endpoint para registrar novos usuários.
+      tags:
+        - Auth
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequestDTO'
+      responses:
+        '200':
+          description: Registro bem-sucedido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDTO'
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Usuário já cadastrado."
+  /chat/generate:
+    post:
+      summary:  Generate endpoint
+      description: Endpoint para gerar resposta baseada no modelo e prompt fornecidos.
+      tags:
+        - chat
+      operationId: generate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequestDTO'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponseDTO'
+  /organizacao/find:
+    post:
+      summary: Busca Organizações
+      security:
+        - bearerAuth: []
+      tags:
+        - Organização
+      operationId: findOrganizacao
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizacaoRequest'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizacaoResponseDTO'
+  /organizacao/detail/{id}:
+    get:
+      summary: Detalha  uma organização
+      security:
+        - bearerAuth: []
+      tags:
+        - Organização
+      operationId: detailOrganizacao
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizacaoResponseDTO'
+  /organizacao:
+    put:
+      summary: Cria uma organização
+      security:
+        - bearerAuth: []
+      tags:
+        - Organização
+      operationId: createOrganizacao
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizacaoRequestDTO'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizacaoModel'
+    patch:
+      summary: Atualiza uma organização
+      security:
+        - bearerAuth: []
+      tags:
+        - Organização
+      operationId: updateOrganizacao
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizacaoModel'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizacaoModel'
+  /organizacao/delete/{id}:
+    delete:
+      summary: Deleta uma organização
+      security:
+        - bearerAuth: []
+      tags:
+        - Organização
+      operationId: deleteOrganizacao
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+  /produto/find:
+    post:
+      summary: Busca Produtos
+      security:
+        - bearerAuth: []
+      tags:
+        - Produto
+      operationId: findProduto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdutoRequest'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponseDTO'
+  /usuario/find:
+    post:
+      summary: Busca usuários
+      security:
+        - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: findUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioRequest'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponseDTO'
+  /usuario/detail/{id}:
+    get:
+      summary: Detalha  um usuário
+      security:
+        - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: detailUsuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponseDTO'
+  /usuario/create:
+    put:
+      summary: Cria um usuário
+      security:
+        - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: createUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequestDTO'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioModel'
+  /usuario/update:
+    patch:
+      summary: Atualiza um usuário
+      security:
+          - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: updateUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioModel'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioModel'
+  /usuario/delete/{id}:
+    delete:
+      summary: Deleta um usuário
+      security:
+          - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: deleteUsuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+  /endereco:
+    post:
+      summary: Cria um novo endereço
+      security:
+        - bearerAuth: []
+      tags:
+        - Endereço
+      operationId: createendereco
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enderecoModel'
+      responses:
+        '200':
+          description: Endereço criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enderecoModel'
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Endereço não criado."
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Erro interno."
+    get:
+      summary: Busca Enderecos
+      security:
+        - bearerAuth: []
+      tags:
+        - Perfil
+      operationId: findendereco
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/enderecoModel'
+
+  /endereco/{id}:
+    put:
+      summary: Atualiza um endereço existente
+      operationId: updateendereco
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enderecoModel'
+      responses:
+        '200':
+          description: Endereço atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enderecoModel'
+        '404':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Endereço não encontrado."
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Erro interno."
+    get:
+      summary: Detalha um endereço
+      security:
+        - bearerAuth: []
+      tags:
+        - Endereço
+      operationId: detailendereco
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enderecoModel'
+    delete:
+      summary: Deleta um endereço existente
+      operationId: deleteendereco
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Endereço excluído com sucesso
+        '404':
+          description: Endereço não encontrado
+        '500':
+          description: Erro interno do servidor
+  /pais:
+    get:
+      summary: Busca Países
+      security:
+        - bearerAuth: []
+      tags:
+        - País
+      operationId: findPais
+      parameters:
+        - name: nome
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaisModel'
+  /pais/{id}:
+    get:
+      summary: Detalha um País
+      security:
+        - bearerAuth: []
+      tags:
+        - País
+      operationId: detailPais
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaisModel'
+  /estado:
+    get:
+      summary: Busca Estados
+      security:
+        - bearerAuth: []
+      tags:
+        - Estado
+      operationId: findEstado
+      parameters:
+        - name: nome
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pais_id
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EstadoModel'
+  /estado/{id}:
+    get:
+      summary: Detalha um Estado
+      security:
+        - bearerAuth: []
+      tags:
+        - Estado
+      operationId: detailEstado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstadoModel'
+  /cidade:
+    get:
+      summary: Busca Cidades
+      security:
+        - bearerAuth: []
+      tags:
+        - Cidade
+      operationId: findCidade
+      parameters:
+        - name: nome
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: estado_id
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CidadeModel'
+  /cidade/{id}:
+    get:
+      summary: Detalha uma Cidade
+      security:
+        - bearerAuth: []
+      tags:
+        - Cidade
+      operationId: detailCidade
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CidadeModel'
+
+
+  /perfil/find:
+    get:
+      summary: Busca Perfis
+      security:
+        - bearerAuth: []
+      tags:
+        - Perfil
+      operationId: findPerfil
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerfilModel'
+  /senha/recuperar:
+    post:
+      summary: Gera link de recuperação de senha
+      description: Recebe o e-mail do usuário e envia um link de recuperação com token válido por 10 minutos.
+      tags:
+        - Senha
+      operationId: recuperarSenha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "usuario@exemplo.com"
+      responses:
+        '200':
+          description: Link de recuperação enviado ao e-mail.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Link de recuperação enviado ao e-mail."
+        '404':
+          description: Usuário não encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Usuário não encontrado."
+  /senha/validar-reset-token:
+    get:
+      summary: Valida token de recuperação de senha
+      description: Valida o token de recuperação de senha e retorna o e-mail do usuário.
+      tags:
+        - Senha
+      operationId: validarResetToken
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c3VhcmlvQGV4Y2xlbW8uY29tIiwiZXhwIjoxNjI5MzQwNjY5fQ.1Z6"
+      responses:
+        '200':
+          description: Token válido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  email:
+                    type: string
+                    example: "usuario@exemplo.com"
+                  nome:
+                    type: string
+                    example: "Usuário Exemplo"
+        '404':
+          description: Token inválido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Token inválido."
+  /senha/salvar:
+    post:
+      summary: Salvar senha do usuário
+      description: Recebe o e-mail do usuário e a nova senha.
+      tags:
+        - Senha
+      operationId: salvarSenha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "usuario@exemplo.com"
+                senha:
+                    type: string
+                    example: "novaSenha"
+                repeatSenha:
+                    type: string
+                    example: "novaSenha"
+                token:
+                    type: string
+                    example: "eyJhbGciOi"
+      responses:
+        '200':
+          description: Senha alterada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Senha alterada com sucesso."
+        '404':
+          description: Senha não salva.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Senha não salva."
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT  # Especifica o formato do token, pode ser omitido
+  schemas:
+    ChatRequestDTO:
+      type: object
+      properties:
+        model:
+          type: string
+        prompt:
+          type: string
+    LoginRequestDTO:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        senha:
+          type: string
+    OrganizacaoRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        nif:
+          type: string
+        email:
+          type: string
+        website:
+          type: string
+        setorAtividade:
+          type: string
+        limit:
+          type: integer
+        offset:
+          type: integer
+        event:
+          $ref: '#/components/schemas/EventPagination'
+    OrganizacaoRequestDTO:
+        type: object
+        properties:
+            id:
+              type: integer
+              description: Identificador da organização
+              example: 1
+            nome:
+              type: string
+              description: Nome da organização
+              example: "XPTO Lda"
+            nif:
+              type: string
+              description: Número de Identificação Fiscal
+              example: "123456789"
+            email:
+              type: string
+              description: Endereço de e-mail
+              example: "Baker Street 221B"
+            website:
+              type: string
+              description: Endereço do website
+              example: "https://www.exemplo.com"
+            setorAtividade:
+              type: string
+              description: Setor de atividade
+              example: "Educação"
+            missao:
+              type: string
+              description: Missão da organização
+              example: "Promover a educação"
+            representanteLegal:
+              type: string
+              description: Representante legal
+              example: "João Silva"
+            cargo:
+              type: string
+              description: Cargo do representante legal
+              example: "CEO"
+            numeroRegistoComercial:
+              type: string
+              description: Número de registo comercial
+              example: "123456789"
+            dataRegisto:
+              type: string
+              format: date
+              nullable: true
+              description: Data de registo comercial
+              example: "2021-09-01"
+    ProdutoRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        preco:
+          type: number
+        categoria:
+          type: string
+        limit:
+          type: integer
+        offset:
+          type: integer
+        event:
+          $ref: '#/components/schemas/EventPagination'
+    UsuarioRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        email:
+          type: string
+        dataNascimento:
+          type: string
+          format: date
+        perfis:
+          type: array
+          items:
+            type: integer
+        limit:
+            type: integer
+        offset:
+          type: integer
+        event:
+          $ref: '#/components/schemas/EventPagination'
+    EventPagination:
+      type: object
+      properties:
+        length:
+          type: integer
+        pageIndex:
+          type: integer
+        pageSize:
+            type: integer
+        previousPageIndex:
+            type: integer
+
+    ChatResponseDTO:
+        type: object
+        properties:
+            model:
+              type: string
+            createdAt:
+              type: string
+            response:
+              type: string
+            done:
+                type: boolean
+    LoginResponseDTO:
+      type: object
+      properties:
+        nome:
+          type: string
+        authorization:
+          type: string
+        perfil:
+          type: string
+    UsuarioResponseDTO:
+      type: object
+      properties:
+        usuarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsuarioModel'
+        totalRecords:
+          type: integer
+    OrganizacaoResponseDTO:
+      type: object
+      properties:
+        organizacoes:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizacaoModel'
+        totalRecords:
+          type: integer
+    ProdutoResponseDTO:
+      type: object
+      properties:
+        produtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProdutoModel'
+        totalRecords:
+          type: integer
+    RegisterRequestDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        email:
+          type: string
+        senha:
+          type: string
+        dataNascimento:
+          type: string
+          format: date
+        enderecos:
+          type: array
+          items:
+            $ref: '#/components/schemas/enderecoModel'
+        perfis:
+          type: array
+          items:
+            $ref: '#/components/schemas/PerfilModel'
+        foto_perfil:
+          type: string
+          format: byte
+    OrganizacaoModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        nif:
+          type: string
+        email:
+          type: string
+        website:
+          type: string
+        setorAtividade:
+            type: string
+        missao:
+            type: string
+        representante_legal:
+            type: string
+        cargo:
+            type: string
+        numeroRegistoComercial:
+            type: string
+        dataRegisto:
+            type: string
+            format: date
+            nullable: true
+    ProdutoModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        descricao:
+          type: string
+        preco:
+          type: number
+        categoria:
+          type: string
+        dataCadastro:
+          type: string
+          format: date
+          nullable: true
+    UsuarioModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        senha:
+          type: string
+        email:
+          type: string
+        dataNascimento:
+          type: string
+          format: date
+        enderecos:
+          type: array
+          items:
+            $ref: '#/components/schemas/enderecoModel'
+        perfis:
+            type: array
+            items:
+                $ref: '#/components/schemas/PerfilModel'
+    enderecoModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        cidade_id:
+          $ref: '#/components/schemas/CidadeModel'
+        cep:
+          type: string
+        logradouro:
+          type: string
+        numero:
+          type: string
+        complemento:
+          type: string
+        bairro:
+          type: string
+        latitude:
+          type: number
+        longitude:
+            type: number
+        usuario_id:
+          type: integer
+
+
+    PerfilModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+    CidadeModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        estado_id:
+          $ref: '#/components/schemas/EstadoModel'
+    EstadoModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        pais_id:
+          $ref: '#/components/schemas/PaisModel'
+    PaisModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+
