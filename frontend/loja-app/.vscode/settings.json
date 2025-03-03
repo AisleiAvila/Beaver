@@ -1,5 +1,7 @@
 {
   "notebook.defaultFormatter": null,
   "github.copilot.advanced": {},
-  "cSpell.words": ["Paises"]
+  "cSpell.words": ["Paises"],
+  "console-ninja.featureSet": "disabled",
+  "console-ninja.outputMode": "disabled"
 }

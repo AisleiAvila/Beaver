@@ -54,15 +54,6 @@ export class MenuComponent implements OnInit {
       .subscribe(() => {
         this.activeRoute = this.location.path();
       });
-
-    this.translate.get('TITLE_AGENDAMENTOS').subscribe((text) => {
-      const agendamentoItem = this.menuItems.find(
-        (item) => item.route === '/agendamentos'
-      );
-      if (agendamentoItem) {
-        agendamentoItem.label = text;
-      }
-    });
   }
 
   ngOnInit(): void {
@@ -140,6 +131,12 @@ export class MenuComponent implements OnInit {
       route: '/agendamentos',
       action: () => this.navigateToAgendamentos(),
     },
+    {
+      icon: 'event',
+      label: 'Agendamento',
+      route: '/agendamento',
+      action: () => this.navigateToAgendamento(),
+    },
   ];
 
   home(): void {
@@ -198,6 +195,12 @@ export class MenuComponent implements OnInit {
   navigateToAgendamentos(): void {
     if (this.isAuthorization()) {
       this.router.navigate(['/agendamentos']);
+    }
+  }
+
+  navigateToAgendamento(): void {
+    if (this.isAuthorization()) {
+      this.router.navigate(['/agendamento']);
     }
   }
 

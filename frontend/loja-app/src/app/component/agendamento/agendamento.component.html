@@ -1,0 +1,159 @@
+<main class="main-container">
+  <div class="content-wrapper">
+    <h2 class="page-title">{{ "TITLE_AGENDAMENTOS" | translate }}</h2>
+    <mat-card>
+      <mat-card-header>
+        <div class="header-actions">
+          <button mat-icon-button (click)="irParaHoje()">
+            <mat-icon>today</mat-icon>
+          </button>
+          <button mat-icon-button (click)="navegarData(-1)">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <span class="periodo-atual">{{ formataDataHeader() }}</span>
+          <button mat-icon-button (click)="navegarData(1)">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+        <div class="view-toggles">
+          <mat-button-toggle-group
+            [value]="visualizacao"
+            (change)="mudarVisualizacao($event.value)"
+          >
+            <mat-button-toggle value="dia">Dia</mat-button-toggle>
+            <mat-button-toggle value="semana">Semana</mat-button-toggle>
+            <mat-button-toggle value="mes">Mês</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Visualização Diária -->
+        <div *ngIf="visualizacao === 'dia'" class="visualizacao-dia">
+          <div class="timeline">
+            <div class="hora" *ngFor="let hora of horarios">
+              <div class="hora-label">{{ hora }}</div>
+              <div class="hora-content"></div>
+            </div>
+          </div>
+          <div class="eventos-dia">
+            <div
+              *ngFor="let agendamento of agendamentosExibidos"
+              class="evento"
+              [ngStyle]="{
+                'top.px':
+                  agendamento.dataInicio.getHours() * 60 +
+                  agendamento.dataInicio.getMinutes(),
+                'height.px':
+                  (agendamento.dataFim.getTime() -
+                    agendamento.dataInicio.getTime()) /
+                  (1000 * 60),
+                'background-color': agendamento.cor
+              }"
+            >
+              <div class="evento-titulo">{{ agendamento.titulo }}</div>
+              <div class="evento-horario">
+                {{ formatarHorario(agendamento.dataInicio) }} -
+                {{ formatarHorario(agendamento.dataFim) }}
+              </div>
+              <div class="evento-descricao">{{ agendamento.descricao }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualização Semanal -->
+        <div *ngIf="visualizacao === 'semana'" class="visualizacao-semana">
+          <div class="cabecalho-semana">
+            <div class="coluna-hora"></div>
+            <div
+              *ngFor="let dia of diasSemana; let i = index"
+              class="coluna-dia"
+            >
+              <div class="dia-nome">{{ dia }}</div>
+              <div class="dia-numero">{{ getDiaSemana(i) }}</div>
+            </div>
+          </div>
+          <div class="conteudo-semana">
+            <div class="timeline">
+              <div class="hora" *ngFor="let hora of horarios">
+                <div class="hora-label">{{ hora }}</div>
+              </div>
+            </div>
+            <div class="dias-semana">
+              <div
+                *ngFor="let dia of diasSemana; let i = index"
+                class="coluna-dia"
+              >
+                <div class="linha-hora" *ngFor="let hora of horarios"></div>
+
+                <div
+                  *ngFor="let agendamento of agendamentosExibidos"
+                  class="evento"
+                  [ngStyle]="{
+                    'top.px':
+                      agendamento.dataInicio.getHours() * 60 +
+                      agendamento.dataInicio.getMinutes(),
+                    'height.px':
+                      (agendamento.dataFim.getTime() -
+                        agendamento.dataInicio.getTime()) /
+                      (1000 * 60),
+                    'background-color': agendamento.cor,
+                    display: isAgendamentoNoDia(agendamento, i)
+                      ? 'block'
+                      : 'none'
+                  }"
+                >
+                  <div class="evento-titulo">{{ agendamento.titulo }}</div>
+                  <div class="evento-horario">
+                    {{ formatarHorario(agendamento.dataInicio) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualização Mensal -->
+        <div *ngIf="visualizacao === 'mes'" class="visualizacao-mes">
+          <div class="grid-mes">
+            <div *ngFor="let dia of diasSemana" class="cabecalho-dia">
+              {{ dia }}
+            </div>
+
+            <!-- Dias do mês anterior -->
+            <div
+              *ngFor="let dia of diasAnterior"
+              class="celula-dia dia-anterior"
+            >
+              <div class="numero-dia">{{ dia }}</div>
+            </div>
+
+            <!-- Dias do mês atual -->
+            <div
+              *ngFor="let dia of diasMes"
+              class="celula-dia"
+              [ngClass]="{ hoje: ehDataAtual(dia) }"
+            >
+              <div class="numero-dia">{{ dia }}</div>
+              <div class="eventos-dia">
+                <div
+                  *ngFor="let agendamento of getAgendamentosDia(dia)"
+                  class="evento-item"
+                  [ngStyle]="{ 'border-left-color': agendamento.cor }"
+                >
+                  {{ formatarHorario(agendamento.dataInicio) }}
+                  {{ agendamento.titulo }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Dias do próximo mês -->
+            <div *ngFor="let dia of diasProximo" class="celula-dia dia-proximo">
+              <div class="numero-dia">{{ dia }}</div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</main>

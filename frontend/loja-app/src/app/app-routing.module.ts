@@ -19,6 +19,7 @@ import { CategoriasComponent } from './component/categorias/categorias.component
 import { CadastroCategoriaComponent } from './component/categorias/cadastro-categoria/cadastro-categoria.component';
 import { AgendamentosComponent } from './component/agendamentos/agendamentos.component';
 import { CadastroAgendamentoComponent } from './component/agendamentos/cadastro-agendamento/cadastro-agendamento.component';
+import { AgendamentoComponent } from './component/agendamento/agendamento.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -45,6 +46,7 @@ export const routes: Routes = [
   { path: 'agendamentos', component: AgendamentosComponent },
   { path: 'agendamentos/novo', component: CadastroAgendamentoComponent },
   { path: 'agendamentos/editar/:id', component: CadastroAgendamentoComponent },
+  { path: 'agendamento', component: AgendamentoComponent },
   { path: '**', redirectTo: '/home' },
 ];
 

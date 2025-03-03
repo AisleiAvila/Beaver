@@ -93,6 +93,17 @@
               </mat-card-content>
             </mat-card>
 
+            <mat-card class="stat-card" [routerLink]="['/agendamento']">
+              <mat-card-content>
+                <div class="stat-icon">
+                  <mat-icon>event_available</mat-icon>
+                </div>
+                <div class="stat-info">
+                  <h3>{{ "TITLE_AGENDAMENTOS" | translate }}</h3>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
             <mat-card class="stat-card" [routerLink]="['/chat']">
               <mat-card-content>
                 <div class="stat-icon">

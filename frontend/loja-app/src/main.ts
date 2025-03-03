@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
+import { AppModule } from './app/app.module';
 
 // Factory function for TranslateLoader
 export function HttpLoaderFactory(http: HttpClient) {
@@ -20,6 +21,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(
+      AppModule,
       BrowserModule,
       HttpClientModule,
       TranslateModule.forRoot({
