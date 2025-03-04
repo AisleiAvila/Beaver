@@ -321,6 +321,25 @@
   background-color: rgba(25, 118, 210, 0.1);
 }
 
+// Add this new class to reduce the data fields width by 50%
+.data-campo-reduzido {
+  width: 50%;
+  min-width: 60px; // Ensure it doesn't get too small on mobile
+}
+
+/* Classe para reduzir o tamanho dos campos de data - versão melhorada */
+.data-campo-reduzido {
+  width: 50% !important; /* Utilizando !important para garantir prioridade */
+  max-width: 150px !important; /* Limitando o tamanho máximo */
+  min-width: 60px !important;
+  flex: 0.5 !important; /* Reduzindo a proporção flex para metade */
+}
+
+/* Garantindo que o mat-form-field respeite a largura definida */
+.mat-form-field.data-campo-reduzido {
+  width: 50% !important;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .visualizacao-dia,
