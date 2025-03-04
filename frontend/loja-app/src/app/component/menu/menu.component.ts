@@ -141,6 +141,12 @@ export class MenuComponent implements OnInit {
       action: () => this.navigateToCategorias(),
       route: '/categorias',
     },
+    {
+      label: 'Geolocalização',
+      icon: 'map',
+      action: () => this.navigateToGeolocalizacao(),
+      route: '/geolocalizacao',
+    },
   ];
 
   home(): void {
@@ -211,6 +217,12 @@ export class MenuComponent implements OnInit {
   navigateToCategorias(): void {
     if (this.isAuthorization()) {
       this.router.navigate(['/categorias']);
+    }
+  }
+
+  navigateToGeolocalizacao(): void {
+    if (this.isAuthorization()) {
+      this.router.navigate(['/geolocalizacao']);
     }
   }
 

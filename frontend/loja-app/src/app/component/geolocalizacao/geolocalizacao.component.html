@@ -1,0 +1,258 @@
+<div class="geo-container">
+  <div class="geo-header">
+    <h2>Serviço de Geolocalização</h2>
+    <p class="geo-description">
+      Localize prestadores de serviço ou busque por endereços
+    </p>
+  </div>
+
+  <div class="geo-content">
+    <!-- Localização atual -->
+    <mat-card class="geo-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>my_location</mat-icon>
+        <mat-card-title>Sua Localização Atual</mat-card-title>
+        <mat-card-subtitle
+          >Usamos sua localização para encontrar prestadores
+          próximos</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="!localizacaoAtual && !erroPosicao" class="geo-loading">
+          <mat-spinner [diameter]="40"></mat-spinner>
+          <p>Obtendo sua localização...</p>
+        </div>
+
+        <div *ngIf="localizacaoAtual" class="geo-coordinates">
+          <div class="geo-coord-row">
+            <span class="geo-label">Latitude:</span>
+            <span class="geo-value">{{
+              localizacaoAtual.latitude | number : "1.6-6"
+            }}</span>
+          </div>
+          <div class="geo-coord-row">
+            <span class="geo-label">Longitude:</span>
+            <span class="geo-value">{{
+              localizacaoAtual.longitude | number : "1.6-6"
+            }}</span>
+          </div>
+          <div *ngIf="localizacaoAtual.precisao" class="geo-coord-row">
+            <span class="geo-label">Precisão:</span>
+            <span class="geo-value"
+              >{{ localizacaoAtual.precisao | number : "1.0-0" }} metros</span
+            >
+          </div>
+
+          <div *ngIf="enderecoAtual" class="geo-address">
+            <mat-divider></mat-divider>
+            <h3>Endereço aproximado:</h3>
+            <p>{{ enderecoAtual }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="erroPosicao" class="geo-error">
+          <mat-icon color="warn">error_outline</mat-icon>
+          <p>{{ erroPosicao }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="obterLocalizacaoAtual()"
+          [disabled]="localizacaoCarregando"
+        >
+          <mat-icon>refresh</mat-icon>
+          Atualizar localização
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Busca por endereço -->
+    <mat-card class="geo-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>search</mat-icon>
+        <mat-card-title>Buscar Endereço</mat-card-title>
+        <mat-card-subtitle
+          >Encontre coordenadas a partir de um endereço</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <div class="geo-search-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Digite um endereço</mat-label>
+            <input
+              matInput
+              [(ngModel)]="enderecoBusca"
+              placeholder="Ex: Av Paulista, 1000, São Paulo"
+              (keydown.enter)="buscarCoordenadas()"
+            />
+            <mat-hint
+              >Inclua número, cidade e estado para melhor precisão</mat-hint
+            >
+            <button
+              *ngIf="enderecoBusca"
+              matSuffix
+              mat-icon-button
+              aria-label="Limpar"
+              (click)="enderecoBusca = ''"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="buscaCarregando" class="geo-loading">
+          <mat-spinner [diameter]="40"></mat-spinner>
+          <p>Buscando endereço...</p>
+        </div>
+
+        <div *ngIf="resultadoGeocodificacao" class="geo-result">
+          <mat-divider></mat-divider>
+          <h3>Resultado da busca:</h3>
+
+          <div class="geo-address-result">
+            <span class="geo-label">Endereço encontrado:</span>
+            <span class="geo-value">{{
+              resultadoGeocodificacao.endereco
+            }}</span>
+          </div>
+
+          <div class="geo-coord-row">
+            <span class="geo-label">Latitude:</span>
+            <span class="geo-value">{{
+              resultadoGeocodificacao.coordenadas.latitude | number : "1.6-6"
+            }}</span>
+          </div>
+          <div class="geo-coord-row">
+            <span class="geo-label">Longitude:</span>
+            <span class="geo-value">{{
+              resultadoGeocodificacao.coordenadas.longitude | number : "1.6-6"
+            }}</span>
+          </div>
+
+          <div
+            *ngIf="resultadoGeocodificacao.enderecoCompleto"
+            class="geo-address-components"
+          >
+            <mat-divider></mat-divider>
+            <h4>Detalhes do endereço:</h4>
+            <div
+              class="geo-detail-row"
+              *ngIf="resultadoGeocodificacao.enderecoCompleto.logradouro"
+            >
+              <span class="geo-label">Logradouro:</span>
+              <span class="geo-value">{{
+                resultadoGeocodificacao.enderecoCompleto.logradouro
+              }}</span>
+            </div>
+            <div
+              class="geo-detail-row"
+              *ngIf="resultadoGeocodificacao.enderecoCompleto.numero"
+            >
+              <span class="geo-label">Número:</span>
+              <span class="geo-value">{{
+                resultadoGeocodificacao.enderecoCompleto.numero
+              }}</span>
+            </div>
+            <div
+              class="geo-detail-row"
+              *ngIf="resultadoGeocodificacao.enderecoCompleto.bairro"
+            >
+              <span class="geo-label">Bairro:</span>
+              <span class="geo-value">{{
+                resultadoGeocodificacao.enderecoCompleto.bairro
+              }}</span>
+            </div>
+            <div class="geo-detail-row">
+              <span class="geo-label">Cidade/UF:</span>
+              <span class="geo-value"
+                >{{ resultadoGeocodificacao.enderecoCompleto.cidade }}/{{
+                  resultadoGeocodificacao.enderecoCompleto.estado
+                }}</span
+              >
+            </div>
+            <div
+              class="geo-detail-row"
+              *ngIf="resultadoGeocodificacao.enderecoCompleto.cep"
+            >
+              <span class="geo-label">CEP:</span>
+              <span class="geo-value">{{
+                resultadoGeocodificacao.enderecoCompleto.cep
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="erroGeocodificacao" class="geo-error">
+          <mat-icon color="warn">error_outline</mat-icon>
+          <p>{{ erroGeocodificacao }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button
+          mat-stroked-button
+          color="warn"
+          (click)="limparBusca()"
+          [disabled]="!enderecoBusca && !resultadoGeocodificacao"
+        >
+          <mat-icon>clear</mat-icon>
+          Limpar
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="buscarCoordenadas()"
+          [disabled]="!enderecoBusca || buscaCarregando"
+        >
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Mapa com localização e distâncias -->
+  <div class="geo-map-wrapper">
+    <mat-card class="geo-card map-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>map</mat-icon>
+        <mat-card-title>Mapa</mat-card-title>
+        <mat-card-subtitle>Visualização geográfica</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="geo-map-container">
+          <!-- Aqui será inserido o mapa do Google Maps ou Leaflet via diretiva -->
+          <div class="map-placeholder">
+            <p *ngIf="!localizacaoAtual && !resultadoGeocodificacao">
+              Obtenha sua localização ou busque um endereço para visualizar no
+              mapa
+            </p>
+            <img
+              *ngIf="localizacaoAtual || resultadoGeocodificacao"
+              class="map-image"
+              src="https://via.placeholder.com/800x400?text=Mapa+será+exibido+aqui"
+              alt="Placeholder para mapa"
+            />
+          </div>
+        </div>
+
+        <!-- Cálculo de distância -->
+        <div
+          *ngIf="localizacaoAtual && resultadoGeocodificacao"
+          class="geo-distance"
+        >
+          <mat-divider></mat-divider>
+          <h3>Distância entre os pontos:</h3>
+          <div class="distance-result">
+            <mat-icon>straighten</mat-icon>
+            <span
+              >{{ calcularDistanciaEntrePontos() | number : "1.2-2" }} km (em
+              linha reta)</span
+            >
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

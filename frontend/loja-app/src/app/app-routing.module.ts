@@ -1,25 +1,26 @@
 // app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './component/home-page/home-page.component';
-import { LoginComponent } from './component/login/login.component';
-import { UsuariosComponent } from './component/usuarios/usuarios.component';
-import { CadastroUsuarioComponent } from './component/usuarios/cadastro-usuario/cadastro-usuario.component';
-import { LembrarSenhaComponent } from './component/lembrar-senha/lembrar-senha.component';
-import { NovaSenhaComponent } from './component/nova-senha/nova-senha.component';
-import { ChatComponent } from './component/chat/chat.component';
-import { TermsComponent } from './component/terms/terms.component';
-import { PrivacyComponent } from './component/privacy/privacy.component';
-import { OrganizacaoComponent } from './component/organizacao/organizacao.component';
-import { CadastroOrganizacaoComponent } from './component/organizacao/cadastro-organizacao/cadastro-organizacao.component';
-import { ProdutosComponent } from './component/produtos/produtos.component';
-import { CadastroProdutoComponent } from './component/produtos/cadastro-produto/cadastro-produto.component';
 import { BackLogComponent } from './backlog/backlog.component';
-import { CategoriasComponent } from './component/categorias/categorias.component';
-import { CadastroCategoriaComponent } from './component/categorias/cadastro-categoria/cadastro-categoria.component';
+import { AgendamentoComponent } from './component/agendamento/agendamento.component';
 import { AgendamentosComponent } from './component/agendamentos/agendamentos.component';
 import { CadastroAgendamentoComponent } from './component/agendamentos/cadastro-agendamento/cadastro-agendamento.component';
-import { AgendamentoComponent } from './component/agendamento/agendamento.component';
+import { CadastroCategoriaComponent } from './component/categorias/cadastro-categoria/cadastro-categoria.component';
+import { CategoriasComponent } from './component/categorias/categorias.component';
+import { ChatComponent } from './component/chat/chat.component';
+import { GeolocalizacaoComponent } from './component/geolocalizacao/geolocalizacao.component';
+import { HomePageComponent } from './component/home-page/home-page.component';
+import { LembrarSenhaComponent } from './component/lembrar-senha/lembrar-senha.component';
+import { LoginComponent } from './component/login/login.component';
+import { NovaSenhaComponent } from './component/nova-senha/nova-senha.component';
+import { CadastroOrganizacaoComponent } from './component/organizacao/cadastro-organizacao/cadastro-organizacao.component';
+import { OrganizacaoComponent } from './component/organizacao/organizacao.component';
+import { PrivacyComponent } from './component/privacy/privacy.component';
+import { CadastroProdutoComponent } from './component/produtos/cadastro-produto/cadastro-produto.component';
+import { ProdutosComponent } from './component/produtos/produtos.component';
+import { TermsComponent } from './component/terms/terms.component';
+import { CadastroUsuarioComponent } from './component/usuarios/cadastro-usuario/cadastro-usuario.component';
+import { UsuariosComponent } from './component/usuarios/usuarios.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -47,6 +48,7 @@ export const routes: Routes = [
   { path: 'agendamentos/novo', component: CadastroAgendamentoComponent },
   { path: 'agendamentos/editar/:id', component: CadastroAgendamentoComponent },
   { path: 'agendamento', component: AgendamentoComponent },
+  { path: 'geolocalizacao', component: GeolocalizacaoComponent },
   { path: '**', redirectTo: '/home' },
 ];
 

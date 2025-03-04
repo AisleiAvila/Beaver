@@ -28,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -58,22 +59,10 @@ import { UsuariosComponent } from './component/usuarios/usuarios.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
 import { CustomPaginatorIntl } from './shared/service/custom-paginator-intl';
-
-// PrimeNG imports
-// import { MessageService } from 'primeng/api';
-// import { ButtonModule } from 'primeng/button';
-// import { CardModule } from 'primeng/card';
-// import { DialogModule } from 'primeng/dialog';
-// import { CalendarModule } from 'primeng/calendar';
-// import { DropdownModule } from 'primeng/dropdown';
-// import { InputTextModule } from 'primeng/inputtext';
-// import { ToastModule } from 'primeng/toast';
-
-// import { AgendamentoComponentComponent } from './agendamento/agendamento-component/agendamento-component.component';
+import { GeolocalizacaoService } from './services/geolocalizacao.service';
 import { AppComponent } from './app.component';
 import { AgendamentoComponent } from './component/agendamento/agendamento.component';
-// import { AgendamentoComponent } from './component/agendamento/agendamento/agendamento.component';
-// import { AgendaComponent } from './components/agenda/agenda.component';
+import { GeolocalizacaoComponent } from './component/geolocalizacao/geolocalizacao.component';
 
 /**
  * Factory para criar o loader de traduções
@@ -89,11 +78,8 @@ export function HttpLoaderFactory(http: HttpClient) {
  * Responsável por configurar e inicializar os recursos globais.
  */
 @NgModule({
-  // Componentes standalone não devem ser declarados
-  declarations: [
-    // AgendamentoComponentComponent,
-    // AgendamentoComponent
-  ],
+  // Não declarar componentes standalone
+  declarations: [],
 
   /**
    * Imports de módulos necessários para a aplicação:
@@ -104,6 +90,8 @@ export function HttpLoaderFactory(http: HttpClient) {
    * - TranslateModule: Internacionalização
    */
   imports: [
+    BrowserModule, // Adicionar BrowserModule para bootstrap
+    AppComponent, // AppComponent é standalone e deve estar nos imports
     BackLogComponent,
     BodyComponent,
     ChatComponent,
@@ -123,9 +111,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     CategoriasComponent,
     CadastroCategoriaComponent,
     AppRoutingModule,
-    AppRoutingModule,
-    // AgendaComponent,
-    AppComponent,
     FormsModule,
     BrowserAnimationsModule,
     RouterModule,
@@ -139,35 +124,20 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    HeaderComponent,
     NgbModalModule,
     NgbModule,
     MatSidenavModule,
     MatListModule,
     MatIconModule,
-    UsuariosComponent,
-    OrganizacaoComponent,
     ReactiveFormsModule,
     MatNativeDateModule,
     MatDatepickerModule,
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    ProdutosComponent,
-    BackLogComponent,
-    DashboardComponent,
-    PrivacyComponent,
-    TermsComponent,
-    ChatComponent,
-    NovaSenhaComponent,
-    CustomSnackbarComponent,
-    MenuComponent,
-    LembrarSenhaComponent,
-    LoginComponent,
-    HomePageComponent,
-    BodyComponent,
     MatChipsModule,
     AgendamentoComponent,
+    GeolocalizacaoComponent,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -178,15 +148,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     MatProgressSpinnerModule,
     MatDialogModule,
-    CategoriasComponent,
-    CadastroCategoriaComponent,
-    // ButtonModule,
-    // CardModule,
-    // DialogModule,
-    // CalendarModule,
-    // DropdownModule,
-    // InputTextModule,
-    // ToastModule,
   ],
 
   /**
@@ -197,11 +158,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
-    // MessageService,
+    GeolocalizacaoService,
   ],
 
-  // Não é necessário bootstrap pois é um módulo standalone
-  // bootstrap: [AppComponent],
+  // Remover bootstrap para componentes standalone
 })
 export class AppModule {
   /**
