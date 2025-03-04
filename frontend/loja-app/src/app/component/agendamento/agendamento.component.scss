@@ -1,5 +1,4 @@
-/* agendamento.component.scss */
-
+/* Estilos principais do container */
 .main-container {
   padding: 24px;
   background-color: #f5f5f5;
@@ -18,36 +17,44 @@
   font-weight: 500;
 }
 
-.agendamento-container {
-  padding: 24px;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  min-height: calc(100vh - 64px);
-  background-color: #f5f5f5;
+/* Estilos para o cabeçalho personalizado */
+.custom-header {
+  padding: 16px;
 
-  mat-card {
+  .header-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
+
+    .periodo-atual {
+      margin: 0 16px;
+      font-size: 18px;
+      font-weight: 500;
+    }
   }
 
-  mat-card-header {
+  .header-controls {
     display: flex;
-    flex-direction: column;
-    padding: 16px;
+    justify-content: space-between;
+    align-items: center;
 
-    .header-actions {
+    .filtro-actions {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-
-      .periodo-atual {
-        margin: 0 16px;
-        font-size: 18px;
-        font-weight: 500;
-        text-transform: capitalize;
-      }
+      gap: 8px;
     }
+  }
+}
 
-    .view-toggles {
+/* Responsividade para o cabeçalho */
+@media (max-width: 768px) {
+  .custom-header .header-controls {
+    flex-direction: column;
+    gap: 16px;
+
+    mat-button-toggle-group,
+    .filtro-actions {
+      width: 100%;
       display: flex;
       justify-content: center;
     }
@@ -361,7 +368,7 @@
   }
 }
 
-// Estilos para a seção de filtros
+/* Estilos para a seção de filtros */
 .filtros-card {
   margin-bottom: 20px;
 }
@@ -392,18 +399,25 @@
   min-width: 150px;
 }
 
-.filtro-actions {
-  display: flex;
-  gap: 16px;
-  margin-top: 8px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-}
-
-// Adicionar estilo para mat-hint
 .mat-mdc-form-field-hint {
   font-size: 12px;
   color: #5c6bc0;
+}
+
+/* Estilos específicos para telas muito pequenas */
+@media (max-width: 576px) {
+  .custom-header .header-controls {
+    flex-direction: column !important;
+    align-items: stretch !important;
+
+    .filtro-actions {
+      margin-top: 8px;
+      width: 100%;
+      justify-content: center;
+
+      button {
+        flex: 1;
+      }
+    }
+  }
 }

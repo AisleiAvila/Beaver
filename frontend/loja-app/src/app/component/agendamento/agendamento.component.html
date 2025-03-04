@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <h2 class="page-title">{{ "TITLE_AGENDAMENTOS" | translate }}</h2>
 
-    <!-- NOVO: Seção de filtros com validação de datas -->
+    <!-- Seção de filtros sem botões -->
     <mat-card class="filtros-card">
       <mat-card-header>
         <mat-card-title>Filtros</mat-card-title>
@@ -131,40 +131,27 @@
             </mat-form-field>
           </div>
 
-          <div class="filtro-actions">
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="aplicarFiltros()"
-            >
-              <mat-icon>filter_list</mat-icon>
-              Aplicar Filtros
-            </button>
-            <button mat-stroked-button color="warn" (click)="limparFiltros()">
-              <mat-icon>clear</mat-icon>
-              Limpar Filtros
-            </button>
-          </div>
+          <!-- Removido daqui: filtro-actions -->
         </div>
       </mat-card-content>
     </mat-card>
 
     <!-- Resto do componente -->
     <mat-card>
-      <mat-card-header>
-        <div class="header-actions">
-          <button mat-icon-button (click)="irParaHoje()">
-            <mat-icon>today</mat-icon>
-          </button>
-          <button mat-icon-button (click)="navegarData(-1)">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-          <span class="periodo-atual">{{ formataDataHeader() }}</span>
-          <button mat-icon-button (click)="navegarData(1)">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
-        </div>
-        <div class="view-toggles">
+      <div class="custom-header">
+        <div class="header-controls">
+          <div class="header-actions">
+            <button mat-icon-button (click)="irParaHoje()">
+              <mat-icon>today</mat-icon>
+            </button>
+            <button mat-icon-button (click)="navegarData(-1)">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="periodo-atual">{{ formataDataHeader() }}</span>
+            <button mat-icon-button (click)="navegarData(1)">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
           <mat-button-toggle-group
             [value]="visualizacao"
             (change)="mudarVisualizacao($event.value)"
@@ -173,8 +160,23 @@
             <mat-button-toggle value="semana">Semana</mat-button-toggle>
             <mat-button-toggle value="mes">Mês</mat-button-toggle>
           </mat-button-toggle-group>
+
+          <div class="filtro-actions">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="aplicarFiltros()"
+            >
+              <mat-icon>filter_list</mat-icon>
+              Aplicar
+            </button>
+            <button mat-stroked-button color="warn" (click)="limparFiltros()">
+              <mat-icon>clear</mat-icon>
+              Limpar
+            </button>
+          </div>
         </div>
-      </mat-card-header>
+      </div>
 
       <mat-card-content>
         <!-- Visualização Diária -->
