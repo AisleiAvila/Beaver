@@ -29,27 +29,39 @@
               </button>
             </mat-form-field>
 
-            <!-- Novo campo do tipo combobox para prestadores -->
+            <!-- Campo de prestador com autocomplete para filtragem e validação -->
             <mat-form-field appearance="outline" class="filtro-field">
               <mat-label>Nome do Prestador</mat-label>
-              <mat-select
+              <input
+                type="text"
+                matInput
                 [(ngModel)]="filtros.nomePrestador"
-                (selectionChange)="aplicarFiltros()"
+                placeholder="Filtrar por prestador"
+                [matAutocomplete]="autoPrestador"
+                (keyup)="filtrarPrestadores($event)"
+                (blur)="validarPrestadorSelecionado()"
+              />
+              <mat-autocomplete
+                #autoPrestador="matAutocomplete"
+                [displayWith]="displayPrestadorFn"
+                (optionSelected)="prestadorSelecionado($event)"
               >
-                <mat-option>Selecione</mat-option>
+                <mat-option *ngIf="prestadoresFiltrados.length === 0" disabled>
+                  Nenhum prestador encontrado
+                </mat-option>
                 <mat-option
-                  *ngFor="let prestador of prestadores"
+                  *ngFor="let prestador of prestadoresFiltrados"
                   [value]="prestador.nome"
                 >
                   {{ prestador.nome }}
                 </mat-option>
-              </mat-select>
+              </mat-autocomplete>
               <button
                 *ngIf="filtros.nomePrestador"
                 matSuffix
                 mat-icon-button
                 aria-label="Limpar"
-                (click)="filtros.nomePrestador = ''; aplicarFiltros()"
+                (click)="limparPrestador()"
               >
                 <mat-icon>close</mat-icon>
               </button>

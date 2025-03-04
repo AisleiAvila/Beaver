@@ -12,12 +12,11 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatMenuModule } from '@angular/material/menu';
-import { PerfilAcessoDirective } from '../../directive/perfil-acesso.directive';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-menu',
@@ -32,7 +31,6 @@ import { PerfilAcessoDirective } from '../../directive/perfil-acesso.directive';
     MatButtonModule,
     RouterModule,
     MatMenuModule,
-    PerfilAcessoDirective,
     TranslateModule,
   ],
 })
@@ -76,12 +74,6 @@ export class MenuComponent implements OnInit {
       icon: 'home',
       action: () => this.home(),
       route: '/home',
-    },
-    {
-      label: 'Usuários',
-      icon: 'person',
-      action: () => this.navigateToUsuarios(),
-      route: '/usuarios',
     },
     {
       label: 'Organização',
@@ -136,6 +128,18 @@ export class MenuComponent implements OnInit {
       label: 'Agendamento',
       route: '/agendamento',
       action: () => this.navigateToAgendamento(),
+    },
+    {
+      label: 'Usuários',
+      icon: 'people',
+      action: () => this.navigateToUsuarios(),
+      route: '/usuarios',
+    },
+    {
+      label: 'Categorias',
+      icon: 'category',
+      action: () => this.navigateToCategorias(),
+      route: '/categorias',
     },
   ];
 
@@ -201,6 +205,12 @@ export class MenuComponent implements OnInit {
   navigateToAgendamento(): void {
     if (this.isAuthorization()) {
       this.router.navigate(['/agendamento']);
+    }
+  }
+
+  navigateToCategorias(): void {
+    if (this.isAuthorization()) {
+      this.router.navigate(['/categorias']);
     }
   }
 

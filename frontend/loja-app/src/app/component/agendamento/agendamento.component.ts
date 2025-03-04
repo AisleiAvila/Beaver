@@ -22,6 +22,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select'; // Adicionar esta importação
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 // Interface para representar um agendamento
 export interface Agendamento {
@@ -84,6 +86,7 @@ const CUSTOM_DATE_FORMATS: MatDateFormats = {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule, // Adicionar esta linha
+    MatAutocompleteModule, // Adicionar o módulo de autocomplete
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
@@ -216,6 +219,9 @@ export class AgendamentoComponent implements OnInit {
     { id: 6, nome: 'Fernanda Lima' },
   ];
 
+  // Lista filtrada de prestadores para o autocomplete
+  prestadoresFiltrados: Prestador[] = [];
+
   // Horários para visualização diária
   horarios: string[] = Array.from(Array(24).keys()).map((hora) => `${hora}:00`);
 
@@ -237,6 +243,11 @@ export class AgendamentoComponent implements OnInit {
   dataInicioMax: Date | null = null;
   dataFimMin: Date | null = null;
 
+  // Flag para controlar se um prestador válido foi selecionado
+  prestadorValido: boolean = false;
+  // Armazenar o último prestador válido selecionado
+  ultimoPrestadorValido: string = '';
+
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('pt-BR');
   }
@@ -244,8 +255,8 @@ export class AgendamentoComponent implements OnInit {
   ngOnInit(): void {
     this.atualizarAgendamentosExibidos();
 
-    // Se houver código adicional para carregar prestadores de um serviço:
-    // this.carregarPrestadores();
+    // Inicializar a lista de prestadores filtrados com todos os prestadores
+    this.prestadoresFiltrados = [...this.prestadores];
   }
 
   mudarVisualizacao(modo: 'dia' | 'semana' | 'mes'): void {
@@ -541,6 +552,13 @@ export class AgendamentoComponent implements OnInit {
     // Resetar também as datas mínima e máxima
     this.dataInicioMax = null;
     this.dataFimMin = null;
+
+    // Resetar prestadores filtrados
+    this.prestadoresFiltrados = [...this.prestadores];
+
+    this.prestadorValido = false;
+    this.ultimoPrestadorValido = '';
+
     this.aplicarFiltros();
   }
 
@@ -583,6 +601,77 @@ export class AgendamentoComponent implements OnInit {
       this.dataInicioMax = null;
     }
 
+    this.aplicarFiltros();
+  }
+
+  // Função para filtrar prestadores conforme o usuário digita
+  filtrarPrestadores(event?: any): void {
+    // Reset da validação ao começar a digitar
+    this.prestadorValido = false;
+
+    // Se não houver evento, resetar para mostrar todos os prestadores
+    if (!event) {
+      this.prestadoresFiltrados = [...this.prestadores];
+      return;
+    }
+
+    const valorFiltro = this.filtros.nomePrestador?.toLowerCase() || '';
+
+    if (valorFiltro === '') {
+      // Se o campo estiver vazio, mostrar todos os prestadores
+      this.prestadoresFiltrados = [...this.prestadores];
+    } else {
+      // Filtrar prestadores pelo texto digitado
+      this.prestadoresFiltrados = this.prestadores.filter((prestador) =>
+        prestador.nome.toLowerCase().includes(valorFiltro)
+      );
+    }
+  }
+
+  // Função para exibir o nome do prestador selecionado
+  displayPrestadorFn(prestadorNome: string): string {
+    return prestadorNome || '';
+  }
+
+  // Método chamado quando um prestador é selecionado na lista
+  prestadorSelecionado(event: MatAutocompleteSelectedEvent): void {
+    const valorSelecionado = event.option.value;
+    this.prestadorValido = true;
+    this.ultimoPrestadorValido = valorSelecionado;
+    this.aplicarFiltros();
+  }
+
+  // Método para validar o prestador ao sair do campo
+  validarPrestadorSelecionado(): void {
+    // Se o campo estiver vazio, consideramos válido (limpo)
+    if (!this.filtros.nomePrestador) {
+      this.prestadorValido = true;
+      this.ultimoPrestadorValido = '';
+      return;
+    }
+
+    // Verificar se o texto digitado corresponde a algum prestador
+    const prestadorExiste = this.prestadores.some(
+      (p) => p.nome.toLowerCase() === this.filtros.nomePrestador.toLowerCase()
+    );
+
+    // Se não for um prestador válido, limpar o campo ou restaurar o último valor válido
+    if (!prestadorExiste) {
+      this.filtros.nomePrestador = '';
+      this.prestadorValido = false;
+      // Opcionalmente mostrar uma mensagem ao usuário
+      // this.snackBar.open('Selecione um prestador válido da lista', 'OK', { duration: 3000 });
+    }
+
+    this.aplicarFiltros();
+  }
+
+  // Método para limpar o campo de prestador
+  limparPrestador(): void {
+    this.filtros.nomePrestador = '';
+    this.prestadorValido = false;
+    this.ultimoPrestadorValido = '';
+    this.prestadoresFiltrados = [...this.prestadores];
     this.aplicarFiltros();
   }
 }
