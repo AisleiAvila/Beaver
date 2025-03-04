@@ -21,6 +21,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select'; // Adicionar esta importação
 
 // Interface para representar um agendamento
 export interface Agendamento {
@@ -82,6 +83,7 @@ const CUSTOM_DATE_FORMATS: MatDateFormats = {
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule, // Adicionar esta linha
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
@@ -204,6 +206,16 @@ export class AgendamentoComponent implements OnInit {
     },
   ];
 
+  // Lista de prestadores para o combobox
+  prestadoresCombobox = [
+    { id: 1, nome: 'Carlos Silva' },
+    { id: 2, nome: 'Maria Oliveira' },
+    { id: 3, nome: 'João Santos' },
+    { id: 4, nome: 'Ana Souza' },
+    { id: 5, nome: 'Roberto Almeida' },
+    { id: 6, nome: 'Fernanda Lima' },
+  ];
+
   // Horários para visualização diária
   horarios: string[] = Array.from(Array(24).keys()).map((hora) => `${hora}:00`);
 
@@ -231,6 +243,9 @@ export class AgendamentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.atualizarAgendamentosExibidos();
+
+    // Se houver código adicional para carregar prestadores de um serviço:
+    // this.carregarPrestadores();
   }
 
   mudarVisualizacao(modo: 'dia' | 'semana' | 'mes'): void {

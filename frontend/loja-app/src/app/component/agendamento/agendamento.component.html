@@ -29,14 +29,21 @@
               </button>
             </mat-form-field>
 
+            <!-- Novo campo do tipo combobox para prestadores -->
             <mat-form-field appearance="outline" class="filtro-field">
               <mat-label>Nome do Prestador</mat-label>
-              <input
-                matInput
+              <mat-select
                 [(ngModel)]="filtros.nomePrestador"
-                placeholder="Filtrar por prestador"
-                (keyup)="aplicarFiltros()"
-              />
+                (selectionChange)="aplicarFiltros()"
+              >
+                <mat-option>Selecione</mat-option>
+                <mat-option
+                  *ngFor="let prestador of prestadores"
+                  [value]="prestador.nome"
+                >
+                  {{ prestador.nome }}
+                </mat-option>
+              </mat-select>
               <button
                 *ngIf="filtros.nomePrestador"
                 matSuffix
