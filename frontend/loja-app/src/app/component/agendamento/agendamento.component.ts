@@ -44,6 +44,11 @@ export interface FiltrosAgendamento {
   dataFim: Date | null;
 }
 
+export interface Prestador {
+  id: number;
+  nome: string;
+}
+
 const CUSTOM_DATE_FORMATS: MatDateFormats = {
   parse: {
     dateInput: 'DD/MM/YYYY',
@@ -152,6 +157,50 @@ export class AgendamentoComponent implements OnInit {
       descricao: 'Curso de Angular avançado',
       cor: '#FF8A65',
       servico: 'Serviço 5',
+    },
+  ];
+
+  // Lista de prestadores de exemplo
+  prestadores: Prestador[] = [
+    {
+      id: 1,
+      nome: 'João Amaro',
+    },
+    {
+      id: 2,
+      nome: 'Maria Silva',
+    },
+    {
+      id: 3,
+      nome: 'Pedro Santos',
+    },
+    {
+      id: 4,
+      nome: 'Ana Souza',
+    },
+    {
+      id: 5,
+      nome: 'Carlos Oliveira',
+    },
+    {
+      id: 6,
+      nome: 'Fernanda Lima',
+    },
+    {
+      id: 7,
+      nome: 'Ricardo Almeida',
+    },
+    {
+      id: 8,
+      nome: 'Juliana Costa',
+    },
+    {
+      id: 9,
+      nome: 'Lucas Pereira',
+    },
+    {
+      id: 10,
+      nome: 'Patricia Santos',
     },
   ];
 
