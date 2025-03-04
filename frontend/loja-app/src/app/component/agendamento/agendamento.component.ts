@@ -18,16 +18,30 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
-interface Agendamento {
+// Interface para representar um agendamento
+export interface Agendamento {
   id: number;
-  cliente: string;
-  prestador: string;
   titulo: string;
+  descricao: string;
   dataInicio: Date;
   dataFim: Date;
-  descricao: string;
   cor: string;
+  cliente: string;
+  prestador: string;
+  servico: string;
+}
+
+// Interface para os filtros
+export interface FiltrosAgendamento {
+  nomeCliente: string;
+  nomePrestador: string;
+  nomeServico: string;
+  dataInicio: Date | null;
+  dataFim: Date | null;
 }
 
 const CUSTOM_DATE_FORMATS: MatDateFormats = {
@@ -60,6 +74,9 @@ const CUSTOM_DATE_FORMATS: MatDateFormats = {
     MatButtonToggleModule,
     MatDialogModule,
     MatNativeDateModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
@@ -90,6 +107,7 @@ export class AgendamentoComponent implements OnInit {
       dataFim: new Date(2025, 2, 2, 11, 30), // 2 de março de 2025, 11:30
       descricao: 'Discussão sobre novo projeto',
       cor: '#7986CB',
+      servico: 'Serviço 1',
     },
     {
       id: 2,
@@ -100,6 +118,7 @@ export class AgendamentoComponent implements OnInit {
       dataFim: new Date(2025, 2, 2, 14, 0), // 2 de março de 2025, 14:00
       descricao: 'Comemoração de aniversário',
       cor: '#4DB6AC',
+      servico: 'Serviço 2',
     },
     {
       id: 3,
@@ -110,6 +129,7 @@ export class AgendamentoComponent implements OnInit {
       dataFim: new Date(2025, 2, 3, 10, 30), // 3 de março de 2025, 10:30
       descricao: 'Definição de metas da semana',
       cor: '#FFB74D',
+      servico: 'Serviço 3',
     },
     {
       id: 4,
@@ -120,6 +140,7 @@ export class AgendamentoComponent implements OnInit {
       dataFim: new Date(2025, 2, 4, 15, 0), // 4 de março de 2025, 15:00
       descricao: 'Vaga de desenvolvedor frontend',
       cor: '#AED581',
+      servico: 'Serviço 4',
     },
     {
       id: 5,
@@ -130,6 +151,7 @@ export class AgendamentoComponent implements OnInit {
       dataFim: new Date(2025, 2, 6, 17, 0), // 6 de março de 2025, 17:00
       descricao: 'Curso de Angular avançado',
       cor: '#FF8A65',
+      servico: 'Serviço 5',
     },
   ];
 
@@ -140,6 +162,19 @@ export class AgendamentoComponent implements OnInit {
   diasMes: number[] = [];
   diasAnterior: number[] = [];
   diasProximo: number[] = [];
+
+  // Objeto para armazenar os filtros
+  filtros: FiltrosAgendamento = {
+    nomeCliente: '',
+    nomePrestador: '',
+    nomeServico: '',
+    dataInicio: null,
+    dataFim: null,
+  };
+
+  // Propriedades para controlar validação de datas
+  dataInicioMax: Date | null = null;
+  dataFimMin: Date | null = null;
 
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('pt-BR');
@@ -185,6 +220,7 @@ export class AgendamentoComponent implements OnInit {
       this.atualizarCalendarioMes();
       this.filtrarAgendamentosMes();
     }
+    this.aplicarFiltros();
   }
 
   filtrarAgendamentosDia(): void {
@@ -317,13 +353,13 @@ export class AgendamentoComponent implements OnInit {
   }
 
   getAgendamentosDia(dia: number): Agendamento[] {
-    // const data = new Date(this.dataAtual.getFullYear(), this.dataAtual.getMonth(), dia);
-    return this.agendamentos.filter(
-      (agendamento) =>
+    return this.agendamentosExibidos.filter((agendamento) => {
+      return (
         agendamento.dataInicio.getDate() === dia &&
         agendamento.dataInicio.getMonth() === this.dataAtual.getMonth() &&
         agendamento.dataInicio.getFullYear() === this.dataAtual.getFullYear()
-    );
+      );
+    });
   }
 
   // Método para obter o número do dia da semana pelo índice
@@ -365,5 +401,124 @@ export class AgendamentoComponent implements OnInit {
       this.dataAtual.getMonth() === hoje.getMonth() &&
       this.dataAtual.getFullYear() === hoje.getFullYear()
     );
+  }
+
+  // Método para aplicar os filtros
+  aplicarFiltros(): void {
+    this.agendamentosExibidos = this.agendamentos.filter((agendamento) => {
+      // Filtro por nome do cliente
+      if (
+        this.filtros.nomeCliente &&
+        !agendamento.cliente
+          .toLowerCase()
+          .includes(this.filtros.nomeCliente.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Filtro por nome do prestador
+      if (
+        this.filtros.nomePrestador &&
+        !agendamento.prestador
+          .toLowerCase()
+          .includes(this.filtros.nomePrestador.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Filtro por nome do serviço
+      if (
+        this.filtros.nomeServico &&
+        !agendamento.servico
+          .toLowerCase()
+          .includes(this.filtros.nomeServico.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Filtro por data de início
+      if (this.filtros.dataInicio) {
+        const dataInicioFiltro = new Date(this.filtros.dataInicio);
+        dataInicioFiltro.setHours(0, 0, 0, 0);
+
+        const dataAgendamento = new Date(agendamento.dataInicio);
+        dataAgendamento.setHours(0, 0, 0, 0);
+
+        if (dataAgendamento < dataInicioFiltro) {
+          return false;
+        }
+      }
+
+      // Filtro por data final
+      if (this.filtros.dataFim) {
+        const dataFimFiltro = new Date(this.filtros.dataFim);
+        dataFimFiltro.setHours(23, 59, 59, 999);
+
+        const dataAgendamento = new Date(agendamento.dataFim);
+
+        if (dataAgendamento > dataFimFiltro) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }
+
+  // Método para limpar todos os filtros
+  limparFiltros(): void {
+    this.filtros = {
+      nomeCliente: '',
+      nomePrestador: '',
+      nomeServico: '',
+      dataInicio: null,
+      dataFim: null,
+    };
+    // Resetar também as datas mínima e máxima
+    this.dataInicioMax = null;
+    this.dataFimMin = null;
+    this.aplicarFiltros();
+  }
+
+  // Método para validar e atualizar a data inicial
+  onDataInicioChange(event: any): void {
+    if (this.filtros.dataInicio) {
+      // Define a data mínima para a data final
+      this.dataFimMin = new Date(this.filtros.dataInicio);
+
+      // Se a data final existir e for menor que a data inicial, ajusta a data final
+      if (
+        this.filtros.dataFim &&
+        this.filtros.dataFim < this.filtros.dataInicio
+      ) {
+        this.filtros.dataFim = new Date(this.filtros.dataInicio);
+      }
+    } else {
+      // Se a data inicial for limpa, remove a restrição de data mínima
+      this.dataFimMin = null;
+    }
+
+    this.aplicarFiltros();
+  }
+
+  // Método para validar e atualizar a data final
+  onDataFimChange(event: any): void {
+    if (this.filtros.dataFim) {
+      // Define a data máxima para a data inicial
+      this.dataInicioMax = new Date(this.filtros.dataFim);
+
+      // Se a data inicial existir e for maior que a data final, ajusta a data inicial
+      if (
+        this.filtros.dataInicio &&
+        this.filtros.dataInicio > this.filtros.dataFim
+      ) {
+        this.filtros.dataInicio = new Date(this.filtros.dataFim);
+      }
+    } else {
+      // Se a data final for limpa, remove a restrição de data máxima
+      this.dataInicioMax = null;
+    }
+
+    this.aplicarFiltros();
   }
 }
