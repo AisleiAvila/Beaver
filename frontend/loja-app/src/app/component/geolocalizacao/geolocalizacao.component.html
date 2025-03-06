@@ -222,19 +222,35 @@
       </mat-card-header>
       <mat-card-content>
         <div class="geo-map-container">
-          <!-- Aqui será inserido o mapa do Google Maps ou Leaflet via diretiva -->
-          <div class="map-placeholder">
-            <p *ngIf="!localizacaoAtual && !resultadoGeocodificacao">
-              Obtenha sua localização ou busque um endereço para visualizar no
-              mapa
+          <!-- Estados de carregamento e erro -->
+          <div class="map-placeholder" *ngIf="!apiCarregada || !mapCarregado">
+            <p *ngIf="!localizacaoAtual && !resultadoGeocodificacao && !localizacaoCarregando">
+              Obtenha sua localização ou busque um endereço para visualizar no mapa
             </p>
-            <img
-              *ngIf="localizacaoAtual || resultadoGeocodificacao"
-              class="map-image"
-              src="https://via.placeholder.com/800x400?text=Mapa+será+exibido+aqui"
-              alt="Placeholder para mapa"
-            />
+            <p *ngIf="!apiCarregada">Carregando API do Google Maps...</p>
+            <mat-spinner
+              diameter="40"
+              *ngIf="localizacaoCarregando"
+            ></mat-spinner>
           </div>
+
+          <!-- Mapa do Google usando Angular Google Maps -->
+          <google-map
+            *ngIf="apiCarregada && mapCarregado"
+            height="400px"
+            width="100%"
+            [center]="center"
+            [zoom]="zoom"
+            [options]="mapOptions"
+          >
+            <map-marker
+              *ngFor="let marker of markers"
+              [position]="marker.position"
+              [title]="marker.titulo"
+              [options]="marker.options"
+            >
+            </map-marker>
+          </google-map>
         </div>
 
         <!-- Cálculo de distância -->

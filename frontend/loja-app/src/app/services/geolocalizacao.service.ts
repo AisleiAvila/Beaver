@@ -31,7 +31,7 @@ export interface ResultadoGeocodificacao {
 })
 export class GeolocalizacaoService {
   private geocodingApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
-  private googleMapsApiKey = ''; // Insira sua chave API do Google Maps
+  private googleMapsApiKey = 'AIzaSyDDjkD8XDr1GYfZpRoEWIQSfzZfJEam9kE'; // Use uma chave de API válida
 
   constructor(private http: HttpClient) {}
 
@@ -344,6 +344,17 @@ export class GeolocalizacaoService {
    * @returns boolean indicando se a chave está configurada
    */
   temChaveGoogleMapsConfigiurada(): boolean {
-    return !!this.googleMapsApiKey && this.googleMapsApiKey.length > 0;
+    return (
+      this.googleMapsApiKey !== 'SUA_CHAVE_API_GOOGLE_MAPS' &&
+      this.googleMapsApiKey !== '' &&
+      !!this.googleMapsApiKey
+    );
+  }
+
+  /**
+   * Retorna a chave de API para Google Maps
+   */
+  getApiKey(): string {
+    return this.googleMapsApiKey;
   }
 }
