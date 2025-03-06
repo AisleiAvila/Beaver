@@ -5,6 +5,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\CidadeController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\EnderecoController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\EstadoController.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\GeolocalizacaoController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\OrganizacaoController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\PaisController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\PerfilController.java
@@ -46,6 +47,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\EmailService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\EnderecoService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\EstadoService.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\GeolocalizacaoService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\OrganizacaoService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\PaisService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\PerfilService.java
@@ -112,6 +114,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\CidadeApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\EnderecoApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\EstadoApi.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\GeolocalizacaoApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\OrganizacaoApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\PaisApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\PerfilApi.java
@@ -126,6 +129,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\EnderecoModel.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\EstadoModel.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\EventPagination.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\GetCoordenadas400Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\Login400Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\LoginRequestDTO.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\LoginResponseDTO.java

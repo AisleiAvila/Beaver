@@ -5,7 +5,9 @@
  */
 package com.dasad.empresa.api;
 
-import com.dasad.empresa.model.PerfilModel;
+import com.dasad.empresa.model.Createendereco500Response;
+import com.dasad.empresa.model.EnderecoModel;
+import com.dasad.empresa.model.GetCoordenadas400Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,21 +36,30 @@ import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-04T11:23:49.816778100Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 @Validated
-@Tag(name = "Perfil", description = "Operações relacionadas a perfis")
-public interface PerfilApi {
+@Tag(name = "Geolocalização", description = "Operações relacionadas a geolocalização")
+public interface GeolocalizacaoApi {
 
     /**
-     * GET /perfil/find : Busca Perfis
+     * POST /geolocalizacao : Obter coordenadas de um endereço
      *
-     * @return Sucesso (status code 200)
+     * @param enderecoModel  (required)
+     * @return Coordenadas obtidas com sucesso (status code 200)
+     *         or Requisição inválida (status code 400)
+     *         or Erro interno (status code 500)
      */
     @Operation(
-        operationId = "findPerfil",
-        summary = "Busca Perfis",
-        tags = { "Perfil" },
+        operationId = "getCoordenadas",
+        summary = "Obter coordenadas de um endereço",
+        tags = { "Geolocalização" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Sucesso", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PerfilModel.class)))
+            @ApiResponse(responseCode = "200", description = "Coordenadas obtidas com sucesso", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = EnderecoModel.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetCoordenadas400Response.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Erro interno", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Createendereco500Response.class))
             })
         },
         security = {
@@ -56,13 +67,14 @@ public interface PerfilApi {
         }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/perfil/find",
-        produces = { "application/json" }
+        method = RequestMethod.POST,
+        value = "/geolocalizacao",
+        produces = { "application/json" },
+        consumes = { "application/json" }
     )
     
-    ResponseEntity<List<PerfilModel>> findPerfil(
-        
+    ResponseEntity<EnderecoModel> getCoordenadas(
+        @Parameter(name = "EnderecoModel", description = "", required = true) @Valid @RequestBody EnderecoModel enderecoModel
     );
 
 }

@@ -10,6 +10,13 @@ import com.dasad.empresa.model.RevokeTokenRequest;
 import com.dasad.empresa.model.UsuarioModel;
 import com.dasad.empresa.repository.UsuarioRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,12 +36,21 @@ import java.util.Optional;
 @CrossOrigin(
         origins = {"http://localhost:4200", "http://localhost:8080", "http://localhost:8100"}
 )
+@Tag(name = "Autenticação", description = "API para autenticação e gerenciamento de tokens")
 public class AuthController implements AuthApi {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorizationService authorizationService;
 
-    @Operation(summary = "Verify authorization endpoint")
+    @Operation(
+            summary = "Verifica a validade do token",
+            description = "Valida o token de autorização enviado no cabeçalho"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Token válido", content = @Content(schema = @Schema(implementation = Boolean.class))),
+            @ApiResponse(responseCode = "400", description = "Token inválido", content = @Content)
+    })
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping({"/verify-authorization"})
     public ResponseEntity<Boolean> verifyAuthorization(@RequestHeader("Authorization") String authorization) {
         log.info("Verify authorization endpoint");
@@ -51,9 +67,20 @@ public class AuthController implements AuthApi {
     }
 
     @Override
-    @Operation(summary = "Login endpoint")
+    @Operation(
+            summary = "Autentica usuário",
+            description = "Realiza login do usuário e retorna um token de acesso"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso",
+                    content = @Content(schema = @Schema(implementation = LoginResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Credenciais inválidas", content = @Content)
+    })
     @PostMapping({"/login"})
-    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<LoginResponseDTO> login(
+            @Parameter(description = "Credenciais do usuário", required = true,
+                    schema = @Schema(implementation = LoginRequestDTO.class))
+            @RequestBody LoginRequestDTO loginRequestDTO) {
         log.info("Login endpoint");
         Optional<UsuarioModel> optionalUsuario = this.usuarioRepository.findByEmail(loginRequestDTO.getEmail());
         if (optionalUsuario.isPresent()) {
@@ -72,7 +99,12 @@ public class AuthController implements AuthApi {
     }
 
     @Override
-    @Operation(summary = "Register endpoint")
+    @Operation(summary = "Register endpoint", description = "Cria um novo usuário no sistema e retorna um token de autorização")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário registrado com sucesso",
+                    content = @Content(schema = @Schema(implementation = LoginResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Email já cadastrado ou dados inválidos", content = @Content)
+    })
     @PostMapping({"/register"})
     public ResponseEntity<LoginResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         log.info("Register endpoint");
@@ -104,7 +136,11 @@ public class AuthController implements AuthApi {
     }
 
     @Override
-    @Operation(summary = "Revoke token")
+    @Operation(summary = "Revoke token", description = "Invalida um token de acesso previamente emitido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Token revogado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Token inválido ou não fornecido")
+    })
     @PostMapping({"/revoke"})
     public ResponseEntity<RevokeToken200Response> revokeToken(RevokeTokenRequest revokeTokenRequest) {
         log.info("Revoke token");

@@ -12,5 +12,7 @@ public interface EnderecoRepository {
 
     EnderecoModel save(EnderecoModel endereco);
 
+    EnderecoModel update(EnderecoModel endereco);
+
     void deleteById(Integer id);
 }

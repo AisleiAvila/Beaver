@@ -25,6 +25,8 @@ tags:
     description: Operações relacionadas a senha de acesso do usuário
   - name: Usuario
     description: Operações relacionadas a usuários
+  - name: Geolocalização
+    description: Operações relacionadas a geolocalização
 
 paths:
   /auth/revoke:
@@ -813,6 +815,49 @@ paths:
                   error:
                     type: string
                     example: "Senha não salva."
+
+  /geolocalizacao:
+    post:
+      summary: Obter coordenadas de um endereço
+      security:
+        - bearerAuth: []
+      tags:
+        - Geolocalização
+      operationId: getCoordenadas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enderecoModel'
+      responses:
+        '200':
+          description: Coordenadas obtidas com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enderecoModel'
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Coordenadas não obtidas."
+        '500':
+          description: Erro interno
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Erro interno."
+
 components:
   securitySchemes:
     bearerAuth:
@@ -1117,7 +1162,6 @@ components:
             type: number
         usuario_id:
           type: integer
-
 
     PerfilModel:
       type: object

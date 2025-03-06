@@ -10,6 +10,7 @@ com\dasad\empresa\api\SenhaApi.class
 com\dasad\empresa\jooq\tables\UsuarioPerfil$UsuarioPerfilPath.class
 com\dasad\empresa\exception\RestExceptionHandler.class
 com\dasad\empresa\jooq\tables\Organizacao.class
+com\dasad\empresa\service\GeolocalizacaoService.class
 com\dasad\empresa\model\EnderecoModel.class
 com\dasad\empresa\jooq\tables\Regioes.class
 com\dasad\empresa\jooq\tables\CategoriaEquipamentos.class
@@ -17,6 +18,7 @@ com\dasad\empresa\util\LocalDateDeserializer.class
 com\dasad\empresa\jooq\DefaultCatalog.class
 com\dasad\empresa\model\ChatResponseDTO.class
 com\dasad\empresa\jooq\tables\Endereco.class
+com\dasad\empresa\model\GetCoordenadas400Response.class
 com\dasad\empresa\model\LoginRequestDTO.class
 com\dasad\empresa\repository\PaisRepositoryImpl.class
 com\dasad\empresa\model\OrganizacaoRequest.class
@@ -119,6 +121,7 @@ com\dasad\empresa\model\RegisterRequestDTO.class
 com\dasad\empresa\config\JacksonConfig.class
 com\dasad\empresa\api\PaisApi.class
 com\dasad\empresa\jooq\tables\records\UsuarioRecord.class
+com\dasad\empresa\api\GeolocalizacaoApi.class
 com\dasad\empresa\jooq\tables\records\UsuarioPerfilRecord.class
 com\dasad\empresa\model\CidadeModel.class
 com\dasad\empresa\model\RecuperarSenhaRequest.class
@@ -164,6 +167,7 @@ com\dasad\empresa\jooq\tables\Fornecedor$FornecedorPath.class
 com\dasad\empresa\jooq\tables\records\ClienteRecord.class
 com\dasad\empresa\model\EstadoModel.class
 com\dasad\empresa\repository\OrganizacaoRepositoryImpl.class
+com\dasad\empresa\controller\GeolocalizacaoController.class
 com\dasad\empresa\controller\UsuarioController.class
 com\dasad\empresa\model\RevokeToken200Response.class
 com\dasad\empresa\api\AuthApi.class

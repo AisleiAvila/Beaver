@@ -64,6 +64,29 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
         return endereco;
     }
 
+    public EnderecoModel update(EnderecoModel endereco) {
+        if (endereco == null) {
+            throw new IllegalArgumentException("Endereco não pode ser nulo.");
+        }
+        if (endereco.getId() == null) {
+            throw new IllegalArgumentException("ID não pode ser nulo.");
+        }
+
+        this.dsl.update(ENDERECO)
+                .set(ENDERECO.CIDADE_ID, endereco.getCidadeId().getId())
+                .set(ENDERECO.CEP, endereco.getCep())
+                .set(ENDERECO.LOGRADOURO, endereco.getLogradouro())
+                .set(ENDERECO.NUMERO, endereco.getNumero())
+                .set(ENDERECO.COMPLEMENTO, endereco.getComplemento())
+                .set(ENDERECO.BAIRRO, endereco.getBairro())
+                .set(ENDERECO.LATITUDE, endereco.getLatitude())
+                .set(ENDERECO.LONGITUDE, endereco.getLongitude())
+                .set(ENDERECO.USUARIO_ID, endereco.getUsuarioId())
+                .where(ENDERECO.ID.eq(endereco.getId()))
+                .execute();
+        return endereco;
+    }
+
     public void deleteById(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("ID não pode ser nulo.");

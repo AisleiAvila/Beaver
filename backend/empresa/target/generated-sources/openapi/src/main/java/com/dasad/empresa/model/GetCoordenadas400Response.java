@@ -16,16 +16,16 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * ValidarResetToken404Response
+ * GetCoordenadas400Response
  */
 
-@JsonTypeName("validarResetToken_404_response")
+@JsonTypeName("getCoordenadas_400_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-04T11:23:49.816778100Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
-public class ValidarResetToken404Response {
+public class GetCoordenadas400Response {
 
   private String error;
 
-  public ValidarResetToken404Response error(String error) {
+  public GetCoordenadas400Response error(String error) {
     this.error = error;
     return this;
   }
@@ -35,7 +35,7 @@ public class ValidarResetToken404Response {
    * @return error
    */
   
-  @Schema(name = "error", example = "Token inválido.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "error", example = "Coordenadas não obtidas.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("error")
   public String getError() {
     return error;
@@ -53,8 +53,8 @@ public class ValidarResetToken404Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ValidarResetToken404Response validarResetToken404Response = (ValidarResetToken404Response) o;
-    return Objects.equals(this.error, validarResetToken404Response.error);
+    GetCoordenadas400Response getCoordenadas400Response = (GetCoordenadas400Response) o;
+    return Objects.equals(this.error, getCoordenadas400Response.error);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class ValidarResetToken404Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ValidarResetToken404Response {\n");
+    sb.append("class GetCoordenadas400Response {\n");
     sb.append("    error: ").append(toIndentedString(error)).append("\n");
     sb.append("}");
     return sb.toString();

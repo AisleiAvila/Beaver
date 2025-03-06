@@ -3,6 +3,13 @@ package com.dasad.empresa.controller;
 import com.dasad.empresa.api.EnderecoApi;
 import com.dasad.empresa.model.EnderecoModel;
 import com.dasad.empresa.service.EnderecoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +25,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping({"/endereco"})
+@Tag(name = "Endereço", description = "API para gerenciamento de endereços")
+@SecurityRequirement(name = "bearerAuth")
 public class EnderecoController implements EnderecoApi {
     @Autowired
     private EnderecoService enderecoService;
@@ -27,6 +36,12 @@ public class EnderecoController implements EnderecoApi {
 
     @Override
     @PutMapping({"/{id}"})
+    @Operation(summary = "Atualiza um endereço existente", description = "Atualiza os dados de um endereço a partir do ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso",
+                    content = @Content(schema = @Schema(implementation = EnderecoModel.class))),
+            @ApiResponse(responseCode = "404", description = "Endereço não encontrado", content = @Content)
+    })
     public ResponseEntity<EnderecoModel> updateendereco(@PathVariable Integer id, @RequestBody EnderecoModel enderecoDetails) {
         return this.enderecoService.findById(id).map((endereco) -> {
             endereco.setLogradouro(enderecoDetails.getLogradouro());
@@ -43,6 +58,12 @@ public class EnderecoController implements EnderecoApi {
 
     @Override
     @DeleteMapping({"/{id}"})
+    @Operation(summary = "Remove um endereço", description = "Exclui um endereço a partir do ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Endereço removido com sucesso"),
+            @ApiResponse(responseCode = "400", description = "ID inválido"),
+            @ApiResponse(responseCode = "404", description = "Endereço não encontrado")
+    })
     public ResponseEntity<Void> deleteendereco(@PathVariable Integer id) {
         if (id == null) {
             return ResponseEntity.badRequest().build();
@@ -58,6 +79,12 @@ public class EnderecoController implements EnderecoApi {
 
     @Override
     @PostMapping
+    @Operation(summary = "Cria um novo endereço", description = "Registra um novo endereço no sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Endereço criado com sucesso",
+                    content = @Content(schema = @Schema(implementation = EnderecoModel.class))),
+            @ApiResponse(responseCode = "400", description = "Dados de endereço inválidos", content = @Content)
+    })
     public ResponseEntity<EnderecoModel> createendereco(@RequestBody EnderecoModel enderecoModel) {
         if (enderecoModel == null) {
             return ResponseEntity.badRequest().build();
@@ -69,6 +96,13 @@ public class EnderecoController implements EnderecoApi {
 
     @Override
     @GetMapping({"/{id}"})
+    @Operation(summary = "Obtém detalhes de um endereço", description = "Retorna os dados de um endereço específico pelo ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Dados do endereço recuperados com sucesso",
+                    content = @Content(schema = @Schema(implementation = EnderecoModel.class))),
+            @ApiResponse(responseCode = "400", description = "ID inválido"),
+            @ApiResponse(responseCode = "404", description = "Endereço não encontrado")
+    })
     public ResponseEntity<EnderecoModel> detailendereco(Integer id) {
         if (id == null) {
             return ResponseEntity.badRequest().build();
@@ -79,6 +113,9 @@ public class EnderecoController implements EnderecoApi {
 
     @Override
     @GetMapping
+    @Operation(summary = "Lista todos os endereços", description = "Retorna a lista completa de endereços cadastrados")
+    @ApiResponse(responseCode = "200", description = "Lista de endereços recuperada com sucesso",
+            content = @Content(schema = @Schema(implementation = EnderecoModel.class)))
     public ResponseEntity<List<EnderecoModel>> findendereco() {
         var enderecos =  this.enderecoService.findAll();
         return ResponseEntity.ok(enderecos);
