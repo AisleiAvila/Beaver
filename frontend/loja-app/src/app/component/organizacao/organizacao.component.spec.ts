@@ -31,8 +31,8 @@ describe('OrganizacaoComponent', () => {
     const modalServiceSpy = jasmine.createSpyObj('NgbModal', ['open']);
 
     await TestBed.configureTestingModule({
-      declarations: [OrganizacaoComponent],
-      providers: [
+    imports: [OrganizacaoComponent],
+    providers: [
         FormBuilder,
         { provide: OrganizacoesService, useValue: organizacoesServiceSpy },
         { provide: EstadoService, useValue: estadoServiceSpy },
@@ -41,8 +41,8 @@ describe('OrganizacaoComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: TranslateService, useValue: translateSpy },
         { provide: NgbModal, useValue: modalServiceSpy },
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
 
     fixture = TestBed.createComponent(OrganizacaoComponent);
     component = fixture.componentInstance;

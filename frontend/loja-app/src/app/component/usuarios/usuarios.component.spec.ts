@@ -14,7 +14,7 @@ describe('UsuariosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientTestingModule,
         HeaderComponent,
         MatFormFieldModule,
@@ -22,9 +22,9 @@ describe('UsuariosComponent', () => {
         MatTableModule,
         FooterComponent,
         MatInputModule,
-      ],
-      declarations: [UsuariosComponent],
-    }).compileComponents();
+        UsuariosComponent,
+    ],
+}).compileComponents();
 
     fixture = TestBed.createComponent(UsuariosComponent);
     component = fixture.componentInstance;

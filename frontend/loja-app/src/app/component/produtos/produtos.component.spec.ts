@@ -26,8 +26,7 @@ describe('ProdutosComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      declarations: [ProdutosComponent],
-      imports: [
+    imports: [
         MatSnackBarModule,
         MatPaginatorModule,
         MatSortModule,
@@ -39,9 +38,10 @@ describe('ProdutosComponent', () => {
         MatTooltipModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-      ],
-      providers: [{ provide: ProdutoService, useValue: produtoServiceSpy }],
-    }).compileComponents();
+        ProdutosComponent,
+    ],
+    providers: [{ provide: ProdutoService, useValue: produtoServiceSpy }],
+}).compileComponents();
 
     produtoService = TestBed.inject(
       ProdutoService

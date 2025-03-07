@@ -6,12 +6,11 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         RouterTestingModule,
-        // , MessageModalModule
-      ],
-      declarations: [AppComponent],
-    }).compileComponents();
+        AppComponent,
+    ],
+}).compileComponents();
   });
 
   it('should create the app', () => {

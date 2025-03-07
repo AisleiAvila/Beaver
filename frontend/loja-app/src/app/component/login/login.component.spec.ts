@@ -21,7 +21,7 @@ describe('LoginComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientTestingModule,
         HeaderComponent,
         MatCheckboxModule,
@@ -31,12 +31,12 @@ describe('LoginComponent', () => {
         FooterComponent,
         FormsModule,
         ReactiveFormsModule,
-      ],
-      declarations: [LoginComponent],
-      providers: [
+        LoginComponent,
+    ],
+    providers: [
         { provide: ModalCommunicationService, useValue: modalServiceSpy },
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;

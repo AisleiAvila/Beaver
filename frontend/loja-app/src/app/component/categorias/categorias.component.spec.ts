@@ -19,9 +19,9 @@ describe('CategoriasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CategoriasComponent],
-      providers: [{ provide: CategoriasService, useClass: MockCategoriasService }]
-    }).compileComponents();
+    imports: [CategoriasComponent],
+    providers: [{ provide: CategoriasService, useClass: MockCategoriasService }]
+}).compileComponents();
   });
 
   beforeEach(() => {

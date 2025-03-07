@@ -12,14 +12,14 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientTestingModule,
         MatToolbarModule,
         MatIconModule,
         MatListItem,
-      ],
-      declarations: [HeaderComponent],
-    }).compileComponents();
+        HeaderComponent,
+    ],
+}).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;

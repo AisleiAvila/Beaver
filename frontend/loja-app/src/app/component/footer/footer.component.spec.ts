@@ -10,9 +10,8 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, MatToolbarModule],
-      declarations: [FooterComponent],
-    }).compileComponents();
+    imports: [HttpClientTestingModule, MatToolbarModule, FooterComponent],
+}).compileComponents();
 
     fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;

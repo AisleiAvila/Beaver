@@ -8,8 +8,8 @@ describe('LembrarSenhaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LembrarSenhaComponent]
-    })
+    imports: [LembrarSenhaComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(LembrarSenhaComponent);

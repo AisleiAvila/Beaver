@@ -14,16 +14,16 @@ describe('HomePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         RouterTestingModule,
         HttpClientTestingModule,
         FooterComponent,
         MatToolbar,
         MatIcon,
         MatListItem,
-      ],
-      declarations: [HomePageComponent, HeaderComponent],
-    }).compileComponents();
+        HomePageComponent, HeaderComponent,
+    ],
+}).compileComponents();
 
     fixture = TestBed.createComponent(HomePageComponent);
     component = fixture.componentInstance;
