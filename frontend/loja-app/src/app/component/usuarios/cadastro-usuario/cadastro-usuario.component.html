@@ -6,29 +6,31 @@
       <form>
         <!-- Reorganizada a estrutura para mover a imagem para acima do conteúdo do formulário -->
         <div class="profile-image-container">
-          <div class="profile-image">
-            <img
-              [src]="profileImageUrl || 'assets/images/default-user.png'"
-              alt="Imagem de perfil"
-            />
-          </div>
-          <div class="profile-actions">
-            <button
-              mat-button
-              class="profile-action-button"
-              (click)="tirarFoto()"
-            >
-              <mat-icon>camera_alt</mat-icon>
-              <span>{{ "LABLE_TIRAR_FOTO" | translate }}</span>
-            </button>
-            <button
-              mat-button
-              class="profile-action-button"
-              (click)="importarImagem()"
-            >
-              <mat-icon>insert_drive_file</mat-icon>
-              <span>{{ "LABLE_IMPORTAR_IMAGEM" | translate }}</span>
-            </button>
+          <div class="profile-image-wrapper">
+            <div class="profile-image">
+              <img
+                [src]="profileImageUrl || 'assets/images/default-user.png'"
+                alt="Imagem de perfil"
+              />
+            </div>
+            <div class="profile-actions">
+              <button
+                mat-icon-button
+                class="profile-action-button"
+                (click)="tirarFoto()"
+                matTooltip="{{ 'LABLE_TIRAR_FOTO' | translate }}"
+              >
+                <mat-icon>camera_alt</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                class="profile-action-button"
+                (click)="importarImagem()"
+                matTooltip="{{ 'LABLE_IMPORTAR_IMAGEM' | translate }}"
+              >
+                <mat-icon>insert_drive_file</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
 
