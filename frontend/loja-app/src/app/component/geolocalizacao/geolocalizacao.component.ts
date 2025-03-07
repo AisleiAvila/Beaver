@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -9,14 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { GoogleMap, MapMarker } from '@angular/google-maps';
-import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 
-import { GoogleMapsConfigModule } from '../../google-maps-config.module';
 import {
-  GeolocalizacaoService,
   Coordenadas,
+  GeolocalizacaoService,
   ResultadoGeocodificacao,
 } from '../../services/geolocalizacao.service';
 
@@ -36,7 +35,8 @@ import {
     MatInputModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    GoogleMapsConfigModule,
+    GoogleMap,
+    MapMarker,
   ],
 })
 export class GeolocalizacaoComponent implements OnInit, AfterViewInit {
