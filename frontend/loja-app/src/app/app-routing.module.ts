@@ -21,6 +21,7 @@ import { ProdutosComponent } from './component/produtos/produtos.component';
 import { TermsComponent } from './component/terms/terms.component';
 import { CadastroUsuarioComponent } from './component/usuarios/cadastro-usuario/cadastro-usuario.component';
 import { UsuariosComponent } from './component/usuarios/usuarios.component';
+import { WebcamCaptureComponent } from './component/webcam-capture/webcam-capture.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -49,6 +50,7 @@ export const routes: Routes = [
   { path: 'agendamentos/editar/:id', component: CadastroAgendamentoComponent },
   { path: 'agendamento', component: AgendamentoComponent },
   { path: 'geolocalizacao', component: GeolocalizacaoComponent },
+  { path: 'webcam-capture', component: WebcamCaptureComponent },
   { path: '**', redirectTo: '/home' },
 ];
 

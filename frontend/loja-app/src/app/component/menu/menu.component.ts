@@ -147,6 +147,12 @@ export class MenuComponent implements OnInit {
       action: () => this.navigateToGeolocalizacao(),
       route: '/geolocalizacao',
     },
+    {
+      label: 'Webcam-Capture',
+      icon: 'photo_camera',
+      action: () => this.navigateToWebcamCapture(),
+      route: '/webcam-capture',
+    },
   ];
 
   home(): void {
@@ -223,6 +229,12 @@ export class MenuComponent implements OnInit {
   navigateToGeolocalizacao(): void {
     if (this.isAuthorization()) {
       this.router.navigate(['/geolocalizacao']);
+    }
+  }
+
+  navigateToWebcamCapture(): void {
+    if (this.isAuthorization()) {
+      this.router.navigate(['/webcam-capture']);
     }
   }
 

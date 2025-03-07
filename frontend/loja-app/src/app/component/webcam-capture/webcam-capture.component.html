@@ -1,0 +1,25 @@
+<div class="webcam-container">
+  <h2>Captura de Imagem</h2>
+
+  <div class="video-container" *ngIf="!capturedImage">
+    <video #videoElement class="video-element" autoplay playsinline></video>
+    <div class="controls">
+      <button class="capture-btn" (click)="captureImage()">Tirar Foto</button>
+    </div>
+  </div>
+
+  <div class="preview-container" *ngIf="capturedImage">
+    <img
+      [src]="capturedImage"
+      alt="Prévia da imagem capturada"
+      class="preview-image"
+    />
+    <div class="controls">
+      <button class="send-btn" (click)="sendImage()" [disabled]="isUploading">
+        {{ isUploading ? "Enviando..." : "Enviar" }}
+      </button>
+      <button class="cancel-btn" (click)="retake()">Cancelar</button>
+    </div>
+    <div class="status" *ngIf="uploadStatus">{{ uploadStatus }}</div>
+  </div>
+</div>

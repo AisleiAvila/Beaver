@@ -115,13 +115,24 @@
               </mat-card-content>
             </mat-card>
 
-            <mat-card class="stat-card" [routerLink]="['/chat']">
+            <mat-card class="stat-card" [routerLink]="['/geolocalizacao']">
               <mat-card-content>
                 <div class="stat-icon">
                   <mat-icon>map</mat-icon>
                 </div>
                 <div class="stat-info">
                   <h3>{{ "TITLE_GEOLOCALIZACAO" | translate }}</h3>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="stat-card" [routerLink]="['/webcam-capture']">
+              <mat-card-content>
+                <div class="stat-icon">
+                  <mat-icon>camera_alt</mat-icon>
+                </div>
+                <div class="stat-info">
+                  <h3>{{ "TITLE_WEBCAM_CAPTURE" | translate }}</h3>
                 </div>
               </mat-card-content>
             </mat-card>

@@ -39,12 +39,15 @@ import {
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { BackLogComponent } from './backlog/backlog.component';
+import { AgendamentoComponent } from './component/agendamento/agendamento.component';
 import { BodyComponent } from './component/body/body.component';
 import { CadastroCategoriaComponent } from './component/categorias/cadastro-categoria/cadastro-categoria.component';
 import { CategoriasComponent } from './component/categorias/categorias.component';
 import { ChatComponent } from './component/chat/chat.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { GeolocalizacaoComponent } from './component/geolocalizacao/geolocalizacao.component';
 import { HeaderComponent } from './component/header/header.component';
 import { HomePageComponent } from './component/home-page/home-page.component';
 import { LembrarSenhaComponent } from './component/lembrar-senha/lembrar-senha.component';
@@ -56,13 +59,11 @@ import { PrivacyComponent } from './component/privacy/privacy.component';
 import { ProdutosComponent } from './component/produtos/produtos.component';
 import { TermsComponent } from './component/terms/terms.component';
 import { UsuariosComponent } from './component/usuarios/usuarios.component';
+import { WebcamCaptureComponent } from './component/webcam-capture/webcam-capture.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { GeolocalizacaoService } from './services/geolocalizacao.service';
 import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
 import { CustomPaginatorIntl } from './shared/service/custom-paginator-intl';
-import { GeolocalizacaoService } from './services/geolocalizacao.service';
-import { AppComponent } from './app.component';
-import { AgendamentoComponent } from './component/agendamento/agendamento.component';
-import { GeolocalizacaoComponent } from './component/geolocalizacao/geolocalizacao.component';
 
 /**
  * Factory para criar o loader de traduções
@@ -79,7 +80,6 @@ export function HttpLoaderFactory(http: HttpClient) {
  */
 @NgModule({
   // Não declarar componentes standalone
-  declarations: [],
 
   /**
    * Imports de módulos necessários para a aplicação:
@@ -137,6 +137,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSortModule,
     MatChipsModule,
     AgendamentoComponent,
+    WebcamCaptureComponent,
     GeolocalizacaoComponent,
     TranslateModule.forRoot({
       loader: {
