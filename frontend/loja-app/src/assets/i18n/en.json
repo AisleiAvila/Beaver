@@ -150,5 +150,7 @@
   "ERRO_EXCLUIR_AGENDAMENTO": "Error deleting appointment",
   "LABLE_ATENCAO": "Warning",
   "LABLE_ERRO": "Error",
-  "LABLE_SUCESSO": "Success"
+  "LABLE_SUCESSO": "Success",
+  "LABLE_TIRAR_FOTO": "Take Photo",
+  "LABLE_IMPORTAR_IMAGEM": "Import Image"
 }

@@ -115,6 +115,9 @@ export class CadastroUsuarioComponent implements OnInit {
   paisErro = '';
   estadoErro = '';
 
+  // Add these properties to your component class
+  profileImageUrl: string | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private usuariosService: UsuariosService,
@@ -133,10 +136,7 @@ export class CadastroUsuarioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    forkJoin([
-      this.getPerfis(),
-      this.getPaises(),
-    ]).subscribe(() => {
+    forkJoin([this.getPerfis(), this.getPaises()]).subscribe(() => {
       this.initializeComponent();
     });
   }
@@ -170,7 +170,7 @@ export class CadastroUsuarioComponent implements OnInit {
       },
       error: (erro) => {
         console.error('Erro ao buscar estados:', erro);
-      }
+      },
     });
   }
 
@@ -182,7 +182,7 @@ export class CadastroUsuarioComponent implements OnInit {
       },
       error: (erro) => {
         console.error('Erro ao buscar cidades:', erro);
-      }
+      },
     });
   }
 
@@ -196,7 +196,7 @@ export class CadastroUsuarioComponent implements OnInit {
     let isValid = true;
 
     if (!this.nome?.trim()) {
-        this.nomeErro = this.translate.instant('LABLE_NOME_OBRIGATORIO');
+      this.nomeErro = this.translate.instant('LABLE_NOME_OBRIGATORIO');
       isValid = false;
     }
 
@@ -261,13 +261,19 @@ export class CadastroUsuarioComponent implements OnInit {
       isValid = false;
     }
 
-    if (this.endereco.cidade_id.estado_id.pais_id.id == null || this.endereco.cidade_id.estado_id.pais_id.id == 0) {
-        this.paisErro = this.translate.instant('LABLE_PAIS_OBRIGATORIA');
+    if (
+      this.endereco.cidade_id.estado_id.pais_id.id == null ||
+      this.endereco.cidade_id.estado_id.pais_id.id == 0
+    ) {
+      this.paisErro = this.translate.instant('LABLE_PAIS_OBRIGATORIA');
       isValid = false;
     }
 
-    if (this.endereco.cidade_id.estado_id.id == null || this.endereco.cidade_id.estado_id.id  == 0) {
-        this.estadoErro = this.translate.instant('LABLE_ESTADO_OBRIGATORIA');
+    if (
+      this.endereco.cidade_id.estado_id.id == null ||
+      this.endereco.cidade_id.estado_id.id == 0
+    ) {
+      this.estadoErro = this.translate.instant('LABLE_ESTADO_OBRIGATORIA');
       isValid = false;
     }
 
@@ -278,9 +284,11 @@ export class CadastroUsuarioComponent implements OnInit {
 
     // Se houver campos inválidos, exibir snackbar com mensagem
     if (!isValid) {
-      this.translate.get('LABLE_CAMPOS_OBRIGATORIOS').subscribe((texto: string) => {
-        this.modalService.abrirModal(texto, 'Erro');
-      });
+      this.translate
+        .get('LABLE_CAMPOS_OBRIGATORIOS')
+        .subscribe((texto: string) => {
+          this.modalService.abrirModal(texto, 'Erro');
+        });
     }
 
     return isValid;
@@ -427,14 +435,10 @@ export class CadastroUsuarioComponent implements OnInit {
       this.cidadeId = this.endereco.cidade_id.id;
       this.estadoId = this.endereco.cidade_id.estado_id.id;
       this.paisId = this.endereco.cidade_id.estado_id.pais_id.id;
-      forkJoin([
-        this.getEstados(),
-        this.getCidades(),
-      ]).subscribe(() => {
+      forkJoin([this.getEstados(), this.getCidades()]).subscribe(() => {
         this.initializeComponent();
       });
     }
-
 
     this.validarCampos();
   }
@@ -501,9 +505,9 @@ export class CadastroUsuarioComponent implements OnInit {
               nome: this.nomeEstado,
               pais_id: {
                 id: this.endereco.cidade_id.estado_id.pais_id.id,
-                nome: this.nomePais
-              }
-            }
+                nome: this.nomePais,
+              },
+            },
           },
           cep: this.endereco.cep,
         },
@@ -511,5 +515,36 @@ export class CadastroUsuarioComponent implements OnInit {
     };
 
     return usuario;
+  }
+
+  // Add these methods to your component class
+  tirarFoto(): void {
+    // Implementação para acessar a câmera do dispositivo
+    // Isso geralmente envolve APIs nativas ou bibliotecas específicas
+    console.log('Abrir câmera para tirar foto');
+    // Após tirar a foto, você atualizaria profileImageUrl com a imagem capturada
+  }
+
+  importarImagem(): void {
+    // Criar um elemento de input de arquivo oculto e acioná-lo
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+
+    fileInput.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.profileImageUrl = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    document.body.appendChild(fileInput);
+    fileInput.click();
+    document.body.removeChild(fileInput);
   }
 }
