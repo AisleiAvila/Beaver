@@ -43,7 +43,7 @@ export class WebcamModalComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialogRef: MatDialogRef<WebcamModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: unknown
   ) {}
 
   async ngOnInit(): Promise<void> {
