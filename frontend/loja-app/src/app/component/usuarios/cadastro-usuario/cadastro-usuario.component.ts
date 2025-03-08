@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -30,6 +31,7 @@ import { UtilService } from 'src/app/shared/service/util.service';
 import { UsuariosService } from '../../../service/usuarios.service';
 import { CharCountService } from '../../../shared/service/char-count.service';
 import { Endereco } from './../../../model/endereco.model';
+import { WebcamModalComponent } from '../../../shared/components/webcam-modal/webcam-modal.component';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -47,6 +49,7 @@ import { Endereco } from './../../../model/endereco.model';
     MatIconModule,
     MatTooltipModule,
     MatNativeDateModule,
+    MatDialogModule, // Import the module, not the service
     TranslateModule,
   ],
 })
@@ -132,7 +135,8 @@ export class CadastroUsuarioComponent implements OnInit {
     private router: Router,
     private charCountService: CharCountService,
     private utilService: UtilService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -519,10 +523,17 @@ export class CadastroUsuarioComponent implements OnInit {
 
   // Add these methods to your component class
   tirarFoto(): void {
-    // Implementação para acessar a câmera do dispositivo
-    // Isso geralmente envolve APIs nativas ou bibliotecas específicas
-    console.log('Abrir câmera para tirar foto');
-    // Após tirar a foto, você atualizaria profileImageUrl com a imagem capturada
+    const dialogRef = this.dialog.open(WebcamModalComponent, {
+      width: '500px',
+      disableClose: true,
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.profileImageUrl = result;
+      }
+    });
   }
 
   importarImagem(): void {

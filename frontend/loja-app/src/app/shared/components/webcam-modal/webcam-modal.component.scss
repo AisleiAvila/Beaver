@@ -1,0 +1,80 @@
+.webcam-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+.camera-feed {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+
+  video {
+    width: 100%;
+    max-width: 400px;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+
+.camera-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-right: auto;
+}
+
+.preview-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.camera-error {
+  color: #f44336;
+  text-align: center;
+  padding: 16px;
+  background-color: rgba(244, 67, 54, 0.1);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.snapshot-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  h3 {
+    margin-bottom: 16px;
+  }
+
+  img {
+    max-width: 400px;
+    max-height: 400px;
+    width: 100%;
+    border-radius: 8px;
+    object-fit: contain;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+mat-dialog-actions {
+  border-top: 1px solid #e0e0e0;
+  margin-top: 16px;
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+
+  &.with-actions {
+    justify-content: space-between;
+  }
+}

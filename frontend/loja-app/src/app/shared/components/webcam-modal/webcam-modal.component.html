@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>{{ "LABLE_TIRAR_FOTO" | translate }}</h2>
+
+<div mat-dialog-content class="webcam-container">
+  <!-- Error message display -->
+  <div *ngIf="errorMessage" class="camera-error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Live camera view -->
+  <div *ngIf="!capturedImage && !errorMessage" class="camera-feed">
+    <video #videoElement autoplay playsinline></video>
+  </div>
+
+  <!-- Hidden canvas for image capture -->
+  <canvas #canvas style="display: none"></canvas>
+
+  <!-- Preview captured photo -->
+  <div *ngIf="capturedImage" class="snapshot-preview">
+    <h3>{{ "LABLE_PREVIEW" | translate }}</h3>
+    <img [src]="capturedImage" alt="Preview da foto capturada" />
+
+    <div class="preview-actions">
+      <button mat-raised-button color="primary" (click)="useImage()">
+        <mat-icon>check</mat-icon>
+        {{ "LABLE_USAR_FOTO" | translate }}
+      </button>
+      <button mat-button (click)="retakePhoto()">
+        <mat-icon>refresh</mat-icon>
+        {{ "LABLE_TIRAR_NOVAMENTE" | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  mat-dialog-actions
+  align="end"
+  [class.with-actions]="!capturedImage && !errorMessage"
+>
+  <!-- Camera controls - only shown when webcam is active -->
+  <div *ngIf="!capturedImage && !errorMessage" class="camera-actions">
+    <button mat-raised-button color="primary" (click)="captureImage()">
+      <mat-icon>camera</mat-icon>
+      {{ "LABLE_CAPTURAR" | translate }}
+    </button>
+
+    <button mat-button *ngIf="hasMultipleCameras" (click)="switchCamera()">
+      <mat-icon>switch_camera</mat-icon>
+      {{ "LABLE_TROCAR_CAMERA" | translate }}
+    </button>
+  </div>
+
+  <!-- Cancel button always visible -->
+  <button mat-button (click)="cancel()">
+    {{ "LABLE_CANCELAR" | translate }}
+  </button>
+</div>
