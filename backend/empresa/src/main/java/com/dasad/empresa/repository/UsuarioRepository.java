@@ -1,5 +1,6 @@
 package com.dasad.empresa.repository;
 
+import com.dasad.empresa.model.UsuarioFotoModel;
 import com.dasad.empresa.model.UsuarioModel;
 import com.dasad.empresa.model.UsuarioRequest;
 
@@ -15,4 +16,6 @@ public interface UsuarioRepository {
     UsuarioModel update(UsuarioModel usuario);
     void deleteById(Integer id);
     void updatePassword(Integer id, String password);
+    Optional<List<UsuarioFotoModel>> findFoto(Integer usuarioId, boolean isAtivo);
+    UsuarioFotoModel createFoto(UsuarioFotoModel usuarioFotoModel);
 }

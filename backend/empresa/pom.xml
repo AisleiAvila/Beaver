@@ -310,7 +310,8 @@
                                 desconto |
                                 precos_regionais |
                                 regioes |
-                                subcategorias
+                                subcategorias |
+                                usuario_foto
                             </includes>
                             <inputSchema>public</inputSchema>
                             <outputSchema>public</outputSchema>

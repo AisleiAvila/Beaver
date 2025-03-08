@@ -389,6 +389,92 @@ paths:
       responses:
         '204':
           description: No Content
+  /usuario/foto/{usuario_id}/{ativo}:
+    get:
+      summary: Busca a foto de perfil do usuário
+      security:
+        - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: getFotoUsuario
+      parameters:
+        - name: usuario_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description:  Id do usuário
+        - name: ativo
+          in: path
+          required: true
+          schema:
+              type: boolean
+          description: Indica se a foto está ativa
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UsuarioFotoModel'
+  /usuario/foto:
+    put:
+      summary: Insere foto do usuário
+      security:
+        - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: createFotoUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioFotoModel'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioFotoModel'
+    patch:
+      summary: Atualiza foto do usuário
+      security:
+        - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: updateFotoUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioFotoModel'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioFotoModel'
+    delete:
+      summary: Deleta foto do usuário
+      security:
+        - bearerAuth: []
+      tags:
+        - Usuario
+      operationId: deleteFotoUsuario
+      parameters:
+        - name: usuario_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description:  Id do usuário
+      responses:
+        '204':
+          description: No Content
   /endereco:
     post:
       summary: Cria um novo endereço
@@ -1139,6 +1225,24 @@ components:
             type: array
             items:
                 $ref: '#/components/schemas/PerfilModel'
+    UsuarioFotoModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        usuario_id:
+          type: integer
+        foto:
+          type: string
+          format: byte
+        ativo:
+          type: boolean
+        data_criacao:
+          type: string
+          format: date
+        data_atualizacao:
+          type: string
+          format: date
     enderecoModel:
       type: object
       properties:

@@ -1,5 +1,6 @@
 package com.dasad.empresa.service;
 
+import com.dasad.empresa.model.UsuarioFotoModel;
 import com.dasad.empresa.model.UsuarioModel;
 import com.dasad.empresa.model.UsuarioRequest;
 import com.dasad.empresa.repository.EnderecoRepository;
@@ -28,6 +29,17 @@ public class UsuarioService {
     public Optional<List<UsuarioModel>> find(UsuarioRequest usuarioRequest) {
         return this.usuarioRepository.find(usuarioRequest);
     }
+
+    public  Optional<List<UsuarioFotoModel>> findFoto(Integer usuarioId, Boolean ativo) {
+        if (usuarioId != null) {
+            var isAtivo = ativo != null ? ativo : true;
+            return this.usuarioRepository.findFoto(usuarioId, isAtivo);
+        }
+
+        return Optional.empty();
+
+    }
+
 
     public Optional<Integer> countTotalRecords(UsuarioRequest usuarioRequest) {
         return this.usuarioRepository.countTotalRecords(usuarioRequest);
@@ -61,4 +73,7 @@ public class UsuarioService {
         this.usuarioRepository.updatePassword(id, password);
     }
 
+    public UsuarioFotoModel createFoto(UsuarioFotoModel usuarioFotoModel) {
+        return this.usuarioRepository.createFoto(usuarioFotoModel);
+    }
 }

@@ -7,6 +7,7 @@ package com.dasad.empresa.jooq;
 import com.dasad.empresa.jooq.tables.Categorias;
 import com.dasad.empresa.jooq.tables.PrecosRegionais;
 import com.dasad.empresa.jooq.tables.Subcategorias;
+import com.dasad.empresa.jooq.tables.UsuarioFoto;
 
 import org.jooq.Index;
 import org.jooq.OrderField;
@@ -29,4 +30,5 @@ public class Indexes {
     public static final Index IDX_PRECOS_SUBCATEGORIA = Internal.createIndex(DSL.name("idx_precos_subcategoria"), PrecosRegionais.PRECOS_REGIONAIS, new OrderField[] { PrecosRegionais.PRECOS_REGIONAIS.SUBCATEGORIA_ID }, false);
     public static final Index IDX_SUBCATEGORIAS_CATEGORIA = Internal.createIndex(DSL.name("idx_subcategorias_categoria"), Subcategorias.SUBCATEGORIAS, new OrderField[] { Subcategorias.SUBCATEGORIAS.CATEGORIA_ID }, false);
     public static final Index IDX_SUBCATEGORIAS_STATUS = Internal.createIndex(DSL.name("idx_subcategorias_status"), Subcategorias.SUBCATEGORIAS, new OrderField[] { Subcategorias.SUBCATEGORIAS.STATUS }, false);
+    public static final Index IDX_USUARIO_FOTO_USER_ID = Internal.createIndex(DSL.name("idx_usuario_foto_user_id"), UsuarioFoto.USUARIO_FOTO, new OrderField[] { UsuarioFoto.USUARIO_FOTO.USUARIO_ID, UsuarioFoto.USUARIO_FOTO.ATIVO, UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO, UsuarioFoto.USUARIO_FOTO.DATA_ATUALIZACAO }, false);
 }

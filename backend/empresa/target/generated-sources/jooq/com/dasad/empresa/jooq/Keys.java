@@ -26,6 +26,7 @@ import com.dasad.empresa.jooq.tables.ProdutoFornecedor;
 import com.dasad.empresa.jooq.tables.Regioes;
 import com.dasad.empresa.jooq.tables.Subcategorias;
 import com.dasad.empresa.jooq.tables.Usuario;
+import com.dasad.empresa.jooq.tables.UsuarioFoto;
 import com.dasad.empresa.jooq.tables.UsuarioPerfil;
 import com.dasad.empresa.jooq.tables.UsuarioRecuperarSenha;
 import com.dasad.empresa.jooq.tables.records.CategoriaEquipamentosRecord;
@@ -49,6 +50,7 @@ import com.dasad.empresa.jooq.tables.records.ProdutoFornecedorRecord;
 import com.dasad.empresa.jooq.tables.records.ProdutoRecord;
 import com.dasad.empresa.jooq.tables.records.RegioesRecord;
 import com.dasad.empresa.jooq.tables.records.SubcategoriasRecord;
+import com.dasad.empresa.jooq.tables.records.UsuarioFotoRecord;
 import com.dasad.empresa.jooq.tables.records.UsuarioPerfilRecord;
 import com.dasad.empresa.jooq.tables.records.UsuarioRecord;
 import com.dasad.empresa.jooq.tables.records.UsuarioRecuperarSenhaRecord;
@@ -100,6 +102,7 @@ public class Keys {
     public static final UniqueKey<SubcategoriasRecord> SUBCATEGORIAS_PKEY = Internal.createUniqueKey(Subcategorias.SUBCATEGORIAS, DSL.name("subcategorias_pkey"), new TableField[] { Subcategorias.SUBCATEGORIAS.ID }, true);
     public static final UniqueKey<SubcategoriasRecord> UK_SUBCATEGORIA_NOME_CATEGORIA = Internal.createUniqueKey(Subcategorias.SUBCATEGORIAS, DSL.name("uk_subcategoria_nome_categoria"), new TableField[] { Subcategorias.SUBCATEGORIAS.CATEGORIA_ID, Subcategorias.SUBCATEGORIAS.NOME }, true);
     public static final UniqueKey<UsuarioRecord> USUARIO_PKEY = Internal.createUniqueKey(Usuario.USUARIO, DSL.name("usuario_pkey"), new TableField[] { Usuario.USUARIO.ID }, true);
+    public static final UniqueKey<UsuarioFotoRecord> USUARIO_FOTO_PKEY = Internal.createUniqueKey(UsuarioFoto.USUARIO_FOTO, DSL.name("usuario_foto_pkey"), new TableField[] { UsuarioFoto.USUARIO_FOTO.ID }, true);
     public static final UniqueKey<UsuarioPerfilRecord> USUARIOS_PERFIS_PKEY = Internal.createUniqueKey(UsuarioPerfil.USUARIO_PERFIL, DSL.name("usuarios_perfis_pkey"), new TableField[] { UsuarioPerfil.USUARIO_PERFIL.USUARIO_ID, UsuarioPerfil.USUARIO_PERFIL.PERFIL_ID }, true);
 
     // -------------------------------------------------------------------------
@@ -123,6 +126,7 @@ public class Keys {
     public static final ForeignKey<ProdutoFornecedorRecord, FornecedorRecord> PRODUTO_FORNECEDOR__PRODUTO_FORNECEDOR_FORNECEDOR_ID_FKEY = Internal.createForeignKey(ProdutoFornecedor.PRODUTO_FORNECEDOR, DSL.name("produto_fornecedor_fornecedor_id_fkey"), new TableField[] { ProdutoFornecedor.PRODUTO_FORNECEDOR.FORNECEDOR_ID }, Keys.FORNECEDOR_PKEY, new TableField[] { Fornecedor.FORNECEDOR.ID }, true);
     public static final ForeignKey<ProdutoFornecedorRecord, ProdutoRecord> PRODUTO_FORNECEDOR__PRODUTO_FORNECEDOR_PRODUTO_ID_FKEY = Internal.createForeignKey(ProdutoFornecedor.PRODUTO_FORNECEDOR, DSL.name("produto_fornecedor_produto_id_fkey"), new TableField[] { ProdutoFornecedor.PRODUTO_FORNECEDOR.PRODUTO_ID }, Keys.PRODUTO_PKEY, new TableField[] { Produto.PRODUTO.ID }, true);
     public static final ForeignKey<SubcategoriasRecord, CategoriasRecord> SUBCATEGORIAS__SUBCATEGORIAS_CATEGORIA_ID_FKEY = Internal.createForeignKey(Subcategorias.SUBCATEGORIAS, DSL.name("subcategorias_categoria_id_fkey"), new TableField[] { Subcategorias.SUBCATEGORIAS.CATEGORIA_ID }, Keys.CATEGORIAS_PKEY, new TableField[] { Categorias.CATEGORIAS.ID }, true);
+    public static final ForeignKey<UsuarioFotoRecord, UsuarioRecord> USUARIO_FOTO__USUARIO_FOTO_USUARIO_ID_FKEY = Internal.createForeignKey(UsuarioFoto.USUARIO_FOTO, DSL.name("usuario_foto_usuario_id_fkey"), new TableField[] { UsuarioFoto.USUARIO_FOTO.USUARIO_ID }, Keys.USUARIO_PKEY, new TableField[] { Usuario.USUARIO.ID }, true);
     public static final ForeignKey<UsuarioPerfilRecord, PerfilRecord> USUARIO_PERFIL__USUARIOS_PERFIS_PERFIL_ID_FKEY = Internal.createForeignKey(UsuarioPerfil.USUARIO_PERFIL, DSL.name("usuarios_perfis_perfil_id_fkey"), new TableField[] { UsuarioPerfil.USUARIO_PERFIL.PERFIL_ID }, Keys.PERFIS_PKEY, new TableField[] { Perfil.PERFIL.ID }, true);
     public static final ForeignKey<UsuarioPerfilRecord, UsuarioRecord> USUARIO_PERFIL__USUARIOS_PERFIS_USUARIO_ID_FKEY = Internal.createForeignKey(UsuarioPerfil.USUARIO_PERFIL, DSL.name("usuarios_perfis_usuario_id_fkey"), new TableField[] { UsuarioPerfil.USUARIO_PERFIL.USUARIO_ID }, Keys.USUARIO_PKEY, new TableField[] { Usuario.USUARIO.ID }, true);
     public static final ForeignKey<UsuarioRecuperarSenhaRecord, UsuarioRecord> USUARIO_RECUPERAR_SENHA__USUARIO_ID_FKEY = Internal.createForeignKey(UsuarioRecuperarSenha.USUARIO_RECUPERAR_SENHA, DSL.name("usuario_id_fkey"), new TableField[] { UsuarioRecuperarSenha.USUARIO_RECUPERAR_SENHA.USUARIO_ID }, Keys.USUARIO_PKEY, new TableField[] { Usuario.USUARIO.ID }, true);

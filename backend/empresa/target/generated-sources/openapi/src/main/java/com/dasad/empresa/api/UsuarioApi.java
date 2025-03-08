@@ -6,6 +6,7 @@
 package com.dasad.empresa.api;
 
 import com.dasad.empresa.model.RegisterRequestDTO;
+import com.dasad.empresa.model.UsuarioFotoModel;
 import com.dasad.empresa.model.UsuarioModel;
 import com.dasad.empresa.model.UsuarioRequest;
 import com.dasad.empresa.model.UsuarioResponseDTO;
@@ -35,10 +36,41 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-04T11:23:49.816778100Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-08T13:58:07.417772700Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Usuario", description = "Operações relacionadas a usuários")
 public interface UsuarioApi {
+
+    /**
+     * PUT /usuario/foto : Insere foto do usuário
+     *
+     * @param usuarioFotoModel  (optional)
+     * @return Sucesso (status code 200)
+     */
+    @Operation(
+        operationId = "createFotoUsuario",
+        summary = "Insere foto do usuário",
+        tags = { "Usuario" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Sucesso", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioFotoModel.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/usuario/foto",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<UsuarioFotoModel> createFotoUsuario(
+        @Parameter(name = "UsuarioFotoModel", description = "") @Valid @RequestBody(required = false) UsuarioFotoModel usuarioFotoModel
+    );
+
 
     /**
      * PUT /usuario/create : Cria um usuário
@@ -68,6 +100,33 @@ public interface UsuarioApi {
     
     ResponseEntity<UsuarioModel> createUsuario(
         @Parameter(name = "RegisterRequestDTO", description = "") @Valid @RequestBody(required = false) RegisterRequestDTO registerRequestDTO
+    );
+
+
+    /**
+     * DELETE /usuario/foto : Deleta foto do usuário
+     *
+     * @param usuarioId Id do usuário (required)
+     * @return No Content (status code 204)
+     */
+    @Operation(
+        operationId = "deleteFotoUsuario",
+        summary = "Deleta foto do usuário",
+        tags = { "Usuario" },
+        responses = {
+            @ApiResponse(responseCode = "204", description = "No Content")
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.DELETE,
+        value = "/usuario/foto"
+    )
+    
+    ResponseEntity<Void> deleteFotoUsuario(
+        @Parameter(name = "usuario_id", description = "Id do usuário", required = true, in = ParameterIn.PATH) @PathVariable("usuario_id") Integer usuarioId
     );
 
 
@@ -156,6 +215,69 @@ public interface UsuarioApi {
     
     ResponseEntity<UsuarioResponseDTO> findUsuario(
         @Parameter(name = "UsuarioRequest", description = "") @Valid @RequestBody(required = false) UsuarioRequest usuarioRequest
+    );
+
+
+    /**
+     * GET /usuario/foto/{usuario_id}/{ativo} : Busca a foto de perfil do usuário
+     *
+     * @param usuarioId Id do usuário (required)
+     * @param ativo Indica se a foto está ativa (required)
+     * @return Sucesso (status code 200)
+     */
+    @Operation(
+        operationId = "getFotoUsuario",
+        summary = "Busca foto do usuário",
+        tags = { "Usuario" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Sucesso", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UsuarioFotoModel.class)))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/usuario/foto/{usuario_id}/{ativo}",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<List<UsuarioFotoModel>> getFotoUsuario(
+        @Parameter(name = "usuario_id", description = "Id do usuário", required = true, in = ParameterIn.PATH) @PathVariable("usuario_id") Integer usuarioId,
+        @Parameter(name = "ativo", description = "Indica se a foto está ativa", required = true, in = ParameterIn.PATH) @PathVariable("ativo") Boolean ativo
+    );
+
+
+    /**
+     * PATCH /usuario/foto : Atualiza foto do usuário
+     *
+     * @param usuarioFotoModel  (optional)
+     * @return Sucesso (status code 200)
+     */
+    @Operation(
+        operationId = "updateFotoUsuario",
+        summary = "Atualiza foto do usuário",
+        tags = { "Usuario" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Sucesso", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioFotoModel.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PATCH,
+        value = "/usuario/foto",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<UsuarioFotoModel> updateFotoUsuario(
+        @Parameter(name = "UsuarioFotoModel", description = "") @Valid @RequestBody(required = false) UsuarioFotoModel usuarioFotoModel
     );
 
 

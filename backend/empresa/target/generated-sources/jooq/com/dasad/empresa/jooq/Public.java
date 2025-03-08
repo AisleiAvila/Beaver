@@ -26,6 +26,7 @@ import com.dasad.empresa.jooq.tables.ProdutoFornecedor;
 import com.dasad.empresa.jooq.tables.Regioes;
 import com.dasad.empresa.jooq.tables.Subcategorias;
 import com.dasad.empresa.jooq.tables.Usuario;
+import com.dasad.empresa.jooq.tables.UsuarioFoto;
 import com.dasad.empresa.jooq.tables.UsuarioPerfil;
 import com.dasad.empresa.jooq.tables.UsuarioRecuperarSenha;
 
@@ -161,6 +162,11 @@ public class Public extends SchemaImpl {
     public final Usuario USUARIO = Usuario.USUARIO;
 
     /**
+     * The table <code>public.usuario_foto</code>.
+     */
+    public final UsuarioFoto USUARIO_FOTO = UsuarioFoto.USUARIO_FOTO;
+
+    /**
      * The table <code>public.usuario_perfil</code>.
      */
     public final UsuarioPerfil USUARIO_PERFIL = UsuarioPerfil.USUARIO_PERFIL;
@@ -208,6 +214,7 @@ public class Public extends SchemaImpl {
             Regioes.REGIOES,
             Subcategorias.SUBCATEGORIAS,
             Usuario.USUARIO,
+            UsuarioFoto.USUARIO_FOTO,
             UsuarioPerfil.USUARIO_PERFIL,
             UsuarioRecuperarSenha.USUARIO_RECUPERAR_SENHA
         );

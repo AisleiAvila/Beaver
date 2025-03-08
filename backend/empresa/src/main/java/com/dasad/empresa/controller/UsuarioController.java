@@ -2,6 +2,7 @@ package com.dasad.empresa.controller;
 
 import com.dasad.empresa.api.UsuarioApi;
 import com.dasad.empresa.model.RegisterRequestDTO;
+import com.dasad.empresa.model.UsuarioFotoModel;
 import com.dasad.empresa.model.UsuarioModel;
 import com.dasad.empresa.model.UsuarioRequest;
 import com.dasad.empresa.model.UsuarioResponseDTO;
@@ -49,6 +50,13 @@ public class UsuarioController implements UsuarioApi{
     }
 
     @Override
+    @PostMapping("/foto")
+    @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
+    public ResponseEntity<UsuarioFotoModel> createFotoUsuario(UsuarioFotoModel usuarioFotoModel) {
+        return ResponseEntity.ok(this.usuarioService.createFoto(usuarioFotoModel));
+    }
+
+    @Override
     @GetMapping("/detail/{id}")
     @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
     public ResponseEntity<UsuarioResponseDTO> detailUsuario(@PathVariable Integer id) {
@@ -70,6 +78,13 @@ public class UsuarioController implements UsuarioApi{
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Override
+    @DeleteMapping("/foto/{usuarioId}")
+    @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
+    public ResponseEntity<Void> deleteFotoUsuario(Integer usuarioId) {
+        return null;
     }
 
     @Override
@@ -99,4 +114,25 @@ public class UsuarioController implements UsuarioApi{
         var usuario = this.usuarioService.update(usuarioModel);
         return ResponseEntity.ok(usuario);
     }
+
+    @Override
+    @GetMapping("/foto")
+    @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
+    public ResponseEntity<List<UsuarioFotoModel>> getFotoUsuario(Integer usuarioId, Boolean ativo) {
+        try {
+            Optional<List<UsuarioFotoModel>> fotos = this.usuarioService.findFoto(usuarioId, ativo);
+            return ResponseEntity.ok(fotos.orElse(Collections.emptyList()));
+        } catch (Exception e) {
+            throw new RuntimeException("Erro interno do servidor", e);
+        }
+
+    }
+
+    @Override
+    @PatchMapping("/foto")
+    @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
+    public ResponseEntity<UsuarioFotoModel> updateFotoUsuario(UsuarioFotoModel usuarioFotoModel) {
+        return null;
+    }
+
 }

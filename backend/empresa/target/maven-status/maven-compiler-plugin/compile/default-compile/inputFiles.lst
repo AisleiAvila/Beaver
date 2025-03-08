@@ -1,4 +1,5 @@
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\config\JacksonConfig.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\config\OpenAPIConfig.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\config\RestTemplateConfig.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\AuthController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\ChatController.java
@@ -37,6 +38,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\PerfilRepositoryImpl.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\OrganizacaoQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\ProdutoQueryBuilder.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\UsuarioFotoQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\UsuarioQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SenhaRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SenhaRepositoryImpl.java
@@ -101,12 +103,14 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\ProdutoRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\RegioesRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\SubcategoriasRecord.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioFotoRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioPerfilRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioRecuperarSenhaRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Regioes.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Subcategorias.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Usuario.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioFoto.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioPerfil.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioRecuperarSenha.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\AuthApi.java
@@ -154,6 +158,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenha404Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenhaRequest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\Updateendereco404Response.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\UsuarioFotoModel.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\UsuarioModel.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\UsuarioRequest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\UsuarioResponseDTO.java
