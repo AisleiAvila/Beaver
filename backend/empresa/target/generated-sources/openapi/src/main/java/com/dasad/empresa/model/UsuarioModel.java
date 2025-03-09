@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.dasad.empresa.model.EnderecoModel;
 import com.dasad.empresa.model.PerfilModel;
+import com.dasad.empresa.model.UsuarioFotoModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ import jakarta.annotation.Generated;
  * UsuarioModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-08T13:58:07.417772700Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-09T16:14:09.616796500Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 public class UsuarioModel {
 
   private Integer id;
@@ -44,6 +45,8 @@ public class UsuarioModel {
 
   @Valid
   private List<@Valid PerfilModel> perfis = new ArrayList<>();
+
+  private UsuarioFotoModel foto;
 
   public UsuarioModel id(Integer id) {
     this.id = id;
@@ -201,6 +204,26 @@ public class UsuarioModel {
     this.perfis = perfis;
   }
 
+  public UsuarioModel foto(UsuarioFotoModel foto) {
+    this.foto = foto;
+    return this;
+  }
+
+  /**
+   * Get foto
+   * @return foto
+   */
+  @Valid 
+  @Schema(name = "foto", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("foto")
+  public UsuarioFotoModel getFoto() {
+    return foto;
+  }
+
+  public void setFoto(UsuarioFotoModel foto) {
+    this.foto = foto;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -216,12 +239,13 @@ public class UsuarioModel {
         Objects.equals(this.email, usuarioModel.email) &&
         Objects.equals(this.dataNascimento, usuarioModel.dataNascimento) &&
         Objects.equals(this.enderecos, usuarioModel.enderecos) &&
-        Objects.equals(this.perfis, usuarioModel.perfis);
+        Objects.equals(this.perfis, usuarioModel.perfis) &&
+        Objects.equals(this.foto, usuarioModel.foto);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nome, senha, email, dataNascimento, enderecos, perfis);
+    return Objects.hash(id, nome, senha, email, dataNascimento, enderecos, perfis, foto);
   }
 
   @Override
@@ -235,6 +259,7 @@ public class UsuarioModel {
     sb.append("    dataNascimento: ").append(toIndentedString(dataNascimento)).append("\n");
     sb.append("    enderecos: ").append(toIndentedString(enderecos)).append("\n");
     sb.append("    perfis: ").append(toIndentedString(perfis)).append("\n");
+    sb.append("    foto: ").append(toIndentedString(foto)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1225,6 +1225,8 @@ components:
             type: array
             items:
                 $ref: '#/components/schemas/PerfilModel'
+        foto:
+          $ref: '#/components/schemas/UsuarioFotoModel'
     UsuarioFotoModel:
       type: object
       properties:
@@ -1239,10 +1241,10 @@ components:
           type: boolean
         data_criacao:
           type: string
-          format: date
+          format: date-time
         data_atualizacao:
           type: string
-          format: date
+          format: date-time
     enderecoModel:
       type: object
       properties:

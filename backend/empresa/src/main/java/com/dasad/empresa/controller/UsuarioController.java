@@ -132,7 +132,8 @@ public class UsuarioController implements UsuarioApi{
     @PatchMapping("/foto")
     @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
     public ResponseEntity<UsuarioFotoModel> updateFotoUsuario(UsuarioFotoModel usuarioFotoModel) {
-        return null;
+        var usuarioFoto = this.usuarioService.updateFoto(usuarioFotoModel);
+        return ResponseEntity.ok(usuarioFoto);
     }
 
 }

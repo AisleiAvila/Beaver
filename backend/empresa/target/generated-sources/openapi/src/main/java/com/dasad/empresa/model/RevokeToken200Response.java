@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("revokeToken_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-08T13:58:07.417772700Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-09T16:14:09.616796500Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 public class RevokeToken200Response {
 
   private String message;

@@ -9,6 +9,7 @@ import org.jooq.SelectConditionStep;
 import org.jooq.impl.DSL;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -72,8 +73,8 @@ public class UsuarioFotoQueryBuilder {
                         usuarioFoto.setId(record.get(UsuarioFoto.USUARIO_FOTO.ID));
                         usuarioFoto.setUsuarioId(record.get(UsuarioFoto.USUARIO_FOTO.USUARIO_ID));
                         usuarioFoto.setFoto(record.get(UsuarioFoto.USUARIO_FOTO.FOTO));
-                        usuarioFoto.setDataCriacao(record.get(UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO).toLocalDate());
-                        usuarioFoto.setDataAtualizacao(record.get(UsuarioFoto.USUARIO_FOTO.DATA_ATUALIZACAO).toLocalDate());
+                        usuarioFoto.setDataCriacao(OffsetDateTime.from(record.get(UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO).toLocalDate()));
+                        usuarioFoto.setDataAtualizacao(OffsetDateTime.from(record.get(UsuarioFoto.USUARIO_FOTO.DATA_ATUALIZACAO).toLocalDate()));
                         usuarioFoto.setAtivo(record.get(UsuarioFoto.USUARIO_FOTO.ATIVO));
                         return usuarioFoto;
                     })

@@ -76,4 +76,8 @@ public class UsuarioService {
     public UsuarioFotoModel createFoto(UsuarioFotoModel usuarioFotoModel) {
         return this.usuarioRepository.createFoto(usuarioFotoModel);
     }
+
+    public UsuarioFotoModel updateFoto(UsuarioFotoModel usuarioFotoModel) {
+        return this.usuarioRepository.updateFoto(usuarioFotoModel);
+    }
 }

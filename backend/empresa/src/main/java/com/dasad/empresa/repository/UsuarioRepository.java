@@ -18,4 +18,5 @@ public interface UsuarioRepository {
     void updatePassword(Integer id, String password);
     Optional<List<UsuarioFotoModel>> findFoto(Integer usuarioId, boolean isAtivo);
     UsuarioFotoModel createFoto(UsuarioFotoModel usuarioFotoModel);
+    UsuarioFotoModel updateFoto(UsuarioFotoModel usuarioFotoModel);
 }

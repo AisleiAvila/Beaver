@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-08T13:58:07.417772700Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-09T16:14:09.616796500Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Usuario", description = "Operações relacionadas a usuários")
 public interface UsuarioApi {
@@ -227,7 +227,7 @@ public interface UsuarioApi {
      */
     @Operation(
         operationId = "getFotoUsuario",
-        summary = "Busca foto do usuário",
+        summary = "Busca a foto de perfil do usuário",
         tags = { "Usuario" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Sucesso", content = {

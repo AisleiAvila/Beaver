@@ -25,6 +25,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -95,7 +97,13 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         Estado.ESTADO.ID.as("estado_id"),
                         Estado.ESTADO.NOME.as("estado_nome"),
                         Pais.PAIS.ID.as("pais_id"),
-                        Pais.PAIS.NOME.as("pais_nome")
+                        Pais.PAIS.NOME.as("pais_nome"),
+                        USUARIO_FOTO.ID.as("foto_id"),
+                        USUARIO_FOTO.USUARIO_ID.as("usuario_id"),
+                        USUARIO_FOTO.FOTO,
+                        USUARIO_FOTO.ATIVO,
+                        USUARIO_FOTO.DATA_CRIACAO,
+                        USUARIO_FOTO.DATA_ATUALIZACAO
                 )
                 .from(Usuario.USUARIO)
                 .leftJoin(UsuarioPerfil.USUARIO_PERFIL)
@@ -106,7 +114,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .leftJoin(Cidade.CIDADE).on(ENDERECO.CIDADE_ID.eq(Cidade.CIDADE.ID))
                 .leftJoin(Estado.ESTADO).on(Cidade.CIDADE.ESTADO_ID.eq(Estado.ESTADO.ID))
                 .leftJoin(Pais.PAIS).on(Estado.ESTADO.PAIS_ID.eq(Pais.PAIS.ID))
+                .leftJoin(USUARIO_FOTO).on(USUARIO_FOTO.USUARIO_ID.eq(Usuario.USUARIO.ID))
                 .where(Usuario.USUARIO.ID.eq(id))
+                .and(USUARIO_FOTO.ATIVO.isTrue())
                 .fetchOptional()
                 .map(record -> {
                     UsuarioModel usuario = new UsuarioModel();
@@ -147,6 +157,21 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         usuario.setEnderecos(new ArrayList<>(Collections.singleton(endereco)));
                     } else {
                         usuario.setEnderecos(new ArrayList<>(Collections.emptySet()));
+                    }
+
+                    if (record.get("foto_id") != null) {
+                        var foto = new UsuarioFotoModel();
+                        foto.setId(record.get("foto_id", Integer.class));
+                        foto.setUsuarioId(record.get("usuario_id", Integer.class));
+                        foto.setFoto(record.get(USUARIO_FOTO.FOTO));
+                        foto.setAtivo(record.get(USUARIO_FOTO.ATIVO));
+                        foto.setDataCriacao(record.get(USUARIO_FOTO.DATA_CRIACAO).atOffset(ZoneOffset.UTC));
+                        if (record.get(USUARIO_FOTO.DATA_ATUALIZACAO) != null) {
+                            foto.setDataAtualizacao(record.get(USUARIO_FOTO.DATA_ATUALIZACAO).atOffset(ZoneOffset.UTC));
+                        } else {
+                            foto.setDataAtualizacao(null);
+                        }
+                        usuario.setFoto(foto);
                     }
                     return usuario;
                 });
@@ -298,15 +323,68 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         usuarioFoto.setId(record.get(USUARIO_FOTO.ID));
                         usuarioFoto.setUsuarioId(record.get(USUARIO_FOTO.USUARIO_ID));
                         usuarioFoto.setFoto(record.get(USUARIO_FOTO.FOTO));
-                        usuarioFoto.setDataCriacao(record.get(USUARIO_FOTO.DATA_CRIACAO).toLocalDate());
-                        usuarioFoto.setDataAtualizacao(record.get(USUARIO_FOTO.DATA_ATUALIZACAO) != null ?
-                                record.get(USUARIO_FOTO.DATA_ATUALIZACAO).toLocalDate() : null);
+                        usuarioFoto.setDataCriacao(record.get(USUARIO_FOTO.DATA_CRIACAO).atOffset(ZoneOffset.UTC));
+                        if (record.get(USUARIO_FOTO.DATA_ATUALIZACAO) != null) {
+                            usuarioFoto.setDataAtualizacao(record.get(USUARIO_FOTO.DATA_ATUALIZACAO).atOffset(ZoneOffset.UTC));
+                        } else {
+                            usuarioFoto.setDataAtualizacao(null);
+                        }
                         usuarioFoto.setAtivo(record.get(USUARIO_FOTO.ATIVO));
                         return usuarioFoto;
                     })
                     .orElseThrow(() -> new RuntimeException("Erro ao cadastrar foto do usuário"));
         });
     }
+
+    @Override
+    public UsuarioFotoModel updateFoto(UsuarioFotoModel usuarioFotoModel) {
+        if (usuarioFotoModel.getUsuarioId() == null) {
+            throw new IllegalArgumentException("Usuário não informado");
+        }
+
+        if (usuarioFotoModel.getId() == null) {
+            throw new IllegalArgumentException("Foto não informada");
+        }
+
+        if (usuarioFotoModel.getFoto() == null) {
+            throw new IllegalArgumentException("Foto não informada");
+        }
+
+        return dsl.transactionResult(configuration -> {
+            DSLContext ctx = DSL.using(configuration);
+            ctx.update(USUARIO_FOTO)
+                    .set(USUARIO_FOTO.FOTO, usuarioFotoModel.getFoto())
+                    .set(USUARIO_FOTO.DATA_ATUALIZACAO, LocalDateTime.now())
+                    .set(USUARIO_FOTO.ATIVO, usuarioFotoModel.getAtivo())
+                    .where(USUARIO_FOTO.ID.eq(usuarioFotoModel.getId()))
+                    .execute();
+
+            return ctx.select(USUARIO_FOTO.ID,
+                            USUARIO_FOTO.USUARIO_ID,
+                            USUARIO_FOTO.FOTO,
+                            USUARIO_FOTO.DATA_CRIACAO,
+                            USUARIO_FOTO.DATA_ATUALIZACAO,
+                            USUARIO_FOTO.ATIVO)
+                    .from(USUARIO_FOTO)
+                    .where(USUARIO_FOTO.USUARIO_ID.eq(usuarioFotoModel.getUsuarioId()))
+                    .orderBy(USUARIO_FOTO.DATA_CRIACAO.desc())
+                    .limit(1)
+                    .fetchOptional()
+                    .map(record -> {
+                        UsuarioFotoModel usuarioFoto = new UsuarioFotoModel();
+                        usuarioFoto.setId(record.get(USUARIO_FOTO.ID));
+                        usuarioFoto.setUsuarioId(record.get(USUARIO_FOTO.USUARIO_ID));
+                        usuarioFoto.setFoto(record.get(USUARIO_FOTO.FOTO));
+                        usuarioFoto.setDataCriacao(OffsetDateTime.from(record.get(USUARIO_FOTO.DATA_CRIACAO).toLocalDate()));
+                        usuarioFoto.setDataAtualizacao(record.get(USUARIO_FOTO.DATA_ATUALIZACAO) != null ?
+                                OffsetDateTime.from(record.get(USUARIO_FOTO.DATA_ATUALIZACAO).toLocalDate()) : null);
+                        usuarioFoto.setAtivo(record.get(USUARIO_FOTO.ATIVO));
+                        return usuarioFoto;
+                    })
+                    .orElseThrow(() -> new RuntimeException("Erro ao cadastrar foto do usuário"));
+        });
+    }
+
 
     private boolean isEmailExists(UsuarioModel usuario) {
         return dsl.fetchExists(

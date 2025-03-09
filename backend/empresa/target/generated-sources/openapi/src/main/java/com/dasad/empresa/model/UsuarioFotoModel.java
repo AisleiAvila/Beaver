@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * UsuarioFotoModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-08T13:58:07.417772700Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-09T16:14:09.616796500Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 public class UsuarioFotoModel {
 
   private Integer id;
@@ -32,11 +32,11 @@ public class UsuarioFotoModel {
 
   private Boolean ativo;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDate dataCriacao;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime dataCriacao;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDate dataAtualizacao;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime dataAtualizacao;
 
   public UsuarioFotoModel id(Integer id) {
     this.id = id;
@@ -118,7 +118,7 @@ public class UsuarioFotoModel {
     this.ativo = ativo;
   }
 
-  public UsuarioFotoModel dataCriacao(LocalDate dataCriacao) {
+  public UsuarioFotoModel dataCriacao(OffsetDateTime dataCriacao) {
     this.dataCriacao = dataCriacao;
     return this;
   }
@@ -130,15 +130,15 @@ public class UsuarioFotoModel {
   @Valid 
   @Schema(name = "data_criacao", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("data_criacao")
-  public LocalDate getDataCriacao() {
+  public OffsetDateTime getDataCriacao() {
     return dataCriacao;
   }
 
-  public void setDataCriacao(LocalDate dataCriacao) {
+  public void setDataCriacao(OffsetDateTime dataCriacao) {
     this.dataCriacao = dataCriacao;
   }
 
-  public UsuarioFotoModel dataAtualizacao(LocalDate dataAtualizacao) {
+  public UsuarioFotoModel dataAtualizacao(OffsetDateTime dataAtualizacao) {
     this.dataAtualizacao = dataAtualizacao;
     return this;
   }
@@ -150,11 +150,11 @@ public class UsuarioFotoModel {
   @Valid 
   @Schema(name = "data_atualizacao", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("data_atualizacao")
-  public LocalDate getDataAtualizacao() {
+  public OffsetDateTime getDataAtualizacao() {
     return dataAtualizacao;
   }
 
-  public void setDataAtualizacao(LocalDate dataAtualizacao) {
+  public void setDataAtualizacao(OffsetDateTime dataAtualizacao) {
     this.dataAtualizacao = dataAtualizacao;
   }
 
