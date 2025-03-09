@@ -177,6 +177,17 @@
 
             <div class="form-row">
               <mat-form-field appearance="outline">
+                <mat-label>{{ "LABLE_COMPLEMENTO" | translate }}</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="endereco.complemento"
+                  name="complemento"
+                  maxlength="100"
+                  [readonly]="!isEditMode"
+                />
+                <mat-error *ngIf="bairroErro">{{ bairroErro }}</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>{{ "LABLE_BAIRRO" | translate }}</mat-label>
                 <input
                   matInput

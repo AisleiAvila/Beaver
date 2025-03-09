@@ -445,8 +445,36 @@ export class CadastroUsuarioComponent implements OnInit {
         this.initializeComponent();
       });
     }
-    if (usuario.foto) {
-      this.profileImageUrl = usuario.foto.foto;
+
+    // Processamento da foto/imagem
+    if (usuario.foto && usuario.foto.foto) {
+      // Verifica se a imagem já tem o prefixo data:image
+      if (usuario.foto.foto.startsWith('data:image')) {
+        this.profileImageUrl = usuario.foto.foto;
+        this.foto.foto =
+          usuario.foto.foto.split('base64,')[1] || usuario.foto.foto;
+      } else {
+        // Se for apenas base64 sem prefixo, adiciona o prefixo
+        this.profileImageUrl = `data:image/jpeg;base64,${usuario.foto.foto}`;
+        this.foto.foto = usuario.foto.foto;
+      }
+
+      // Atualiza outros campos da foto
+      this.foto.id = usuario.foto.id || 0;
+      this.foto.usuario_id = usuario.id;
+      this.foto.ativo = usuario.foto.ativo || true;
+      this.foto.data_criacao =
+        usuario.foto.data_criacao || new Date().toISOString();
+      this.foto.data_atualizacao =
+        usuario.foto.data_atualizacao || new Date().toISOString();
+
+      console.log(
+        'Imagem carregada com sucesso:',
+        this.profileImageUrl.substring(0, 50) + '...'
+      );
+    } else {
+      console.log('Usuário não possui foto cadastrada');
+      this.profileImageUrl = null;
     }
 
     this.validarCampos();
