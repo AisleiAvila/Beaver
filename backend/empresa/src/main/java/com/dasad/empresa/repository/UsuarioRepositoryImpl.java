@@ -116,7 +116,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .leftJoin(Pais.PAIS).on(Estado.ESTADO.PAIS_ID.eq(Pais.PAIS.ID))
                 .leftJoin(USUARIO_FOTO).on(USUARIO_FOTO.USUARIO_ID.eq(Usuario.USUARIO.ID))
                 .where(Usuario.USUARIO.ID.eq(id))
-                .and(USUARIO_FOTO.ATIVO.isTrue())
+//                .and(USUARIO_FOTO.ATIVO.isTrue())
                 .fetchOptional()
                 .map(record -> {
                     UsuarioModel usuario = new UsuarioModel();
@@ -159,7 +159,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         usuario.setEnderecos(new ArrayList<>(Collections.emptySet()));
                     }
 
-                    if (record.get("foto_id") != null) {
+                    if (record.get("foto_id") != null && record.get(USUARIO_FOTO.ATIVO) == true) {
                         var foto = new UsuarioFotoModel();
                         foto.setId(record.get("foto_id", Integer.class));
                         foto.setUsuarioId(record.get("usuario_id", Integer.class));
@@ -375,9 +375,12 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         usuarioFoto.setId(record.get(USUARIO_FOTO.ID));
                         usuarioFoto.setUsuarioId(record.get(USUARIO_FOTO.USUARIO_ID));
                         usuarioFoto.setFoto(record.get(USUARIO_FOTO.FOTO));
-                        usuarioFoto.setDataCriacao(OffsetDateTime.from(record.get(USUARIO_FOTO.DATA_CRIACAO).toLocalDate()));
-                        usuarioFoto.setDataAtualizacao(record.get(USUARIO_FOTO.DATA_ATUALIZACAO) != null ?
-                                OffsetDateTime.from(record.get(USUARIO_FOTO.DATA_ATUALIZACAO).toLocalDate()) : null);
+                        usuarioFoto.setDataCriacao(record.get(USUARIO_FOTO.DATA_CRIACAO).atOffset(ZoneOffset.UTC));
+                        if (record.get(USUARIO_FOTO.DATA_ATUALIZACAO) != null) {
+                            usuarioFoto.setDataAtualizacao(record.get(USUARIO_FOTO.DATA_ATUALIZACAO).atOffset(ZoneOffset.UTC));
+                        } else {
+                            usuarioFoto.setDataAtualizacao(null);
+                        }
                         usuarioFoto.setAtivo(record.get(USUARIO_FOTO.ATIVO));
                         return usuarioFoto;
                     })
