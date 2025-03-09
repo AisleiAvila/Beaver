@@ -1159,6 +1159,8 @@ components:
         foto_perfil:
           type: string
           format: byte
+        foto:
+          $ref: '#/components/schemas/UsuarioFotoModel'
     OrganizacaoModel:
       type: object
       properties:

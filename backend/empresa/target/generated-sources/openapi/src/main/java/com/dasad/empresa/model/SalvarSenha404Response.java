@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("salvarSenha_404_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-09T16:14:09.616796500Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-09T17:35:12.343032500Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 public class SalvarSenha404Response {
 
   private String error;
