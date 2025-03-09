@@ -1,4 +1,5 @@
 import { Endereco } from './endereco.model';
+import { Foto } from './foto.model';
 import { Perfil } from './perfil.model';
 
 export interface Usuario {
@@ -9,4 +10,5 @@ export interface Usuario {
   senha: string;
   perfis: Perfil[];
   enderecos: Endereco[];
+  foto?: Foto;
 }

@@ -13,32 +13,8 @@ export class EstadoService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   private apiUrl = environment.apiUrl + '/estado';
-  // private estados: Estado[] = [];
-
-  // getEstado(id: number): Observable<Estado> {
-  //   const headers = this.authService.getAuthHeaders();
-  //   this.apiUrl = this.apiUrl + '/' + id;
-  //   alert('Chamando endpoint com id: ' + id + ' URL: ' + this.apiUrl); // Log para verificar o ID
-
-
-  //   return this.http
-  //     .get<Estado>(`${this.apiUrl}`, {
-  //       headers: headers,
-  //     })
-  //     .pipe(
-  //       map((response) => {
-  //         console.log('Resposta do endpoint:', response); // Log para verificar a resposta
-  //         return response;
-  //       }),
-  //       catchError((error) => {
-  //         console.error('Erro ao chamar endpoint:', error); // Log para verificar erros
-  //         return of(null);
-  //       })
-  //     );
-  // }
 
   getEstadosByPaisId(paisId: number): Observable<Estado[]> {
-
     if (!paisId) {
       return of([]);
     }
@@ -71,10 +47,16 @@ export class EstadoService {
 
     const fullUrl = `${this.apiUrl}`; // Apenas a base, sem parâmetros manuais
 
-    console.log('Chamando endpoint findEstados com URL:', fullUrl, 'e params:', queryParams.toString()); // Log para depuração
+    console.log(
+      'Chamando endpoint findEstados com URL:',
+      fullUrl,
+      'e params:',
+      queryParams.toString()
+    ); // Log para depuração
 
     return this.http
-      .get<Estado[]>(fullUrl, { // Agora a URL está correta
+      .get<Estado[]>(fullUrl, {
+        // Agora a URL está correta
         headers: headers,
         params: queryParams,
       })
@@ -89,5 +71,4 @@ export class EstadoService {
         })
       );
   }
-
 }

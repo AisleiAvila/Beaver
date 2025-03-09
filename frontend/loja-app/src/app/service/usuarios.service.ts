@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/service/auth.service';
 import { UsuarioResponseDTO } from '../model/usuarioResponseDTO.model';
 import { Usuario } from '../model/usuario.model';
+import { Foto } from '../model/foto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ import { Usuario } from '../model/usuario.model';
  */
 export class UsuariosService {
   private apiUrl = environment.apiUrl + '/usuario';
+  private apiUrlFoto = environment.apiUrl + '/usuario/foto';
   // private usuarios: any[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -47,6 +49,18 @@ export class UsuariosService {
   }
 
   saveUsuario(usuario: Usuario): Observable<Usuario> {
+    if (!usuario) {
+      return of(usuario);
+    }
+
+    if (usuario.id !== undefined && usuario.id !== null && usuario.id > 0) {
+      return this.updateUsuario(usuario);
+    } else {
+      return this.insertUsuario(usuario);
+    }
+  }
+
+  insertUsuario(usuario: Usuario): Observable<Usuario> {
     const headers = this.authService.getAuthHeaders();
 
     return this.http
@@ -153,5 +167,99 @@ export class UsuariosService {
         return throwError(() => new Error(errorMessage));
       })
     );
+  }
+
+  saveUsuarioFoto(foto: Foto): Observable<Foto> {
+    if (!foto) {
+      return of(foto);
+    }
+
+    if (!foto.usuario_id) {
+      return throwError(() => new Error('ID do usuário não informado.'));
+    }
+
+    if (!foto.foto) {
+      return throwError(() => new Error('Foto não informada.'));
+    }
+
+    if (foto.id !== undefined && foto.id !== null && foto.id > 0) {
+      return this.updateUsuarioFoto(foto);
+    } else {
+      return this.insertUsuarioFoto(foto);
+    }
+  }
+
+  insertUsuarioFoto(foto: Foto): Observable<Foto> {
+    const headers = this.authService.getAuthHeaders();
+
+    return this.http
+      .post<Foto>(`${this.apiUrlFoto}`, foto, { headers: headers })
+      .pipe(
+        catchError((error) => {
+          let errorMessage =
+            'Erro ao salvar foto do usuário. Por favor, tente novamente mais tarde.';
+
+          // Verificar se a resposta é JSON ou texto
+          if (error.error instanceof ErrorEvent) {
+            // Erro do lado do cliente
+            errorMessage = `Erro: ${error.error.message}`;
+          } else {
+            // Erro do lado do servidor
+            if (error.error && typeof error.error === 'string') {
+              try {
+                const parsedError = JSON.parse(error.error);
+                if (parsedError.message) {
+                  errorMessage = parsedError.message;
+                }
+              } catch (e) {
+                console.log('Erro ao salvar foto do usuário:', e);
+                errorMessage = error.error;
+              }
+            } else if (error.error && error.error.message) {
+              errorMessage = error.error.message;
+            }
+          }
+
+          console.error('Erro ao salvar foto do usuário:', errorMessage);
+          return throwError(() => new Error(errorMessage));
+        })
+      );
+  }
+
+  updateUsuarioFoto(foto: Foto): Observable<Foto> {
+    const headers = this.authService.getAuthHeaders();
+
+    return this.http
+      .patch<Foto>(`${this.apiUrlFoto}`, foto, { headers: headers })
+      .pipe(
+        catchError((error) => {
+          let errorMessage =
+            'Erro ao salvar foto do usuário. Por favor, tente novamente mais tarde.';
+
+          // Verificar se a resposta é JSON ou texto
+          if (error.error instanceof ErrorEvent) {
+            // Erro do lado do cliente
+            errorMessage = `Erro: ${error.error.message}`;
+          } else {
+            // Erro do lado do servidor
+            if (error.error && typeof error.error === 'string') {
+              try {
+                const parsedError = JSON.parse(error.error);
+                if (parsedError.message) {
+                  errorMessage = parsedError.message;
+                }
+              } catch (e) {
+                console.log('Erro ao salvar foto do usuário:', e);
+                errorMessage = error.error;
+              }
+            } else if (error.error && error.error.message) {
+              errorMessage = error.error.message;
+            }
+          }
+
+          console.error('Erro ao salvar foto do usuário:', errorMessage);
+          return throwError(() => new Error(errorMessage));
+        })
+      );
   }
 }

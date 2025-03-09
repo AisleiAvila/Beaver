@@ -17,6 +17,7 @@ import { forkJoin, tap } from 'rxjs';
 import { ApiError } from 'src/app/model/apiError.model';
 import { Cidade } from 'src/app/model/cidade.model';
 import { Estado } from 'src/app/model/estado.model';
+import { Foto } from 'src/app/model/foto.model';
 import { Pais } from 'src/app/model/pais.model';
 import { Perfil } from 'src/app/model/perfil.model';
 import { Usuario } from 'src/app/model/usuario.model';
@@ -29,9 +30,9 @@ import { PerfisService } from 'src/app/service/perfis.service';
 import { CustomSnackbarComponent } from 'src/app/shared/components/custom-snackbar/custom-snackbar.component';
 import { UtilService } from 'src/app/shared/service/util.service';
 import { UsuariosService } from '../../../service/usuarios.service';
+import { WebcamModalComponent } from '../../../shared/components/webcam-modal/webcam-modal.component';
 import { CharCountService } from '../../../shared/service/char-count.service';
 import { Endereco } from './../../../model/endereco.model';
-import { WebcamModalComponent } from '../../../shared/components/webcam-modal/webcam-modal.component';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -101,6 +102,15 @@ export class CadastroUsuarioComponent implements OnInit {
       },
     },
     cep: '',
+  };
+
+  foto: Foto = {
+    id: 0,
+    usuario_id: 0,
+    foto: '',
+    ativo: true,
+    data_criacao: '',
+    data_atualizacao: '',
   };
 
   // Variáveis de estado para armazenar mensagens de erro
@@ -325,49 +335,40 @@ export class CadastroUsuarioComponent implements OnInit {
 
     const usuario = this.criarUsuario();
 
+    let mensagemSucesso = '';
+    let mensagemErro = '';
+
     if (this.acao === 'Alterar') {
-      this.usuariosService.updateUsuario(usuario).subscribe(
-        () => {
-          this.snackBar.open('Usuário atualizado com sucesso', 'Fechar', {
-            duration: 3000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-          } as MatSnackBarConfig);
-          this.router.navigate(['/usuarios']);
-        },
-        (error) => {
-          this.modalCommunicationService.abrirModal(
-            this.formatarErro(error),
-            'error'
-          );
-        }
-      );
+      mensagemSucesso = 'Usuário atualizado com sucesso';
+      mensagemErro = 'Erro ao atualizar usuário';
     } else {
-      // Remover o alert de depuração
-      // alert('Usuário: ' + JSON.stringify(usuario));
-      this.usuariosService.saveUsuario(usuario).subscribe(
-        () => {
-          this.snackBar.open('Usuário criado com sucesso!', 'Fechar', {
+      mensagemSucesso = 'Usuário criado com sucesso';
+      mensagemErro = 'Erro ao criar usuário';
+    }
+
+    this.usuariosService.saveUsuario(usuario).subscribe(
+      () => {
+        this.usuariosService.saveUsuarioFoto(usuario.foto).subscribe(() => {
+          this.snackBar.open(mensagemSucesso, 'Fechar', {
             duration: 3000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
           } as MatSnackBarConfig);
           this.router.navigate(['/usuarios']);
-        },
-        (error) => {
-          console.error('Erro ao criar usuário:', error);
-          this.snackBar.openFromComponent(CustomSnackbarComponent, {
-            data: {
-              message:
-                'Erro ao criar usuário!<br>E-mail utilizado por outro usuário.',
-            },
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-            panelClass: ['snackbar-multiline'],
-          });
-        }
-      );
-    }
+        });
+      },
+      (error) => {
+        console.error(mensagemErro, error);
+        this.snackBar.openFromComponent(CustomSnackbarComponent, {
+          data: {
+            message: mensagemErro,
+          },
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['snackbar-multiline'],
+        });
+      }
+    );
   }
 
   cancelar() {
@@ -444,6 +445,9 @@ export class CadastroUsuarioComponent implements OnInit {
         this.initializeComponent();
       });
     }
+    if (usuario.foto) {
+      this.profileImageUrl = usuario.foto.foto;
+    }
 
     this.validarCampos();
   }
@@ -476,6 +480,19 @@ export class CadastroUsuarioComponent implements OnInit {
     const perfilSelecionado = this.lstPerfis.find((perfil) => {
       return Number(perfil.id) === Number(this.perfilSelecionadoId);
     });
+
+    // Montar objeto de foto do usuário
+    if (this.profileImageUrl) {
+      const base64Image = this.profileImageUrl.includes('base64,')
+        ? this.profileImageUrl.split('base64,')[1]
+        : this.profileImageUrl;
+
+      this.foto.foto = base64Image;
+      this.foto.usuario_id = this.id;
+      this.foto.ativo = true;
+      this.foto.data_criacao = new Date().toISOString();
+      this.foto.data_atualizacao = new Date().toISOString();
+    }
 
     const perfis = perfilSelecionado
       ? [
@@ -517,6 +534,14 @@ export class CadastroUsuarioComponent implements OnInit {
           cep: this.endereco.cep,
         },
       ],
+      foto: {
+        id: this.foto.id,
+        usuario_id: this.foto.usuario_id,
+        foto: this.foto.foto,
+        ativo: this.foto.ativo,
+        data_criacao: this.foto.data_criacao,
+        data_atualizacao: this.foto.data_atualizacao,
+      },
     };
 
     return usuario;
@@ -544,6 +569,7 @@ export class CadastroUsuarioComponent implements OnInit {
           // this.resizeImage(img, 300, 300);
         };
         img.onerror = (error) => {
+          this.profileImageUrl = null;
           console.error('Erro ao carregar imagem da webcam:', error);
           this.snackBar.open(
             'Não foi possível processar a imagem da webcam',
