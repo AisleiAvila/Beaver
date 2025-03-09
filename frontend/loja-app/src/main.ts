@@ -2,14 +2,15 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
 import { AppModule } from './app/app.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { routes } from './app/app-routing.module'; // Ajuste o caminho conforme sua estrutura
+import { routes } from './app/app-routing.module';
 
-// Inicialização para componente standalone
+// Inicializar o AppComponent como aplicação standalone
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(AppModule, BrowserAnimationsModule),
-    provideRouter(routes),
+    importProvidersFrom(AppModule), // Importar providers do AppModule
+    provideAnimations(), // Prover animações
+    provideRouter(routes), // Prover rotas
   ],
-}).catch((err) => console.error(err));
+}).catch((err) => console.error('Erro ao inicializar aplicação:', err));

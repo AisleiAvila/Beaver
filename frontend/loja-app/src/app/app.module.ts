@@ -39,30 +39,8 @@ import {
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BackLogComponent } from './backlog/backlog.component';
-import { AgendamentoComponent } from './component/agendamento/agendamento.component';
-import { BodyComponent } from './component/body/body.component';
-import { CadastroCategoriaComponent } from './component/categorias/cadastro-categoria/cadastro-categoria.component';
-import { CategoriasComponent } from './component/categorias/categorias.component';
-import { ChatComponent } from './component/chat/chat.component';
-import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { GeolocalizacaoComponent } from './component/geolocalizacao/geolocalizacao.component';
-import { HeaderComponent } from './component/header/header.component';
-import { HomePageComponent } from './component/home-page/home-page.component';
-import { LembrarSenhaComponent } from './component/lembrar-senha/lembrar-senha.component';
-import { LoginComponent } from './component/login/login.component';
-import { MenuComponent } from './component/menu/menu.component';
-import { NovaSenhaComponent } from './component/nova-senha/nova-senha.component';
-import { OrganizacaoComponent } from './component/organizacao/organizacao.component';
-import { PrivacyComponent } from './component/privacy/privacy.component';
-import { ProdutosComponent } from './component/produtos/produtos.component';
-import { TermsComponent } from './component/terms/terms.component';
-import { UsuariosComponent } from './component/usuarios/usuarios.component';
-import { WebcamCaptureComponent } from './component/webcam-capture/webcam-capture.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { GeolocalizacaoService } from './services/geolocalizacao.service';
-import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
 import { CustomPaginatorIntl } from './shared/service/custom-paginator-intl';
 
 /**
@@ -79,66 +57,43 @@ export function HttpLoaderFactory(http: HttpClient) {
  * Responsável por configurar e inicializar os recursos globais.
  */
 @NgModule({
-  // Não declarar componentes standalone
-
-  /**
-   * Imports de módulos necessários para a aplicação:
-   * - AppRoutingModule: Configuração de rotas
-   * - BrowserModule: Recursos essenciais do browser
-   * - HttpClientModule: Requisições HTTP
-   * - Material Modules: Componentes do Angular Material
-   * - TranslateModule: Internacionalização
-   */
+  declarations: [],
   imports: [
-    BrowserModule, // Adicionar BrowserModule para bootstrap
-    AppComponent, // AppComponent é standalone e deve estar nos imports
-    BackLogComponent,
-    BodyComponent,
-    ChatComponent,
-    DashboardComponent,
-    HeaderComponent,
-    HomePageComponent,
-    LembrarSenhaComponent,
-    LoginComponent,
-    MenuComponent,
-    NovaSenhaComponent,
-    OrganizacaoComponent,
-    PrivacyComponent,
-    ProdutosComponent,
-    TermsComponent,
-    UsuariosComponent,
-    CustomSnackbarComponent,
-    CategoriasComponent,
-    CadastroCategoriaComponent,
-    AppRoutingModule,
-    FormsModule,
+    BrowserModule,
     BrowserAnimationsModule,
-    RouterModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    AppRoutingModule,
+
+    // Angular Material
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
     MatSlideToggleModule,
+    MatSortModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    NgbModalModule,
-    NgbModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
     MatTooltipModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatChipsModule,
-    AgendamentoComponent,
-    WebcamCaptureComponent,
-    GeolocalizacaoComponent,
+
+    // Bootstrap
+    NgbModule,
+    NgbModalModule,
+
+    // Traduções
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -147,28 +102,38 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       defaultLanguage: 'pt-BR',
     }),
-    MatProgressSpinnerModule,
-    MatDialogModule,
   ],
-
-  /**
-   * Providers globais da aplicação:
-   * - AuthInterceptor: Intercepta requisições HTTP para adicionar token
-   * - CustomPaginatorIntl: Customiza textos do paginador
-   */
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
     GeolocalizacaoService,
+    TranslateService,
   ],
-
-  // Remover bootstrap para componentes standalone
+  exports: [
+    // Exportar módulos Angular Material para que estejam disponíveis globalmente
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+  ],
 })
 export class AppModule {
-  /**
-   * Construtor que configura o idioma padrão da aplicação
-   * @param translate Serviço de tradução
-   */
   constructor(private translate: TranslateService) {
     this.translate.setDefaultLang('pt-BR');
     this.translate.use('pt-BR');

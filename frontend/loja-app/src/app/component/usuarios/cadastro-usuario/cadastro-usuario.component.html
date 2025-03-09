@@ -4,8 +4,8 @@
 
     <div class="form-container">
       <form>
-        <!-- Reorganizada a estrutura para mover a imagem para acima do conteúdo do formulário -->
-        <div class="profile-image-container">
+        <!-- Seção de imagem de perfil alinhada à esquerda -->
+        <div class="profile-section">
           <div class="profile-image-wrapper">
             <div class="profile-image">
               <img
@@ -19,6 +19,7 @@
                 class="profile-action-button"
                 (click)="tirarFoto()"
                 matTooltip="{{ 'LABLE_TIRAR_FOTO' | translate }}"
+                type="button"
               >
                 <mat-icon>camera_alt</mat-icon>
               </button>
@@ -27,8 +28,9 @@
                 class="profile-action-button"
                 (click)="importarImagem()"
                 matTooltip="{{ 'LABLE_IMPORTAR_IMAGEM' | translate }}"
+                type="button"
               >
-                <mat-icon>insert_drive_file</mat-icon>
+                <mat-icon>photo_library</mat-icon>
               </button>
             </div>
           </div>

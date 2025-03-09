@@ -4,13 +4,20 @@ import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './component/header/header.component';
 import { BodyComponent } from './component/body/body.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, BodyComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    HeaderComponent,
+    BodyComponent,
+    RouterOutlet,
+  ],
 })
 export class AppComponent {
   isLoginScreen = false;

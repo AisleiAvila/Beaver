@@ -15,7 +15,8 @@
     "reset": "node force-clean.js && ng serve",
     "iniciar": "iniciar-limpo.bat",
     "start-no-hmr": "ng serve --no-hmr",
-    "iniciar-sem-hmr": "iniciar-limpo.bat --no-hmr"
+    "iniciar-sem-hmr": "iniciar-limpo.bat --no-hmr",
+    "download-models": "ts-node src/app/utils/download-models.ts"
   },
   "private": true,
   "dependencies": {

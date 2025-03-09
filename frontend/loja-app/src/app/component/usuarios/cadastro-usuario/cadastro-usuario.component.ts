@@ -343,7 +343,8 @@ export class CadastroUsuarioComponent implements OnInit {
         }
       );
     } else {
-      alert('Usuário: ' + JSON.stringify(usuario));
+      // Remover o alert de depuração
+      // alert('Usuário: ' + JSON.stringify(usuario));
       this.usuariosService.saveUsuario(usuario).subscribe(
         () => {
           this.snackBar.open('Usuário criado com sucesso!', 'Fechar', {
@@ -531,9 +532,64 @@ export class CadastroUsuarioComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.profileImageUrl = result;
+        console.log('Imagem capturada da webcam:', result);
+
+        // Criar elemento de imagem para garantir que carregue corretamente
+        const img = new Image();
+        img.onload = () => {
+          // A imagem foi carregada com sucesso
+          this.profileImageUrl = result;
+
+          // Se necessário, você pode redimensionar a imagem aqui
+          // this.resizeImage(img, 300, 300);
+        };
+        img.onerror = (error) => {
+          console.error('Erro ao carregar imagem da webcam:', error);
+          this.snackBar.open(
+            'Não foi possível processar a imagem da webcam',
+            'OK',
+            {
+              duration: 3000,
+            }
+          );
+        };
+
+        // Iniciar carregamento da imagem
+        img.src = result;
       }
     });
+  }
+
+  // Método auxiliar para redimensionar imagem se necessário
+  private resizeImage(
+    img: HTMLImageElement,
+    maxWidth: number,
+    maxHeight: number
+  ): string {
+    const canvas = document.createElement('canvas');
+    let width = img.width;
+    let height = img.height;
+
+    // Redimensionar mantendo proporção
+    if (width > height) {
+      if (width > maxWidth) {
+        height = Math.round((height * maxWidth) / width);
+        width = maxWidth;
+      }
+    } else {
+      if (height > maxHeight) {
+        width = Math.round((width * maxHeight) / height);
+        height = maxHeight;
+      }
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, width, height);
+
+    return canvas.toDataURL('image/jpeg');
   }
 
   importarImagem(): void {
