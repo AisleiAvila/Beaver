@@ -371,6 +371,36 @@ export class CadastroUsuarioComponent implements OnInit {
     );
   }
 
+  excluirFoto() {
+    const mensagemSucesso = 'Foto do usuário excluída com sucesso';
+    const mensagemErro = 'Erro ao excluir foto do usuário';
+    this.profileImageUrl = null;
+
+    if (this.foto.id) {
+      this.foto.ativo = false;
+      this.usuariosService.deleteUsuarioFoto(this.foto).subscribe(
+        () => {
+          this.snackBar.open(mensagemSucesso, 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          } as MatSnackBarConfig);
+        },
+        (error) => {
+          console.error(mensagemErro, error);
+          this.snackBar.openFromComponent(CustomSnackbarComponent, {
+            data: {
+              message: mensagemErro,
+            },
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: ['snackbar-multiline'],
+          });
+        }
+      );
+    }
+  }
+
   cancelar() {
     this.location.back();
   }
