@@ -15,6 +15,7 @@
             </div>
             <div class="profile-actions">
               <button
+                *ngIf="isCreateMode || isEditMode"
                 mat-icon-button
                 class="profile-action-button"
                 (click)="tirarFoto()"
@@ -24,6 +25,7 @@
                 <mat-icon>camera_alt</mat-icon>
               </button>
               <button
+                *ngIf="isCreateMode || isEditMode"
                 mat-icon-button
                 class="profile-action-button"
                 (click)="importarImagem()"
@@ -33,13 +35,14 @@
                 <mat-icon>photo_library</mat-icon>
               </button>
               <button
+                *ngIf="profileImageUrl && (isCreateMode || isEditMode)"
                 mat-icon-button
                 class="profile-action-button"
                 (click)="excluirFoto()"
                 matTooltip="{{ 'LABLE_EXCLUIR_IMAGEM' | translate }}"
                 type="button"
               >
-                <mat-icon>photo_library</mat-icon>
+                <mat-icon>delete</mat-icon>
               </button>
             </div>
           </div>

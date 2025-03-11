@@ -11,13 +11,15 @@
           (click)="item.action()"
           (keydown.enter)="item.action()"
           (keydown.space)="item.action()"
-          [title]="item.label"
+          [title]="item.labelKey ? (item.labelKey | translate) : item.label"
           class="menu-item"
           [ngClass]="{ active: isActive(item.route) }"
           tabindex="0"
         >
           <mat-icon mat-list-icon>{{ item.icon }}</mat-icon>
-          <span mat-line *ngIf="isExpanded">{{ item.label }}</span>
+          <span mat-line *ngIf="isExpanded">
+            {{ item.labelKey ? (item.labelKey | translate) : item.label }}
+          </span>
         </a>
       </div>
       <button
