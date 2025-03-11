@@ -24,6 +24,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select'; // Adicionar esta importação
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 
 // Interface para representar um agendamento
 export interface Agendamento {
@@ -69,6 +76,28 @@ const CUSTOM_DATE_FORMATS: MatDateFormats = {
   templateUrl: './agendamento.component.html',
   styleUrls: ['./agendamento.component.scss'],
   standalone: true,
+  animations: [
+    trigger('expandCollapse', [
+      state(
+        'collapsed',
+        style({
+          height: '0px',
+          opacity: 0,
+          overflow: 'hidden',
+          margin: '0',
+        })
+      ),
+      state(
+        'expanded',
+        style({
+          height: '*',
+          opacity: 1,
+          margin: '0 0 20px 0',
+        })
+      ),
+      transition('collapsed <=> expanded', animate('300ms ease-in-out')),
+    ]),
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -248,12 +277,19 @@ export class AgendamentoComponent implements OnInit {
   // Armazenar o último prestador válido selecionado
   ultimoPrestadorValido: string = '';
 
+  // Estado de expansão dos filtros
+  filtrosExpanded: boolean = false;
+
+  // Contador de filtros ativos
+  contadorFiltrosAtivos: number = 0;
+
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('pt-BR');
   }
 
   ngOnInit(): void {
     this.atualizarAgendamentosExibidos();
+    this.atualizarContadorFiltros();
 
     // Inicializar a lista de prestadores filtrados com todos os prestadores
     this.prestadoresFiltrados = [...this.prestadores];
@@ -538,6 +574,7 @@ export class AgendamentoComponent implements OnInit {
 
       return true;
     });
+    this.atualizarContadorFiltros();
   }
 
   // Método para limpar todos os filtros
@@ -560,6 +597,7 @@ export class AgendamentoComponent implements OnInit {
     this.ultimoPrestadorValido = '';
 
     this.aplicarFiltros();
+    this.atualizarContadorFiltros();
   }
 
   // Método para validar e atualizar a data inicial
@@ -581,6 +619,7 @@ export class AgendamentoComponent implements OnInit {
     }
 
     this.aplicarFiltros();
+    this.atualizarContadorFiltros();
   }
 
   // Método para validar e atualizar a data final
@@ -602,6 +641,7 @@ export class AgendamentoComponent implements OnInit {
     }
 
     this.aplicarFiltros();
+    this.atualizarContadorFiltros();
   }
 
   // Função para filtrar prestadores conforme o usuário digita
@@ -673,5 +713,24 @@ export class AgendamentoComponent implements OnInit {
     this.ultimoPrestadorValido = '';
     this.prestadoresFiltrados = [...this.prestadores];
     this.aplicarFiltros();
+    this.atualizarContadorFiltros();
+  }
+
+  // Método para alternar a visibilidade dos filtros
+  toggleFiltros(): void {
+    this.filtrosExpanded = !this.filtrosExpanded;
+  }
+
+  // Método para atualizar o contador de filtros ativos
+  atualizarContadorFiltros(): void {
+    let contador = 0;
+
+    if (this.filtros.nomeCliente?.trim()) contador++;
+    if (this.filtros.nomePrestador?.trim()) contador++;
+    if (this.filtros.nomeServico?.trim()) contador++;
+    if (this.filtros.dataInicio) contador++;
+    if (this.filtros.dataFim) contador++;
+
+    this.contadorFiltrosAtivos = contador;
   }
 }

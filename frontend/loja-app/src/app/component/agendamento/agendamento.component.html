@@ -2,158 +2,195 @@
   <div class="content-wrapper">
     <h2 class="page-title">{{ "TITLE_AGENDAMENTOS" | translate }}</h2>
 
-    <!-- Seção de filtros sem botões -->
-    <mat-card class="filtros-card">
-      <mat-card-header>
-        <mat-card-title>Filtros</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="filtros-container">
-          <div class="filtro-row">
-            <mat-form-field appearance="outline" class="filtro-field">
-              <mat-label>Nome do Cliente</mat-label>
-              <input
-                matInput
-                [(ngModel)]="filtros.nomeCliente"
-                placeholder="Filtrar por cliente"
-                (keyup)="aplicarFiltros()"
-              />
-              <button
-                *ngIf="filtros.nomeCliente"
-                matSuffix
-                mat-icon-button
-                aria-label="Limpar"
-                (click)="filtros.nomeCliente = ''; aplicarFiltros()"
-              >
-                <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field>
+    <!-- Botão para expandir/contrair os filtros -->
+    <button
+      mat-stroked-button
+      class="filtro-toggle-btn"
+      (click)="toggleFiltros()"
+    >
+      <mat-icon>{{ filtrosExpanded ? "expand_less" : "expand_more" }}</mat-icon>
+      Filtros
+      <span *ngIf="contadorFiltrosAtivos > 0" class="filtro-badge">{{
+        contadorFiltrosAtivos
+      }}</span>
+    </button>
 
-            <!-- Campo de prestador com autocomplete para filtragem e validação -->
-            <mat-form-field appearance="outline" class="filtro-field">
-              <mat-label>Nome do Prestador</mat-label>
-              <input
-                type="text"
-                matInput
-                [(ngModel)]="filtros.nomePrestador"
-                placeholder="Filtrar por prestador"
-                [matAutocomplete]="autoPrestador"
-                (keyup)="filtrarPrestadores($event)"
-                (blur)="validarPrestadorSelecionado()"
-              />
-              <mat-autocomplete
-                #autoPrestador="matAutocomplete"
-                [displayWith]="displayPrestadorFn"
-                (optionSelected)="prestadorSelecionado($event)"
-              >
-                <mat-option *ngIf="prestadoresFiltrados.length === 0" disabled>
-                  Nenhum prestador encontrado
-                </mat-option>
-                <mat-option
-                  *ngFor="let prestador of prestadoresFiltrados"
-                  [value]="prestador.nome"
+    <!-- Seção de filtros retrátil -->
+    <div
+      class="filtros-wrapper"
+      [@expandCollapse]="filtrosExpanded ? 'expanded' : 'collapsed'"
+    >
+      <mat-card class="filtros-card">
+        <mat-card-header>
+          <mat-card-title>Filtros</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="filtros-container">
+            <div class="filtro-row">
+              <mat-form-field appearance="outline" class="filtro-field">
+                <mat-label>Nome do Cliente</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="filtros.nomeCliente"
+                  placeholder="Filtrar por cliente"
+                  (keyup)="aplicarFiltros()"
+                />
+                <button
+                  *ngIf="filtros.nomeCliente"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Limpar"
+                  (click)="filtros.nomeCliente = ''; aplicarFiltros()"
                 >
-                  {{ prestador.nome }}
-                </mat-option>
-              </mat-autocomplete>
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <!-- Campo de prestador com autocomplete para filtragem e validação -->
+              <mat-form-field appearance="outline" class="filtro-field">
+                <mat-label>Nome do Prestador</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  [(ngModel)]="filtros.nomePrestador"
+                  placeholder="Filtrar por prestador"
+                  [matAutocomplete]="autoPrestador"
+                  (keyup)="filtrarPrestadores($event)"
+                  (blur)="validarPrestadorSelecionado()"
+                />
+                <mat-autocomplete
+                  #autoPrestador="matAutocomplete"
+                  [displayWith]="displayPrestadorFn"
+                  (optionSelected)="prestadorSelecionado($event)"
+                >
+                  <mat-option
+                    *ngIf="prestadoresFiltrados.length === 0"
+                    disabled
+                  >
+                    Nenhum prestador encontrado
+                  </mat-option>
+                  <mat-option
+                    *ngFor="let prestador of prestadoresFiltrados"
+                    [value]="prestador.nome"
+                  >
+                    {{ prestador.nome }}
+                  </mat-option>
+                </mat-autocomplete>
+                <button
+                  *ngIf="filtros.nomePrestador"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Limpar"
+                  (click)="limparPrestador()"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+
+            <div class="filtro-row">
+              <mat-form-field appearance="outline" class="filtro-field">
+                <mat-label>Nome do Serviço</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="filtros.nomeServico"
+                  placeholder="Filtrar por serviço"
+                  (keyup)="aplicarFiltros()"
+                />
+                <button
+                  *ngIf="filtros.nomeServico"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Limpar"
+                  (click)="filtros.nomeServico = ''; aplicarFiltros()"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <!-- Campo de Data Inicial com classe aprimorada -->
+              <mat-form-field appearance="outline" class="data-campo-reduzido">
+                <mat-label>Data Inicial</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="pickerInicio"
+                  [(ngModel)]="filtros.dataInicio"
+                  placeholder="DD/MM/AAAA"
+                  (dateChange)="onDataInicioChange($event)"
+                  [max]="dataInicioMax"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="pickerInicio"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicio></mat-datepicker>
+                <button
+                  *ngIf="filtros.dataInicio"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Limpar"
+                  (click)="
+                    filtros.dataInicio = null; onDataInicioChange($event)
+                  "
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-hint *ngIf="dataInicioMax"
+                  >Data máxima:
+                  {{ dataInicioMax | date : "dd/MM/yyyy" }}</mat-hint
+                >
+              </mat-form-field>
+
+              <!-- Campo de Data Final com classe aprimorada -->
+              <mat-form-field appearance="outline" class="data-campo-reduzido">
+                <mat-label>Data Final</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="pickerFim"
+                  [(ngModel)]="filtros.dataFim"
+                  placeholder="DD/MM/AAAA"
+                  (dateChange)="onDataFimChange($event)"
+                  [min]="dataFimMin"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="pickerFim"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #pickerFim></mat-datepicker>
+                <button
+                  *ngIf="filtros.dataFim"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Limpar"
+                  (click)="filtros.dataFim = null; onDataFimChange($event)"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-hint *ngIf="dataFimMin"
+                  >Data mínima: {{ dataFimMin | date : "dd/MM/yyyy" }}</mat-hint
+                >
+              </mat-form-field>
+            </div>
+
+            <!-- Botões de ação dos filtros movidos para o card de filtros -->
+            <div class="filtro-row filtro-actions">
               <button
-                *ngIf="filtros.nomePrestador"
-                matSuffix
-                mat-icon-button
-                aria-label="Limpar"
-                (click)="limparPrestador()"
+                mat-raised-button
+                color="primary"
+                (click)="aplicarFiltros()"
               >
-                <mat-icon>close</mat-icon>
+                <mat-icon>filter_list</mat-icon>
+                Aplicar
               </button>
-            </mat-form-field>
+              <button mat-stroked-button color="warn" (click)="limparFiltros()">
+                <mat-icon>clear</mat-icon>
+                Limpar
+              </button>
+            </div>
           </div>
-
-          <div class="filtro-row">
-            <mat-form-field appearance="outline" class="filtro-field">
-              <mat-label>Nome do Serviço</mat-label>
-              <input
-                matInput
-                [(ngModel)]="filtros.nomeServico"
-                placeholder="Filtrar por serviço"
-                (keyup)="aplicarFiltros()"
-              />
-              <button
-                *ngIf="filtros.nomeServico"
-                matSuffix
-                mat-icon-button
-                aria-label="Limpar"
-                (click)="filtros.nomeServico = ''; aplicarFiltros()"
-              >
-                <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field>
-
-            <!-- Campo de Data Inicial com classe aprimorada -->
-            <mat-form-field appearance="outline" class="data-campo-reduzido">
-              <mat-label>Data Inicial</mat-label>
-              <input
-                matInput
-                [matDatepicker]="pickerInicio"
-                [(ngModel)]="filtros.dataInicio"
-                placeholder="DD/MM/AAAA"
-                (dateChange)="onDataInicioChange($event)"
-                [max]="dataInicioMax"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="pickerInicio"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #pickerInicio></mat-datepicker>
-              <button
-                *ngIf="filtros.dataInicio"
-                matSuffix
-                mat-icon-button
-                aria-label="Limpar"
-                (click)="filtros.dataInicio = null; onDataInicioChange($event)"
-              >
-                <mat-icon>close</mat-icon>
-              </button>
-              <mat-hint *ngIf="dataInicioMax"
-                >Data máxima:
-                {{ dataInicioMax | date : "dd/MM/yyyy" }}</mat-hint
-              >
-            </mat-form-field>
-
-            <!-- Campo de Data Final com classe aprimorada -->
-            <mat-form-field appearance="outline" class="data-campo-reduzido">
-              <mat-label>Data Final</mat-label>
-              <input
-                matInput
-                [matDatepicker]="pickerFim"
-                [(ngModel)]="filtros.dataFim"
-                placeholder="DD/MM/AAAA"
-                (dateChange)="onDataFimChange($event)"
-                [min]="dataFimMin"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="pickerFim"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #pickerFim></mat-datepicker>
-              <button
-                *ngIf="filtros.dataFim"
-                matSuffix
-                mat-icon-button
-                aria-label="Limpar"
-                (click)="filtros.dataFim = null; onDataFimChange($event)"
-              >
-                <mat-icon>close</mat-icon>
-              </button>
-              <mat-hint *ngIf="dataFimMin"
-                >Data mínima: {{ dataFimMin | date : "dd/MM/yyyy" }}</mat-hint
-              >
-            </mat-form-field>
-          </div>
-
-          <!-- Removido daqui: filtro-actions -->
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
     <!-- Resto do componente -->
     <mat-card>
@@ -179,21 +216,6 @@
             <mat-button-toggle value="semana">Semana</mat-button-toggle>
             <mat-button-toggle value="mes">Mês</mat-button-toggle>
           </mat-button-toggle-group>
-
-          <div class="filtro-actions">
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="aplicarFiltros()"
-            >
-              <mat-icon>filter_list</mat-icon>
-              Aplicar
-            </button>
-            <button mat-stroked-button color="warn" (click)="limparFiltros()">
-              <mat-icon>clear</mat-icon>
-              Limpar
-            </button>
-          </div>
         </div>
       </div>
 

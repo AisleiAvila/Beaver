@@ -389,7 +389,7 @@
 
 /* Estilos para a seção de filtros */
 .filtros-card {
-  margin-bottom: 20px;
+  margin-bottom: 0; /* Removido o margin-bottom pois o wrapper já controla */
 }
 
 .filtros-container {
@@ -405,6 +405,18 @@
 
   @media (max-width: 768px) {
     flex-direction: column;
+  }
+
+  &.filtro-actions {
+    justify-content: flex-end; /* Alinha os botões à direita */
+
+    @media (max-width: 768px) {
+      justify-content: stretch;
+
+      button {
+        flex: 1; /* Faz os botões ocuparem todo o espaço disponível em telas pequenas */
+      }
+    }
   }
 }
 
@@ -428,15 +440,44 @@
   .custom-header .header-controls {
     flex-direction: column !important;
     align-items: stretch !important;
+  }
 
-    .filtro-actions {
-      margin-top: 8px;
-      width: 100%;
-      justify-content: center;
+  .filtro-actions {
+    width: 100%;
+    justify-content: center;
 
-      button {
-        flex: 1;
-      }
+    button {
+      flex: 1;
     }
   }
+}
+
+/* Estilos para o botão de toggle dos filtros */
+.filtro-toggle-btn {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+/* Badge para o contador de filtros */
+.filtro-badge {
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 0 4px;
+  margin-left: 8px;
+}
+
+/* Wrapper para os filtros animados */
+.filtros-wrapper {
+  overflow: hidden;
+  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
