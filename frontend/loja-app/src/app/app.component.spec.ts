@@ -1,16 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 // import { MessageModalModule } from './shared/components/modal/message-modal/message-modal.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         RouterTestingModule,
+        NoopAnimationsModule, // Add NoopAnimationsModule
         AppComponent,
-    ],
-}).compileComponents();
+      ],
+    }).compileComponents();
   });
 
   it('should create the app', () => {
@@ -18,7 +20,6 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
 
   it('should render router-outlet and app-message-modal', () => {
     const fixture = TestBed.createComponent(AppComponent);

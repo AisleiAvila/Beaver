@@ -273,15 +273,15 @@ export class AgendamentoComponent implements OnInit {
   dataFimMin: Date | null = null;
 
   // Flag para controlar se um prestador válido foi selecionado
-  prestadorValido: boolean = false;
+  prestadorValido = false;
   // Armazenar o último prestador válido selecionado
-  ultimoPrestadorValido: string = '';
+  ultimoPrestadorValido = '';
 
   // Estado de expansão dos filtros
-  filtrosExpanded: boolean = false;
+  filtrosExpanded = false;
 
   // Contador de filtros ativos
-  contadorFiltrosAtivos: number = 0;
+  contadorFiltrosAtivos = 0;
 
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('pt-BR');

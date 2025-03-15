@@ -12,7 +12,7 @@
     "target": "es2022", // Ajustado para es2022
     "module": "es2022", // Ajustado para es2022
     "lib": ["es2022", "dom"], // Ajustado para es2022
-    "types": ["node"],
+    "types": ["node", "jest"],
     "typeRoots": ["node_modules/@types"],
     "skipLibCheck": true,
     "resolveJsonModule": true,

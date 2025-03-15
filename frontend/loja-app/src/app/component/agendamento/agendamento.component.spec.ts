@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AgendamentoComponent } from './agendamento.component';
 
@@ -8,9 +10,12 @@ describe('AgendamentoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [AgendamentoComponent]
-})
-    .compileComponents();
+      imports: [
+        AgendamentoComponent,
+        TranslateModule.forRoot(),
+        BrowserAnimationsModule,
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AgendamentoComponent);
     component = fixture.componentInstance;

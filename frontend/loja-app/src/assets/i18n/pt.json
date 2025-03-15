@@ -152,7 +152,6 @@
   "register": "Registrar",
   "search": "Buscar",
   "settings": "Configurações",
-  "shop": "Loja",
   "TERMS_ACCEPTANCE": "Aceitação dos Termos",
   "TERMS_ACCEPTANCE_TEXT": "Ao acessar e usar este serviço, você aceita e concorda em cumprir estes termos e condições de uso.",
   "TERMS_INTELLECTUAL_PROPERTY": "Propriedade Intelectual",
@@ -186,7 +185,5 @@
   "TITLE_TAREFAS": "Tarefas",
   "TITLE_USUARIOS": "Usuários",
   "TITLE_WEBCAM_CAPTURE": "Webcam Capture",
-  "Usuários Ativos": "Usuários Ativos",
-  "Ver Todos": "Ver Todos",
-  "wishlist": "Lista de desejos"
+  "TITLE_USUARIOS_ATIVOS": "Usuários Ativos"
 }
