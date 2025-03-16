@@ -13,6 +13,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\PerfilController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\ProdutoController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\SenhaController.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\SubCategoriaController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\UsuarioController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\EmpresaApplication.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\exception\EmailAlreadyExistsException.java
@@ -42,10 +43,13 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\CategoriaQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\OrganizacaoQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\ProdutoQueryBuilder.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\SubCategoriaQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\UsuarioFotoQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\UsuarioQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SenhaRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SenhaRepositoryImpl.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SubCategoriaRepository.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SubCategoriaRepositoryImpl.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\UsuarioRecuperarSenhaRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\UsuarioRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\UsuarioRepositoryImpl.java
@@ -59,6 +63,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\PaisService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\PerfilService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\SenhaService.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\SubCategoriaService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\UsuarioService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\util\DataUtil.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\util\LocalDateDeserializer.java
@@ -130,6 +135,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\PerfilApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\ProdutoApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\SenhaApi.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\SubcategoriaApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\UsuarioApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\CategoriaModel.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\CategoriaRequest.java
@@ -165,6 +171,8 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenha200Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenha404Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenhaRequest.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SubCategoriaModel.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SubCategoriaRequest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\Updateendereco404Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\UsuarioFotoModel.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\UsuarioModel.java

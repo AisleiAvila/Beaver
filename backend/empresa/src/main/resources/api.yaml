@@ -781,6 +781,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CategoriaModel'
+  /subcategoria/find:
+    post:
+      summary: Busca SubCategorias
+      security:
+        - bearerAuth: []
+      tags:
+        - SubCategoria
+      operationId: findSubCategoria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubCategoriaRequest'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubCategoriaModel'
 
   /perfil/find:
     get:
@@ -1133,6 +1155,23 @@ components:
           type: integer
         offset:
           type: integer
+    SubCategoriaRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        categoria_id:
+          type: integer
+        nome:
+          type: string
+        status:
+          type: string
+        nivel_medio_complexidade:
+          type: string
+        limit:
+          type: integer
+        offset:
+          type: integer
 
     ChatResponseDTO:
         type: object
@@ -1393,4 +1432,33 @@ components:
                 nullable: true
             documentos_necessarios:
                 type: string
+    SubCategoriaModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        categoria_id:
+          type: integer
+        nome:
+          type: string
+        descricao:
+          type: string
+        status:
+          type: string
+        tempo_medio_minutos:
+            type: integer
+        nivel_complexidade:
+            type: string
+        preco_base:
+            type: number
+        unidade_medida:
+            type: string
+        materiais_tipicos:
+            type: string
+        data_criacao:
+          type: string
+          format: date-time
+        data_atualizacao:
+          type: string
+          format: date-time
 

@@ -2,6 +2,7 @@ com\dasad\empresa\jooq\tables\Fornecedor.class
 com\dasad\empresa\api\CategoriaApi.class
 com\dasad\empresa\controller\EnderecoController.class
 com\dasad\empresa\jooq\tables\records\PerfilRecord.class
+com\dasad\empresa\api\SubcategoriaApi.class
 com\dasad\empresa\jooq\tables\records\FornecedorRecord.class
 com\dasad\empresa\repository\query\UsuarioFotoQueryBuilder.class
 com\dasad\empresa\jooq\tables\Categoria$CategoriaPath.class
@@ -25,6 +26,7 @@ com\dasad\empresa\repository\PaisRepository.class
 com\dasad\empresa\repository\SenhaRepositoryImpl.class
 com\dasad\empresa\jooq\tables\Pedido$PedidoPath.class
 com\dasad\empresa\jooq\tables\Produto$ProdutoPath.class
+com\dasad\empresa\repository\SubCategoriaRepository.class
 com\dasad\empresa\model\Createendereco500Response.class
 com\dasad\empresa\jooq\tables\Endereco$EnderecoPath.class
 com\dasad\empresa\jooq\tables\ProdutoFornecedor$ProdutoFornecedorPath.class
@@ -58,6 +60,7 @@ com\dasad\empresa\model\UsuarioModel.class
 com\dasad\empresa\jooq\tables\Desconto.class
 com\dasad\empresa\model\UsuarioFotoModel.class
 com\dasad\empresa\model\RegisterRequestDTO.class
+com\dasad\empresa\model\SubCategoriaModel.class
 com\dasad\empresa\api\GeolocalizacaoApi.class
 com\dasad\empresa\model\RecuperarSenhaRequest.class
 com\dasad\empresa\util\DataUtil.class
@@ -66,6 +69,7 @@ com\dasad\empresa\jooq\tables\Subcategoria$SubcategoriaPath.class
 com\dasad\empresa\service\CidadeService.class
 com\dasad\empresa\jooq\tables\Estoque$EstoquePath.class
 com\dasad\empresa\model\OrganizacaoResponseDTO.class
+com\dasad\empresa\repository\SubCategoriaRepositoryImpl.class
 com\dasad\empresa\jooq\tables\records\ProdutoFornecedorRecord.class
 com\dasad\empresa\jooq\tables\records\EnderecoRecord.class
 com\dasad\empresa\model\PaisModel.class
@@ -149,6 +153,7 @@ com\dasad\empresa\repository\CidadeRepository.class
 com\dasad\empresa\repository\OrganizacaoRepository.class
 com\dasad\empresa\jooq\tables\Cliente.class
 com\dasad\empresa\jooq\tables\Produto.class
+com\dasad\empresa\repository\query\SubCategoriaQueryBuilder.class
 com\dasad\empresa\repository\SenhaRepository.class
 com\dasad\empresa\service\EstadoService.class
 com\dasad\empresa\model\EventPagination.class
@@ -160,6 +165,7 @@ com\dasad\empresa\repository\query\UsuarioQueryBuilder.class
 com\dasad\empresa\jooq\tables\PasswordResetToken$PasswordResetTokenPath.class
 com\dasad\empresa\model\SalvarSenhaRequest.class
 com\dasad\empresa\repository\query\ProdutoQueryBuilder.class
+com\dasad\empresa\controller\SubCategoriaController.class
 com\dasad\empresa\model\RevokeToken400Response.class
 com\dasad\empresa\model\PerfilModel.class
 com\dasad\empresa\jooq\tables\records\OrganizacaoRecord.class
@@ -185,6 +191,7 @@ com\dasad\empresa\model\Login400Response.class
 com\dasad\empresa\jooq\tables\Estoque.class
 com\dasad\empresa\jooq\tables\Usuario.class
 com\dasad\empresa\jooq\tables\records\ItemPedidoRecord.class
+com\dasad\empresa\service\SubCategoriaService.class
 com\dasad\empresa\jooq\tables\records\PrecosRegionaisRecord.class
 com\dasad\empresa\jooq\Tables.class
 com\dasad\empresa\infra\security\AuthorizationService.class
@@ -192,6 +199,7 @@ com\dasad\empresa\jooq\tables\records\HistoricoPrecoRecord.class
 com\dasad\empresa\model\EstadoModel.class
 com\dasad\empresa\controller\UsuarioController.class
 com\dasad\empresa\model\ValidarResetToken200Response.class
+com\dasad\empresa\model\SubCategoriaRequest.class
 com\dasad\empresa\util\NdjsonHttpMessageConverter.class
 com\dasad\empresa\infra\security\SecurityConfig.class
 com\dasad\empresa\repository\EnderecoRepositoryImpl.class
