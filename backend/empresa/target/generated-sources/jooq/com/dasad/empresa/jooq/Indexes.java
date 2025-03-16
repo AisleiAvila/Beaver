@@ -4,9 +4,9 @@
 package com.dasad.empresa.jooq;
 
 
-import com.dasad.empresa.jooq.tables.Categorias;
+import com.dasad.empresa.jooq.tables.Categoria;
 import com.dasad.empresa.jooq.tables.PrecosRegionais;
-import com.dasad.empresa.jooq.tables.Subcategorias;
+import com.dasad.empresa.jooq.tables.Subcategoria;
 import com.dasad.empresa.jooq.tables.UsuarioFoto;
 
 import org.jooq.Index;
@@ -25,10 +25,10 @@ public class Indexes {
     // INDEX definitions
     // -------------------------------------------------------------------------
 
-    public static final Index IDX_CATEGORIAS_STATUS = Internal.createIndex(DSL.name("idx_categorias_status"), Categorias.CATEGORIAS, new OrderField[] { Categorias.CATEGORIAS.STATUS }, false);
+    public static final Index IDX_CATEGORIA_STATUS = Internal.createIndex(DSL.name("idx_categoria_status"), Categoria.CATEGORIA, new OrderField[] { Categoria.CATEGORIA.STATUS }, false);
     public static final Index IDX_PRECOS_REGIAO = Internal.createIndex(DSL.name("idx_precos_regiao"), PrecosRegionais.PRECOS_REGIONAIS, new OrderField[] { PrecosRegionais.PRECOS_REGIONAIS.REGIAO_ID }, false);
     public static final Index IDX_PRECOS_SUBCATEGORIA = Internal.createIndex(DSL.name("idx_precos_subcategoria"), PrecosRegionais.PRECOS_REGIONAIS, new OrderField[] { PrecosRegionais.PRECOS_REGIONAIS.SUBCATEGORIA_ID }, false);
-    public static final Index IDX_SUBCATEGORIAS_CATEGORIA = Internal.createIndex(DSL.name("idx_subcategorias_categoria"), Subcategorias.SUBCATEGORIAS, new OrderField[] { Subcategorias.SUBCATEGORIAS.CATEGORIA_ID }, false);
-    public static final Index IDX_SUBCATEGORIAS_STATUS = Internal.createIndex(DSL.name("idx_subcategorias_status"), Subcategorias.SUBCATEGORIAS, new OrderField[] { Subcategorias.SUBCATEGORIAS.STATUS }, false);
+    public static final Index IDX_SUBCATEGORIA_CATEGORIA = Internal.createIndex(DSL.name("idx_subcategoria_categoria"), Subcategoria.SUBCATEGORIA, new OrderField[] { Subcategoria.SUBCATEGORIA.CATEGORIA_ID }, false);
+    public static final Index IDX_SUBCATEGORIA_STATUS = Internal.createIndex(DSL.name("idx_subcategoria_status"), Subcategoria.SUBCATEGORIA, new OrderField[] { Subcategoria.SUBCATEGORIA.STATUS }, false);
     public static final Index IDX_USUARIO_FOTO_USER_ID = Internal.createIndex(DSL.name("idx_usuario_foto_user_id"), UsuarioFoto.USUARIO_FOTO, new OrderField[] { UsuarioFoto.USUARIO_FOTO.USUARIO_ID, UsuarioFoto.USUARIO_FOTO.ATIVO, UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO, UsuarioFoto.USUARIO_FOTO.DATA_ATUALIZACAO }, false);
 }

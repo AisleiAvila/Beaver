@@ -7,7 +7,7 @@ package com.dasad.empresa.jooq.tables;
 import com.dasad.empresa.jooq.Keys;
 import com.dasad.empresa.jooq.Public;
 import com.dasad.empresa.jooq.tables.PrecosRegionais.PrecosRegionaisPath;
-import com.dasad.empresa.jooq.tables.Subcategorias.SubcategoriasPath;
+import com.dasad.empresa.jooq.tables.Subcategoria.SubcategoriaPath;
 import com.dasad.empresa.jooq.tables.records.RegioesRecord;
 
 import java.time.LocalDateTime;
@@ -191,10 +191,10 @@ public class Regioes extends TableImpl<RegioesRecord> {
 
     /**
      * Get the implicit many-to-many join path to the
-     * <code>public.subcategorias</code> table
+     * <code>public.subcategoria</code> table
      */
-    public SubcategoriasPath subcategorias() {
-        return precosRegionais().subcategorias();
+    public SubcategoriaPath subcategoria() {
+        return precosRegionais().subcategoria();
     }
 
     @Override

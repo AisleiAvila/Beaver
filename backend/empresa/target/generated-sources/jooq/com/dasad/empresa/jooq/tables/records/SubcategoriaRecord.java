@@ -4,7 +4,7 @@
 package com.dasad.empresa.jooq.tables.records;
 
 
-import com.dasad.empresa.jooq.tables.Subcategorias;
+import com.dasad.empresa.jooq.tables.Subcategoria;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,61 +17,61 @@ import org.jooq.impl.UpdatableRecordImpl;
  * Tabela de subcategorias de serviços vinculadas às categorias
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
-public class SubcategoriasRecord extends UpdatableRecordImpl<SubcategoriasRecord> {
+public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>public.subcategorias.id</code>.
+     * Setter for <code>public.subcategoria.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.id</code>.
+     * Getter for <code>public.subcategoria.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>public.subcategorias.categoria_id</code>.
+     * Setter for <code>public.subcategoria.categoria_id</code>.
      */
     public void setCategoriaId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.categoria_id</code>.
+     * Getter for <code>public.subcategoria.categoria_id</code>.
      */
     public Integer getCategoriaId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>public.subcategorias.nome</code>.
+     * Setter for <code>public.subcategoria.nome</code>.
      */
     public void setNome(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.nome</code>.
+     * Getter for <code>public.subcategoria.nome</code>.
      */
     public String getNome() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>public.subcategorias.descricao</code>.
+     * Setter for <code>public.subcategoria.descricao</code>.
      */
     public void setDescricao(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.descricao</code>.
+     * Getter for <code>public.subcategoria.descricao</code>.
      */
     public String getDescricao() {
         return (String) get(3);
@@ -104,14 +104,14 @@ public class SubcategoriasRecord extends UpdatableRecordImpl<SubcategoriasRecord
     }
 
     /**
-     * Setter for <code>public.subcategorias.tempo_medio_minutos</code>.
+     * Setter for <code>public.subcategoria.tempo_medio_minutos</code>.
      */
     public void setTempoMedioMinutos(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.tempo_medio_minutos</code>.
+     * Getter for <code>public.subcategoria.tempo_medio_minutos</code>.
      */
     public Integer getTempoMedioMinutos() {
         return (Integer) get(5);
@@ -144,14 +144,14 @@ public class SubcategoriasRecord extends UpdatableRecordImpl<SubcategoriasRecord
     }
 
     /**
-     * Setter for <code>public.subcategorias.preco_base</code>.
+     * Setter for <code>public.subcategoria.preco_base</code>.
      */
     public void setPrecoBase(BigDecimal value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.preco_base</code>.
+     * Getter for <code>public.subcategoria.preco_base</code>.
      */
     public BigDecimal getPrecoBase() {
         return (BigDecimal) get(7);
@@ -184,42 +184,42 @@ public class SubcategoriasRecord extends UpdatableRecordImpl<SubcategoriasRecord
     }
 
     /**
-     * Setter for <code>public.subcategorias.materiais_tipicos</code>.
+     * Setter for <code>public.subcategoria.materiais_tipicos</code>.
      */
     public void setMateriaisTipicos(String[] value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.materiais_tipicos</code>.
+     * Getter for <code>public.subcategoria.materiais_tipicos</code>.
      */
     public String[] getMateriaisTipicos() {
         return (String[]) get(9);
     }
 
     /**
-     * Setter for <code>public.subcategorias.data_criacao</code>.
+     * Setter for <code>public.subcategoria.data_criacao</code>.
      */
     public void setDataCriacao(LocalDateTime value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.data_criacao</code>.
+     * Getter for <code>public.subcategoria.data_criacao</code>.
      */
     public LocalDateTime getDataCriacao() {
         return (LocalDateTime) get(10);
     }
 
     /**
-     * Setter for <code>public.subcategorias.data_atualizacao</code>.
+     * Setter for <code>public.subcategoria.data_atualizacao</code>.
      */
     public void setDataAtualizacao(LocalDateTime value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>public.subcategorias.data_atualizacao</code>.
+     * Getter for <code>public.subcategoria.data_atualizacao</code>.
      */
     public LocalDateTime getDataAtualizacao() {
         return (LocalDateTime) get(11);
@@ -239,17 +239,17 @@ public class SubcategoriasRecord extends UpdatableRecordImpl<SubcategoriasRecord
     // -------------------------------------------------------------------------
 
     /**
-     * Create a detached SubcategoriasRecord
+     * Create a detached SubcategoriaRecord
      */
-    public SubcategoriasRecord() {
-        super(Subcategorias.SUBCATEGORIAS);
+    public SubcategoriaRecord() {
+        super(Subcategoria.SUBCATEGORIA);
     }
 
     /**
-     * Create a detached, initialised SubcategoriasRecord
+     * Create a detached, initialised SubcategoriaRecord
      */
-    public SubcategoriasRecord(Integer id, Integer categoriaId, String nome, String descricao, Object status, Integer tempoMedioMinutos, Object nivelComplexidade, BigDecimal precoBase, Object unidadeMedida, String[] materiaisTipicos, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao) {
-        super(Subcategorias.SUBCATEGORIAS);
+    public SubcategoriaRecord(Integer id, Integer categoriaId, String nome, String descricao, Object status, Integer tempoMedioMinutos, Object nivelComplexidade, BigDecimal precoBase, Object unidadeMedida, String[] materiaisTipicos, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao) {
+        super(Subcategoria.SUBCATEGORIA);
 
         setId(id);
         setCategoriaId(categoriaId);

@@ -4,7 +4,7 @@
 package com.dasad.empresa.jooq.tables.records;
 
 
-import com.dasad.empresa.jooq.tables.Categorias;
+import com.dasad.empresa.jooq.tables.Categoria;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,47 +17,47 @@ import org.jooq.impl.UpdatableRecordImpl;
  * Tabela principal de categorias de serviços
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
-public class CategoriasRecord extends UpdatableRecordImpl<CategoriasRecord> {
+public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>public.categorias.id</code>.
+     * Setter for <code>public.categoria.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.categorias.id</code>.
+     * Getter for <code>public.categoria.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>public.categorias.nome</code>.
+     * Setter for <code>public.categoria.nome</code>.
      */
     public void setNome(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.categorias.nome</code>.
+     * Getter for <code>public.categoria.nome</code>.
      */
     public String getNome() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>public.categorias.descricao</code>.
+     * Setter for <code>public.categoria.descricao</code>.
      */
     public void setDescricao(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.categorias.descricao</code>.
+     * Getter for <code>public.categoria.descricao</code>.
      */
     public String getDescricao() {
         return (String) get(2);
@@ -90,42 +90,42 @@ public class CategoriasRecord extends UpdatableRecordImpl<CategoriasRecord> {
     }
 
     /**
-     * Setter for <code>public.categorias.requer_certificacao</code>.
+     * Setter for <code>public.categoria.requer_certificacao</code>.
      */
     public void setRequerCertificacao(Boolean value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.categorias.requer_certificacao</code>.
+     * Getter for <code>public.categoria.requer_certificacao</code>.
      */
     public Boolean getRequerCertificacao() {
         return (Boolean) get(4);
     }
 
     /**
-     * Setter for <code>public.categorias.tipo_certificacao</code>.
+     * Setter for <code>public.categoria.tipo_certificacao</code>.
      */
     public void setTipoCertificacao(String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>public.categorias.tipo_certificacao</code>.
+     * Getter for <code>public.categoria.tipo_certificacao</code>.
      */
     public String getTipoCertificacao() {
         return (String) get(5);
     }
 
     /**
-     * Setter for <code>public.categorias.experiencia_minima_meses</code>.
+     * Setter for <code>public.categoria.experiencia_minima_meses</code>.
      */
     public void setExperienciaMinimaMeses(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>public.categorias.experiencia_minima_meses</code>.
+     * Getter for <code>public.categoria.experiencia_minima_meses</code>.
      */
     public Integer getExperienciaMinimaMeses() {
         return (Integer) get(6);
@@ -158,140 +158,140 @@ public class CategoriasRecord extends UpdatableRecordImpl<CategoriasRecord> {
     }
 
     /**
-     * Setter for <code>public.categorias.seguro_obrigatorio</code>.
+     * Setter for <code>public.categoria.seguro_obrigatorio</code>.
      */
     public void setSeguroObrigatorio(Boolean value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>public.categorias.seguro_obrigatorio</code>.
+     * Getter for <code>public.categoria.seguro_obrigatorio</code>.
      */
     public Boolean getSeguroObrigatorio() {
         return (Boolean) get(8);
     }
 
     /**
-     * Setter for <code>public.categorias.valor_base_hora</code>.
+     * Setter for <code>public.categoria.valor_base_hora</code>.
      */
     public void setValorBaseHora(BigDecimal value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>public.categorias.valor_base_hora</code>.
+     * Getter for <code>public.categoria.valor_base_hora</code>.
      */
     public BigDecimal getValorBaseHora() {
         return (BigDecimal) get(9);
     }
 
     /**
-     * Setter for <code>public.categorias.data_criacao</code>.
+     * Setter for <code>public.categoria.data_criacao</code>.
      */
     public void setDataCriacao(LocalDateTime value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>public.categorias.data_criacao</code>.
+     * Getter for <code>public.categoria.data_criacao</code>.
      */
     public LocalDateTime getDataCriacao() {
         return (LocalDateTime) get(10);
     }
 
     /**
-     * Setter for <code>public.categorias.data_atualizacao</code>.
+     * Setter for <code>public.categoria.data_atualizacao</code>.
      */
     public void setDataAtualizacao(LocalDateTime value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>public.categorias.data_atualizacao</code>.
+     * Getter for <code>public.categoria.data_atualizacao</code>.
      */
     public LocalDateTime getDataAtualizacao() {
         return (LocalDateTime) get(11);
     }
 
     /**
-     * Setter for <code>public.categorias.url_imagem</code>.
+     * Setter for <code>public.categoria.url_imagem</code>.
      */
     public void setUrlImagem(String value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>public.categorias.url_imagem</code>.
+     * Getter for <code>public.categoria.url_imagem</code>.
      */
     public String getUrlImagem() {
         return (String) get(12);
     }
 
     /**
-     * Setter for <code>public.categorias.palavras_chave</code>.
+     * Setter for <code>public.categoria.palavras_chave</code>.
      */
     public void setPalavrasChave(String[] value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>public.categorias.palavras_chave</code>.
+     * Getter for <code>public.categoria.palavras_chave</code>.
      */
     public String[] getPalavrasChave() {
         return (String[]) get(13);
     }
 
     /**
-     * Setter for <code>public.categorias.horas_minimas_agendamento</code>.
+     * Setter for <code>public.categoria.horas_minimas_agendamento</code>.
      */
     public void setHorasMinimasAgendamento(Integer value) {
         set(14, value);
     }
 
     /**
-     * Getter for <code>public.categorias.horas_minimas_agendamento</code>.
+     * Getter for <code>public.categoria.horas_minimas_agendamento</code>.
      */
     public Integer getHorasMinimasAgendamento() {
         return (Integer) get(14);
     }
 
     /**
-     * Setter for <code>public.categorias.horas_cancelamento_gratis</code>.
+     * Setter for <code>public.categoria.horas_cancelamento_gratis</code>.
      */
     public void setHorasCancelamentoGratis(Integer value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>public.categorias.horas_cancelamento_gratis</code>.
+     * Getter for <code>public.categoria.horas_cancelamento_gratis</code>.
      */
     public Integer getHorasCancelamentoGratis() {
         return (Integer) get(15);
     }
 
     /**
-     * Setter for <code>public.categorias.percentual_comissao</code>.
+     * Setter for <code>public.categoria.percentual_comissao</code>.
      */
     public void setPercentualComissao(BigDecimal value) {
         set(16, value);
     }
 
     /**
-     * Getter for <code>public.categorias.percentual_comissao</code>.
+     * Getter for <code>public.categoria.percentual_comissao</code>.
      */
     public BigDecimal getPercentualComissao() {
         return (BigDecimal) get(16);
     }
 
     /**
-     * Setter for <code>public.categorias.documentos_necessarios</code>.
+     * Setter for <code>public.categoria.documentos_necessarios</code>.
      */
     public void setDocumentosNecessarios(String[] value) {
         set(17, value);
     }
 
     /**
-     * Getter for <code>public.categorias.documentos_necessarios</code>.
+     * Getter for <code>public.categoria.documentos_necessarios</code>.
      */
     public String[] getDocumentosNecessarios() {
         return (String[]) get(17);
@@ -311,17 +311,17 @@ public class CategoriasRecord extends UpdatableRecordImpl<CategoriasRecord> {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a detached CategoriasRecord
+     * Create a detached CategoriaRecord
      */
-    public CategoriasRecord() {
-        super(Categorias.CATEGORIAS);
+    public CategoriaRecord() {
+        super(Categoria.CATEGORIA);
     }
 
     /**
-     * Create a detached, initialised CategoriasRecord
+     * Create a detached, initialised CategoriaRecord
      */
-    public CategoriasRecord(Integer id, String nome, String descricao, Object status, Boolean requerCertificacao, String tipoCertificacao, Integer experienciaMinimaMeses, Object nivelRisco, Boolean seguroObrigatorio, BigDecimal valorBaseHora, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao, String urlImagem, String[] palavrasChave, Integer horasMinimasAgendamento, Integer horasCancelamentoGratis, BigDecimal percentualComissao, String[] documentosNecessarios) {
-        super(Categorias.CATEGORIAS);
+    public CategoriaRecord(Integer id, String nome, String descricao, Object status, Boolean requerCertificacao, String tipoCertificacao, Integer experienciaMinimaMeses, Object nivelRisco, Boolean seguroObrigatorio, BigDecimal valorBaseHora, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao, String urlImagem, String[] palavrasChave, Integer horasMinimasAgendamento, Integer horasCancelamentoGratis, BigDecimal percentualComissao, String[] documentosNecessarios) {
+        super(Categoria.CATEGORIA);
 
         setId(id);
         setNome(nome);

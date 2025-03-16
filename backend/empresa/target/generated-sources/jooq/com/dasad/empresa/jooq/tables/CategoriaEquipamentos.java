@@ -6,7 +6,7 @@ package com.dasad.empresa.jooq.tables;
 
 import com.dasad.empresa.jooq.Keys;
 import com.dasad.empresa.jooq.Public;
-import com.dasad.empresa.jooq.tables.Categorias.CategoriasPath;
+import com.dasad.empresa.jooq.tables.Categoria.CategoriaPath;
 import com.dasad.empresa.jooq.tables.records.CategoriaEquipamentosRecord;
 
 import java.time.LocalDateTime;
@@ -182,16 +182,16 @@ public class CategoriaEquipamentos extends TableImpl<CategoriaEquipamentosRecord
         return Arrays.asList(Keys.CATEGORIA_EQUIPAMENTOS__CATEGORIA_EQUIPAMENTOS_CATEGORIA_ID_FKEY);
     }
 
-    private transient CategoriasPath _categorias;
+    private transient CategoriaPath _categoria;
 
     /**
-     * Get the implicit join path to the <code>public.categorias</code> table.
+     * Get the implicit join path to the <code>public.categoria</code> table.
      */
-    public CategoriasPath categorias() {
-        if (_categorias == null)
-            _categorias = new CategoriasPath(this, Keys.CATEGORIA_EQUIPAMENTOS__CATEGORIA_EQUIPAMENTOS_CATEGORIA_ID_FKEY, null);
+    public CategoriaPath categoria() {
+        if (_categoria == null)
+            _categoria = new CategoriaPath(this, Keys.CATEGORIA_EQUIPAMENTOS__CATEGORIA_EQUIPAMENTOS_CATEGORIA_ID_FKEY, null);
 
-        return _categorias;
+        return _categoria;
     }
 
     @Override

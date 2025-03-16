@@ -4,8 +4,8 @@
 package com.dasad.empresa.jooq;
 
 
+import com.dasad.empresa.jooq.tables.Categoria;
 import com.dasad.empresa.jooq.tables.CategoriaEquipamentos;
-import com.dasad.empresa.jooq.tables.Categorias;
 import com.dasad.empresa.jooq.tables.Cidade;
 import com.dasad.empresa.jooq.tables.Cliente;
 import com.dasad.empresa.jooq.tables.Desconto;
@@ -24,7 +24,7 @@ import com.dasad.empresa.jooq.tables.PrecosRegionais;
 import com.dasad.empresa.jooq.tables.Produto;
 import com.dasad.empresa.jooq.tables.ProdutoFornecedor;
 import com.dasad.empresa.jooq.tables.Regioes;
-import com.dasad.empresa.jooq.tables.Subcategorias;
+import com.dasad.empresa.jooq.tables.Subcategoria;
 import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.jooq.tables.UsuarioFoto;
 import com.dasad.empresa.jooq.tables.UsuarioPerfil;
@@ -52,14 +52,14 @@ public class Public extends SchemaImpl {
     public static final Public PUBLIC = new Public();
 
     /**
+     * Tabela principal de categorias de serviços
+     */
+    public final Categoria CATEGORIA = Categoria.CATEGORIA;
+
+    /**
      * Equipamentos necessários para cada categoria de serviço
      */
     public final CategoriaEquipamentos CATEGORIA_EQUIPAMENTOS = CategoriaEquipamentos.CATEGORIA_EQUIPAMENTOS;
-
-    /**
-     * Tabela principal de categorias de serviços
-     */
-    public final Categorias CATEGORIAS = Categorias.CATEGORIAS;
 
     /**
      * The table <code>public.cidade</code>.
@@ -154,7 +154,7 @@ public class Public extends SchemaImpl {
     /**
      * Tabela de subcategorias de serviços vinculadas às categorias
      */
-    public final Subcategorias SUBCATEGORIAS = Subcategorias.SUBCATEGORIAS;
+    public final Subcategoria SUBCATEGORIA = Subcategoria.SUBCATEGORIA;
 
     /**
      * The table <code>public.usuario</code>.
@@ -192,8 +192,8 @@ public class Public extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
+            Categoria.CATEGORIA,
             CategoriaEquipamentos.CATEGORIA_EQUIPAMENTOS,
-            Categorias.CATEGORIAS,
             Cidade.CIDADE,
             Cliente.CLIENTE,
             Desconto.DESCONTO,
@@ -212,7 +212,7 @@ public class Public extends SchemaImpl {
             Produto.PRODUTO,
             ProdutoFornecedor.PRODUTO_FORNECEDOR,
             Regioes.REGIOES,
-            Subcategorias.SUBCATEGORIAS,
+            Subcategoria.SUBCATEGORIA,
             Usuario.USUARIO,
             UsuarioFoto.USUARIO_FOTO,
             UsuarioPerfil.USUARIO_PERFIL,

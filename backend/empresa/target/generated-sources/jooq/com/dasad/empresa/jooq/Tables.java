@@ -4,8 +4,8 @@
 package com.dasad.empresa.jooq;
 
 
+import com.dasad.empresa.jooq.tables.Categoria;
 import com.dasad.empresa.jooq.tables.CategoriaEquipamentos;
-import com.dasad.empresa.jooq.tables.Categorias;
 import com.dasad.empresa.jooq.tables.Cidade;
 import com.dasad.empresa.jooq.tables.Cliente;
 import com.dasad.empresa.jooq.tables.Desconto;
@@ -24,7 +24,7 @@ import com.dasad.empresa.jooq.tables.PrecosRegionais;
 import com.dasad.empresa.jooq.tables.Produto;
 import com.dasad.empresa.jooq.tables.ProdutoFornecedor;
 import com.dasad.empresa.jooq.tables.Regioes;
-import com.dasad.empresa.jooq.tables.Subcategorias;
+import com.dasad.empresa.jooq.tables.Subcategoria;
 import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.jooq.tables.UsuarioFoto;
 import com.dasad.empresa.jooq.tables.UsuarioPerfil;
@@ -38,14 +38,14 @@ import com.dasad.empresa.jooq.tables.UsuarioRecuperarSenha;
 public class Tables {
 
     /**
+     * Tabela principal de categorias de serviços
+     */
+    public static final Categoria CATEGORIA = Categoria.CATEGORIA;
+
+    /**
      * Equipamentos necessários para cada categoria de serviço
      */
     public static final CategoriaEquipamentos CATEGORIA_EQUIPAMENTOS = CategoriaEquipamentos.CATEGORIA_EQUIPAMENTOS;
-
-    /**
-     * Tabela principal de categorias de serviços
-     */
-    public static final Categorias CATEGORIAS = Categorias.CATEGORIAS;
 
     /**
      * The table <code>public.cidade</code>.
@@ -140,7 +140,7 @@ public class Tables {
     /**
      * Tabela de subcategorias de serviços vinculadas às categorias
      */
-    public static final Subcategorias SUBCATEGORIAS = Subcategorias.SUBCATEGORIAS;
+    public static final Subcategoria SUBCATEGORIA = Subcategoria.SUBCATEGORIA;
 
     /**
      * The table <code>public.usuario</code>.

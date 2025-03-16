@@ -7,6 +7,8 @@ info:
 tags:
   - name: Auth
     description: Operações relacionadas a autenticação
+  - name: Categoria
+    description: Operações relacionadas a categorias
   - name: chat
     description: Operações relacionadas a chat
   - name: Endereço
@@ -23,6 +25,8 @@ tags:
     description: Operações relacionadas a produtos
   - name: Senha
     description: Operações relacionadas a senha de acesso do usuário
+  - name: Subcategoria
+    description: Operações relacionadas a subcategorias
   - name: Usuario
     description: Operações relacionadas a usuários
   - name: Geolocalização
@@ -755,6 +759,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/CidadeModel'
 
+  /categoria/find:
+    post:
+      summary: Busca Categorias
+      security:
+        - bearerAuth: []
+      tags:
+        - Categoria
+      operationId: findCategoria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaRequest'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoriaModel'
 
   /perfil/find:
     get:
@@ -1086,6 +1112,27 @@ components:
             type: integer
         previousPageIndex:
             type: integer
+    CategoriaRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        status:
+          type: string
+        requer_certificacao:
+          type: boolean
+        tipo_certificacao:
+          type: string
+        experiencia_minima_meses:
+            type: integer
+        nivel_risco:
+            type: string
+        limit:
+          type: integer
+        offset:
+          type: integer
 
     ChatResponseDTO:
         type: object
@@ -1303,4 +1350,47 @@ components:
           type: integer
         nome:
           type: string
+    CategoriaModel:
+        type: object
+        properties:
+            id:
+              type: integer
+            nome:
+              type: string
+            descricao:
+              type: string
+            status:
+              type: string
+            requer_certificacao:
+                type: boolean
+            tipo_certificacao:
+                type: string
+            experiencia_minima_meses:
+              type: integer
+            nivel_risco:
+              type: string
+            seguro_obrigatorio:
+                type: boolean
+            valor_base_hora:
+                type: number
+            data_criacao:
+                type: string
+                format: date-time
+            data_atualizacao:
+                type: string
+                format: date-time
+            url_imagem:
+                type: string
+            palavras_chave:
+                type: string
+            horas_minimas_agendamento:
+                type: integer
+            horas_cancelamento_gratis:
+                type: integer
+            percentual_comissao:
+                type: number
+                format: float
+                nullable: true
+            documentos_necessarios:
+                type: string
 

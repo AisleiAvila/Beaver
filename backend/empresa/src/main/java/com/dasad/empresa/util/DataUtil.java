@@ -7,15 +7,6 @@ import java.util.Optional;
 
 public class DataUtil {
 
-//    public static LocalDate convertStringToLocalDate(String strData) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//
-//        return Optional.ofNullable(strData)
-//                .filter(data -> !data.trim().isEmpty())
-//                .map(data -> LocalDate.parse(data, formatter))
-//                .orElse(null);
-//    }
-
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static LocalDate convertStringToLocalDate(String dateString) {

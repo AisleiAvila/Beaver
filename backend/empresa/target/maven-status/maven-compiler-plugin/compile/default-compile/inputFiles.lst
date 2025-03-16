@@ -2,6 +2,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\config\OpenAPIConfig.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\config\RestTemplateConfig.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\AuthController.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\CategoriaController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\ChatController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\CidadeController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\EnderecoController.java
@@ -24,6 +25,8 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\SecurityConfig.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\SecurityFilter.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\models\EnderecoModel.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\CategoriaRepository.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\CategoriaRepositoryImpl.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\CidadeRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\CidadeRepositoryImpl.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\EnderecoRepository.java
@@ -36,6 +39,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\PaisRepositoryImpl.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\PerfilRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\PerfilRepositoryImpl.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\CategoriaQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\OrganizacaoQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\ProdutoQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\UsuarioFotoQueryBuilder.java
@@ -45,6 +49,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\UsuarioRecuperarSenhaRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\UsuarioRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\UsuarioRepositoryImpl.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\CategoriaService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\CidadeService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\EmailService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\EnderecoService.java
@@ -63,8 +68,8 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\Keys.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\Public.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\Tables.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Categoria.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\CategoriaEquipamentos.java
-C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Categorias.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Cidade.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Cliente.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Desconto.java
@@ -83,7 +88,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Produto.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\ProdutoFornecedor.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\CategoriaEquipamentosRecord.java
-C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\CategoriasRecord.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\CategoriaRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\CidadeRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\ClienteRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\DescontoRecord.java
@@ -102,18 +107,19 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\ProdutoFornecedorRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\ProdutoRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\RegioesRecord.java
-C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\SubcategoriasRecord.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\SubcategoriaRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioFotoRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioPerfilRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioRecuperarSenhaRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Regioes.java
-C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Subcategorias.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Subcategoria.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Usuario.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioFoto.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioPerfil.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioRecuperarSenha.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\AuthApi.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\CategoriaApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\ChatApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\CidadeApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\EnderecoApi.java
@@ -125,6 +131,8 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\ProdutoApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\SenhaApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\UsuarioApi.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\CategoriaModel.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\CategoriaRequest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\ChatRequestDTO.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\ChatResponseDTO.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\CidadeModel.java

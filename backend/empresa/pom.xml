@@ -306,11 +306,11 @@
                                 usuario_perfil |
                                 usuario_recuperar_senha |
                                 categoria_equipamentos |
-                                categorias |
+                                categoria |
                                 desconto |
                                 precos_regionais |
                                 regioes |
-                                subcategorias |
+                                subcategoria |
                                 usuario_foto
                             </includes>
                             <inputSchema>public</inputSchema>

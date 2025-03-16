@@ -8,7 +8,7 @@ import com.dasad.empresa.jooq.Indexes;
 import com.dasad.empresa.jooq.Keys;
 import com.dasad.empresa.jooq.Public;
 import com.dasad.empresa.jooq.tables.Regioes.RegioesPath;
-import com.dasad.empresa.jooq.tables.Subcategorias.SubcategoriasPath;
+import com.dasad.empresa.jooq.tables.Subcategoria.SubcategoriaPath;
 import com.dasad.empresa.jooq.tables.records.PrecosRegionaisRecord;
 
 import java.math.BigDecimal;
@@ -208,17 +208,16 @@ public class PrecosRegionais extends TableImpl<PrecosRegionaisRecord> {
         return _regioes;
     }
 
-    private transient SubcategoriasPath _subcategorias;
+    private transient SubcategoriaPath _subcategoria;
 
     /**
-     * Get the implicit join path to the <code>public.subcategorias</code>
-     * table.
+     * Get the implicit join path to the <code>public.subcategoria</code> table.
      */
-    public SubcategoriasPath subcategorias() {
-        if (_subcategorias == null)
-            _subcategorias = new SubcategoriasPath(this, Keys.PRECOS_REGIONAIS__PRECOS_REGIONAIS_SUBCATEGORIA_ID_FKEY, null);
+    public SubcategoriaPath subcategoria() {
+        if (_subcategoria == null)
+            _subcategoria = new SubcategoriaPath(this, Keys.PRECOS_REGIONAIS__PRECOS_REGIONAIS_SUBCATEGORIA_ID_FKEY, null);
 
-        return _subcategorias;
+        return _subcategoria;
     }
 
     @Override

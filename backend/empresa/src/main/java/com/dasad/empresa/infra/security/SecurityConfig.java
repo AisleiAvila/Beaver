@@ -45,7 +45,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Habilitar CORS aqui
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests(authorize -> {
+                .authorizeHttpRequests(authorize -> {
                     for (String url : excludedUrls) {
                         authorize.requestMatchers(url).permitAll();
                     }
