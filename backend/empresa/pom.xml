@@ -310,6 +310,7 @@
                                 desconto |
                                 precos_regionais |
                                 regioes |
+                                status_servico |
                                 subcategoria |
                                 usuario_foto
                             </includes>

@@ -15,6 +15,7 @@ com\dasad\empresa\model\OrganizacaoRequest.class
 com\dasad\empresa\jooq\tables\records\RegioesRecord.class
 com\dasad\empresa\controller\AuthController.class
 com\dasad\empresa\repository\PerfilRepository.class
+com\dasad\empresa\jooq\enums\StatusServico.class
 com\dasad\empresa\jooq\tables\Pais.class
 com\dasad\empresa\jooq\Keys.class
 com\dasad\empresa\jooq\tables\ItemPedido$ItemPedidoPath.class
@@ -53,6 +54,7 @@ com\dasad\empresa\jooq\tables\Estado$EstadoPath.class
 com\dasad\empresa\jooq\tables\records\CategoriaRecord.class
 com\dasad\empresa\model\RevokeTokenRequest.class
 com\dasad\empresa\jooq\tables\records\SubcategoriaRecord.class
+com\dasad\empresa\model\StatusServico.class
 com\dasad\empresa\controller\SenhaController.class
 com\dasad\empresa\api\EnderecoApi.class
 com\dasad\empresa\model\RecuperarSenha200Response.class

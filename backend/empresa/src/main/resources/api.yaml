@@ -759,6 +759,61 @@ paths:
               schema:
                 $ref: '#/components/schemas/CidadeModel'
 
+  /categoria:
+    post:
+      summary: Cria uma categoria
+      security:
+        - bearerAuth: []
+      tags:
+        - Categoria
+      operationId: createCategoria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaModel'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriaModel'
+    patch:
+      summary: Atualiza uma categoria
+      security:
+        - bearerAuth: []
+      tags:
+        - Categoria
+      operationId: updateCategoria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaModel'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriaModel'
+    delete:
+      summary: Deleta uma categoria
+      security:
+        - bearerAuth: []
+      tags:
+        - Categoria
+      operationId: deleteCategoria
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
   /categoria/find:
     post:
       summary: Busca Categorias
@@ -1142,7 +1197,8 @@ components:
         nome:
           type: string
         status:
-          type: string
+          $ref: '#/components/schemas/StatusServico'
+#          type: string
         requer_certificacao:
           type: boolean
         tipo_certificacao:
@@ -1399,7 +1455,8 @@ components:
             descricao:
               type: string
             status:
-              type: string
+              $ref: '#/components/schemas/StatusServico'
+#              type: string
             requer_certificacao:
                 type: boolean
             tipo_certificacao:
@@ -1446,19 +1503,26 @@ components:
         status:
           type: string
         tempo_medio_minutos:
-            type: integer
+          type: integer
         nivel_complexidade:
-            type: string
+          type: string
         preco_base:
-            type: number
+          type: number
         unidade_medida:
-            type: string
+          type: string
         materiais_tipicos:
-            type: string
+          type: string
         data_criacao:
           type: string
           format: date-time
         data_atualizacao:
           type: string
           format: date-time
+    StatusServico:
+      type: string
+      enum:
+        - ATIVO
+        - INATIVO
+        - SUSPENSO
+
 

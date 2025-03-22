@@ -4,6 +4,7 @@
 package com.dasad.empresa.jooq.tables.records;
 
 
+import com.dasad.empresa.jooq.enums.StatusServico;
 import com.dasad.empresa.jooq.tables.Categoria;
 
 import java.math.BigDecimal;
@@ -64,29 +65,17 @@ public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
     }
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * Setter for <code>public.categoria.status</code>.
      */
-    @Deprecated
-    public void setStatus(Object value) {
+    public void setStatus(StatusServico value) {
         set(3, value);
     }
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * Getter for <code>public.categoria.status</code>.
      */
-    @Deprecated
-    public Object getStatus() {
-        return get(3);
+    public StatusServico getStatus() {
+        return (StatusServico) get(3);
     }
 
     /**
@@ -320,7 +309,7 @@ public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
     /**
      * Create a detached, initialised CategoriaRecord
      */
-    public CategoriaRecord(Integer id, String nome, String descricao, Object status, Boolean requerCertificacao, String tipoCertificacao, Integer experienciaMinimaMeses, Object nivelRisco, Boolean seguroObrigatorio, BigDecimal valorBaseHora, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao, String urlImagem, String[] palavrasChave, Integer horasMinimasAgendamento, Integer horasCancelamentoGratis, BigDecimal percentualComissao, String[] documentosNecessarios) {
+    public CategoriaRecord(Integer id, String nome, String descricao, StatusServico status, Boolean requerCertificacao, String tipoCertificacao, Integer experienciaMinimaMeses, Object nivelRisco, Boolean seguroObrigatorio, BigDecimal valorBaseHora, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao, String urlImagem, String[] palavrasChave, Integer horasMinimasAgendamento, Integer horasCancelamentoGratis, BigDecimal percentualComissao, String[] documentosNecessarios) {
         super(Categoria.CATEGORIA);
 
         setId(id);

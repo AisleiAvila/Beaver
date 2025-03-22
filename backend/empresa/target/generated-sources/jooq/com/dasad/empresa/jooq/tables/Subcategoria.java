@@ -7,6 +7,7 @@ package com.dasad.empresa.jooq.tables;
 import com.dasad.empresa.jooq.Indexes;
 import com.dasad.empresa.jooq.Keys;
 import com.dasad.empresa.jooq.Public;
+import com.dasad.empresa.jooq.enums.StatusServico;
 import com.dasad.empresa.jooq.tables.Categoria.CategoriaPath;
 import com.dasad.empresa.jooq.tables.PrecosRegionais.PrecosRegionaisPath;
 import com.dasad.empresa.jooq.tables.Regioes.RegioesPath;
@@ -87,15 +88,9 @@ public class Subcategoria extends TableImpl<SubcategoriaRecord> {
     public final TableField<SubcategoriaRecord, String> DESCRICAO = createField(DSL.name("descricao"), SQLDataType.CLOB, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>public.subcategoria.status</code>.
      */
-    @Deprecated
-    public final TableField<SubcategoriaRecord, Object> STATUS = createField(DSL.name("status"), DefaultDataType.getDefaultDataType("\"public\".\"status_servico\"").nullable(false).defaultValue(DSL.field(DSL.raw("'ATIVO'::status_servico"), org.jooq.impl.SQLDataType.OTHER)), this, "");
+    public final TableField<SubcategoriaRecord, StatusServico> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR.nullable(false).defaultValue(DSL.field(DSL.raw("'ATIVO'::status_servico"), SQLDataType.VARCHAR)).asEnumDataType(StatusServico.class), this, "");
 
     /**
      * The column <code>public.subcategoria.tempo_medio_minutos</code>.

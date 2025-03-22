@@ -17,11 +17,9 @@ import java.util.stream.Collectors;
 public class UsuarioFotoQueryBuilder {
     private SelectConditionStep<Record6<Integer, Integer, byte[], LocalDateTime, LocalDateTime, Boolean>> query;
     private final static Integer DEFAULT_LIMIT = 10;
-    private final DSLContext dslContext;
     private Integer limit = DEFAULT_LIMIT;
 
     public UsuarioFotoQueryBuilder(DSLContext db) {
-        this.dslContext = db;
 
         this.query = db.select(
                         UsuarioFoto.USUARIO_FOTO.ID,

@@ -1,5 +1,6 @@
 package com.dasad.empresa.service;
 
+import aj.org.objectweb.asm.commons.Remapper;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
 import com.dasad.empresa.repository.CategoriaRepository;
@@ -21,5 +22,15 @@ public class CategoriaService {
         return this.categoriaRepository.find(categoriaRequest);
     }
 
+    public Optional<CategoriaModel> create(CategoriaModel categoriaModel) {
+        return this.categoriaRepository.create(categoriaModel);
+    }
 
+    public void delete(Integer id) {
+        this.categoriaRepository.delete(id);
+    }
+
+    public Optional<Object> findById(Integer id) {
+        return this.categoriaRepository.findById(id);
+    }
 }

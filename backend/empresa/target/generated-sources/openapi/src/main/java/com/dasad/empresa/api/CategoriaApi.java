@@ -33,10 +33,68 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-16T01:23:15.460529900Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-22T15:44:36.725596400Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Categoria", description = "Operações relacionadas a categorias")
 public interface CategoriaApi {
+
+    /**
+     * POST /categoria : Cria uma categoria
+     *
+     * @param categoriaModel  (optional)
+     * @return Sucesso (status code 200)
+     */
+    @Operation(
+        operationId = "createCategoria",
+        summary = "Cria uma categoria",
+        tags = { "Categoria" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Sucesso", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CategoriaModel.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/categoria",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<CategoriaModel> createCategoria(
+        @Parameter(name = "CategoriaModel", description = "") @Valid @RequestBody(required = false) CategoriaModel categoriaModel
+    );
+
+
+    /**
+     * DELETE /categoria : Deleta uma categoria
+     *
+     * @param id  (required)
+     * @return No Content (status code 204)
+     */
+    @Operation(
+        operationId = "deleteCategoria",
+        summary = "Deleta uma categoria",
+        tags = { "Categoria" },
+        responses = {
+            @ApiResponse(responseCode = "204", description = "No Content")
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.DELETE,
+        value = "/categoria"
+    )
+    
+    ResponseEntity<Void> deleteCategoria(
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
+    );
+
 
     /**
      * POST /categoria/find : Busca Categorias
@@ -66,6 +124,37 @@ public interface CategoriaApi {
     
     ResponseEntity<List<CategoriaModel>> findCategoria(
         @Parameter(name = "CategoriaRequest", description = "") @Valid @RequestBody(required = false) CategoriaRequest categoriaRequest
+    );
+
+
+    /**
+     * PATCH /categoria : Atualiza uma categoria
+     *
+     * @param categoriaModel  (optional)
+     * @return Sucesso (status code 200)
+     */
+    @Operation(
+        operationId = "updateCategoria",
+        summary = "Atualiza uma categoria",
+        tags = { "Categoria" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Sucesso", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CategoriaModel.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PATCH,
+        value = "/categoria",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<CategoriaModel> updateCategoria(
+        @Parameter(name = "CategoriaModel", description = "") @Valid @RequestBody(required = false) CategoriaModel categoriaModel
     );
 
 }

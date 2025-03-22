@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("login_400_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-16T01:23:15.460529900Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-22T15:44:36.725596400Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 public class Login400Response {
 
   private String error;

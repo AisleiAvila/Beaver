@@ -1,9 +1,11 @@
 package com.dasad.empresa.repository.query;
 
+import com.dasad.empresa.jooq.enums.StatusServico;
 import com.dasad.empresa.jooq.tables.Categoria;
 import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.model.CategoriaModel;
 import jakarta.annotation.Nonnull;
+import jakarta.validation.constraints.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.Record18;
 import org.jooq.SelectConditionStep;
@@ -19,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class CategoriaQueryBuilder {
-    private  SelectConditionStep<Record18<Integer, String, String, Object, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]>> query;
+    private @NotNull SelectConditionStep<Record18<Integer, String, String, StatusServico, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]>> query;
     private final static Integer DEFAULT_LIMIT = 10;
     private final DSLContext dslContext;
 
@@ -63,8 +65,8 @@ public class CategoriaQueryBuilder {
         return this;
     }
 
-    public  CategoriaQueryBuilder withStatus(@Nonnull String status) {
-        if (status != null &&  !status.isEmpty()) {
+    public  CategoriaQueryBuilder withStatus(@Nonnull StatusServico status) {
+        if (status != null ) {
             this.query = this.query.and(Categoria.CATEGORIA.STATUS.eq(status));
         }
         return this;
@@ -113,12 +115,12 @@ public class CategoriaQueryBuilder {
                     record -> record.get(Usuario.USUARIO.ID),
                     Collectors.mapping(record -> record, Collectors.toList())
             )).values().stream().map(records -> {
-                Record18<Integer, String, String, Object, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]> record = records.getFirst();
+                Record18<Integer, String, String, StatusServico, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]> record = records.getFirst();
                 CategoriaModel categoria = new CategoriaModel();
                 categoria.setId(record.get(Categoria.CATEGORIA.ID));
                 categoria.setNome(record.get(Categoria.CATEGORIA.NOME));
                 categoria.setDescricao(record.get(Categoria.CATEGORIA.DESCRICAO));
-                categoria.setStatus(record.get(Categoria.CATEGORIA.STATUS).toString());
+                categoria.setStatus(com.dasad.empresa.model.StatusServico.valueOf(record.get(Categoria.CATEGORIA.STATUS).toString()));
                 categoria.setRequerCertificacao(record.get(Categoria.CATEGORIA.REQUER_CERTIFICACAO));
                 categoria.setTipoCertificacao(record.get(Categoria.CATEGORIA.TIPO_CERTIFICACAO));
                 categoria.setExperienciaMinimaMeses(record.get(Categoria.CATEGORIA.EXPERIENCIA_MINIMA_MESES));

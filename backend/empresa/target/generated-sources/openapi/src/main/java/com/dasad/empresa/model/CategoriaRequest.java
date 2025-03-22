@@ -2,8 +2,10 @@ package com.dasad.empresa.model;
 
 import java.net.URI;
 import java.util.Objects;
+import com.dasad.empresa.model.StatusServico;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -18,14 +20,14 @@ import jakarta.annotation.Generated;
  * CategoriaRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-16T01:23:15.460529900Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-22T15:44:36.725596400Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 public class CategoriaRequest {
 
   private Integer id;
 
   private String nome;
 
-  private String status;
+  private StatusServico status;
 
   private Boolean requerCertificacao;
 
@@ -79,7 +81,7 @@ public class CategoriaRequest {
     this.nome = nome;
   }
 
-  public CategoriaRequest status(String status) {
+  public CategoriaRequest status(StatusServico status) {
     this.status = status;
     return this;
   }
@@ -88,14 +90,14 @@ public class CategoriaRequest {
    * Get status
    * @return status
    */
-  
+  @Valid 
   @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("status")
-  public String getStatus() {
+  public StatusServico getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusServico status) {
     this.status = status;
   }
 

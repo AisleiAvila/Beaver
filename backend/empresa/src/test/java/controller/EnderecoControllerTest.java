@@ -35,22 +35,16 @@ public class EnderecoControllerTest {
 
     private EnderecoModel enderecoModel;
 
-    private CidadeModel cidadeModel;
-
-    private EstadoModel estadoModel;
-
-    private PaisModel paisModel;
-
     @BeforeEach
     void setup() {
-        paisModel = new PaisModel();
+        PaisModel paisModel = new PaisModel();
         paisModel.setId(1);
         paisModel.setNome("Brasil");
-        estadoModel = new EstadoModel();
+        EstadoModel estadoModel = new EstadoModel();
         estadoModel.setId(1);
         estadoModel.setNome("São Paulo");
         estadoModel.setPaisId(paisModel);
-        cidadeModel = new CidadeModel();
+        CidadeModel cidadeModel = new CidadeModel();
         cidadeModel.setId(1);
         cidadeModel.setNome("São Paulo");
         enderecoModel = new EnderecoModel();

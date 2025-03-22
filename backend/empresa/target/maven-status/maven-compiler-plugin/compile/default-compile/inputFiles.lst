@@ -69,6 +69,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\util\LocalDateDeserializer.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\util\NdjsonHttpMessageConverter.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\DefaultCatalog.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\enums\StatusServico.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\Indexes.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\Keys.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\Public.java
@@ -171,6 +172,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenha200Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenha404Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenhaRequest.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\StatusServico.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SubCategoriaModel.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SubCategoriaRequest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\Updateendereco404Response.java

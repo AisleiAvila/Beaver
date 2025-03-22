@@ -30,7 +30,7 @@ public class CidadeController implements CidadeApi {
     @Override
     @GetMapping
     public ResponseEntity<List<CidadeModel>> findCidade(@RequestParam(required = false) String nome, @RequestParam(required = false) Integer estado_id) {
-        var cidades =  this.cidadeService.findAll(nome, estado_id);
+        var cidades = this.cidadeService.findAll(nome, estado_id);
         return ResponseEntity.ok(cidades);
     }
 

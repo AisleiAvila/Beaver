@@ -10,4 +10,9 @@ public interface CategoriaRepository {
 
     Optional<List<CategoriaModel>> find(CategoriaRequest categoriarequest);
 
+    Optional<CategoriaModel> create(CategoriaModel categoriaModel);
+
+    void delete(Integer id);
+
+    Optional<Object> findById(Integer id);
 }

@@ -4,6 +4,7 @@
 package com.dasad.empresa.jooq.tables.records;
 
 
+import com.dasad.empresa.jooq.enums.StatusServico;
 import com.dasad.empresa.jooq.tables.Subcategoria;
 
 import java.math.BigDecimal;
@@ -78,29 +79,17 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
     }
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * Setter for <code>public.subcategoria.status</code>.
      */
-    @Deprecated
-    public void setStatus(Object value) {
+    public void setStatus(StatusServico value) {
         set(4, value);
     }
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * Getter for <code>public.subcategoria.status</code>.
      */
-    @Deprecated
-    public Object getStatus() {
-        return get(4);
+    public StatusServico getStatus() {
+        return (StatusServico) get(4);
     }
 
     /**
@@ -248,7 +237,7 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
     /**
      * Create a detached, initialised SubcategoriaRecord
      */
-    public SubcategoriaRecord(Integer id, Integer categoriaId, String nome, String descricao, Object status, Integer tempoMedioMinutos, Object nivelComplexidade, BigDecimal precoBase, Object unidadeMedida, String[] materiaisTipicos, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao) {
+    public SubcategoriaRecord(Integer id, Integer categoriaId, String nome, String descricao, StatusServico status, Integer tempoMedioMinutos, Object nivelComplexidade, BigDecimal precoBase, Object unidadeMedida, String[] materiaisTipicos, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao) {
         super(Subcategoria.SUBCATEGORIA);
 
         setId(id);

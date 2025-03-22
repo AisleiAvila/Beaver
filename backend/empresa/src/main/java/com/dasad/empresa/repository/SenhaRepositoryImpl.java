@@ -14,12 +14,10 @@ import static com.dasad.empresa.jooq.tables.UsuarioRecuperarSenha.USUARIO_RECUPE
 public class SenhaRepositoryImpl implements SenhaRepository {
     private static final Logger log = LogManager.getLogger(SenhaRepositoryImpl.class);
     private final DSLContext dsl;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public SenhaRepositoryImpl(DSLContext dsl, PasswordEncoder passwordEncoder) {
         this.dsl = dsl;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

@@ -20,12 +20,6 @@ public class PaisRepositoryImpl implements PaisRepository {
         this.dsl = dsl;
     }
 
-//    public List<PaisModel> findAll2(String nome) {
-//        return buildBaseQuery()
-//                .where(Pais.PAIS.NOME.likeIgnoreCase("%" + nome + "%"))
-//                .fetch(PaisRepositoryImpl::getPaisModel);
-//    }
-
     public List<PaisModel> findAll(String nome) {
         var query = buildBaseQuery();
 

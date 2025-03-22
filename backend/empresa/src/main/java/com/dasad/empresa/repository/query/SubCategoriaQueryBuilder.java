@@ -1,9 +1,11 @@
 package com.dasad.empresa.repository.query;
 
+import com.dasad.empresa.jooq.enums.StatusServico;
 import com.dasad.empresa.jooq.tables.Subcategoria;
 import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.model.SubCategoriaModel;
 import jakarta.annotation.Nonnull;
+import jakarta.validation.constraints.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.Record12;
 import org.jooq.SelectConditionStep;
@@ -18,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class SubCategoriaQueryBuilder {
-    private SelectConditionStep<Record12<Integer, Integer, String, String, Object, Integer, Object, BigDecimal, Object, String[], LocalDateTime, LocalDateTime>> query;
+    private @NotNull SelectConditionStep<Record12<Integer, Integer, String, String, StatusServico, Integer, Object, BigDecimal, Object, String[], LocalDateTime, LocalDateTime>> query;
     private final static Integer DEFAULT_LIMIT = 10;
     private final DSLContext dslContext;
 
@@ -65,7 +67,7 @@ public class SubCategoriaQueryBuilder {
 
     public SubCategoriaQueryBuilder withStatus(@Nonnull String status) {
         if (status != null &&  !status.isEmpty()) {
-            this.query = this.query.and(Subcategoria.SUBCATEGORIA.STATUS.eq(status));
+            this.query = this.query.and(Subcategoria.SUBCATEGORIA.STATUS.eq(StatusServico.valueOf(status)));
         }
         return this;
     }
@@ -94,7 +96,7 @@ public class SubCategoriaQueryBuilder {
                     record -> record.get(Usuario.USUARIO.ID),
                     Collectors.mapping(record -> record, Collectors.toList())
             )).values().stream().map(records -> {
-                Record12<Integer, Integer, String, String, Object, Integer, Object, BigDecimal, Object, String[], LocalDateTime, LocalDateTime> record = records.getFirst();
+                Record12<Integer, Integer, String, String, StatusServico, Integer, Object, BigDecimal, Object, String[], LocalDateTime, LocalDateTime> record = records.getFirst();
                 SubCategoriaModel subCategoria = new SubCategoriaModel();
                 subCategoria.setId(record.get(Subcategoria.SUBCATEGORIA.ID));
                 subCategoria.setCategoriaId(record.get(Subcategoria.SUBCATEGORIA.CATEGORIA_ID));
