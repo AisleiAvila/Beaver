@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,13 +24,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   ],
 })
 export class ChatComponent {
+  ollamaService = inject(OllamaService);
+
   pergunta = '';
   resposta: string | null = null;
   fullResponse: string | null = null; // Resposta completa da API
   historico: { pergunta: string; resposta: string }[] = []; // Histórico de perguntas e respostas
   isLoading = false;
-
-  constructor(private ollamaService: OllamaService) {}
 
   fazerPergunta() {
     if (this.pergunta) {

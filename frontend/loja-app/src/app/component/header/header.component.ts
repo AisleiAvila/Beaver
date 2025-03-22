@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
@@ -23,24 +23,22 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
 })
 export class HeaderComponent implements OnInit {
+  router = inject(Router);
+  loginService = inject(LoginService);
+  authService = inject(AuthService);
+  translate = inject(TranslateService);
+
   isLoginScreen = false;
   title = 'Loja XPTO';
   nomeUsuario: string | null = localStorage.getItem('nomeUsuario');
 
-  constructor(
-    private router: Router,
-    private loginService: LoginService,
-    private authService: AuthService,
-    private translate: TranslateService
-  ) {
+  ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isLoginScreen = this.router.url === '/login';
       }
     });
-  }
 
-  ngOnInit(): void {
     this.checkAuthorization();
   }
 

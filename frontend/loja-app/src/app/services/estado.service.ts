@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Estado } from '../model/estado.model';
 
@@ -7,9 +7,9 @@ import { Estado } from '../model/estado.model';
   providedIn: 'root',
 })
 export class EstadoService {
-  private apiUrl = 'http://api.example.com';
+  http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://api.example.com';
 
   obterEstados(): Observable<Estado[]> {
     return this.http.get<Estado[]>(`${this.apiUrl}/estados`);

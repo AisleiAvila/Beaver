@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -19,14 +19,12 @@ import { TranslateService } from '@ngx-translate/core';
  * Serviço responsável por realizar a autenticação do usuário.
  */
 export class LoginService {
-  private apiUrl = environment.apiUrl + '/auth';
+  http = inject(HttpClient);
+  router = inject(Router);
+  modalService = inject(ModalCommunicationService);
+  translate = inject(TranslateService);
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private modalService: ModalCommunicationService,
-    private translate: TranslateService
-  ) {}
+  private apiUrl = environment.apiUrl + '/auth';
 
   // Método getLogin para fazer login
   getLogin(email: string, senha: string): Observable<LoginResponse> {

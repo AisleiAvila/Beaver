@@ -5,7 +5,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -21,11 +21,8 @@ import { catchError } from 'rxjs/operators';
  */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  /**
-   * Construtor do interceptor de autenticação
-   * @param router - Serviço de roteamento do Angular para redirecionamento
-   */
-  constructor(private router: Router) {}
+  // Serviço de roteamento do Angular para redirecionamento
+  router = inject(Router);
 
   /**
    * Intercepta todas as requisições HTTP para adicionar o token de autenticação

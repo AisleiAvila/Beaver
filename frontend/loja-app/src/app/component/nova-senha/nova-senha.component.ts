@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
-  ReactiveFormsModule,
   FormsModule,
+  ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RecuperacaoSenhaService } from 'src/app/shared/service/recuperar-senha.service';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TokenResponse } from 'src/app/interfaces/token-response.interface';
+import { RecuperacaoSenhaService } from 'src/app/shared/service/recuperar-senha.service';
 
 @Component({
   selector: 'app-nova-senha',
@@ -35,24 +35,29 @@ import { TokenResponse } from 'src/app/interfaces/token-response.interface';
   ],
 })
 export class NovaSenhaComponent implements OnInit {
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+  recuperacaoSenhaService = inject(RecuperacaoSenhaService);
+
   novaSenhaForm: FormGroup;
   tokenValido = false;
   usuario: TokenResponse;
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
-    private recuperacaoSenhaService: RecuperacaoSenhaService
-  ) {
-    this.novaSenhaForm = this.fb.group(
-      {
-        novaSenha: ['', [Validators.required, Validators.minLength(6)]],
-        confirmaSenha: ['', [Validators.required]],
-      },
-      { validator: this.senhasIguais }
-    );
-  }
+  // constructor(
+  //   // private fb: FormBuilder,
+  //   // private router: Router,
+  //   // private route: ActivatedRoute,
+  //   // private recuperacaoSenhaService: RecuperacaoSenhaService
+  // ) {
+  //   this.novaSenhaForm = this.fb.group(
+  //     {
+  //       novaSenha: ['', [Validators.required, Validators.minLength(6)]],
+  //       confirmaSenha: ['', [Validators.required]],
+  //     },
+  //     { validator: this.senhasIguais }
+  //   );
+  // }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -63,6 +68,14 @@ export class NovaSenhaComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+
+    this.novaSenhaForm = this.fb.group(
+      {
+        novaSenha: ['', [Validators.required, Validators.minLength(6)]],
+        confirmaSenha: ['', [Validators.required]],
+      },
+      { validator: this.senhasIguais }
+    );
   }
 
   validarToken(token: string): void {

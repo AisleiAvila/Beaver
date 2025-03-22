@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,15 +18,15 @@ import { ApiError } from 'src/app/model/apiError.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TranslateModule],
 })
-export class LembrarSenhaComponent {
+export class LembrarSenhaComponent implements OnInit {
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  lembrarSenhaService = inject(LembrarSenhaService);
+
   lembrarSenhaForm: FormGroup;
   mensagem: string;
 
-  constructor(
-    private fb: FormBuilder,
-    private lembrarSenhaService: LembrarSenhaService,
-    private router: Router // Injetar Router
-  ) {
+  ngOnInit(): void {
     this.lembrarSenhaForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });

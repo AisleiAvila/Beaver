@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, inject, Input, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 
 @Directive({
@@ -6,9 +6,10 @@ import { AuthService } from '../service/auth.service';
   standalone: true,
 })
 export class PerfilAcessoDirective implements OnInit {
-  @Input('appPerfilAcesso') perfisPermitidos: string[] = [];
+  el = inject(ElementRef);
+  authService = inject(AuthService);
 
-  constructor(private el: ElementRef, private authService: AuthService) {}
+  @Input('appPerfilAcesso') perfisPermitidos: string[] = [];
 
   ngOnInit() {
     const perfilUsuario = this.authService.getPerfilUsuario();

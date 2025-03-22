@@ -5,6 +5,7 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -64,6 +65,16 @@ import { ModalCommunicationService } from '../../service/modal-communication.ser
   ],
 })
 export class OrganizacaoComponent implements AfterViewInit, OnInit {
+  organizacoesService = inject(OrganizacoesService);
+  modalService = inject(NgbModal);
+  router = inject(Router);
+  snackBar = inject(MatSnackBar);
+  paginatorIntl = inject(MatPaginatorIntl);
+  translate = inject(TranslateService);
+  estadoService = inject(EstadoService);
+  modalCommunicationService = inject(ModalCommunicationService);
+  fb = inject(FormBuilder);
+
   @ViewChild('nomeInput') nomeInput!: ElementRef;
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('nifInput') nifInput!: ElementRef;
@@ -93,25 +104,6 @@ export class OrganizacaoComponent implements AfterViewInit, OnInit {
   estados: Estado[] = [];
   cidades: Cidade[] = [];
 
-  constructor(
-    // private usuariosService: UsuariosService,
-    private organizacoesService: OrganizacoesService,
-    private modalService: NgbModal,
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private paginatorIntl: MatPaginatorIntl,
-    private translate: TranslateService,
-    private fb: FormBuilder,
-    private estadoService: EstadoService,
-    private modalCommunicationService: ModalCommunicationService
-  ) {
-    this.form = this.fb.group({
-      paisId: ['', Validators.required],
-      estadoId: ['', Validators.required],
-      cidadeId: ['', Validators.required],
-    });
-  }
-
   ngAfterViewInit(): void {
     if (this.paginator) {
       this.organizacoes.paginator = this.paginator;
@@ -133,6 +125,13 @@ export class OrganizacaoComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.carregarPaises();
     this.getEstados(1); // Chame a função getEstados com um ID de exemplo
+
+    // Inicialização do formulário no ngOnInit
+    this.form = this.fb.group({
+      paisId: ['', Validators.required],
+      estadoId: ['', Validators.required],
+      cidadeId: ['', Validators.required],
+    });
   }
 
   carregarPaises(): void {

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AuthService } from '../shared/service/auth.service';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -9,7 +9,8 @@ import { Pais } from '../model/pais.model';
   providedIn: 'root',
 })
 export class PaisService {
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  http = inject(HttpClient);
+  authService = inject(AuthService);
 
   private apiUrl = environment.apiUrl + '/pais';
   private pais: Pais[] = [];

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'; // Supondo que você esteja usando ngx-translate para internacionalização
 
 @Component({
@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core'; // Supondo que você est
   standalone: true,
 })
 export class FooterComponent {
-  constructor(private translate: TranslateService) {}
+  translate = inject(TranslateService);
 
   changeLanguage(language: string) {
     this.translate.use(language);

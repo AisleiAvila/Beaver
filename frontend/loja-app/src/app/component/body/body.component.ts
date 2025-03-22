@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -17,11 +24,12 @@ import { MenuComponent } from '../menu/menu.component';
   imports: [CommonModule, MenuComponent, RouterModule],
 })
 export class BodyComponent implements OnInit {
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+
   @Input() isExpanded = false;
   @Output() expansionChange = new EventEmitter<boolean>();
   showMenu = true;
-
-  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.router.events

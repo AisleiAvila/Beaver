@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../shared/service/auth.service';
@@ -8,9 +8,10 @@ import { AuthService } from '../shared/service/auth.service';
   providedIn: 'root',
 })
 export class OllamaService {
-  private apiUrl = environment.apiUrl + '/chat/generate';
+  http = inject(HttpClient);
+  authService = inject(AuthService);
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  private apiUrl = environment.apiUrl + '/chat/generate';
 
   getAnswer(question: string): Observable<string> {
     const headers = this.authService.getAuthHeaders();

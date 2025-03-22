@@ -1,7 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, NgFor } from '@angular/common';
+import { Component, NO_ERRORS_SCHEMA, OnInit, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -9,13 +17,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { Categoria } from 'src/app/model/categoria.model';
 import { CategoriasService } from 'src/app/service/categorias.service';
-import { MatOptionModule } from '@angular/material/core';
-import { NgFor } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro-categoria',
@@ -34,20 +37,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     MatChipsModule,
     TranslateModule,
     MatOptionModule,
-    NgFor
+    NgFor,
   ],
-  schemas: [NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class CadastroCategoriaComponent implements OnInit {
-  categoriaForm: FormGroup;
+  fb = inject(FormBuilder);
+  router = inject(Router);
+  snackBar = inject(MatSnackBar);
+  translate = inject(TranslateService);
+  categoriasService = inject(CategoriasService);
 
-  constructor(
-    private fb: FormBuilder,
-    private categoriasService: CategoriasService,
-    private snackBar: MatSnackBar,
-    private router: Router,
-    private translate: TranslateService
-  ) {}
+  categoriaForm: FormGroup;
 
   ngOnInit(): void {
     this.categoriaForm = this.fb.group({
@@ -62,7 +63,10 @@ export class CadastroCategoriaComponent implements OnInit {
       valor_base_hora: [0, [Validators.min(0)]],
       horas_minimas_agendamento: [24, [Validators.required, Validators.min(1)]],
       horas_cancelamento_gratis: [24, [Validators.required, Validators.min(0)]],
-      percentual_comissao: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+      percentual_comissao: [
+        0,
+        [Validators.required, Validators.min(0), Validators.max(100)],
+      ],
       url_imagem: ['', Validators.maxLength(255)],
       palavras_chave: [[]],
       documentos_necessarios: [[]],
@@ -104,7 +108,9 @@ export class CadastroCategoriaComponent implements OnInit {
   }
 
   removeKeyword(keyword: string): void {
-    const index = this.categoriaForm.get('palavras_chave').value.indexOf(keyword);
+    const index = this.categoriaForm
+      .get('palavras_chave')
+      .value.indexOf(keyword);
 
     if (index >= 0) {
       this.categoriaForm.get('palavras_chave').value.splice(index, 1);
@@ -127,7 +133,9 @@ export class CadastroCategoriaComponent implements OnInit {
   }
 
   removeDocument(doc: string): void {
-    const index = this.categoriaForm.get('documentos_necessarios').value.indexOf(doc);
+    const index = this.categoriaForm
+      .get('documentos_necessarios')
+      .value.indexOf(doc);
 
     if (index >= 0) {
       this.categoriaForm.get('documentos_necessarios').value.splice(index, 1);

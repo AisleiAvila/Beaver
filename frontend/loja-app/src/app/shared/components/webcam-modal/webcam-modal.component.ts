@@ -1,11 +1,11 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import {
-  MatDialogRef,
   MAT_DIALOG_DATA,
   MatDialogModule,
+  MatDialogRef,
 } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 import { WebcamImage, WebcamInitError, WebcamModule } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
 
@@ -81,13 +81,11 @@ import { Observable, Subject } from 'rxjs';
   ],
 })
 export class WebcamModalComponent implements OnInit, OnDestroy {
+  public dialogRef = inject(MatDialogRef<WebcamModalComponent>);
+  public data = inject(MAT_DIALOG_DATA);
+
   private trigger: Subject<void> = new Subject<void>();
   capturedImage: WebcamImage | null = null;
-
-  constructor(
-    public dialogRef: MatDialogRef<WebcamModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
 
   ngOnInit(): void {
     // Opcionalmente, você pode solicitar permissão de câmera aqui

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MAT_SNACK_BAR_DATA,
   MatSnackBarRef,
@@ -12,8 +12,6 @@ import { SnackbarData } from 'src/app/model/snackbarData.model';
   standalone: true,
 })
 export class CustomSnackbarComponent {
-  constructor(
-    public snackBarRef: MatSnackBarRef<CustomSnackbarComponent>,
-    @Inject(MAT_SNACK_BAR_DATA) public data: SnackbarData
-  ) {}
+  snackBarRef = inject<MatSnackBarRef<CustomSnackbarComponent>>(MatSnackBarRef);
+  data = inject<SnackbarData>(MAT_SNACK_BAR_DATA);
 }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -14,14 +14,11 @@ import { AuthService } from '../shared/service/auth.service';
  * Serviço responsável por realizar a comunicação com a API de organizações.
  */
 export class OrganizacoesService {
-  private apiUrl = environment.apiUrl + '/organizacao';
-  // private organizacoes: any[] = [];
+  http = inject(HttpClient);
+  modalService = inject(NgbModal);
+  authService = inject(AuthService);
 
-  constructor(
-    private http: HttpClient,
-    private modalService: NgbModal,
-    private authService: AuthService
-  ) {}
+  private apiUrl = environment.apiUrl + '/organizacao';
 
   getOrganizacaoById(id: number): Observable<Organizacao> {
     const headers = this.authService.getAuthHeaders();

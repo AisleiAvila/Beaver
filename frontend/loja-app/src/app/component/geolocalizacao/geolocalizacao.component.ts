@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,6 +46,10 @@ import {
   ],
 })
 export class GeolocalizacaoComponent implements OnInit, AfterViewInit {
+  httpClient = inject(HttpClient);
+  geoService = inject(GeolocalizacaoService);
+  snackBar = inject(MatSnackBar);
+
   @ViewChild(GoogleMap) map!: GoogleMap;
 
   // Propriedades existentes
@@ -67,12 +77,6 @@ export class GeolocalizacaoComponent implements OnInit, AfterViewInit {
   };
   markers: any[] = [];
   mapCarregado = false;
-
-  constructor(
-    private httpClient: HttpClient,
-    private geoService: GeolocalizacaoService,
-    private snackBar: MatSnackBar
-  ) {}
 
   ngOnInit(): void {
     // Verificar se a API do Google Maps está disponível

@@ -1,5 +1,11 @@
 import { CommonModule, Location } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,6 +48,13 @@ import { CustomPaginatorIntl } from 'src/app/shared/service/custom-paginator-int
   ],
 })
 export class ProdutosComponent implements OnInit, AfterViewInit {
+  produtoService = inject(ProdutoService);
+  router = inject(Router);
+  snackBar = inject(MatSnackBar);
+  paginatorIntl = inject(MatPaginatorIntl);
+  translate = inject(TranslateService);
+  location = inject(Location);
+
   produtos = new MatTableDataSource<Produto>([]);
   totalProdutos = 0;
   pageSize = 5;
@@ -60,17 +73,17 @@ export class ProdutosComponent implements OnInit, AfterViewInit {
     'acoes',
   ];
 
-  constructor(
-    private produtoService: ProdutoService,
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private paginatorIntl: MatPaginatorIntl,
-    private translate: TranslateService,
-    private location: Location
-  ) {
-    console.log('ProdutosComponent construtor');
-    console.log('URL atual:', this.location.path());
-  }
+  // constructor(
+  //   private produtoService: ProdutoService,
+  //   private router: Router,
+  //   private snackBar: MatSnackBar,
+  //   private paginatorIntl: MatPaginatorIntl,
+  //   private translate: TranslateService,
+  //   private location: Location
+  // ) {
+  //   console.log('ProdutosComponent construtor');
+  //   console.log('URL atual:', this.location.path());
+  // }
 
   ngOnInit(): void {
     console.log('ProdutosComponent ngOnInit');

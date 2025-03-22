@@ -5,6 +5,7 @@ import {
   ViewChild,
   ElementRef,
   Renderer2,
+  inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,6 +39,13 @@ import { ModalCommunicationService } from '../../service/modal-communication.ser
  * Componente responsável por exibir a tela de login da aplicação.
  */
 export class LoginComponent implements OnInit {
+  loginService = inject(LoginService);
+  router = inject(Router);
+  modalService = inject(ModalCommunicationService);
+  route = inject(ActivatedRoute);
+  renderer = inject(Renderer2);
+  translate = inject(TranslateService);
+
   @ViewChild('loginButton') loginButton!: ElementRef;
 
   email: string | undefined;
@@ -45,15 +53,6 @@ export class LoginComponent implements OnInit {
   lembrarSenha: boolean | undefined;
   mensagem: string;
   isProcessing = false;
-
-  constructor(
-    private loginService: LoginService,
-    private router: Router,
-    private modalService: ModalCommunicationService,
-    private route: ActivatedRoute,
-    private renderer: Renderer2,
-    private translate: TranslateService
-  ) {}
 
   ngOnInit(): void {
     // Obter a mensagem dos parâmetros da URL

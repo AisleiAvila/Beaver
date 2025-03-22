@@ -1,10 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import {
+  NavigationEnd,
+  Router,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { HeaderComponent } from './component/header/header.component';
+import { filter } from 'rxjs/operators';
 import { BodyComponent } from './component/body/body.component';
-import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './component/header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -20,22 +25,42 @@ import { RouterOutlet } from '@angular/router';
   ],
 })
 export class AppComponent {
+  private router = inject(Router);
+  private translate = inject(TranslateService);
+
   isLoginScreen = false;
   isExpanded = false;
 
-  constructor(private router: Router, private translate: TranslateService) {
+  // constructor() {
+  //   // Definir idioma padrão
+  //   this.translate.setDefaultLang('pt');
+
+  //   // Usar idioma padrão
+  //   this.translate.use('pt');
+
+  //   this.router.events.subscribe((event) => {
+  //     if (event instanceof NavigationEnd) {
+  //       this.isLoginScreen = this.router.url === '/login';
+  //     }
+  //   });
+  // }
+
+  // Inicializador que substitui o constructor
+  private initialize = (() => {
     // Definir idioma padrão
     this.translate.setDefaultLang('pt');
 
     // Usar idioma padrão
     this.translate.use('pt');
 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.isLoginScreen = this.router.url === '/login';
-      }
-    });
-  }
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.isLoginScreen = this.router.url === '/login';
+        }
+      });
+  })();
 
   /**
    * Método responsável por atualizar o estado de expansão do menu.

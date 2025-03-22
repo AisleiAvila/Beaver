@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -19,6 +19,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { CategoriasService } from 'src/app/service/categorias.service';
 import { Categoria } from 'src/app/model/categoria.model';
+import { CategoriaRequest } from 'src/app/interfaces/categoria-request.interface';
 
 @Component({
   selector: 'app-categorias',
@@ -44,30 +45,47 @@ import { Categoria } from 'src/app/model/categoria.model';
     MatSnackBarModule,
     MatOptionModule,
     NgbModalModule,
-    TranslateModule
-  ]
+    TranslateModule,
+  ],
 })
 export class CategoriasComponent implements OnInit {
-  categorias: Categoria[] = [];
-  filtroNome: string = '';
-  displayedColumns: string[] = ['nome', 'descricao', 'acoes'];
+  categoriasService = inject(CategoriasService);
+  router = inject(Router);
 
-  constructor(private categoriasService: CategoriasService, private router: Router) {}
+  categorias: Categoria[] = [];
+  filtroNome = '';
+  displayedColumns: string[] = ['nome', 'descricao', 'acoes'];
 
   ngOnInit(): void {
     this.loadCategorias();
   }
 
   loadCategorias(): void {
-    this.categoriasService.getCategorias().subscribe((data: Categoria[]) => {
-      this.categorias = data;
-    });
+    const params: CategoriaRequest = {
+      // Você pode adicionar valores padrão, como limit e offset se necessário
+      limit: 50, // exemplo: limite de 50 categorias
+      offset: 0,
+    };
+    this.categoriasService
+      .getCategorias(params)
+      .subscribe((data: Categoria[]) => {
+        this.categorias = data;
+      });
   }
 
   pesquisarCategorias(): void {
-    this.categoriasService.getCategorias().subscribe((data: Categoria[]) => {
-      this.categorias = data.filter(categoria => categoria.nome.toLowerCase().includes(this.filtroNome.toLowerCase()));
-    });
+    const params: CategoriaRequest = {
+      nome: this.filtroNome, // Passa o filtro para o backend processar
+      limit: 50,
+      offset: 0,
+    };
+    this.categoriasService
+      .getCategorias(params)
+      .subscribe((data: Categoria[]) => {
+        this.categorias = data.filter((categoria) =>
+          categoria.nome.toLowerCase().includes(this.filtroNome.toLowerCase())
+        );
+      });
   }
 
   limparFiltros(): void {

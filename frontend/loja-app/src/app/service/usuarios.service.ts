@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, throwError } from 'rxjs';
+import { catchError, firstValueFrom, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/service/auth.service';
 import { UsuarioResponseDTO } from '../model/usuarioResponseDTO.model';
@@ -29,7 +29,26 @@ export class UsuariosService {
   }
 
   // Método para obter usuários com parâmetros opcionais
-  getUsuarios(params: {
+  // getUsuarios(params: {
+  //   nome?: string;
+  //   id?: number;
+  //   email?: string;
+  //   dataNascimento?: string;
+  //   perfis?: number[];
+  //   limit?: number;
+  //   offset?: number;
+  // }): Observable<UsuarioResponseDTO> {
+  //   const headers = this.authService.getAuthHeaders();
+
+  //   // Garantir que params sempre seja um objeto JSON
+  //   const body = { ...params };
+
+  //   return this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/find`, body, {
+  //     headers: headers,
+  //   });
+  // }
+
+  async getUsuarios(params: {
     nome?: string;
     id?: number;
     email?: string;
@@ -37,15 +56,22 @@ export class UsuariosService {
     perfis?: number[];
     limit?: number;
     offset?: number;
-  }): Observable<UsuarioResponseDTO> {
+  }): Promise<UsuarioResponseDTO> {
     const headers = this.authService.getAuthHeaders();
 
     // Garantir que params sempre seja um objeto JSON
     const body = { ...params };
 
-    return this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/find`, body, {
-      headers: headers,
-    });
+    try {
+      return await firstValueFrom(
+        this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/find`, body, {
+          headers: headers,
+        })
+      );
+    } catch (error) {
+      console.error('Erro ao buscar usuários:', error);
+      throw error;
+    }
   }
 
   saveUsuario(usuario: Usuario): Observable<Usuario> {

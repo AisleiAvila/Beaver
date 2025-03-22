@@ -1,14 +1,14 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 
 @Directive({
   selector: '[appDateFormat]',
   standalone: true,
 })
 export class DateFormatDirective {
+  el = inject(ElementRef);
+
   private regex = new RegExp(/^\d{0,2}\/?\d{0,2}\/?\d{0,4}$/g);
   private specialKeys: string[] = ['Backspace', 'Tab', 'End', 'Home'];
-
-  constructor(private el: ElementRef) {}
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {

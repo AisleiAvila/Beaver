@@ -1,5 +1,5 @@
 import { CommonModule, formatDate, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -55,6 +55,22 @@ import { Endereco } from './../../../model/endereco.model';
   ],
 })
 export class CadastroUsuarioComponent implements OnInit {
+  route = inject(ActivatedRoute);
+  usuariosService = inject(UsuariosService);
+  perfisService = inject(PerfisService);
+  paisService = inject(PaisService);
+  estadoService = inject(EstadoService);
+  cidadeService = inject(CidadeService);
+  modalService = inject(ModalCommunicationService);
+  location = inject(Location);
+  modalCommunicationService = inject(ModalCommunicationService);
+  snackBar = inject(MatSnackBar);
+  router = inject(Router);
+  charCountService = inject(CharCountService);
+  utilService = inject(UtilService);
+  translate = inject(TranslateService);
+  dialog = inject(MatDialog);
+
   isEditMode = false;
   isCreateMode = false;
   titulo = '';
@@ -130,24 +146,6 @@ export class CadastroUsuarioComponent implements OnInit {
 
   // Add these properties to your component class
   profileImageUrl: string | null = null;
-
-  constructor(
-    private route: ActivatedRoute,
-    private usuariosService: UsuariosService,
-    private perfisService: PerfisService,
-    private paisService: PaisService,
-    private estadoService: EstadoService,
-    private cidadeService: CidadeService,
-    private modalService: ModalCommunicationService,
-    private location: Location,
-    private modalCommunicationService: ModalCommunicationService,
-    private snackBar: MatSnackBar,
-    private router: Router,
-    private charCountService: CharCountService,
-    private utilService: UtilService,
-    private translate: TranslateService,
-    private dialog: MatDialog
-  ) {}
 
   ngOnInit(): void {
     forkJoin([this.getPerfis(), this.getPaises()]).subscribe(() => {

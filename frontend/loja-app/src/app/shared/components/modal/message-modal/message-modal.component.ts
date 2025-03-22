@@ -1,8 +1,11 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -145,12 +148,12 @@ import { MatIconModule } from '@angular/material/icon';
     `,
   ],
 })
-export class MessageModalComponent {
-  constructor(
-    public dialogRef: MatDialogRef<MessageModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { mensagem: string; titulo: string }
-  ) {
-    dialogRef.addPanelClass('custom-dialog-container');
+export class MessageModalComponent implements OnInit {
+  public dialogRef = inject(MatDialogRef<MessageModalComponent>);
+  public data = inject(MAT_DIALOG_DATA) as { mensagem: string; titulo: string };
+
+  ngOnInit(): void {
+    this.dialogRef.addPanelClass('custom-dialog-container');
   }
 
   fecharModal(): void {

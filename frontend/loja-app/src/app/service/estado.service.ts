@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -10,7 +10,8 @@ import { AuthService } from '../shared/service/auth.service';
   providedIn: 'root',
 })
 export class EstadoService {
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  http = inject(HttpClient);
+  authService = inject(AuthService);
 
   private apiUrl = environment.apiUrl + '/estado';
 

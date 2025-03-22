@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Agendamento } from '../models/agendamento.model';
@@ -8,9 +8,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AgendaService {
-  private apiUrl = 'http://localhost:3000/agendamentos';
+  http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:3000/agendamentos';
 
   getAgendamentos(): Observable<Agendamento[]> {
     return this.http.get<Agendamento[]>(this.apiUrl);

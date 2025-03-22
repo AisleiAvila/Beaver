@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Servico } from '../models/servico.model';
@@ -7,9 +7,9 @@ import { Servico } from '../models/servico.model';
   providedIn: 'root',
 })
 export class ServicoService {
-  private apiUrl = 'http://localhost:3000/servicos';
+  http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:3000/servicos';
 
   getServicos(): Observable<Servico[]> {
     return this.http.get<Servico[]>(this.apiUrl);

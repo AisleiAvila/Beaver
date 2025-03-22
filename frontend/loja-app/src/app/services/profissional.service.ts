@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Profissional } from '../models/profissional.model';
@@ -7,9 +7,9 @@ import { Profissional } from '../models/profissional.model';
   providedIn: 'root',
 })
 export class ProfissionalService {
-  private apiUrl = 'http://localhost:3000/profissionais';
+  http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:3000/profissionais';
 
   getProfissionais(): Observable<Profissional[]> {
     return this.http.get<Profissional[]>(this.apiUrl);

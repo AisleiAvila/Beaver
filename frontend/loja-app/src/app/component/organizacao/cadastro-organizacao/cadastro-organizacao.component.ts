@@ -1,5 +1,5 @@
 import { CommonModule, formatDate, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -36,6 +36,16 @@ import { UtilService } from 'src/app/shared/service/util.service';
   ],
 })
 export class CadastroOrganizacaoComponent implements OnInit {
+  route = inject(ActivatedRoute);
+  organizacoesService = inject(OrganizacoesService);
+  location = inject(Location);
+  modalCommunicationService = inject(ModalCommunicationService);
+  snackBar = inject(MatSnackBar);
+  router = inject(Router);
+  charCountService = inject(CharCountService);
+  utilService = inject(UtilService);
+  translate = inject(TranslateService);
+
   isEditMode = false;
   isCreateMode = false;
   titulo = '';
@@ -64,18 +74,6 @@ export class CadastroOrganizacaoComponent implements OnInit {
   cargoErro = '';
   numeroRegistoComercialErro = '';
   dataRegistoErro = '';
-
-  constructor(
-    private route: ActivatedRoute,
-    private organizacoesService: OrganizacoesService,
-    private location: Location,
-    private modalCommunicationService: ModalCommunicationService,
-    private snackBar: MatSnackBar,
-    private router: Router,
-    private charCountService: CharCountService,
-    private utilService: UtilService,
-    private translate: TranslateService
-  ) {}
 
   ngOnInit(): void {
     this.initializeComponent();

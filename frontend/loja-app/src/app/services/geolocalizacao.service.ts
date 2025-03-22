@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, from, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -30,10 +30,10 @@ export interface ResultadoGeocodificacao {
   providedIn: 'root',
 })
 export class GeolocalizacaoService {
+  http = inject(HttpClient);
+
   private geocodingApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
   private googleMapsApiKey = 'AIzaSyDDjkD8XDr1GYfZpRoEWIQSfzZfJEam9kE'; // Use uma chave de API válida
-
-  constructor(private http: HttpClient) {}
 
   /**
    * Obtém a localização atual do usuário usando a API de Geolocalização do navegador

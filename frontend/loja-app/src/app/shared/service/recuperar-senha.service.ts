@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { TokenResponse } from 'src/app/interfaces/token-response.interface';
 import { ValidarResetTokenRequest } from 'src/app/interfaces/validar-reset-token-request.interface';
@@ -8,9 +8,9 @@ import { ValidarResetTokenRequest } from 'src/app/interfaces/validar-reset-token
   providedIn: 'root',
 })
 export class RecuperacaoSenhaService {
-  private apiUrl = 'http://localhost:8080/senha'; // Substitua pela URL da sua API
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:8080/senha'; // Substitua pela URL da sua API
 
   validarToken(token: string): Observable<TokenResponse> {
     const request: ValidarResetTokenRequest = { token };

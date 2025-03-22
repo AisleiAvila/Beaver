@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  inject,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -18,6 +19,8 @@ import { of, Subscription } from 'rxjs';
   styleUrls: ['./webcam-capture.component.scss'],
 })
 export class WebcamCaptureComponent implements OnInit, OnDestroy {
+  http = inject(HttpClient);
+
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
 
   private stream: MediaStream | null = null;
@@ -26,8 +29,6 @@ export class WebcamCaptureComponent implements OnInit, OnDestroy {
   capturedImage: string | null = null;
   isUploading = false;
   uploadStatus = '';
-
-  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.startCamera();

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { RecuperarSenhaResponse } from 'src/app/model/recuperarSenhaResponse.model';
@@ -8,9 +8,9 @@ import { RecuperarSenhaResponse } from 'src/app/model/recuperarSenhaResponse.mod
   providedIn: 'root',
 })
 export class LembrarSenhaService {
-  private apiUrl = environment.apiUrl + '/senha/recuperar';
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = environment.apiUrl + '/senha/recuperar';
 
   lembrarSenha(email: string): Observable<RecuperarSenhaResponse> {
     return this.http.post<RecuperarSenhaResponse>(`${this.apiUrl}`, { email });

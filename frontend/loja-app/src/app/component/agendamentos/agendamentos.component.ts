@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -26,6 +26,9 @@ import { Agendamento } from '../../model/agendamento.model';
   ],
 })
 export class AgendamentosComponent implements OnInit {
+  agendamentoService = inject(AgendamentoService);
+  router = inject(Router);
+
   displayedColumns: string[] = [
     'cliente',
     'prestador',
@@ -40,11 +43,6 @@ export class AgendamentosComponent implements OnInit {
   dataSource = new MatTableDataSource<Agendamento>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-  constructor(
-    private agendamentoService: AgendamentoService,
-    private router: Router
-  ) {}
 
   ngOnInit() {
     this.loadAgendamentos();

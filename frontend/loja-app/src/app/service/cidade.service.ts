@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Cidade } from '../model/cidade.model';
 import { AuthService } from '../shared/service/auth.service';
@@ -9,10 +9,11 @@ import { catchError, map, Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class CidadeService {
+  http = inject(HttpClient);
+  authService = inject(AuthService);
+
   private apiUrl = environment.apiUrl + '/cidade';
   private estado: Cidade[] = [];
-
-  constructor(private http: HttpClient, private authService: AuthService) {}
 
   // Método para obter os países
   getCidade(nome?: string, estadoId?: number): Observable<Cidade[]> {
@@ -41,5 +42,4 @@ export class CidadeService {
         catchError(() => of([])) // em caso de erro retorna array vazio
       );
   }
-
 }

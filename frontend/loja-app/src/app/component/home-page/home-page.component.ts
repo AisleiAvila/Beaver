@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,8 @@ import { AuthService } from '../../service/auth.service';
  * Componente responsável por exibir a página inicial da aplicação.
  */
 export class HomePageComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  router = inject(Router);
+  authService = inject(AuthService);
 
   get podeAcessarUsuarios(): boolean {
     const perfilUsuario = this.authService.getPerfilUsuario();

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageModalComponent } from '../shared/components/modal/message-modal/message-modal.component';
 
@@ -6,7 +6,7 @@ import { MessageModalComponent } from '../shared/components/modal/message-modal/
   providedIn: 'root',
 })
 export class ModalCommunicationService {
-  constructor(private dialog: MatDialog) {}
+  dialog = inject(MatDialog);
 
   abrirModal(mensagem: string, titulo: string): void {
     this.dialog.open(MessageModalComponent, {

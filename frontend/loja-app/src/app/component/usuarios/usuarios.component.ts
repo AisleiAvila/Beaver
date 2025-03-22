@@ -5,6 +5,7 @@ import {
   ElementRef,
   ViewChild,
   OnInit,
+  inject,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -99,15 +100,23 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
     'acoes',
   ];
 
-  constructor(
-    private usuariosService: UsuariosService,
-    private modalService: NgbModal,
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private paginatorIntl: MatPaginatorIntl,
-    private translate: TranslateService,
-    private perfisService: PerfisService
-  ) {}
+  usuariosService = inject(UsuariosService);
+  perfisService = inject(PerfisService);
+  modalService = inject(NgbModal);
+  router = inject(Router);
+  snackBar = inject(MatSnackBar);
+  paginatorIntl = inject(MatPaginatorIntl);
+  translate = inject(TranslateService);
+
+  // constructor(
+  // private usuariosService: UsuariosService,
+  // private modalService: NgbModal,
+  // private router: Router,
+  // private snackBar: MatSnackBar,
+  // private paginatorIntl: MatPaginatorIntl,
+  // private translate: TranslateService,
+  // private perfisService: PerfisService
+  // ) {}
 
   ngOnInit(): void {
     this.perfisService.getPerfis().subscribe((perfis) => {
@@ -131,19 +140,17 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
       // Inscrever-se nos eventos de paginação
       this.paginator.page
         .pipe(debounceTime(300))
-        .subscribe((event: PageEvent) => {
+        .subscribe(async (event: PageEvent) => {
           this.pageIndex = event.pageIndex;
           this.pageSize = event.pageSize;
-          this.applyFilters();
-          // this.loadUsuarios();
+          await this.applyFilters();
         });
 
       this.applyFilters();
-      // this.loadUsuarios();
     }
   }
 
-  loadUsuarios(
+  async loadUsuarios(
     params: {
       nome?: string;
       id?: number;
@@ -154,7 +161,7 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
       offset?: number;
       event?: PageEvent;
     } = {}
-  ) {
+  ): Promise<void> {
     const offset = this.pageIndex * this.pageSize;
     const requestParams = {
       ...params,
@@ -162,52 +169,51 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
       offset: offset,
     };
 
-    this.usuariosService.getUsuarios(requestParams).subscribe({
-      next: (response: UsuarioResponseDTO) => {
-        if (response && Array.isArray(response.usuarios)) {
-          this.usuarios.data = response.usuarios;
-          this.totalUsuarios = response.totalRecords || 0;
+    try {
+      const response = await this.usuariosService.getUsuarios(requestParams);
 
-          if (this.paginator) {
-            // Atualizar o paginator
-            this.paginator.length = this.totalUsuarios;
-            this.paginator.pageSize = this.pageSize;
+      if (response && Array.isArray(response.usuarios)) {
+        this.usuarios.data = response.usuarios;
+        this.totalUsuarios = response.totalRecords || 0;
 
-            // Importante: Atualizar o pageIndex por último
-            setTimeout(() => {
-              this.paginator.pageIndex = this.pageIndex;
-            });
+        if (this.paginator) {
+          // Atualizar o paginator
+          this.paginator.length = this.totalUsuarios;
+          this.paginator.pageSize = this.pageSize;
 
-            const start = offset + 1;
-            const end = Math.min(start + this.pageSize - 1, this.totalUsuarios);
-
-            if (this.paginatorIntl instanceof CustomPaginatorIntl) {
-              this.paginatorIntl.setValues(start, end, this.totalUsuarios);
-              this.paginatorIntl.emitChanges();
-            }
-
-            // Atualizar estado da paginação
-            this.updatePaginationState();
-          }
-        } else {
-          console.error('Formato de resposta inválido:', response);
-          this.snackBar.open('Erro ao carregar dados', 'Fechar', {
-            duration: 3000,
+          // Importante: Atualizar o pageIndex por último
+          setTimeout(() => {
+            this.paginator.pageIndex = this.pageIndex;
           });
+
+          const start = offset + 1;
+          const end = Math.min(start + this.pageSize - 1, this.totalUsuarios);
+
+          if (this.paginatorIntl instanceof CustomPaginatorIntl) {
+            this.paginatorIntl.setValues(start, end, this.totalUsuarios);
+            this.paginatorIntl.emitChanges();
+          }
+
+          // Atualizar estado da paginação
+          this.updatePaginationState();
         }
-      },
-      error: (error) => {
-        console.error('Erro ao carregar usuários:', error);
-        if (error.status === 401) {
-          this.router.navigate(['/login']);
-        }
-        this.snackBar.open(
-          error.message || 'Erro ao carregar usuários',
-          'Fechar',
-          { duration: 3000 }
-        );
-      },
-    });
+      } else {
+        console.error('Formato de resposta inválido:', response);
+        this.snackBar.open('Erro ao carregar dados', 'Fechar', {
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao carregar usuários:', error);
+      if (error.status === 401) {
+        this.router.navigate(['/login']);
+      }
+      this.snackBar.open(
+        error.message || 'Erro ao carregar usuários',
+        'Fechar',
+        { duration: 3000 }
+      );
+    }
   }
 
   private updatePaginationState(): void {
@@ -235,35 +241,68 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
     modalRef.componentInstance.type = type;
   }
 
-  cadastroUsuario(id: number, acao: string): void {
-    this.usuariosService.getUsuarios({ id }).subscribe(
-      (usuario) => {
+  // cadastroUsuario(id: number, acao: string): void {
+  //   this.usuariosService.getUsuarios({ id }).subscribe(
+  //     (usuario) => {
+  //       this.router.navigate(['/cadastro-usuario', id], {
+  //         state: { usuario, acao: acao },
+  //       });
+  //     },
+  //     (error) => {
+  //       console.error('Erro ao carregar usuário:', error);
+  //       this.abrirModal('Erro ao carregar usuário', 'error');
+  //     }
+  //   );
+  // }
+
+  async cadastroUsuario(id: number, acao: string): Promise<void> {
+    try {
+      const response = await this.usuariosService.getUsuarios({ id });
+      if (response && response.usuarios && response.usuarios.length > 0) {
+        const usuario = response.usuarios[0]; // Obtém o primeiro usuário do array
         this.router.navigate(['/cadastro-usuario', id], {
           state: { usuario, acao: acao },
         });
-      },
-      (error) => {
-        console.error('Erro ao carregar usuário:', error);
-        this.abrirModal('Erro ao carregar usuário', 'error');
+      } else {
+        console.error('Usuário não encontrado');
+        this.abrirModal('Usuário não encontrado', 'error');
       }
-    );
+    } catch (error) {
+      console.error('Erro ao carregar usuário:', error);
+      this.abrirModal('Erro ao carregar usuário', 'error');
+    }
   }
 
-  excluirUsuario(id: number): void {
-    this.usuariosService.deleteUsuario({ id }).subscribe(
-      () => {
-        this.snackBar.open('Usuário excluído com sucesso!', 'Fechar', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        } as MatSnackBarConfig);
-        this.loadUsuarios();
-      },
-      (error) => {
-        console.error('Erro ao excluir usuário:', error);
-        this.abrirModal('Erro ao excluir usuário' + error, 'error');
-      }
-    );
+  // excluirUsuario(id: number): void {
+  //   this.usuariosService.deleteUsuario({ id }).subscribe(
+  //     () => {
+  //       this.snackBar.open('Usuário excluído com sucesso!', 'Fechar', {
+  //         duration: 3000,
+  //         horizontalPosition: 'center',
+  //         verticalPosition: 'top',
+  //       } as MatSnackBarConfig);
+  //       this.loadUsuarios();
+  //     },
+  //     (error) => {
+  //       console.error('Erro ao excluir usuário:', error);
+  //       this.abrirModal('Erro ao excluir usuário' + error, 'error');
+  //     }
+  //   );
+  // }
+
+  async excluirUsuario(id: number): Promise<void> {
+    try {
+      await this.usuariosService.deleteUsuario({ id });
+      this.snackBar.open('Usuário excluído com sucesso!', 'Fechar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      } as MatSnackBarConfig);
+      this.loadUsuarios();
+    } catch (error) {
+      console.error('Erro ao excluir usuário:', error);
+      this.abrirModal('Erro ao excluir usuário' + error, 'error');
+    }
   }
 
   onDateInput(event: MatDatepickerInputEvent<Date>) {
