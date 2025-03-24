@@ -5,7 +5,9 @@ import java.util.Objects;
 import com.dasad.empresa.model.StatusServico;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,14 +22,15 @@ import jakarta.annotation.Generated;
  * CategoriaRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-22T15:44:36.725596400Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 public class CategoriaRequest {
 
   private Integer id;
 
   private String nome;
 
-  private StatusServico status;
+  @Valid
+  private List<StatusServico> status = new ArrayList<>();
 
   private Boolean requerCertificacao;
 
@@ -81,8 +84,16 @@ public class CategoriaRequest {
     this.nome = nome;
   }
 
-  public CategoriaRequest status(StatusServico status) {
+  public CategoriaRequest status(List<StatusServico> status) {
     this.status = status;
+    return this;
+  }
+
+  public CategoriaRequest addStatusItem(StatusServico statusItem) {
+    if (this.status == null) {
+      this.status = new ArrayList<>();
+    }
+    this.status.add(statusItem);
     return this;
   }
 
@@ -93,11 +104,11 @@ public class CategoriaRequest {
   @Valid 
   @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("status")
-  public StatusServico getStatus() {
+  public List<StatusServico> getStatus() {
     return status;
   }
 
-  public void setStatus(StatusServico status) {
+  public void setStatus(List<StatusServico> status) {
     this.status = status;
   }
 

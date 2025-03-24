@@ -3,7 +3,9 @@ package com.dasad.empresa.service;
 import aj.org.objectweb.asm.commons.Remapper;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
+import com.dasad.empresa.model.StatusServico;
 import com.dasad.empresa.repository.CategoriaRepository;
+import com.dasad.empresa.repository.StatusServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ import java.util.Optional;
 public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private StatusServicoRepository statusServicoRepository;
 
     public CategoriaService() {
     }
@@ -32,5 +37,9 @@ public class CategoriaService {
 
     public Optional<Object> findById(Integer id) {
         return this.categoriaRepository.findById(id);
+    }
+
+    public Optional<List<StatusServico>> getStatus() {
+        return this.statusServicoRepository.findAll();
     }
 }

@@ -3,10 +3,12 @@ package com.dasad.empresa.controller;
 import com.dasad.empresa.api.CategoriaApi;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
+import com.dasad.empresa.model.StatusServico;
 import com.dasad.empresa.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +48,12 @@ public class CategoriaController implements CategoriaApi {
     @PostMapping("/find")
     public ResponseEntity<List<CategoriaModel>> findCategoria(CategoriaRequest categoriaRequest) {
         return this.categoriaService.find(categoriaRequest).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @Override
+    @GetMapping("/status")
+    public ResponseEntity<List<StatusServico>> findStatusServico() {
+        return this.categoriaService.getStatus().map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @Override

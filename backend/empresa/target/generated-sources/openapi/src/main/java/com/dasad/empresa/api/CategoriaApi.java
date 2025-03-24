@@ -7,6 +7,7 @@ package com.dasad.empresa.api;
 
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
+import com.dasad.empresa.model.StatusServico;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-22T15:44:36.725596400Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Categoria", description = "Operações relacionadas a categorias")
 public interface CategoriaApi {
@@ -124,6 +125,35 @@ public interface CategoriaApi {
     
     ResponseEntity<List<CategoriaModel>> findCategoria(
         @Parameter(name = "CategoriaRequest", description = "") @Valid @RequestBody(required = false) CategoriaRequest categoriaRequest
+    );
+
+
+    /**
+     * GET /categoria/status : Busca Status de Serviço
+     *
+     * @return Sucesso (status code 200)
+     */
+    @Operation(
+        operationId = "findStatusServico",
+        summary = "Busca Status de Serviço",
+        tags = { "Categoria" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Sucesso", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = StatusServico.class)))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/categoria/status",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<List<StatusServico>> findStatusServico(
+        
     );
 
 

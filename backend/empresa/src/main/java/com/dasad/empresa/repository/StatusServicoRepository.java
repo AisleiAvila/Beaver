@@ -1,18 +1,12 @@
 package com.dasad.empresa.repository;
 
-import com.dasad.empresa.model.CategoriaModel;
-import com.dasad.empresa.model.CategoriaRequest;
+import com.dasad.empresa.model.StatusServico;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CategoriaRepository {
+public interface StatusServicoRepository {
 
-    Optional<List<CategoriaModel>> find(CategoriaRequest categoriarequest);
+    Optional<List<StatusServico>> findAll();
 
-    Optional<CategoriaModel> create(CategoriaModel categoriaModel);
-
-    void delete(Integer id);
-
-    Optional<Object> findById(Integer id);
 }

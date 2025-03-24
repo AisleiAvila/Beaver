@@ -65,9 +65,9 @@ public class CategoriaQueryBuilder {
         return this;
     }
 
-    public  CategoriaQueryBuilder withStatus(@Nonnull StatusServico status) {
-        if (status != null ) {
-            this.query = this.query.and(Categoria.CATEGORIA.STATUS.eq(status));
+    public  CategoriaQueryBuilder withStatus(List<StatusServico> status) {
+        if (status != null && !status.isEmpty()) {
+            this.query = this.query.and(Categoria.CATEGORIA.STATUS.in(status));
         }
         return this;
     }

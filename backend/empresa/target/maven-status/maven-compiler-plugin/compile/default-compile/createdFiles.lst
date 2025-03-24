@@ -71,11 +71,13 @@ com\dasad\empresa\jooq\tables\Subcategoria$SubcategoriaPath.class
 com\dasad\empresa\service\CidadeService.class
 com\dasad\empresa\jooq\tables\Estoque$EstoquePath.class
 com\dasad\empresa\model\OrganizacaoResponseDTO.class
+com\dasad\empresa\repository\StatusServicoRepository.class
 com\dasad\empresa\repository\SubCategoriaRepositoryImpl.class
 com\dasad\empresa\jooq\tables\records\ProdutoFornecedorRecord.class
 com\dasad\empresa\jooq\tables\records\EnderecoRecord.class
 com\dasad\empresa\model\PaisModel.class
 com\dasad\empresa\jooq\tables\Pais$PaisPath.class
+com\dasad\empresa\repository\StatusServicoRepositoryImpl.class
 com\dasad\empresa\jooq\tables\Perfil.class
 com\dasad\empresa\controller\ProdutoController.class
 com\dasad\empresa\jooq\tables\CategoriaEquipamentos$CategoriaEquipamentosPath.class

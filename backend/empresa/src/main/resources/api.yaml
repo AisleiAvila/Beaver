@@ -858,7 +858,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/SubCategoriaModel'
-
+  /categoria/status:
+    get:
+      summary: Busca Status de Serviço
+      security:
+        - bearerAuth: []
+      tags:
+        - Categoria
+      operationId: findStatusServico
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatusServico'
   /perfil/find:
     get:
       summary: Busca Perfis
@@ -1197,8 +1213,9 @@ components:
         nome:
           type: string
         status:
-          $ref: '#/components/schemas/StatusServico'
-#          type: string
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusServico'
         requer_certificacao:
           type: boolean
         tipo_certificacao:

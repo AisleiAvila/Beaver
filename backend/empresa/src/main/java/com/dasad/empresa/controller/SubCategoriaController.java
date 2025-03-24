@@ -6,6 +6,7 @@ import com.dasad.empresa.model.SubCategoriaRequest;
 import com.dasad.empresa.service.SubCategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ public class SubCategoriaController implements SubcategoriaApi {
     }
 
     @Override
+    @PostMapping("/find")
     public ResponseEntity<List<SubCategoriaModel>> findSubCategoria(SubCategoriaRequest subCategoriaRequest) {
         return this.subCategoriaService.find(subCategoriaRequest).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }

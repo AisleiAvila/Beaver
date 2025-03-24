@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class CategoriaRepositoryImpl implements CategoriaRepository {
@@ -28,7 +29,11 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
                 .withId(categoriarequest.getId())
                 .withNome(categoriarequest.getNome())
                 .withExperienciaMinimaMeses(categoriarequest.getExperienciaMinimaMeses())
-                .withStatus(categoriarequest.getStatus() != null ? StatusServico.valueOf(categoriarequest.getStatus().name()) : null)
+                .withStatus(categoriarequest.getStatus() != null ?
+                        categoriarequest.getStatus().stream()
+                                .map(status -> StatusServico.valueOf(status.name()))
+                                .collect(Collectors.toList())
+                        : null)
                 .withRequerCertificacao(categoriarequest.getRequerCertificacao())
                 .withNivelRisco(categoriarequest.getNivelRisco())
                 .withTipoCertificacao(categoriarequest.getTipoCertificacao())
