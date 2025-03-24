@@ -1,14 +1,16 @@
 <main class="main-container">
   <div class="content-wrapper">
-    <h2 class="page-title">{{ "Cadastro de Categoria" | translate }}</h2>
+    <h2 class="page-title">{{ titulo | translate }}</h2>
 
     <div class="form-container">
       <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()">
         <div class="form-section">
-          <h3 class="section-title">{{ "Informações Básicas" | translate }}</h3>
+          <h3 class="section-title">
+            {{ "TITLE_INFORMACOES_BASICAS" | translate }}
+          </h3>
           <div class="form-row">
             <mat-form-field appearance="outline">
-              <mat-label>{{ "Nome" | translate }}</mat-label>
+              <mat-label>{{ "LABLE_NOME" | translate }}</mat-label>
               <input matInput formControlName="nome" maxlength="100" required />
               <mat-error *ngIf="categoriaForm.get('nome').hasError('required')">
                 {{ "Nome é obrigatório" | translate }}
@@ -26,24 +28,21 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>{{ "Status" | translate }}</mat-label>
+              <mat-label>{{ "LABLE_STATUS" | translate }}</mat-label>
               <mat-select formControlName="status" required>
-                <mat-option value="ATIVO">{{ "Ativo" | translate }}</mat-option>
-                <mat-option value="INATIVO">{{
-                  "Inativo" | translate
-                }}</mat-option>
+                <mat-option
+                  *ngFor="let status of statusOptions"
+                  [value]="status"
+                >
+                  {{ status }}
+                </mat-option>
               </mat-select>
-              <mat-error
-                *ngIf="categoriaForm.get('status').hasError('required')"
-              >
-                {{ "Status é obrigatório" | translate }}
-              </mat-error>
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline">
-              <mat-label>{{ "Descrição" | translate }}</mat-label>
+              <mat-label>{{ "LABLE_DESCRICAO" | translate }}</mat-label>
               <textarea
                 matInput
                 formControlName="descricao"
@@ -65,7 +64,7 @@
           </h3>
           <div class="form-row">
             <mat-form-field appearance="outline">
-              <mat-label>{{ "Nível de Risco" | translate }}</mat-label>
+              <mat-label>{{ "LABEL_NIVEL_RISCO" | translate }}</mat-label>
               <mat-select formControlName="nivel_risco" required>
                 <mat-option value="BAIXO">{{ "Baixo" | translate }}</mat-option>
                 <mat-option value="MEDIO">{{ "Médio" | translate }}</mat-option>
@@ -315,6 +314,60 @@
                   placeholder="{{ 'Adicionar documento' | translate }}"
                   [matChipInputFor]="docList"
                   (matChipInputTokenEnd)="addDocument($event)"
+                />
+              </mat-chip-grid>
+              <mat-hint>{{
+                "Pressione Enter para adicionar" | translate
+              }}</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Adicione esta seção antes de <div class="form-actions"> -->
+        <div class="form-section">
+          <h3 class="section-title">{{ "Subcategorias" | translate }}</h3>
+
+          <!-- Lista de subcategorias existentes -->
+          <div
+            class="subcategorias-container"
+            *ngIf="subcategorias && subcategorias.length > 0"
+          >
+            <h4>{{ "Subcategorias existentes" | translate }}</h4>
+            <div class="subcategorias-list">
+              <mat-chip-set>
+                <mat-chip
+                  *ngFor="let subcategoria of subcategorias"
+                  (removed)="removerSubcategoriaExistente(subcategoria)"
+                >
+                  {{ subcategoria.nome }}
+                  <button matChipRemove *ngIf="isEditMode">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+          </div>
+
+          <!-- Interface para adicionar novas subcategorias -->
+          <div class="form-row" *ngIf="isEditMode || isCreateMode">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ "Adicionar subcategorias" | translate }}</mat-label>
+              <mat-chip-grid #subcategoriasList>
+                <mat-chip-row
+                  *ngFor="
+                    let subcategoria of categoriaForm.get('subcategorias').value
+                  "
+                  (removed)="removeSubcategoria(subcategoria)"
+                >
+                  {{ subcategoria.nome }}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip-row>
+                <input
+                  placeholder="{{ 'Nova subcategoria' | translate }}"
+                  [matChipInputFor]="subcategoriasList"
+                  (matChipInputTokenEnd)="addSubcategoria($event)"
                 />
               </mat-chip-grid>
               <mat-hint>{{

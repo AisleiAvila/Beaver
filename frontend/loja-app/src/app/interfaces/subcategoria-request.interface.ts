@@ -1,13 +1,11 @@
 import { StatusServico } from '../enum/status-servico.enum';
 
-export interface CategoriaRequest {
+export interface SubcategoriaRequest {
   id?: number;
+  categoria_id?: number;
   nome?: string;
   status?: StatusServico | StatusServico[];
-  requer_certificacao?: boolean;
-  tipo_certificacao?: string;
-  experiencia_minima_meses?: number;
-  nivel_risco?: string;
+  nivel_medio_complexidade?: string;
   limit?: number;
   offset?: number;
 }

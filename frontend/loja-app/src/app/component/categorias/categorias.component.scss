@@ -18,3 +18,19 @@ button {
   width: 100%;
   margin-top: 20px;
 }
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.filtro-nome-field {
+  flex: 3; /* Ocupa 3 partes do espaço disponível */
+  min-width: 300px;
+}
+
+.filtro-status-field {
+  flex: 1; /* Ocupa 1 parte do espaço disponível */
+  min-width: 200px;
+}

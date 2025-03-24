@@ -94,7 +94,8 @@
     color: #0b2931;
   }
 
-  .mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-thick {
+  .mat-form-field-appearance-outline.mat-form-field-invalid
+    .mat-form-field-outline-thick {
     color: #f44336;
   }
 
@@ -131,9 +132,23 @@
 
 // Animação de shake para feedback visual
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 .form-container.has-errors {

@@ -10,16 +10,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { CategoriasService } from 'src/app/service/categorias.service';
-import { Categoria } from 'src/app/model/categoria.model';
+import { StatusServico } from 'src/app/enum/status-servico.enum';
 import { CategoriaRequest } from 'src/app/interfaces/categoria-request.interface';
+import { Categoria } from 'src/app/model/categoria.model';
+import { CategoriasService } from 'src/app/service/categorias.service';
 
 @Component({
   selector: 'app-categorias',
@@ -51,13 +52,19 @@ import { CategoriaRequest } from 'src/app/interfaces/categoria-request.interface
 export class CategoriasComponent implements OnInit {
   categoriasService = inject(CategoriasService);
   router = inject(Router);
+  snackBar = inject(MatSnackBar);
 
   categorias: Categoria[] = [];
   filtroNome = '';
-  displayedColumns: string[] = ['nome', 'descricao', 'acoes'];
+  displayedColumns: string[] = ['nome', 'descricao', 'status', 'acoes'];
+
+  statusOptions: StatusServico[] = [];
+  statusSelecionados: StatusServico[] = [];
+  allStatusSelected = false;
 
   ngOnInit(): void {
     this.loadCategorias();
+    this.loadStatusOptions();
   }
 
   loadCategorias(): void {
@@ -73,23 +80,62 @@ export class CategoriasComponent implements OnInit {
       });
   }
 
+  toggleAllStatus(): void {
+    if (this.allStatusSelected) {
+      this.statusSelecionados = [];
+    } else {
+      this.statusSelecionados = [...this.statusOptions];
+    }
+    this.allStatusSelected = !this.allStatusSelected;
+  }
+
   pesquisarCategorias(): void {
     const params: CategoriaRequest = {
       nome: this.filtroNome, // Passa o filtro para o backend processar
+      status:
+        this.statusSelecionados.length > 0
+          ? this.statusSelecionados
+          : undefined,
       limit: 50,
       offset: 0,
     };
-    this.categoriasService
-      .getCategorias(params)
-      .subscribe((data: Categoria[]) => {
-        this.categorias = data.filter((categoria) =>
-          categoria.nome.toLowerCase().includes(this.filtroNome.toLowerCase())
-        );
-      });
+    this.categoriasService.getCategorias(params).subscribe({
+      next: (data: Categoria[]) => {
+        this.categorias = data;
+      },
+      error: (error) => {
+        // Verificar se é erro 404
+        if (error.status === 404) {
+          // Tratar como lista vazia sem mostrar erro
+          this.categorias = [];
+          this.snackBar.open(
+            'Nenhuma categoria encontrada com os filtros aplicados',
+            'Fechar',
+            {
+              duration: 5000,
+              horizontalPosition: 'end',
+              verticalPosition: 'bottom',
+            }
+          );
+        } else {
+          // Para outros erros, mostrar mensagem de erro
+          this.categorias = [];
+          this.snackBar.open('Erro ao pesquisar categorias', 'Fechar', {
+            duration: 5000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'],
+          });
+          console.error('Erro ao pesquisar categorias:', error);
+        }
+      },
+    });
   }
 
   limparFiltros(): void {
     this.filtroNome = '';
+    this.statusSelecionados = [];
+    this.allStatusSelected = false;
     this.loadCategorias();
   }
 
@@ -98,12 +144,29 @@ export class CategoriasComponent implements OnInit {
   }
 
   editarCategoria(categoriaId: number): void {
-    this.router.navigate([`/cadastro-categoria/${categoriaId}`]);
+    this.router.navigate(['/cadastro-categoria', categoriaId]);
   }
 
   excluirCategoria(categoriaId: number): void {
     this.categoriasService.deleteCategoria(categoriaId).subscribe(() => {
       this.loadCategorias();
+    });
+  }
+
+  loadStatusOptions() {
+    this.categoriasService.getStatus().subscribe({
+      next: (statusList) => {
+        this.statusOptions = statusList;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar status:', error);
+      },
+    });
+  }
+
+  cadastroCategoria(id: number, acao: string): void {
+    this.router.navigate(['/cadastro-categoria', id], {
+      state: { id, acao: acao },
     });
   }
 }
