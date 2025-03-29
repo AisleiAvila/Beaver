@@ -121,6 +121,6 @@ public class ItemPedidoRecord extends UpdatableRecordImpl<ItemPedidoRecord> {
         setProdutoId(produtoId);
         setQuantidade(quantidade);
         setPrecoUnitario(precoUnitario);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

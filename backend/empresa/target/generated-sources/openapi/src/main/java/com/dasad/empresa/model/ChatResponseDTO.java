@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -18,16 +19,16 @@ import jakarta.annotation.Generated;
  * ChatResponseDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class ChatResponseDTO {
 
-  private String model;
+  private @Nullable String model;
 
-  private String createdAt;
+  private @Nullable String createdAt;
 
-  private String response;
+  private @Nullable String response;
 
-  private Boolean done;
+  private @Nullable Boolean done;
 
   public ChatResponseDTO model(String model) {
     this.model = model;

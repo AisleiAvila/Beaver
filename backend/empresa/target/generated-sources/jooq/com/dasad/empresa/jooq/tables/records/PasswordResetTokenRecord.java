@@ -106,6 +106,6 @@ public class PasswordResetTokenRecord extends UpdatableRecordImpl<PasswordResetT
         setToken(token);
         setUsuarioId(usuarioId);
         setExpiryDate(expiryDate);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

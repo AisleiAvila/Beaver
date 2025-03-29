@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -18,22 +19,22 @@ import jakarta.annotation.Generated;
  * SubCategoriaRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class SubCategoriaRequest {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private Integer categoriaId;
+  private @Nullable Integer categoriaId;
 
-  private String nome;
+  private @Nullable String nome;
 
-  private String status;
+  private @Nullable String status;
 
-  private String nivelMedioComplexidade;
+  private @Nullable String nivelMedioComplexidade;
 
-  private Integer limit;
+  private @Nullable Integer limit;
 
-  private Integer offset;
+  private @Nullable Integer offset;
 
   public SubCategoriaRequest id(Integer id) {
     this.id = id;

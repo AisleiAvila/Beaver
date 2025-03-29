@@ -6,6 +6,7 @@ import com.dasad.empresa.model.EventPagination;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.math.BigDecimal;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,22 +21,22 @@ import jakarta.annotation.Generated;
  * ProdutoRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class ProdutoRequest {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private String nome;
+  private @Nullable String nome;
 
-  private BigDecimal preco;
+  private @Nullable BigDecimal preco;
 
-  private String categoria;
+  private @Nullable String categoria;
 
-  private Integer limit;
+  private @Nullable Integer limit;
 
-  private Integer offset;
+  private @Nullable Integer offset;
 
-  private EventPagination event;
+  private @Nullable EventPagination event;
 
   public ProdutoRequest id(Integer id) {
     this.id = id;

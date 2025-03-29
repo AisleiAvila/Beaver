@@ -27,6 +27,7 @@ import com.dasad.empresa.jooq.tables.Regioes;
 import com.dasad.empresa.jooq.tables.Subcategoria;
 import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.jooq.tables.UsuarioFoto;
+import com.dasad.empresa.jooq.tables.UsuarioOrganizacao;
 import com.dasad.empresa.jooq.tables.UsuarioPerfil;
 import com.dasad.empresa.jooq.tables.UsuarioRecuperarSenha;
 
@@ -151,6 +152,11 @@ public class Tables {
      * The table <code>public.usuario_foto</code>.
      */
     public static final UsuarioFoto USUARIO_FOTO = UsuarioFoto.USUARIO_FOTO;
+
+    /**
+     * The table <code>public.usuario_organizacao</code>.
+     */
+    public static final UsuarioOrganizacao USUARIO_ORGANIZACAO = UsuarioOrganizacao.USUARIO_ORGANIZACAO;
 
     /**
      * The table <code>public.usuario_perfil</code>.

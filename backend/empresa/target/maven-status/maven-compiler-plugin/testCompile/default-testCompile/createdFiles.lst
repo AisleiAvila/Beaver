@@ -10,6 +10,7 @@ infra\security\CustomUserDetailServiceTest.class
 controller\AuthControllerTest$RegisterTests.class
 service\EnderecoServiceTest.class
 infra\security\CustomAccessDeniedHandlerTest.class
+controller\CategoriaControllerTest.class
 util\DataUtilTest.class
 controller\EnderecoControllerTest$CreateEnderecoTests.class
 controller\AuthControllerTest$VerifyAuthorizationTests.class

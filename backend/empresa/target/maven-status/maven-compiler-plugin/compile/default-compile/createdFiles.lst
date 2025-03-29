@@ -2,6 +2,7 @@ com\dasad\empresa\jooq\tables\Fornecedor.class
 com\dasad\empresa\api\CategoriaApi.class
 com\dasad\empresa\controller\EnderecoController.class
 com\dasad\empresa\jooq\tables\records\PerfilRecord.class
+com\dasad\empresa\jooq\tables\UsuarioOrganizacao$UsuarioOrganizacaoPath.class
 com\dasad\empresa\api\SubcategoriaApi.class
 com\dasad\empresa\jooq\tables\records\FornecedorRecord.class
 com\dasad\empresa\repository\query\UsuarioFotoQueryBuilder.class
@@ -41,6 +42,7 @@ com\dasad\empresa\infra\security\JwtAuthenticationFilter.class
 com\dasad\empresa\jooq\tables\records\PedidoRecord.class
 com\dasad\empresa\controller\PerfilController.class
 com\dasad\empresa\jooq\tables\Cidade$CidadePath.class
+com\dasad\empresa\jooq\tables\Organizacao$OrganizacaoPath.class
 com\dasad\empresa\jooq\tables\records\PaisRecord.class
 com\dasad\empresa\config\RestTemplateConfig.class
 com\dasad\empresa\jooq\tables\UsuarioFoto.class
@@ -114,6 +116,7 @@ com\dasad\empresa\jooq\tables\CategoriaEquipamentos.class
 com\dasad\empresa\util\LocalDateDeserializer.class
 com\dasad\empresa\jooq\tables\Categoria.class
 com\dasad\empresa\jooq\tables\Endereco.class
+com\dasad\empresa\jooq\tables\records\UsuarioOrganizacaoRecord.class
 com\dasad\empresa\service\CategoriaService.class
 com\dasad\empresa\repository\PaisRepositoryImpl.class
 com\dasad\empresa\controller\ChatController.class
@@ -179,6 +182,7 @@ com\dasad\empresa\jooq\tables\records\UsuarioRecord.class
 com\dasad\empresa\jooq\tables\records\UsuarioPerfilRecord.class
 com\dasad\empresa\model\CidadeModel.class
 com\dasad\empresa\EmpresaApplication.class
+com\dasad\empresa\jooq\tables\UsuarioOrganizacao.class
 com\dasad\empresa\jooq\tables\records\PasswordResetTokenRecord.class
 com\dasad\empresa\model\CategoriaRequest.class
 com\dasad\empresa\jooq\tables\Subcategoria.class

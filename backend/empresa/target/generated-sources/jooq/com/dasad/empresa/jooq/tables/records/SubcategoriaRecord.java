@@ -252,6 +252,6 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
         setMateriaisTipicos(materiaisTipicos);
         setDataCriacao(dataCriacao);
         setDataAtualizacao(dataAtualizacao);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

@@ -211,6 +211,6 @@ public class OrganizacaoRecord extends UpdatableRecordImpl<OrganizacaoRecord> {
         setCargo(cargo);
         setNumeroRegistoComercial(numeroRegistoComercial);
         setDataRegisto(dataRegisto);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

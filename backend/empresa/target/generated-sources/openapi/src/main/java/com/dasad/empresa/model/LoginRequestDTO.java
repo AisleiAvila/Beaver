@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -18,12 +19,12 @@ import jakarta.annotation.Generated;
  * LoginRequestDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class LoginRequestDTO {
 
-  private String email;
+  private @Nullable String email;
 
-  private String senha;
+  private @Nullable String senha;
 
   public LoginRequestDTO email(String email) {
     this.email = email;

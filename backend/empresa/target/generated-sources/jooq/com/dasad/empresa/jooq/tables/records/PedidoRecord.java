@@ -106,6 +106,6 @@ public class PedidoRecord extends UpdatableRecordImpl<PedidoRecord> {
         setClienteId(clienteId);
         setDataPedido(dataPedido);
         setStatus(status);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

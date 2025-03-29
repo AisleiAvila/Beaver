@@ -137,6 +137,6 @@ public class DescontoRecord extends UpdatableRecordImpl<DescontoRecord> {
         setDataInicio(dataInicio);
         setDataFim(dataFim);
         setMotivo(motivo);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

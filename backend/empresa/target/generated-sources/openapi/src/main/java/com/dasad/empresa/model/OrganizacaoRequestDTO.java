@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -23,28 +24,28 @@ import jakarta.annotation.Generated;
  * OrganizacaoRequestDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class OrganizacaoRequestDTO {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private String nome;
+  private @Nullable String nome;
 
-  private String nif;
+  private @Nullable String nif;
 
-  private String email;
+  private @Nullable String email;
 
-  private String website;
+  private @Nullable String website;
 
-  private String setorAtividade;
+  private @Nullable String setorAtividade;
 
-  private String missao;
+  private @Nullable String missao;
 
-  private String representanteLegal;
+  private @Nullable String representanteLegal;
 
-  private String cargo;
+  private @Nullable String cargo;
 
-  private String numeroRegistoComercial;
+  private @Nullable String numeroRegistoComercial;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private JsonNullable<LocalDate> dataRegisto = JsonNullable.<LocalDate>undefined();
@@ -259,7 +260,7 @@ public class OrganizacaoRequestDTO {
    * @return dataRegisto
    */
   @Valid 
-  @Schema(name = "dataRegisto", example = "Wed Sep 01 01:00:00 WEST 2021", description = "Data de registo comercial", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "dataRegisto", example = "2021-09-01", description = "Data de registo comercial", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataRegisto")
   public JsonNullable<LocalDate> getDataRegisto() {
     return dataRegisto;

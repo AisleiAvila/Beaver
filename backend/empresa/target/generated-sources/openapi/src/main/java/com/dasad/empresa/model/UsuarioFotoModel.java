@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -21,22 +22,22 @@ import jakarta.annotation.Generated;
  * UsuarioFotoModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class UsuarioFotoModel {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private Integer usuarioId;
+  private @Nullable Integer usuarioId;
 
-  private byte[] foto;
+  private @Nullable byte[] foto;
 
-  private Boolean ativo;
-
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime dataCriacao;
+  private @Nullable Boolean ativo;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime dataAtualizacao;
+  private @Nullable OffsetDateTime dataCriacao;
+
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private @Nullable OffsetDateTime dataAtualizacao;
 
   public UsuarioFotoModel id(Integer id) {
     this.id = id;

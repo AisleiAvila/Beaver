@@ -117,6 +117,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\RegioesRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\SubcategoriaRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioFotoRecord.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioOrganizacaoRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioPerfilRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioRecord.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\records\UsuarioRecuperarSenhaRecord.java
@@ -124,6 +125,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Subcategoria.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\Usuario.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioFoto.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioOrganizacao.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioPerfil.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\jooq\com\dasad\empresa\jooq\tables\UsuarioRecuperarSenha.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\AuthApi.java

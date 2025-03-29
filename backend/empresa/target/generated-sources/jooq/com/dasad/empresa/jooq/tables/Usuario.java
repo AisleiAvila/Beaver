@@ -7,9 +7,11 @@ package com.dasad.empresa.jooq.tables;
 import com.dasad.empresa.jooq.Keys;
 import com.dasad.empresa.jooq.Public;
 import com.dasad.empresa.jooq.tables.Endereco.EnderecoPath;
+import com.dasad.empresa.jooq.tables.Organizacao.OrganizacaoPath;
 import com.dasad.empresa.jooq.tables.PasswordResetToken.PasswordResetTokenPath;
 import com.dasad.empresa.jooq.tables.Perfil.PerfilPath;
 import com.dasad.empresa.jooq.tables.UsuarioFoto.UsuarioFotoPath;
+import com.dasad.empresa.jooq.tables.UsuarioOrganizacao.UsuarioOrganizacaoPath;
 import com.dasad.empresa.jooq.tables.UsuarioPerfil.UsuarioPerfilPath;
 import com.dasad.empresa.jooq.tables.UsuarioRecuperarSenha.UsuarioRecuperarSenhaPath;
 import com.dasad.empresa.jooq.tables.records.UsuarioRecord;
@@ -215,6 +217,19 @@ public class Usuario extends TableImpl<UsuarioRecord> {
         return _usuarioRecuperarSenha;
     }
 
+    private transient UsuarioOrganizacaoPath _usuarioOrganizacao;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.usuario_organizacao</code> table
+     */
+    public UsuarioOrganizacaoPath usuarioOrganizacao() {
+        if (_usuarioOrganizacao == null)
+            _usuarioOrganizacao = new UsuarioOrganizacaoPath(this, null, Keys.USUARIO_ORGANIZACAO__USUARIOS_ORGANIZACOES_USUARIO_ID_FKEY.getInverseKey());
+
+        return _usuarioOrganizacao;
+    }
+
     private transient UsuarioPerfilPath _usuarioPerfil;
 
     /**
@@ -226,6 +241,14 @@ public class Usuario extends TableImpl<UsuarioRecord> {
             _usuarioPerfil = new UsuarioPerfilPath(this, null, Keys.USUARIO_PERFIL__USUARIOS_PERFIS_USUARIO_ID_FKEY.getInverseKey());
 
         return _usuarioPerfil;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the
+     * <code>public.organizacao</code> table
+     */
+    public OrganizacaoPath organizacao() {
+        return usuarioOrganizacao().organizacao();
     }
 
     /**

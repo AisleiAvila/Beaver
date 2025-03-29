@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -22,27 +23,27 @@ import jakarta.annotation.Generated;
  * CategoriaRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class CategoriaRequest {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private String nome;
+  private @Nullable String nome;
 
   @Valid
   private List<StatusServico> status = new ArrayList<>();
 
-  private Boolean requerCertificacao;
+  private @Nullable Boolean requerCertificacao;
 
-  private String tipoCertificacao;
+  private @Nullable String tipoCertificacao;
 
-  private Integer experienciaMinimaMeses;
+  private @Nullable Integer experienciaMinimaMeses;
 
-  private String nivelRisco;
+  private @Nullable String nivelRisco;
 
-  private Integer limit;
+  private @Nullable Integer limit;
 
-  private Integer offset;
+  private @Nullable Integer offset;
 
   public CategoriaRequest id(Integer id) {
     this.id = id;

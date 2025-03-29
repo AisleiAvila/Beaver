@@ -89,6 +89,6 @@ public class ProdutoFornecedorRecord extends UpdatableRecordImpl<ProdutoForneced
         setId(id);
         setProdutoId(produtoId);
         setFornecedorId(fornecedorId);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

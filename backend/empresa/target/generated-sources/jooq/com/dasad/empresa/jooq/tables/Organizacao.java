@@ -6,6 +6,8 @@ package com.dasad.empresa.jooq.tables;
 
 import com.dasad.empresa.jooq.Keys;
 import com.dasad.empresa.jooq.Public;
+import com.dasad.empresa.jooq.tables.Usuario.UsuarioPath;
+import com.dasad.empresa.jooq.tables.UsuarioOrganizacao.UsuarioOrganizacaoPath;
 import com.dasad.empresa.jooq.tables.records.OrganizacaoRecord;
 
 import java.time.LocalDate;
@@ -15,10 +17,14 @@ import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -137,6 +143,39 @@ public class Organizacao extends TableImpl<OrganizacaoRecord> {
         this(DSL.name("organizacao"), null);
     }
 
+    public <O extends Record> Organizacao(Table<O> path, ForeignKey<O, OrganizacaoRecord> childPath, InverseForeignKey<O, OrganizacaoRecord> parentPath) {
+        super(path, childPath, parentPath, ORGANIZACAO);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class OrganizacaoPath extends Organizacao implements Path<OrganizacaoRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> OrganizacaoPath(Table<O> path, ForeignKey<O, OrganizacaoRecord> childPath, InverseForeignKey<O, OrganizacaoRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private OrganizacaoPath(Name alias, Table<OrganizacaoRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public OrganizacaoPath as(String alias) {
+            return new OrganizacaoPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public OrganizacaoPath as(Name alias) {
+            return new OrganizacaoPath(alias, this);
+        }
+
+        @Override
+        public OrganizacaoPath as(Table<?> alias) {
+            return new OrganizacaoPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -155,6 +194,27 @@ public class Organizacao extends TableImpl<OrganizacaoRecord> {
     @Override
     public List<UniqueKey<OrganizacaoRecord>> getUniqueKeys() {
         return Arrays.asList(Keys.ORGANIZACAO_NIF_KEY);
+    }
+
+    private transient UsuarioOrganizacaoPath _usuarioOrganizacao;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.usuario_organizacao</code> table
+     */
+    public UsuarioOrganizacaoPath usuarioOrganizacao() {
+        if (_usuarioOrganizacao == null)
+            _usuarioOrganizacao = new UsuarioOrganizacaoPath(this, null, Keys.USUARIO_ORGANIZACAO__USUARIOS_ORGANIZACOES_ORGANIZACAO_ID_FKEY.getInverseKey());
+
+        return _usuarioOrganizacao;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the
+     * <code>public.usuario</code> table
+     */
+    public UsuarioPath usuario() {
+        return usuarioOrganizacao().usuario();
     }
 
     @Override

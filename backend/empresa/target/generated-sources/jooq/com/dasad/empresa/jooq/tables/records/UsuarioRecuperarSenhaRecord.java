@@ -111,6 +111,6 @@ public class UsuarioRecuperarSenhaRecord extends TableRecordImpl<UsuarioRecupera
         setToken(token);
         setDataExpiracao(dataExpiracao);
         setUsado(usado);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

@@ -89,6 +89,6 @@ public class CidadeRecord extends UpdatableRecordImpl<CidadeRecord> {
         setId(id);
         setNome(nome);
         setEstadoId(estadoId);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

@@ -196,6 +196,6 @@ public class EnderecoRecord extends UpdatableRecordImpl<EnderecoRecord> {
         setLatitude(latitude);
         setLongitude(longitude);
         setUsuarioId(usuarioId);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

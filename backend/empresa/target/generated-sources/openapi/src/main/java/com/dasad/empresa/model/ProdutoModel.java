@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -24,18 +25,18 @@ import jakarta.annotation.Generated;
  * ProdutoModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class ProdutoModel {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private String nome;
+  private @Nullable String nome;
 
-  private String descricao;
+  private @Nullable String descricao;
 
-  private BigDecimal preco;
+  private @Nullable BigDecimal preco;
 
-  private String categoria;
+  private @Nullable String categoria;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private JsonNullable<LocalDate> dataCadastro = JsonNullable.<LocalDate>undefined();

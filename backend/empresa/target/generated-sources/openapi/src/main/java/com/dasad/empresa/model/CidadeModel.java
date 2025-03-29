@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.dasad.empresa.model.EstadoModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -19,14 +20,14 @@ import jakarta.annotation.Generated;
  * CidadeModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class CidadeModel {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private String nome;
+  private @Nullable String nome;
 
-  private EstadoModel estadoId;
+  private @Nullable EstadoModel estadoId;
 
   public CidadeModel id(Integer id) {
     this.id = id;

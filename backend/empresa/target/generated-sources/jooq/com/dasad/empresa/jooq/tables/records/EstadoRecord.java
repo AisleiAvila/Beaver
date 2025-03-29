@@ -89,6 +89,6 @@ public class EstadoRecord extends UpdatableRecordImpl<EstadoRecord> {
         setId(id);
         setNome(nome);
         setPaisId(paisId);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

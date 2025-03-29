@@ -151,6 +151,6 @@ public class CategoriaEquipamentosRecord extends UpdatableRecordImpl<CategoriaEq
         setObrigatorio(obrigatorio);
         setDataCriacao(dataCriacao);
         setDataAtualizacao(dataAtualizacao);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

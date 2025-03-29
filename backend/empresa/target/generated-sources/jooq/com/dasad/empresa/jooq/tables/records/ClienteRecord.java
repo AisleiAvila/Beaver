@@ -134,6 +134,6 @@ public class ClienteRecord extends UpdatableRecordImpl<ClienteRecord> {
         setTelefone(telefone);
         setEndereco(endereco);
         setFotoPerfil(fotoPerfil);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

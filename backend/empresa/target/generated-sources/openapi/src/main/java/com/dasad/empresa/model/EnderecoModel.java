@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.math.BigDecimal;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -22,28 +23,28 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("enderecoModel")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class EnderecoModel {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private CidadeModel cidadeId;
+  private @Nullable CidadeModel cidadeId;
 
-  private String cep;
+  private @Nullable String cep;
 
-  private String logradouro;
+  private @Nullable String logradouro;
 
-  private String numero;
+  private @Nullable String numero;
 
-  private String complemento;
+  private @Nullable String complemento;
 
-  private String bairro;
+  private @Nullable String bairro;
 
-  private BigDecimal latitude;
+  private @Nullable BigDecimal latitude;
 
-  private BigDecimal longitude;
+  private @Nullable BigDecimal longitude;
 
-  private Integer usuarioId;
+  private @Nullable Integer usuarioId;
 
   public EnderecoModel id(Integer id) {
     this.id = id;

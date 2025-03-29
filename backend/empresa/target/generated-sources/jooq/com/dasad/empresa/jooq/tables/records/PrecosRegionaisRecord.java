@@ -167,6 +167,6 @@ public class PrecosRegionaisRecord extends UpdatableRecordImpl<PrecosRegionaisRe
         setPrecoMaximo(precoMaximo);
         setDataCriacao(dataCriacao);
         setDataAtualizacao(dataAtualizacao);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

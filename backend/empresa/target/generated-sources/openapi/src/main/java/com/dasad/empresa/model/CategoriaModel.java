@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -26,46 +27,46 @@ import jakarta.annotation.Generated;
  * CategoriaModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class CategoriaModel {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private String nome;
+  private @Nullable String nome;
 
-  private String descricao;
+  private @Nullable String descricao;
 
-  private StatusServico status;
+  private @Nullable StatusServico status;
 
-  private Boolean requerCertificacao;
+  private @Nullable Boolean requerCertificacao;
 
-  private String tipoCertificacao;
+  private @Nullable String tipoCertificacao;
 
-  private Integer experienciaMinimaMeses;
+  private @Nullable Integer experienciaMinimaMeses;
 
-  private String nivelRisco;
+  private @Nullable String nivelRisco;
 
-  private Boolean seguroObrigatorio;
+  private @Nullable Boolean seguroObrigatorio;
 
-  private BigDecimal valorBaseHora;
-
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime dataCriacao;
+  private @Nullable BigDecimal valorBaseHora;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime dataAtualizacao;
+  private @Nullable OffsetDateTime dataCriacao;
 
-  private String urlImagem;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private @Nullable OffsetDateTime dataAtualizacao;
 
-  private String palavrasChave;
+  private @Nullable String urlImagem;
 
-  private Integer horasMinimasAgendamento;
+  private @Nullable String palavrasChave;
 
-  private Integer horasCancelamentoGratis;
+  private @Nullable Integer horasMinimasAgendamento;
+
+  private @Nullable Integer horasCancelamentoGratis;
 
   private JsonNullable<Float> percentualComissao = JsonNullable.<Float>undefined();
 
-  private String documentosNecessarios;
+  private @Nullable String documentosNecessarios;
 
   public CategoriaModel id(Integer id) {
     this.id = id;

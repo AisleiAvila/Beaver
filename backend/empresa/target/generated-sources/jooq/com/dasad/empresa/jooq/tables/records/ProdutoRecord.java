@@ -137,6 +137,6 @@ public class ProdutoRecord extends UpdatableRecordImpl<ProdutoRecord> {
         setPreco(preco);
         setCategoria(categoria);
         setDataCadastro(dataCadastro);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

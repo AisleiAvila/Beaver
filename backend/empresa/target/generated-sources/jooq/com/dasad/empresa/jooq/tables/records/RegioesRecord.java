@@ -151,6 +151,6 @@ public class RegioesRecord extends UpdatableRecordImpl<RegioesRecord> {
         setAtivo(ativo);
         setDataCriacao(dataCriacao);
         setDataAtualizacao(dataAtualizacao);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

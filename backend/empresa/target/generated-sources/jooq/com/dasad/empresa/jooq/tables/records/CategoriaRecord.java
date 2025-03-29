@@ -330,6 +330,6 @@ public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
         setHorasCancelamentoGratis(horasCancelamentoGratis);
         setPercentualComissao(percentualComissao);
         setDocumentosNecessarios(documentosNecessarios);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

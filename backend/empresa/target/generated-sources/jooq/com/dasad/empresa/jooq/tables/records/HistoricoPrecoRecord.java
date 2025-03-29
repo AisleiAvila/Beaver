@@ -137,6 +137,6 @@ public class HistoricoPrecoRecord extends UpdatableRecordImpl<HistoricoPrecoReco
         setPrecoNovo(precoNovo);
         setDataMudanca(dataMudanca);
         setMotivo(motivo);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -21,34 +22,34 @@ import jakarta.annotation.Generated;
  * SubCategoriaModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class SubCategoriaModel {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private Integer categoriaId;
+  private @Nullable Integer categoriaId;
 
-  private String nome;
+  private @Nullable String nome;
 
-  private String descricao;
+  private @Nullable String descricao;
 
-  private String status;
+  private @Nullable String status;
 
-  private Integer tempoMedioMinutos;
+  private @Nullable Integer tempoMedioMinutos;
 
-  private String nivelComplexidade;
+  private @Nullable String nivelComplexidade;
 
-  private BigDecimal precoBase;
+  private @Nullable BigDecimal precoBase;
 
-  private String unidadeMedida;
+  private @Nullable String unidadeMedida;
 
-  private String materiaisTipicos;
-
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime dataCriacao;
+  private @Nullable String materiaisTipicos;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime dataAtualizacao;
+  private @Nullable OffsetDateTime dataCriacao;
+
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private @Nullable OffsetDateTime dataAtualizacao;
 
   public SubCategoriaModel id(Integer id) {
     this.id = id;

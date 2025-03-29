@@ -74,6 +74,6 @@ public class PaisRecord extends UpdatableRecordImpl<PaisRecord> {
 
         setId(id);
         setNome(nome);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

@@ -119,6 +119,6 @@ public class FornecedorRecord extends UpdatableRecordImpl<FornecedorRecord> {
         setContato(contato);
         setTelefone(telefone);
         setEndereco(endereco);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

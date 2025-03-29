@@ -104,6 +104,6 @@ public class EstoqueRecord extends UpdatableRecordImpl<EstoqueRecord> {
         setProdutoId(produtoId);
         setQuantidade(quantidade);
         setLocalizacao(localizacao);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

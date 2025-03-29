@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -26,19 +27,19 @@ import jakarta.annotation.Generated;
  * UsuarioModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-23T11:15:53.659232200Z[Europe/Lisbon]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class UsuarioModel {
 
-  private Integer id;
+  private @Nullable Integer id;
 
-  private String nome;
+  private @Nullable String nome;
 
-  private String senha;
+  private @Nullable String senha;
 
-  private String email;
+  private @Nullable String email;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDate dataNascimento;
+  private @Nullable LocalDate dataNascimento;
 
   @Valid
   private List<@Valid EnderecoModel> enderecos = new ArrayList<>();
@@ -46,7 +47,7 @@ public class UsuarioModel {
   @Valid
   private List<@Valid PerfilModel> perfis = new ArrayList<>();
 
-  private UsuarioFotoModel foto;
+  private @Nullable UsuarioFotoModel foto;
 
   public UsuarioModel id(Integer id) {
     this.id = id;

@@ -136,6 +136,6 @@ public class UsuarioFotoRecord extends UpdatableRecordImpl<UsuarioFotoRecord> {
         setDataCriacao(dataCriacao);
         setDataAtualizacao(dataAtualizacao);
         setAtivo(ativo);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }
