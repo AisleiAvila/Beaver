@@ -18,7 +18,9 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\EmpresaApplication.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\exception\EmailAlreadyExistsException.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\exception\OrganizacaoAlreadyExistsException.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\exception\OrganizacaoServiceException.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\exception\RestExceptionHandler.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\filter\OrganizacaoContextFilter.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\AuthorizationService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\CustomAccessDeniedHandler.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\CustomUserDetailService.java

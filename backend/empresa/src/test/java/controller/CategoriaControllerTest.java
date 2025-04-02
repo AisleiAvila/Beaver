@@ -43,9 +43,6 @@ class CategoriaControllerTest {
     private CategoriaModel categoriaModelInput;
     private CategoriaModel categoriaModelOutput;
     private CategoriaRequest categoriaRequest;
-    // Não precisamos mais das variáveis statusServico1, statusServico2 aqui
-    // private StatusServico statusServico1;
-    // private StatusServico statusServico2;
 
     @BeforeEach
     void setUp() {
@@ -173,9 +170,7 @@ class CategoriaControllerTest {
         // Verifica se os enums retornados são os esperados
         assertTrue(response.getBody().contains(StatusServico.ATIVO));
         assertTrue(response.getBody().contains(StatusServico.INATIVO));
-        // Ou comparar elemento por elemento se a ordem importar:
-        // assertEquals(StatusServico.ATIVO, response.getBody().get(0));
-        // assertEquals(StatusServico.INATIVO, response.getBody().get(1));
+
 
         // Verifica se o método getStatus do serviço foi chamado
         verify(categoriaService, times(1)).getStatus();
@@ -214,15 +209,5 @@ class CategoriaControllerTest {
         assertNull(response);
         verifyNoInteractions(categoriaService);
 
-        /*
-        // ---- Exemplo de como seria se o método fosse implementado ----
-        when(categoriaService.update(any(CategoriaModel.class))).thenReturn(Optional.of(categoriaParaAtualizar));
-        ResponseEntity<CategoriaModel> responseAlternativo = categoriaController.updateCategoria(categoriaParaAtualizar);
-        assertNotNull(responseAlternativo);
-        assertEquals(HttpStatus.OK, responseAlternativo.getStatusCode());
-        assertNotNull(responseAlternativo.getBody());
-        assertEquals(categoriaParaAtualizar.getNome(), responseAlternativo.getBody().getNome());
-        verify(categoriaService, times(1)).update(categoriaParaAtualizar);
-        */
     }
 }

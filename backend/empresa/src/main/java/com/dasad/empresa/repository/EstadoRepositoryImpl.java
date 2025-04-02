@@ -53,16 +53,16 @@ public class EstadoRepositoryImpl implements EstadoRepository {
                 .from(Estado.ESTADO);
     }
 
-    private static EstadoModel getEstadoModel(Record3<Integer, String, Integer> record) {
-        if (record == null) {
+    private static EstadoModel getEstadoModel(Record3<Integer, String, Integer> item) {
+        if (item == null) {
             return null;
         }
 
         var estado = new EstadoModel();
-        estado.setId(record.get(Estado.ESTADO.ID));
-        estado.setNome(record.get(Estado.ESTADO.NOME));
+        estado.setId(item.get(Estado.ESTADO.ID));
+        estado.setNome(item.get(Estado.ESTADO.NOME));
         var pais = new PaisModel();
-        pais.setId(record.get(Estado.ESTADO.PAIS_ID));
+        pais.setId(item.get(Estado.ESTADO.PAIS_ID));
         estado.setPaisId(pais);
         return estado;
     }

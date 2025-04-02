@@ -6,6 +6,7 @@ import com.dasad.empresa.service.PaisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ public class PaisController implements PaisApi {
 
     @Override
     @GetMapping({"/{id}"})
-    public ResponseEntity<PaisModel> detailPais(Integer id) {
+    public ResponseEntity<PaisModel> detailPais(@PathVariable Integer id) {
         return this.paisService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 

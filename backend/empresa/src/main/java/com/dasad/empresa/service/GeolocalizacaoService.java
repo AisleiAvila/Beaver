@@ -3,8 +3,6 @@ package com.dasad.empresa.service;
 import com.dasad.empresa.model.EnderecoModel;
 import com.dasad.empresa.repository.EnderecoRepository;
 import lombok.extern.log4j.Log4j2;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -70,7 +68,6 @@ public class GeolocalizacaoService {
 
                 double latitude = Double.parseDouble(result.get("lat").toString());
                 double longitude = Double.parseDouble(result.get("lon").toString());
-                JSONArray jsonArray = new JSONArray(response);
 
                 log.info("Coordenadas encontradas: Latitude: {}, Longitude: {}", latitude, longitude);
 
@@ -82,7 +79,9 @@ public class GeolocalizacaoService {
 
             // Adicionar um delay para respeitar o limite de requisições do Nominatim
             Thread.sleep(1000);
-
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("Operação de geolocalização interrompida", e);
         } catch (Exception e) {
             log.error("Erro ao obter coordenadas para o endereço", e);
         }

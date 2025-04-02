@@ -34,7 +34,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class SenhaServiceTest {
+class SenhaServiceTest {
 
     @Mock
     private UsuarioRepository usuarioRepository;
@@ -137,23 +137,6 @@ public class SenhaServiceTest {
         assertNotNull(response);
         assertEquals(ResponseEntity.badRequest().build().getStatusCode(), response.getStatusCode());
     }
-
-//    @Test
-//    void testGetRecuperarSenhaWithMessagingException() throws MessagingException {
-//        // Arrange
-//        when(usuarioService.findByEmail(anyString())).thenReturn(Optional.of(usuarioModel));
-//        when(authorizationService.generateToken(any(UsuarioModel.class))).thenReturn("valid-token");
-//        doThrow(new MessagingException("Erro ao enviar e-mail")).when(emailService).sendPasswordResetEmail(anyString(), anyString(), anyString());
-//
-//        // Act & Assert
-//        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-//            senhaService.getRecuperarSenha(recuperarSenhaRequest);
-//        });
-//
-//        assertNotNull(exception.getCause());
-//        assertInstanceOf(MessagingException.class, exception.getCause());
-//        assertEquals("Erro ao enviar e-mail", exception.getCause().getMessage());
-//    }
 
     @Test
     void testGetValidarResetTokenWithException() {

@@ -45,9 +45,9 @@ class UsuarioServiceTest {
     void testFind() {
         UsuarioRequest request = new UsuarioRequest();
         List<UsuarioModel> usuarios = List.of(new UsuarioModel());
-        when(usuarioRepository.find(any(UsuarioRequest.class))).thenReturn(Optional.of(usuarios));
+        when(usuarioRepository.find(any(UsuarioRequest.class), anyInt())).thenReturn(Optional.of(usuarios));
 
-        Optional<List<UsuarioModel>> result = usuarioService.find(request);
+        Optional<List<UsuarioModel>> result = usuarioService.find(request,1);
 
         assertTrue(result.isPresent());
         assertEquals(usuarios, result.get());
@@ -56,9 +56,9 @@ class UsuarioServiceTest {
     @Test
     void testCountTotalRecords() {
         UsuarioRequest request = new UsuarioRequest();
-        when(usuarioRepository.countTotalRecords(any(UsuarioRequest.class))).thenReturn(Optional.of(10));
+        when(usuarioRepository.countTotalRecords(any(UsuarioRequest.class), anyInt())).thenReturn(Optional.of(10));
 
-        Optional<Integer> result = usuarioService.countTotalRecords(request);
+        Optional<Integer> result = usuarioService.countTotalRecords(request, 1);
 
         assertTrue(result.isPresent());
         assertEquals(10, result.get());
@@ -89,9 +89,9 @@ class UsuarioServiceTest {
     @Test
     void testCreate() {
         UsuarioModel usuario = new UsuarioModel();
-        when(usuarioRepository.create(any(UsuarioModel.class))).thenReturn(usuario);
+        when(usuarioRepository.create(any(UsuarioModel.class), anyInt())).thenReturn(usuario);
 
-        UsuarioModel result = usuarioService.create(usuario);
+        UsuarioModel result = usuarioService.create(usuario, 1);
 
         assertNotNull(result);
         assertEquals(usuario, result);
@@ -100,22 +100,13 @@ class UsuarioServiceTest {
     @Test
     void testUpdate() {
         UsuarioModel usuario = new UsuarioModel();
-        when(usuarioRepository.update(any(UsuarioModel.class))).thenReturn(usuario);
+        when(usuarioRepository.update(any(UsuarioModel.class), anyInt())).thenReturn(usuario);
 
-        UsuarioModel result = usuarioService.update(usuario);
+        UsuarioModel result = usuarioService.update(usuario, 1);
 
         assertNotNull(result);
         assertEquals(usuario, result);
     }
-
-//    @Test
-//    void testDeleteById() {
-//        doNothing().when(usuarioRepository).deleteById(anyInt());
-//
-//        usuarioService.deleteById(1);
-//
-//        verify(usuarioRepository, times(1)).deleteById(1);
-//    }
 
     @Test
     void testUpdatePassword() {

@@ -22,10 +22,10 @@ public class PerfilRepositoryImpl implements PerfilRepository {
         log.info("Executando o método findAll");
 
         try {
-            List<PerfilModel> perfis = this.dsl.selectFrom(Perfil.PERFIL).fetch((record) -> {
+            List<PerfilModel> perfis = this.dsl.selectFrom(Perfil.PERFIL).fetch((item) -> {
                 PerfilModel perfil = new PerfilModel();
-                perfil.setId((Integer) record.get(Perfil.PERFIL.ID));
-                perfil.setNome((String) record.get(Perfil.PERFIL.NOME));
+                perfil.setId(item.get(Perfil.PERFIL.ID));
+                perfil.setNome(item.get(Perfil.PERFIL.NOME));
                 return perfil;
             });
             log.info("Buscado com sucesso {} perfis", perfis.size());

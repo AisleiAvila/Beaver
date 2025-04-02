@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.dasad.empresa.model.OrganizacaoModel;
 import com.dasad.empresa.model.PerfilModel;
 import com.dasad.empresa.model.UsuarioModel;
 import lombok.extern.log4j.Log4j2;
@@ -16,26 +17,28 @@ import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
 public class AuthorizationService {
-    private static final long JWT_EXPIRATION = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+    private static final long JWT_EXPIRATION = 2L * 60 * 60 * 1000; // 2 hours in milliseconds // 2 hours in milliseconds
 
     @Value("${api.security.token.secret}")
     private String secret;
 
-    private Set<String> revokedTokens = new HashSet<>();
+    private final Set<String> revokedTokens = new HashSet<>();
 
+    /**
+     * Construtor padrão sem parâmetros.
+     * Utilizado pela injeção de dependências do Spring.
+     */
     public AuthorizationService() {
+        // Construtor padrão necessário para injeção de dependências
     }
 
     public String generateToken(UsuarioModel usuarioModel) {
@@ -46,10 +49,20 @@ public class AuthorizationService {
 
         List<String> roles = usuarioModel.getPerfis().stream()
                 .map(PerfilModel::getNome)
-                .collect(Collectors.toList());
+                .toList();
         String rolesString = String.join(",", roles);
+
+        // Extrair IDs das organizações
+        List<Integer> organizacoesIds = usuarioModel.getOrganizacoes().stream()
+                .map(OrganizacaoModel::getId)
+                .toList();
+
         return JWT.create()
                 .withSubject(usuarioModel.getEmail())
+                .withClaim("userId", usuarioModel.getId())
+                .withClaim("nome", usuarioModel.getNome())
+                .withClaim("perfil", usuarioModel.getPerfis().getFirst().getNome())
+                .withClaim("organizacaoId", organizacoesIds.getFirst())
                 .withIssuer("login-auth-api")
                 .withClaim("role", rolesString)
                 .withExpiresAt(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
@@ -83,7 +96,7 @@ public class AuthorizationService {
             if (StringUtils.hasText(userEmail) && StringUtils.hasText(rolesString)) {
                 List<SimpleGrantedAuthority> authorities = Arrays.stream(rolesString.split(","))
                         .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                        .collect(Collectors.toList());
+                        .toList();
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userEmail, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -104,8 +117,4 @@ public class AuthorizationService {
         revokedTokens.add(token);
     }
 
-    private Instant getExpirationTime() {
-        log.info("Calculating token expiration time");
-        return LocalDateTime.now().plusHours(2L).toInstant(ZoneOffset.of("-03:00"));
-    }
 }

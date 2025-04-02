@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CustomAccessDeniedHandlerTest {
+class CustomAccessDeniedHandlerTest {
 
     @InjectMocks
     private CustomAccessDeniedHandler customAccessDeniedHandler;
@@ -33,12 +33,12 @@ public class CustomAccessDeniedHandlerTest {
     private AccessDeniedException accessDeniedException;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testHandle() throws IOException {
+    void testHandle() throws IOException {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
 

@@ -47,14 +47,14 @@ public class PaisRepositoryImpl implements PaisRepository {
                 .from(Pais.PAIS);
     }
 
-    private static PaisModel getPaisModel(Record2<Integer, String> record) {
-        if (record == null) {
+    private static PaisModel getPaisModel(Record2<Integer, String> item) {
+        if (item == null) {
             return null;
         }
 
         PaisModel pais = new PaisModel();
-        pais.setId(record.get(Pais.PAIS.ID));
-        pais.setNome(record.get(Pais.PAIS.NOME));
+        pais.setId(item.get(Pais.PAIS.ID));
+        pais.setNome(item.get(Pais.PAIS.NOME));
         return pais;
     }
 }

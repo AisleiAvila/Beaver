@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +27,10 @@ import java.util.List;
 @Tag(name = "Endereço", description = "API para gerenciamento de endereços")
 @SecurityRequirement(name = "bearerAuth")
 public class EnderecoController implements EnderecoApi {
-    @Autowired
-    private EnderecoService enderecoService;
+    private final EnderecoService enderecoService;
 
-    public EnderecoController() {
+    public EnderecoController(EnderecoService enderecoService) {
+        this.enderecoService = enderecoService;
     }
 
     @Override
@@ -43,7 +42,7 @@ public class EnderecoController implements EnderecoApi {
             @ApiResponse(responseCode = "404", description = "Endereço não encontrado", content = @Content)
     })
     public ResponseEntity<EnderecoModel> updateendereco(@PathVariable Integer id, @RequestBody EnderecoModel enderecoDetails) {
-        return this.enderecoService.findById(id).map((endereco) -> {
+        return this.enderecoService.findById(id).map(endereco -> {
             endereco.setLogradouro(enderecoDetails.getLogradouro());
             endereco.setCidadeId(enderecoDetails.getCidadeId());
             endereco.setCep(enderecoDetails.getCep());
@@ -103,7 +102,7 @@ public class EnderecoController implements EnderecoApi {
             @ApiResponse(responseCode = "400", description = "ID inválido"),
             @ApiResponse(responseCode = "404", description = "Endereço não encontrado")
     })
-    public ResponseEntity<EnderecoModel> detailendereco(Integer id) {
+    public ResponseEntity<EnderecoModel> detailendereco(@PathVariable Integer id) {
         if (id == null) {
             return ResponseEntity.badRequest().build();
         }

@@ -3,6 +3,7 @@ package com.dasad.empresa.model;
 import java.net.URI;
 import java.util.Objects;
 import com.dasad.empresa.model.EnderecoModel;
+import com.dasad.empresa.model.OrganizacaoModel;
 import com.dasad.empresa.model.PerfilModel;
 import com.dasad.empresa.model.UsuarioFotoModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,7 +28,7 @@ import jakarta.annotation.Generated;
  * UsuarioModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-03T00:09:08.080519600+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class UsuarioModel {
 
   private @Nullable Integer id;
@@ -46,6 +47,9 @@ public class UsuarioModel {
 
   @Valid
   private List<@Valid PerfilModel> perfis = new ArrayList<>();
+
+  @Valid
+  private List<@Valid OrganizacaoModel> organizacoes = new ArrayList<>();
 
   private @Nullable UsuarioFotoModel foto;
 
@@ -205,6 +209,34 @@ public class UsuarioModel {
     this.perfis = perfis;
   }
 
+  public UsuarioModel organizacoes(List<@Valid OrganizacaoModel> organizacoes) {
+    this.organizacoes = organizacoes;
+    return this;
+  }
+
+  public UsuarioModel addOrganizacoesItem(OrganizacaoModel organizacoesItem) {
+    if (this.organizacoes == null) {
+      this.organizacoes = new ArrayList<>();
+    }
+    this.organizacoes.add(organizacoesItem);
+    return this;
+  }
+
+  /**
+   * Get organizacoes
+   * @return organizacoes
+   */
+  @Valid 
+  @Schema(name = "organizacoes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("organizacoes")
+  public List<@Valid OrganizacaoModel> getOrganizacoes() {
+    return organizacoes;
+  }
+
+  public void setOrganizacoes(List<@Valid OrganizacaoModel> organizacoes) {
+    this.organizacoes = organizacoes;
+  }
+
   public UsuarioModel foto(UsuarioFotoModel foto) {
     this.foto = foto;
     return this;
@@ -241,12 +273,13 @@ public class UsuarioModel {
         Objects.equals(this.dataNascimento, usuarioModel.dataNascimento) &&
         Objects.equals(this.enderecos, usuarioModel.enderecos) &&
         Objects.equals(this.perfis, usuarioModel.perfis) &&
+        Objects.equals(this.organizacoes, usuarioModel.organizacoes) &&
         Objects.equals(this.foto, usuarioModel.foto);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nome, senha, email, dataNascimento, enderecos, perfis, foto);
+    return Objects.hash(id, nome, senha, email, dataNascimento, enderecos, perfis, organizacoes, foto);
   }
 
   @Override
@@ -260,6 +293,7 @@ public class UsuarioModel {
     sb.append("    dataNascimento: ").append(toIndentedString(dataNascimento)).append("\n");
     sb.append("    enderecos: ").append(toIndentedString(enderecos)).append("\n");
     sb.append("    perfis: ").append(toIndentedString(perfis)).append("\n");
+    sb.append("    organizacoes: ").append(toIndentedString(organizacoes)).append("\n");
     sb.append("    foto: ").append(toIndentedString(foto)).append("\n");
     sb.append("}");
     return sb.toString();

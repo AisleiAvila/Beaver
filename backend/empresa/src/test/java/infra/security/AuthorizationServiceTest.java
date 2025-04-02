@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthorizationServiceTest {
+class AuthorizationServiceTest {
 
     @InjectMocks
     private AuthorizationService authorizationService;
@@ -31,12 +31,12 @@ public class AuthorizationServiceTest {
     private UsuarioModel usuarioModel;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         ReflectionTestUtils.setField(authorizationService, "secret", "mySecretKey");
     }
 
     @Test
-    public void testGenerateToken() {
+    void testGenerateToken() {
         PerfilModel perfilModel = new PerfilModel();
         perfilModel.setNome("USER");
         when(usuarioModel.getEmail()).thenReturn("user@example.com");
@@ -49,7 +49,7 @@ public class AuthorizationServiceTest {
     }
 
     @Test
-    public void testGenerateTokenWithoutSecret() {
+    void testGenerateTokenWithoutSecret() {
         ReflectionTestUtils.setField(authorizationService, "secret", "");
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
@@ -60,7 +60,7 @@ public class AuthorizationServiceTest {
     }
 
     @Test
-    public void testValidateToken() {
+    void testValidateToken() {
         PerfilModel perfilModel = new PerfilModel();
         perfilModel.setNome("USER");
         when(usuarioModel.getEmail()).thenReturn("user@example.com");
@@ -73,37 +73,9 @@ public class AuthorizationServiceTest {
         assertEquals("user@example.com", userEmail);
     }
 
-//    @Test
-//    public void testValidateTokenWithInvalidToken() {
-//        String invalidToken = "eyJhbGciOiJIUzI1NiJ9.invalid.payload";
-//
-//        String userEmail = authorizationService.validateToken(invalidToken);
-//
-//        assertNull(userEmail);
-//    }
-
-//    @Test
-//    public void testValidateTokenWithExpiredToken() {
-//        // Gerar um token com uma data de expiração curta
-//        PerfilModel perfil = new PerfilModel();
-//        perfil.setNome("USER");
-//        when(usuario.getEmail()).thenReturn("user@example.com");
-//        when(usuario.getPerfis()).thenReturn(Collections.singletonList(perfil));
-//
-//        String token = JWT.create()
-//                .withSubject(usuario.getEmail())
-//                .withIssuer("login-auth-api")
-//                .withClaim("role", "USER")
-//                .withExpiresAt(new Date(System.currentTimeMillis() - 1000)) // Expirado
-//                .sign(Algorithm.HMAC512("mySecretKey".getBytes()));
-//
-//        String userEmail = authorizationService.validateToken(token);
-//
-//        assertNull(userEmail);
-//    }
 
     @Test
-    public void testRevokeToken() {
+    void testRevokeToken() {
         String token = "sampleToken";
         authorizationService.revokeToken(token);
 
@@ -113,7 +85,7 @@ public class AuthorizationServiceTest {
     }
 
     @Test
-    public void testRevokeTokenAlreadyRevoked() {
+    void testRevokeTokenAlreadyRevoked() {
         String token = "sampleToken";
         authorizationService.revokeToken(token);
         authorizationService.revokeToken(token);

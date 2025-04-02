@@ -23,7 +23,13 @@ import java.util.List;
 @Log4j2
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    /*
+     * Este filtro é responsável por interceptar as requisições e verificar se o token JWT
+     * está presente e é válido. Se o token for válido, ele autentica o usuário e permite
+     * que a requisição prossiga.
+     */
     public JwtAuthenticationFilter() {
+        // Construtor padrão
     }
 
     @Override
@@ -43,7 +49,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 endpoint.equals("/auth/register") ||
                 endpoint.equals("/lembrar-senha") ||
                 endpoint.equals("/api/public/**") ||
-                endpoint.equals("/favicon.ico")) {
+                endpoint.equals("/favicon.ico") ||
+                endpoint.equals("/organizacao/find") ||
+                endpoint.equals("/usuario/perfil")) {
             log.info("URL excluída: {}", endpoint);
             filterChain.doFilter(request, response);
             return;

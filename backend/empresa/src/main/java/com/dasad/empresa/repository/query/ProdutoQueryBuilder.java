@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class ProdutoQueryBuilder {
     private final @Nonnull SelectJoinStep<Record6<Integer, String, String, String, BigDecimal, LocalDateTime>> query;
-    private final static Integer DEFAULT_LIMIT = 10;
+    private static final Integer DEFAULT_LIMIT = 10;
     private final DSLContext dslContext;
 
     public ProdutoQueryBuilder(DSLContext db) {
@@ -33,47 +33,45 @@ public class ProdutoQueryBuilder {
                 .from(Produto.PRODUTO);
     }
 
-    public ProdutoQueryBuilder withId(@Nonnull Integer id) {
+    public ProdutoQueryBuilder withId(Integer id) {
         if(id != null) {
             this.query.where(Produto.PRODUTO.ID.eq(id));
         }
         return this;
     }
 
-    public ProdutoQueryBuilder withNome(@Nonnull String nome) {
+    public ProdutoQueryBuilder withNome(String nome) {
         if (nome != null) {
             this.query.where(DSL.lower(Produto.PRODUTO.NOME).like("%" + nome.toLowerCase() + "%"));
         }
         return this;
     }
 
-    public ProdutoQueryBuilder withLimit(@Nonnull Integer limit) {
+    public ProdutoQueryBuilder withLimit(Integer limit) {
         this.query.limit(limit != null && limit > 0 ? limit : DEFAULT_LIMIT);
         return this;
     }
 
-    public ProdutoQueryBuilder withOffset(@Nonnull Integer offset) {
+    public ProdutoQueryBuilder withOffset(Integer offset) {
         this.query.offset(offset != null  ? offset : 0);
         return this;
     }
 
     public CompletableFuture<List<ProdutoModel>> build() {
-        return CompletableFuture.supplyAsync(() -> {
-            return this.query.fetch().stream().collect(Collectors.groupingBy(
-                    record -> record.get(Usuario.USUARIO.ID),
-                    Collectors.mapping(record -> record, Collectors.toList())
-            )).values().stream().map(records -> {
-                Record6<Integer, String, String, String, BigDecimal, LocalDateTime> record = records.getFirst();
-                ProdutoModel produto = new ProdutoModel();
-                produto.setId(record.get(Produto.PRODUTO.ID));
-                produto.setNome(record.get(Produto.PRODUTO.NOME));
-                produto.setDescricao(record.get(Produto.PRODUTO.DESCRICAO));
-                produto.setCategoria(record.get(Produto.PRODUTO.CATEGORIA));
-                produto.setPreco(record.get(Produto.PRODUTO.PRECO));
-                LocalDateTime dataCadastro = record.get(Produto.PRODUTO.DATA_CADASTRO);
-                return produto;
-            }).collect(Collectors.toList());
-        });
+        return CompletableFuture.supplyAsync(() -> this.query.fetch().stream().collect(Collectors.groupingBy(
+                item -> item.get(Usuario.USUARIO.ID),
+                Collectors.mapping(item -> item, Collectors.toList())
+        )).values().stream().map(records -> {
+            Record6<Integer, String, String, String, BigDecimal, LocalDateTime> item = records.getFirst();
+            ProdutoModel produto = new ProdutoModel();
+            produto.setId(item.get(Produto.PRODUTO.ID));
+            produto.setNome(item.get(Produto.PRODUTO.NOME));
+            produto.setDescricao(item.get(Produto.PRODUTO.DESCRICAO));
+            produto.setCategoria(item.get(Produto.PRODUTO.CATEGORIA));
+            produto.setPreco(item.get(Produto.PRODUTO.PRECO));
+            LocalDateTime dataCadastro = item.get(Produto.PRODUTO.DATA_CADASTRO);
+            return produto;
+        }).toList());
     }
 
     public CompletableFuture<Integer> calculateTotalPages(Integer limit) {
@@ -82,11 +80,9 @@ public class ProdutoQueryBuilder {
     }
 
     public CompletableFuture<Integer> countTotalRecords() {
-        return CompletableFuture.supplyAsync(() -> {
-            return this.dslContext
-                    .selectCount()
-                    .from(Produto.PRODUTO)
-                    .fetchOne(0, int.class);
-        });
+        return CompletableFuture.supplyAsync(() -> this.dslContext
+                .selectCount()
+                .from(Produto.PRODUTO)
+                .fetchOne(0, int.class));
     }
 }

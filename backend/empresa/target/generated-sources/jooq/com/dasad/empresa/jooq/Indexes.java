@@ -8,6 +8,7 @@ import com.dasad.empresa.jooq.tables.Categoria;
 import com.dasad.empresa.jooq.tables.PrecosRegionais;
 import com.dasad.empresa.jooq.tables.Subcategoria;
 import com.dasad.empresa.jooq.tables.UsuarioFoto;
+import com.dasad.empresa.jooq.tables.UsuarioOrganizacao;
 
 import org.jooq.Index;
 import org.jooq.OrderField;
@@ -31,4 +32,5 @@ public class Indexes {
     public static final Index IDX_SUBCATEGORIA_CATEGORIA = Internal.createIndex(DSL.name("idx_subcategoria_categoria"), Subcategoria.SUBCATEGORIA, new OrderField[] { Subcategoria.SUBCATEGORIA.CATEGORIA_ID }, false);
     public static final Index IDX_SUBCATEGORIA_STATUS = Internal.createIndex(DSL.name("idx_subcategoria_status"), Subcategoria.SUBCATEGORIA, new OrderField[] { Subcategoria.SUBCATEGORIA.STATUS }, false);
     public static final Index IDX_USUARIO_FOTO_USER_ID = Internal.createIndex(DSL.name("idx_usuario_foto_user_id"), UsuarioFoto.USUARIO_FOTO, new OrderField[] { UsuarioFoto.USUARIO_FOTO.USUARIO_ID, UsuarioFoto.USUARIO_FOTO.ATIVO, UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO, UsuarioFoto.USUARIO_FOTO.DATA_ATUALIZACAO }, false);
+    public static final Index IDX_USUARIO_ORGANIZACAO = Internal.createIndex(DSL.name("idx_usuario_organizacao"), UsuarioOrganizacao.USUARIO_ORGANIZACAO, new OrderField[] { UsuarioOrganizacao.USUARIO_ORGANIZACAO.USUARIO_ID, UsuarioOrganizacao.USUARIO_ORGANIZACAO.ORGANIZACAO_ID }, false);
 }

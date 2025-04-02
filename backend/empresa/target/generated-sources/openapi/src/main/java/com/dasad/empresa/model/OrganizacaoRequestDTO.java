@@ -5,11 +5,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.time.LocalDate;
-import java.util.Arrays;
-import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -24,7 +21,7 @@ import jakarta.annotation.Generated;
  * OrganizacaoRequestDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-03T00:09:08.080519600+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class OrganizacaoRequestDTO {
 
   private @Nullable Integer id;
@@ -48,7 +45,7 @@ public class OrganizacaoRequestDTO {
   private @Nullable String numeroRegistoComercial;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private JsonNullable<LocalDate> dataRegisto = JsonNullable.<LocalDate>undefined();
+  private @Nullable LocalDate dataRegisto;
 
   public OrganizacaoRequestDTO id(Integer id) {
     this.id = id;
@@ -251,7 +248,7 @@ public class OrganizacaoRequestDTO {
   }
 
   public OrganizacaoRequestDTO dataRegisto(LocalDate dataRegisto) {
-    this.dataRegisto = JsonNullable.of(dataRegisto);
+    this.dataRegisto = dataRegisto;
     return this;
   }
 
@@ -262,11 +259,11 @@ public class OrganizacaoRequestDTO {
   @Valid 
   @Schema(name = "dataRegisto", example = "2021-09-01", description = "Data de registo comercial", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataRegisto")
-  public JsonNullable<LocalDate> getDataRegisto() {
+  public LocalDate getDataRegisto() {
     return dataRegisto;
   }
 
-  public void setDataRegisto(JsonNullable<LocalDate> dataRegisto) {
+  public void setDataRegisto(LocalDate dataRegisto) {
     this.dataRegisto = dataRegisto;
   }
 
@@ -289,23 +286,12 @@ public class OrganizacaoRequestDTO {
         Objects.equals(this.representanteLegal, organizacaoRequestDTO.representanteLegal) &&
         Objects.equals(this.cargo, organizacaoRequestDTO.cargo) &&
         Objects.equals(this.numeroRegistoComercial, organizacaoRequestDTO.numeroRegistoComercial) &&
-        equalsNullable(this.dataRegisto, organizacaoRequestDTO.dataRegisto);
-  }
-
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+        Objects.equals(this.dataRegisto, organizacaoRequestDTO.dataRegisto);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nome, nif, email, website, setorAtividade, missao, representanteLegal, cargo, numeroRegistoComercial, hashCodeNullable(dataRegisto));
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+    return Objects.hash(id, nome, nif, email, website, setorAtividade, missao, representanteLegal, cargo, numeroRegistoComercial, dataRegisto);
   }
 
   @Override

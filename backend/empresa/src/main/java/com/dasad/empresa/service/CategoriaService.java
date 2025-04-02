@@ -1,6 +1,5 @@
 package com.dasad.empresa.service;
 
-import aj.org.objectweb.asm.commons.Remapper;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
 import com.dasad.empresa.model.StatusServico;
@@ -20,7 +19,12 @@ public class CategoriaService {
     @Autowired
     private StatusServicoRepository statusServicoRepository;
 
+    /**
+     * Construtor padrão sem parâmetros.
+     * Utilizado pela injeção de dependências do Spring.
+     */
     public CategoriaService() {
+        // Construtor padrão necessário para injeção de dependências
     }
 
     public Optional<List<CategoriaModel>> find(CategoriaRequest categoriaRequest) {

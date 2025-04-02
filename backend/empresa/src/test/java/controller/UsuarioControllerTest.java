@@ -19,17 +19,17 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 
-import static com.dasad.empresa.util.DataUtil.convertLocalDateToString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UsuarioControllerTest {
+class UsuarioControllerTest {
 
     @Mock
     UsuarioService usuarioService;
@@ -55,15 +55,21 @@ public class UsuarioControllerTest {
     class FindTests {
 
         @Test
-        public void shouldReturnSuccess() {
+        void shouldReturnSuccess() {
+            // Arrange
+            when(usuarioService.find(any(UsuarioRequest.class), any())).thenReturn(
+                    Optional.of(Collections.emptyList()));
+            when(usuarioService.countTotalRecords(any(UsuarioRequest.class), anyInt())).thenReturn(
+                    Optional.of(0));
+
             // Act
-            var response = usuarioController.findUsuario(usuarioRequest);
+            var response = usuarioController.findUsuario(1, usuarioRequest);
             // Assert
             assertNotNull(response, "A resposta não deve ser nula");
         }
 
         @Test
-        public void shouldPassCorrectParameters() {
+        void shouldPassCorrectParameters() {
             // Arrange
             var nome = "nome";
             var id = 1;
@@ -75,49 +81,57 @@ public class UsuarioControllerTest {
             usuarioRequest.setEmail(email);
             usuarioRequest.setDataNascimento(dataNascimento);
 
+            when(usuarioService.find(any(UsuarioRequest.class), any())).thenReturn(
+                    Optional.of(Collections.emptyList()));
+            when(usuarioService.countTotalRecords(any(UsuarioRequest.class), anyInt())).thenReturn(
+                    Optional.of(0));
+
             // Act
-            var response = usuarioController.findUsuario(usuarioRequest);
+            var response = usuarioController.findUsuario(1, usuarioRequest);
 
             // Assert
             assertNotNull(response, "A resposta não deve ser nula");
         }
 
         @Test
-        public void shouldReturnError() {
+        void shouldReturnError() {
             // Arrange
             UsuarioRequest usuarioRequest = new UsuarioRequest();
-            when(usuarioService.find(usuarioRequest)).thenThrow(new RuntimeException("Erro interno do servidor"));
+            when(usuarioService.find(any(UsuarioRequest.class), any())).thenThrow(
+                    new RuntimeException("Erro interno do servidor"));
 
             // Act & Assert
-            assertThrows(RuntimeException.class, () -> usuarioController.findUsuario(usuarioRequest),
+            assertThrows(RuntimeException.class, () -> usuarioController.findUsuario(1, usuarioRequest),
                     "Deveria lançar RuntimeException");
         }
 
         @Test
-        public void testUpdateUsuario() {
+        void testUpdateUsuario() {
             // Arrange: Configura o comportamento esperado do mock usuarioService
-            when(usuarioService.update(usuarioModel)).thenReturn(usuarioModel);
+            when(usuarioService.update(any(UsuarioModel.class), anyInt())).thenReturn(usuarioModel);
 
             // Act: Chama o método updateUsuario do usuarioController
-            ResponseEntity<UsuarioModel> response = usuarioController.updateUsuario(usuarioModel);
+            ResponseEntity<UsuarioModel> response = usuarioController.updateUsuario(1, usuarioModel);
 
             // Assert: Verifica se a resposta é a esperada e se o método update foi chamado uma vez
             assertEquals(ResponseEntity.ok(usuarioModel), response);
-            verify(usuarioService, times(1)).update(usuarioModel);
+            verify(usuarioService, times(1)).update(usuarioModel, 1);
         }
+
     }
 
     @Nested
     class DeleteUsuarioTests {
 
         @Test
-        public void shouldReturnNoContentWhenUsuarioExists() {
+        void shouldReturnNoContentWhenUsuarioExists() {
             // Arrange
             Integer id = 1;
+            Integer organizacaoId = 1;
             when(usuarioService.findById(id)).thenReturn(Optional.of(usuarioModel));
 
             // Act
-            ResponseEntity<Void> response = usuarioController.deleteUsuario(id);
+            ResponseEntity<Void> response = usuarioController.deleteUsuario(organizacaoId, id);
 
             // Assert
             assertEquals(ResponseEntity.noContent().build(), response);
@@ -126,13 +140,14 @@ public class UsuarioControllerTest {
         }
 
         @Test
-        public void shouldReturnNotFoundWhenUsuarioDoesNotExist() {
+        void shouldReturnNotFoundWhenUsuarioDoesNotExist() {
             // Arrange
+            Integer organizacaoId = 1;
             Integer id = 1;
             when(usuarioService.findById(id)).thenReturn(Optional.empty());
 
             // Act
-            ResponseEntity<Void> response = usuarioController.deleteUsuario(id);
+            ResponseEntity<Void> response = usuarioController.deleteUsuario(organizacaoId, id);
 
             // Assert
             assertEquals(ResponseEntity.notFound().build(), response);
@@ -145,7 +160,7 @@ public class UsuarioControllerTest {
     class DetailUsuarioTests {
 
         @Test
-        public void shouldReturnUsuarioWhenExists() {
+        void shouldReturnUsuarioWhenExists() {
             // Arrange
             Integer id = 1;
             when(usuarioService.findById(id)).thenReturn(Optional.of(usuarioModel));
@@ -163,7 +178,7 @@ public class UsuarioControllerTest {
         }
 
         @Test
-        public void shouldReturnNotFoundWhenUsuarioDoesNotExist() {
+        void shouldReturnNotFoundWhenUsuarioDoesNotExist() {
             // Arrange
             Integer id = 1;
             when(usuarioService.findById(id)).thenReturn(Optional.empty());
@@ -197,7 +212,7 @@ public class UsuarioControllerTest {
         }
 
         @Test
-        public void shouldCreateUsuarioSuccessfully() {
+        void shouldCreateUsuarioSuccessfully() {
             // Arrange: Cria uma instância de UsuarioModel e define seus atributos
             UsuarioModel usuarioModel = new UsuarioModel();
             usuarioModel.setId(registerRequestDTO.getId());
@@ -209,17 +224,17 @@ public class UsuarioControllerTest {
             usuarioModel.setPerfis(registerRequestDTO.getPerfis());
 
             // Configura o comportamento esperado do mock usuarioService
-            when(usuarioService.create(any(UsuarioModel.class))).thenReturn(usuarioModel);
+            when(usuarioService.create(any(UsuarioModel.class), anyInt())).thenReturn(usuarioModel);
 
             // Act: Chama o método createUsuario do usuarioController
-            ResponseEntity<UsuarioModel> response = usuarioController.createUsuario(registerRequestDTO);
+            ResponseEntity<UsuarioModel> response = usuarioController.createUsuario(1, registerRequestDTO);
 
             // Assert: Verifica se a resposta não é nula
             assertNotNull(response);
             // Verifica se a resposta é igual a ResponseEntity.ok(usuarioModel)
             assertEquals(ResponseEntity.ok(usuarioModel), response);
             // Verifica se o método create do usuarioService foi chamado exatamente uma vez
-            verify(usuarioService, times(1)).create(any(UsuarioModel.class));
+            verify(usuarioService, times(1)).create(any(UsuarioModel.class), anyInt());
         }
     }
 }

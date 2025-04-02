@@ -4,7 +4,6 @@ import com.dasad.empresa.jooq.enums.StatusServico;
 import com.dasad.empresa.jooq.tables.Subcategoria;
 import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.model.SubCategoriaModel;
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.Record12;
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class SubCategoriaQueryBuilder {
     private @NotNull SelectConditionStep<Record12<Integer, Integer, String, String, StatusServico, Integer, Object, BigDecimal, Object, String[], LocalDateTime, LocalDateTime>> query;
-    private final static Integer DEFAULT_LIMIT = 10;
+    private static final  Integer DEFAULT_LIMIT = 10;
     private final DSLContext dslContext;
 
     public SubCategoriaQueryBuilder(DSLContext db) {
@@ -44,35 +43,35 @@ public class SubCategoriaQueryBuilder {
                 .where(DSL.trueCondition());
     }
 
-    public SubCategoriaQueryBuilder withId(@Nonnull Integer id) {
+    public SubCategoriaQueryBuilder withId(Integer id) {
         if (id != null &&  id != 0) {
             this.query = this.query.and(Subcategoria.SUBCATEGORIA.ID.eq(id));
         }
         return this;
     }
 
-    public  SubCategoriaQueryBuilder withCategoriaId(@Nonnull Integer categoriaId) {
+    public  SubCategoriaQueryBuilder withCategoriaId(Integer categoriaId) {
         if (categoriaId != null &&  categoriaId != 0) {
             this.query = this.query.and(Subcategoria.SUBCATEGORIA.CATEGORIA_ID.eq(categoriaId));
         }
         return this;
     }
 
-    public SubCategoriaQueryBuilder withNome(@Nonnull String nome) {
+    public SubCategoriaQueryBuilder withNome(String nome) {
         if (nome != null &&  !nome.isEmpty()) {
             this.query = this.query.and(DSL.lower(Subcategoria.SUBCATEGORIA.NOME).like("%" + nome.toLowerCase() + "%"));
         }
         return this;
     }
 
-    public SubCategoriaQueryBuilder withStatus(@Nonnull String status) {
+    public SubCategoriaQueryBuilder withStatus(String status) {
         if (status != null &&  !status.isEmpty()) {
             this.query = this.query.and(Subcategoria.SUBCATEGORIA.STATUS.eq(StatusServico.valueOf(status)));
         }
         return this;
     }
 
-    public SubCategoriaQueryBuilder withNivelComlexidade(@Nonnull String nivelComlexidade) {
+    public SubCategoriaQueryBuilder withNivelComlexidade(String nivelComlexidade) {
         if (nivelComlexidade != null && !nivelComlexidade.isEmpty()) {
             this.query = this.query.and(Subcategoria.SUBCATEGORIA.NIVEL_COMPLEXIDADE .eq(nivelComlexidade));
         }
@@ -80,12 +79,12 @@ public class SubCategoriaQueryBuilder {
     }
 
 
-    public SubCategoriaQueryBuilder withLimit(@Nonnull Integer limit) {
+    public SubCategoriaQueryBuilder withLimit(Integer limit) {
         this.query.limit(limit != null &&  limit > 0 ? limit : DEFAULT_LIMIT);
         return this;
     }
 
-    public SubCategoriaQueryBuilder withOffset(@Nonnull Integer offset) {
+    public SubCategoriaQueryBuilder withOffset(Integer offset) {
         this.query.offset(offset != null  ? offset : 0);
         return this;
     }
@@ -113,7 +112,7 @@ public class SubCategoriaQueryBuilder {
                 var dataAtualizacao = record.get(Subcategoria.SUBCATEGORIA.DATA_ATUALIZACAO);
                 subCategoria.setDataAtualizacao(dataAtualizacao != null ? OffsetDateTime.of(dataAtualizacao, ZoneOffset.UTC) : null);
                 return subCategoria;
-            }).collect(Collectors.toList());
+            }).toList();
         });
     }
 

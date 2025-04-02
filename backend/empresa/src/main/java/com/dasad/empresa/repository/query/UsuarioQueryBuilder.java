@@ -2,9 +2,11 @@ package com.dasad.empresa.repository.query;
 
 import com.dasad.empresa.jooq.tables.Cidade;
 import com.dasad.empresa.jooq.tables.Estado;
+import com.dasad.empresa.jooq.tables.Organizacao;
 import com.dasad.empresa.jooq.tables.Pais;
 import com.dasad.empresa.jooq.tables.Perfil;
 import com.dasad.empresa.jooq.tables.Usuario;
+import com.dasad.empresa.jooq.tables.UsuarioOrganizacao;
 import com.dasad.empresa.jooq.tables.UsuarioPerfil;
 import com.dasad.empresa.model.CidadeModel;
 import com.dasad.empresa.model.EnderecoModel;
@@ -12,8 +14,8 @@ import com.dasad.empresa.model.EstadoModel;
 import com.dasad.empresa.model.PaisModel;
 import com.dasad.empresa.model.PerfilModel;
 import com.dasad.empresa.model.UsuarioModel;
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.jooq.Record20;
 import org.jooq.SelectOnConditionStep;
@@ -26,13 +28,12 @@ import java.util.stream.Collectors;
 
 import static com.dasad.empresa.jooq.tables.Endereco.ENDERECO;
 
+@Slf4j
 public class UsuarioQueryBuilder {
     private final @NotNull SelectOnConditionStep<Record20<Integer, String, String, String, LocalDate, Integer, String, Integer, String, String, String, String, Integer, String, String, Integer, String, Integer, String, Integer>> query;
-    private final static Integer DEFAULT_LIMIT = 10;
-    private final DSLContext dslContext;
+    private static final  Integer DEFAULT_LIMIT = 10;
 
     public UsuarioQueryBuilder(DSLContext db) {
-        this.dslContext = db;
         this.query = db.select(
                         Usuario.USUARIO.ID.as("usuario_id"),
                         Usuario.USUARIO.NOME,
@@ -63,50 +64,59 @@ public class UsuarioQueryBuilder {
                 .leftJoin(ENDERECO).on(Usuario.USUARIO.ID.eq(ENDERECO.USUARIO_ID))
                 .leftJoin(Cidade.CIDADE).on(ENDERECO.CIDADE_ID.eq(Cidade.CIDADE.ID))
                 .leftJoin(Estado.ESTADO).on(Cidade.CIDADE.ESTADO_ID.eq(Estado.ESTADO.ID))
-                .leftJoin(Pais.PAIS).on(Estado.ESTADO.PAIS_ID.eq(Pais.PAIS.ID));
+                .leftJoin(Pais.PAIS).on(Estado.ESTADO.PAIS_ID.eq(Pais.PAIS.ID))
+                .innerJoin(UsuarioOrganizacao.USUARIO_ORGANIZACAO).on(Usuario.USUARIO.ID.eq(UsuarioOrganizacao.USUARIO_ORGANIZACAO.USUARIO_ID))
+                .innerJoin(Organizacao.ORGANIZACAO).on(UsuarioOrganizacao.USUARIO_ORGANIZACAO.ORGANIZACAO_ID.eq(Organizacao.ORGANIZACAO.ID));
     }
 
-    public UsuarioQueryBuilder withNome(@Nonnull String nome) {
+    public UsuarioQueryBuilder withOrganizacao(Integer organizacaoId) {
+        if (organizacaoId != null) {
+            this.query.where(Organizacao.ORGANIZACAO.ID.eq(organizacaoId));
+        }
+        return this;
+    }
+
+    public UsuarioQueryBuilder withNome(String nome) {
         if (nome != null) {
             this.query.where(DSL.lower(Usuario.USUARIO.NOME).like("%" + nome.toLowerCase() + "%"));
         }
         return this;
     }
 
-    public UsuarioQueryBuilder withEmail(@Nonnull String email) {
+    public UsuarioQueryBuilder withEmail(String email) {
         if (email != null) {
             this.query.where(DSL.lower(Usuario.USUARIO.EMAIL).like("%" + email.toLowerCase() + "%"));
         }
         return this;
     }
 
-    public UsuarioQueryBuilder withDataNascimento(@Nonnull LocalDate dataNascimento) {
+    public UsuarioQueryBuilder withDataNascimento(LocalDate dataNascimento) {
         if (dataNascimento != null) {
             this.query.where(Usuario.USUARIO.DATA_NASCIMENTO.eq(dataNascimento));
         }
         return this;
     }
 
-    public UsuarioQueryBuilder withPerfil(@Nonnull List<Integer> perfis) {
+    public UsuarioQueryBuilder withPerfil(List<Integer> perfis) {
         if(perfis != null && !perfis.isEmpty()) {
             this.query.where(Perfil.PERFIL.ID.in(perfis));
         }
         return this;
     }
 
-    public UsuarioQueryBuilder withId(@Nonnull Integer id) {
+    public UsuarioQueryBuilder withId(Integer id) {
         if(id != null) {
             this.query.where(Usuario.USUARIO.ID.eq(id));
         }
         return this;
     }
 
-    public UsuarioQueryBuilder withLimit(@Nonnull Integer limit) {
+    public UsuarioQueryBuilder withLimit(Integer limit) {
         this.query.limit(limit != null && limit > 0 ? limit : DEFAULT_LIMIT);
         return this;
     }
 
-    public UsuarioQueryBuilder withOffset(@Nonnull Integer offset) {
+    public UsuarioQueryBuilder withOffset(Integer offset) {
         this.query.offset(offset != null  ? offset : 0);
         return this;
     }
@@ -114,16 +124,16 @@ public class UsuarioQueryBuilder {
     public CompletableFuture<List<UsuarioModel>> build() {
         return CompletableFuture.supplyAsync(() -> {
             return this.query.fetch().stream().collect(Collectors.groupingBy(
-                    record -> record.get("usuario_id", Integer.class),
-                    Collectors.mapping(record -> record, Collectors.toList())
+                    item -> item.get("usuario_id", Integer.class),
+                    Collectors.mapping(item -> item, Collectors.toList())
             )).values().stream().map(records -> {
-                Record20<Integer, String, String, String, LocalDate, Integer, String, Integer, String, String, String, String, Integer, String, String, Integer, String, Integer, String, Integer> record = records.get(0);
+                Record20<Integer, String, String, String, LocalDate, Integer, String, Integer, String, String, String, String, Integer, String, String, Integer, String, Integer, String, Integer> item = records.getFirst();
                 UsuarioModel usuario = new UsuarioModel();
-                usuario.setId(record.get("usuario_id", Integer.class));
-                usuario.setNome(record.get(Usuario.USUARIO.NOME));
-                usuario.setEmail(record.get(Usuario.USUARIO.EMAIL));
-                usuario.setSenha(record.get(Usuario.USUARIO.SENHA));
-                usuario.setDataNascimento(record.get(Usuario.USUARIO.DATA_NASCIMENTO));
+                usuario.setId(item.get("usuario_id", Integer.class));
+                usuario.setNome(item.get(Usuario.USUARIO.NOME));
+                usuario.setEmail(item.get(Usuario.USUARIO.EMAIL));
+                usuario.setSenha(item.get(Usuario.USUARIO.SENHA));
+                usuario.setDataNascimento(item.get(Usuario.USUARIO.DATA_NASCIMENTO));
                 usuario.setPerfis(records.stream()
                         .filter(r -> r.get("perfil_id") != null)
                         .map(r -> {
@@ -132,7 +142,7 @@ public class UsuarioQueryBuilder {
                             perfil.setNome(r.get("perfil_nome", String.class));
                             return perfil;
                         })
-                        .collect(Collectors.toList()));
+                        .toList());
                 usuario.setEnderecos(records.stream()
                         .filter(r -> r.get(ENDERECO.BAIRRO) != null)
                         .map(r -> {
@@ -157,9 +167,9 @@ public class UsuarioQueryBuilder {
                             endereco.setCep(r.get(ENDERECO.CEP));
                             return endereco;
                         })
-                        .collect(Collectors.toList()));
+                        .toList());
                 return usuario;
-            }).collect(Collectors.toList());
+            }).toList();
         });
     }
 
@@ -170,10 +180,7 @@ public class UsuarioQueryBuilder {
 
     public CompletableFuture<Integer> countTotalRecords() {
         return CompletableFuture.supplyAsync(() -> {
-            return this.dslContext
-                    .selectCount()
-                    .from(Usuario.USUARIO)
-                    .fetchOne(0, int.class);
+           return Math.toIntExact(this.query.fetch().size());
         });
     }
 }

@@ -5,7 +5,6 @@ import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
 import com.dasad.empresa.model.StatusServico;
 import com.dasad.empresa.service.CategoriaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +18,11 @@ import java.util.List;
 @RestController
 @RequestMapping({"/categoria"})
 public class CategoriaController implements CategoriaApi {
-    @Autowired
-    private CategoriaService categoriaService;
 
-    public CategoriaController() {
+    private final CategoriaService categoriaService;
+
+    public CategoriaController(CategoriaService categoriaService) {
+        this.categoriaService = categoriaService;
     }
 
     @Override

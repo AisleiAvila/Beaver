@@ -4,6 +4,7 @@ import com.dasad.empresa.api.AuthApi;
 import com.dasad.empresa.infra.security.AuthorizationService;
 import com.dasad.empresa.model.LoginRequestDTO;
 import com.dasad.empresa.model.LoginResponseDTO;
+import com.dasad.empresa.model.OrganizacaoModel;
 import com.dasad.empresa.model.RegisterRequestDTO;
 import com.dasad.empresa.model.RevokeToken200Response;
 import com.dasad.empresa.model.RevokeTokenRequest;
@@ -26,8 +27,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,6 +44,16 @@ public class AuthController implements AuthApi {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorizationService authorizationService;
+
+    public AuthController(
+            final UsuarioRepository usuarioRepository,
+            final PasswordEncoder passwordEncoder,
+            final AuthorizationService authorizationService) {
+        log.info("AuthController constructor");
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authorizationService = authorizationService;
+    }
 
     @Operation(
             summary = "Verifica a validade do token",
@@ -59,13 +72,6 @@ public class AuthController implements AuthApi {
 
     }
 
-    public AuthController(final UsuarioRepository usuarioRepository, final PasswordEncoder passwordEncoder, final AuthorizationService authorizationService) {
-        log.info("AuthController constructor");
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authorizationService = authorizationService;
-    }
-
     @Override
     @Operation(
             summary = "Autentica usuário",
@@ -78,11 +84,15 @@ public class AuthController implements AuthApi {
     })
     @PostMapping({"/login"})
     public ResponseEntity<LoginResponseDTO> login(
-            @Parameter(description = "Credenciais do usuário", required = true,
-                    schema = @Schema(implementation = LoginRequestDTO.class))
+            @Parameter(description = "Credenciais do usuário",
+                                required = true,
+                                schema = @Schema(implementation = LoginRequestDTO.class))
             @RequestBody LoginRequestDTO loginRequestDTO) {
         log.info("Login endpoint");
-        Optional<UsuarioModel> optionalUsuario = this.usuarioRepository.findByEmail(loginRequestDTO.getEmail());
+        Optional<UsuarioModel> optionalUsuario = this.usuarioRepository.findByEmailAndOrganizacaoId(
+                loginRequestDTO.getEmail(),
+                loginRequestDTO.getOrganizacaoId().orElse(null)
+        );
         if (optionalUsuario.isPresent()) {
             var usuario = optionalUsuario.get();
             if (this.passwordEncoder.matches(loginRequestDTO.getSenha(), usuario.getSenha())) {
@@ -90,7 +100,16 @@ public class AuthController implements AuthApi {
                 var loginResponseDTO  =  new LoginResponseDTO();
                 loginResponseDTO.setNome(usuario.getNome());
                 loginResponseDTO.setAuthorization(authorization);
-                loginResponseDTO.setPerfil(usuario.getPerfis().get(0).getNome());
+                loginResponseDTO.setPerfil(usuario.getPerfis().getFirst().getNome());
+
+                // Extrair apenas os IDs das organizações
+                List<Integer> organizacoesIds = usuario.getOrganizacoes().stream()
+                        .map(OrganizacaoModel::getId)
+                        .toList();
+
+                loginResponseDTO.setOrganizacoesIds(organizacoesIds);
+
+
                 return ResponseEntity.ok(loginResponseDTO);
             }
         }
@@ -106,7 +125,9 @@ public class AuthController implements AuthApi {
             @ApiResponse(responseCode = "400", description = "Email já cadastrado ou dados inválidos", content = @Content)
     })
     @PostMapping({"/register"})
-    public ResponseEntity<LoginResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
+    public ResponseEntity<LoginResponseDTO> register(
+            @RequestParam(value = "organizaoId") Integer organizacaoId,
+            @RequestBody RegisterRequestDTO registerRequestDTO) {
         log.info("Register endpoint");
         Optional<UsuarioModel> usuarioCadastrado = this.usuarioRepository.findByEmail(registerRequestDTO.getEmail());
         if (usuarioCadastrado.isEmpty()) {
@@ -115,13 +136,12 @@ public class AuthController implements AuthApi {
             usuario.setNome(registerRequestDTO.getNome());
             usuario.setEmail(registerRequestDTO.getEmail());
             usuario.setSenha(this.passwordEncoder.encode(registerRequestDTO.getSenha()));
-//            usuario.setDataNascimento(convertLocalDateToString(registerRequestDTO.getDataNascimento()));
             usuario.setDataNascimento(registerRequestDTO.getDataNascimento());
             usuario.setEnderecos(registerRequestDTO.getEnderecos());
             usuario.setPerfis(registerRequestDTO.getPerfis());
 
             log.info("Criando usuário");
-            this.usuarioRepository.create(usuario);
+            this.usuarioRepository.create(usuario, organizacaoId);
             log.info("Usuário criado");
             String authorization = this.authorizationService.generateToken(usuario);
             var loginResponseDTO  =  new LoginResponseDTO();

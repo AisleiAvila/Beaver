@@ -4,7 +4,6 @@ import com.dasad.empresa.jooq.enums.StatusServico;
 import com.dasad.empresa.jooq.tables.Categoria;
 import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.model.CategoriaModel;
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.Record18;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class CategoriaQueryBuilder {
     private @NotNull SelectConditionStep<Record18<Integer, String, String, StatusServico, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]>> query;
-    private final static Integer DEFAULT_LIMIT = 10;
+    private static final Integer DEFAULT_LIMIT = 10;
     private final DSLContext dslContext;
 
     public CategoriaQueryBuilder(DSLContext db) {
@@ -51,14 +50,14 @@ public class CategoriaQueryBuilder {
                 .where(DSL.trueCondition());
     }
 
-    public CategoriaQueryBuilder withId(@Nonnull Integer id) {
+    public CategoriaQueryBuilder withId(Integer id) {
         if (id != null &&  id != 0) {
             this.query = this.query.and(Categoria.CATEGORIA.ID.eq(id));
         }
         return this;
     }
 
-    public CategoriaQueryBuilder withNome(@Nonnull String nome) {
+    public CategoriaQueryBuilder withNome(String nome) {
         if (nome != null &&  !nome.isEmpty()) {
             this.query = this.query.and(DSL.lower(Categoria.CATEGORIA.NOME).like("%" + nome.toLowerCase() + "%"));
         }
@@ -72,74 +71,72 @@ public class CategoriaQueryBuilder {
         return this;
     }
 
-    public  CategoriaQueryBuilder withRequerCertificacao(@Nonnull Boolean requerCertificacao) {
+    public  CategoriaQueryBuilder withRequerCertificacao(Boolean requerCertificacao) {
         if (requerCertificacao != null) {
             this.query = this.query.and(Categoria.CATEGORIA.REQUER_CERTIFICACAO.eq(requerCertificacao));        }
         return this;
     }
 
-    public  CategoriaQueryBuilder withTipoCertificacao(@Nonnull String tipoCertificacao) {
+    public  CategoriaQueryBuilder withTipoCertificacao(String tipoCertificacao) {
         if (tipoCertificacao != null &&  !tipoCertificacao.isEmpty()) {
             this.query = this.query.and(Categoria.CATEGORIA.TIPO_CERTIFICACAO.eq(tipoCertificacao));
         }
         return this;
     }
 
-    public  CategoriaQueryBuilder withExperienciaMinimaMeses(@Nonnull Integer experienciaMinimaMeses) {
+    public  CategoriaQueryBuilder withExperienciaMinimaMeses(Integer experienciaMinimaMeses) {
         if (experienciaMinimaMeses != null && experienciaMinimaMeses != 0) {
             this.query = this.query.and(Categoria.CATEGORIA.EXPERIENCIA_MINIMA_MESES.eq(experienciaMinimaMeses));
         }
         return this;
     }
 
-    public  CategoriaQueryBuilder withNivelRisco(@Nonnull String nivelRisco) {
+    public  CategoriaQueryBuilder withNivelRisco( String nivelRisco) {
         if (nivelRisco != null &&  !nivelRisco.isEmpty()) {
             this.query = this.query.and(Categoria.CATEGORIA.NIVEL_RISCO.eq(nivelRisco));
         }
         return this;
     }
 
-    public CategoriaQueryBuilder withLimit(@Nonnull Integer limit) {
+    public CategoriaQueryBuilder withLimit(Integer limit) {
         this.query.limit(limit != null &&  limit > 0 ? limit : DEFAULT_LIMIT);
         return this;
     }
 
-    public CategoriaQueryBuilder withOffset(@Nonnull Integer offset) {
+    public CategoriaQueryBuilder withOffset(Integer offset) {
         this.query.offset(offset != null  ? offset : 0);
         return this;
     }
 
     public CompletableFuture<List<CategoriaModel>> build() {
-        return CompletableFuture.supplyAsync(() -> {
-            return this.query.fetch().stream().collect(Collectors.groupingBy(
-                    record -> record.get(Usuario.USUARIO.ID),
-                    Collectors.mapping(record -> record, Collectors.toList())
-            )).values().stream().map(records -> {
-                Record18<Integer, String, String, StatusServico, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]> record = records.getFirst();
-                CategoriaModel categoria = new CategoriaModel();
-                categoria.setId(record.get(Categoria.CATEGORIA.ID));
-                categoria.setNome(record.get(Categoria.CATEGORIA.NOME));
-                categoria.setDescricao(record.get(Categoria.CATEGORIA.DESCRICAO));
-                categoria.setStatus(com.dasad.empresa.model.StatusServico.valueOf(record.get(Categoria.CATEGORIA.STATUS).toString()));
-                categoria.setRequerCertificacao(record.get(Categoria.CATEGORIA.REQUER_CERTIFICACAO));
-                categoria.setTipoCertificacao(record.get(Categoria.CATEGORIA.TIPO_CERTIFICACAO));
-                categoria.setExperienciaMinimaMeses(record.get(Categoria.CATEGORIA.EXPERIENCIA_MINIMA_MESES));
-                categoria.setNivelRisco(record.get(Categoria.CATEGORIA.NIVEL_RISCO).toString());
-                categoria.setSeguroObrigatorio(record.get(Categoria.CATEGORIA.SEGURO_OBRIGATORIO));
-                categoria.setValorBaseHora(record.get(Categoria.CATEGORIA.VALOR_BASE_HORA));
-                var dataCriacao = record.get(Categoria.CATEGORIA.DATA_CRIACAO);
-                categoria.setDataCriacao(dataCriacao != null ? OffsetDateTime.of(dataCriacao, ZoneOffset.UTC) : null);
-                var dataAtualizacao = record.get(Categoria.CATEGORIA.DATA_ATUALIZACAO);
-                categoria.setDataAtualizacao(dataAtualizacao != null ? OffsetDateTime.of(dataAtualizacao, ZoneOffset.UTC) : null);
-                categoria.setUrlImagem(record.get(Categoria.CATEGORIA.URL_IMAGEM));
-                categoria.setPalavrasChave(String.join(",", record.get(Categoria.CATEGORIA.PALAVRAS_CHAVE)));
-                categoria.setHorasMinimasAgendamento(record.get(Categoria.CATEGORIA.HORAS_MINIMAS_AGENDAMENTO));
-                categoria.setHorasCancelamentoGratis(record.get(Categoria.CATEGORIA.HORAS_CANCELAMENTO_GRATIS));
-                categoria.setPercentualComissao(JsonNullable.of(record.get(Categoria.CATEGORIA.PERCENTUAL_COMISSAO).floatValue()));
-                categoria.setDocumentosNecessarios(String.join(",", record.get(Categoria.CATEGORIA.DOCUMENTOS_NECESSARIOS)));
-                return categoria;
-            }).collect(Collectors.toList());
-        });
+        return CompletableFuture.supplyAsync(() -> this.query.fetch().stream().collect(Collectors.groupingBy(
+                registro -> registro.get(Usuario.USUARIO.ID),
+                Collectors.mapping(registro -> registro, Collectors.toList())
+        )).values().stream().map(records -> {
+            Record18<Integer, String, String, StatusServico, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]> registro = records.getFirst();
+            CategoriaModel categoria = new CategoriaModel();
+            categoria.setId(registro.get(Categoria.CATEGORIA.ID));
+            categoria.setNome(registro.get(Categoria.CATEGORIA.NOME));
+            categoria.setDescricao(registro.get(Categoria.CATEGORIA.DESCRICAO));
+            categoria.setStatus(com.dasad.empresa.model.StatusServico.valueOf(registro.get(Categoria.CATEGORIA.STATUS).toString()));
+            categoria.setRequerCertificacao(registro.get(Categoria.CATEGORIA.REQUER_CERTIFICACAO));
+            categoria.setTipoCertificacao(registro.get(Categoria.CATEGORIA.TIPO_CERTIFICACAO));
+            categoria.setExperienciaMinimaMeses(registro.get(Categoria.CATEGORIA.EXPERIENCIA_MINIMA_MESES));
+            categoria.setNivelRisco(registro.get(Categoria.CATEGORIA.NIVEL_RISCO).toString());
+            categoria.setSeguroObrigatorio(registro.get(Categoria.CATEGORIA.SEGURO_OBRIGATORIO));
+            categoria.setValorBaseHora(registro.get(Categoria.CATEGORIA.VALOR_BASE_HORA));
+            var dataCriacao = registro.get(Categoria.CATEGORIA.DATA_CRIACAO);
+            categoria.setDataCriacao(dataCriacao != null ? OffsetDateTime.of(dataCriacao, ZoneOffset.UTC) : null);
+            var dataAtualizacao = registro.get(Categoria.CATEGORIA.DATA_ATUALIZACAO);
+            categoria.setDataAtualizacao(dataAtualizacao != null ? OffsetDateTime.of(dataAtualizacao, ZoneOffset.UTC) : null);
+            categoria.setUrlImagem(registro.get(Categoria.CATEGORIA.URL_IMAGEM));
+            categoria.setPalavrasChave(String.join(",", registro.get(Categoria.CATEGORIA.PALAVRAS_CHAVE)));
+            categoria.setHorasMinimasAgendamento(registro.get(Categoria.CATEGORIA.HORAS_MINIMAS_AGENDAMENTO));
+            categoria.setHorasCancelamentoGratis(registro.get(Categoria.CATEGORIA.HORAS_CANCELAMENTO_GRATIS));
+            categoria.setPercentualComissao(JsonNullable.of(registro.get(Categoria.CATEGORIA.PERCENTUAL_COMISSAO).floatValue()));
+            categoria.setDocumentosNecessarios(String.join(",", registro.get(Categoria.CATEGORIA.DOCUMENTOS_NECESSARIOS)));
+            return categoria;
+        }).toList());
     }
 
     public CompletableFuture<Integer> calculateTotalPages(Integer limit) {
@@ -148,11 +145,9 @@ public class CategoriaQueryBuilder {
     }
 
     public CompletableFuture<Integer> countTotalRecords() {
-        return CompletableFuture.supplyAsync(() -> {
-            return this.dslContext
-                    .selectCount()
-                    .from(Categoria.CATEGORIA)
-                    .fetchOne(0, int.class);
-        });
+        return CompletableFuture.supplyAsync(() -> this.dslContext
+                .selectCount()
+                .from(Categoria.CATEGORIA)
+                .fetchOne(0, int.class));
     }
 }

@@ -33,21 +33,21 @@ public class UsuarioFotoQueryBuilder {
                 .where(DSL.trueCondition());
     }
 
-    public UsuarioFotoQueryBuilder withUsuarioId(@Nonnull Integer usuarioId) {
+    public UsuarioFotoQueryBuilder withUsuarioId(Integer usuarioId) {
         if(usuarioId != null) {
             this.query = this.query.and(UsuarioFoto.USUARIO_FOTO.USUARIO_ID.eq(usuarioId));
         }
         return this;
     }
 
-    public UsuarioFotoQueryBuilder withAtivo(@Nonnull Boolean ativo) {
+    public UsuarioFotoQueryBuilder withAtivo(Boolean ativo) {
         if(ativo != null && ativo) {
             this.query = this.query.and(UsuarioFoto.USUARIO_FOTO.ATIVO.eq(ativo));
         }
         return this;
     }
 
-    public UsuarioFotoQueryBuilder withLimit(@Nonnull Integer limit) {
+    public UsuarioFotoQueryBuilder withLimit(Integer limit) {
         this.limit = limit != null && limit > 0 ? limit : DEFAULT_LIMIT;
         return this;
     }
@@ -76,7 +76,7 @@ public class UsuarioFotoQueryBuilder {
                         usuarioFoto.setAtivo(record.get(UsuarioFoto.USUARIO_FOTO.ATIVO));
                         return usuarioFoto;
                     })
-                    .collect(Collectors.toList());
+                    .toList();
         });
     }
 }

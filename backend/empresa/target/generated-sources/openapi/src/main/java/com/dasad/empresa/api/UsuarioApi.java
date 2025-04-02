@@ -5,6 +5,8 @@
  */
 package com.dasad.empresa.api;
 
+import com.dasad.empresa.model.LoginRequestDTO;
+import com.dasad.empresa.model.PerfilModel;
 import com.dasad.empresa.model.RegisterRequestDTO;
 import com.dasad.empresa.model.UsuarioFotoModel;
 import com.dasad.empresa.model.UsuarioModel;
@@ -36,7 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-03T00:09:08.080519600+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 @Validated
 @Tag(name = "Usuario", description = "Operações relacionadas a usuários")
 public interface UsuarioApi {
@@ -75,6 +77,7 @@ public interface UsuarioApi {
     /**
      * PUT /usuario/create : Cria um usuário
      *
+     * @param organizacaoId Id da organização (required)
      * @param registerRequestDTO  (optional)
      * @return Sucesso (status code 200)
      */
@@ -99,6 +102,7 @@ public interface UsuarioApi {
     )
     
     ResponseEntity<UsuarioModel> createUsuario(
+        @NotNull @Parameter(name = "organizacaoId", description = "Id da organização", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "organizacaoId", required = true) Integer organizacaoId,
         @Parameter(name = "RegisterRequestDTO", description = "") @Valid @RequestBody(required = false) RegisterRequestDTO registerRequestDTO
     );
 
@@ -133,6 +137,7 @@ public interface UsuarioApi {
     /**
      * DELETE /usuario/delete/{id} : Deleta um usuário
      *
+     * @param organizacaoId Id da organização (required)
      * @param id  (required)
      * @return No Content (status code 204)
      */
@@ -153,6 +158,7 @@ public interface UsuarioApi {
     )
     
     ResponseEntity<Void> deleteUsuario(
+        @NotNull @Parameter(name = "organizacaoId", description = "Id da organização", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "organizacaoId", required = true) Integer organizacaoId,
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     );
 
@@ -188,8 +194,37 @@ public interface UsuarioApi {
 
 
     /**
+     * GET /usuario/perfil : Busca perfil do usuário
+     *
+     * @param loginRequestDTO  (required)
+     * @return Sucesso (status code 200)
+     */
+    @Operation(
+        operationId = "findPerfilUsuario",
+        summary = "Busca perfil do usuário",
+        tags = { "Usuario" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Sucesso", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = PerfilModel.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/usuario/perfil",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<PerfilModel> findPerfilUsuario(
+        @Parameter(name = "LoginRequestDTO", description = "", required = true) @Valid @RequestBody LoginRequestDTO loginRequestDTO
+    );
+
+
+    /**
      * POST /usuario/find : Busca usuários
      *
+     * @param organizacaoId Id da organização (required)
      * @param usuarioRequest  (optional)
      * @return Sucesso (status code 200)
      */
@@ -214,6 +249,7 @@ public interface UsuarioApi {
     )
     
     ResponseEntity<UsuarioResponseDTO> findUsuario(
+        @NotNull @Parameter(name = "organizacaoId", description = "Id da organização", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "organizacaoId", required = true) Integer organizacaoId,
         @Parameter(name = "UsuarioRequest", description = "") @Valid @RequestBody(required = false) UsuarioRequest usuarioRequest
     );
 
@@ -284,6 +320,7 @@ public interface UsuarioApi {
     /**
      * PATCH /usuario/update : Atualiza um usuário
      *
+     * @param organizacaoId Id da organização (required)
      * @param usuarioModel  (optional)
      * @return Sucesso (status code 200)
      */
@@ -308,6 +345,7 @@ public interface UsuarioApi {
     )
     
     ResponseEntity<UsuarioModel> updateUsuario(
+        @NotNull @Parameter(name = "organizacaoId", description = "Id da organização", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "organizacaoId", required = true) Integer organizacaoId,
         @Parameter(name = "UsuarioModel", description = "") @Valid @RequestBody(required = false) UsuarioModel usuarioModel
     );
 

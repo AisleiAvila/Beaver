@@ -4,6 +4,9 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -19,7 +22,7 @@ import jakarta.annotation.Generated;
  * LoginResponseDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-03T00:09:08.080519600+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class LoginResponseDTO {
 
   private @Nullable String nome;
@@ -27,6 +30,9 @@ public class LoginResponseDTO {
   private @Nullable String authorization;
 
   private @Nullable String perfil;
+
+  @Valid
+  private List<Integer> organizacoesIds = new ArrayList<>();
 
   public LoginResponseDTO nome(String nome) {
     this.nome = nome;
@@ -88,6 +94,34 @@ public class LoginResponseDTO {
     this.perfil = perfil;
   }
 
+  public LoginResponseDTO organizacoesIds(List<Integer> organizacoesIds) {
+    this.organizacoesIds = organizacoesIds;
+    return this;
+  }
+
+  public LoginResponseDTO addOrganizacoesIdsItem(Integer organizacoesIdsItem) {
+    if (this.organizacoesIds == null) {
+      this.organizacoesIds = new ArrayList<>();
+    }
+    this.organizacoesIds.add(organizacoesIdsItem);
+    return this;
+  }
+
+  /**
+   * Get organizacoesIds
+   * @return organizacoesIds
+   */
+  
+  @Schema(name = "organizacoesIds", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("organizacoesIds")
+  public List<Integer> getOrganizacoesIds() {
+    return organizacoesIds;
+  }
+
+  public void setOrganizacoesIds(List<Integer> organizacoesIds) {
+    this.organizacoesIds = organizacoesIds;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -99,12 +133,13 @@ public class LoginResponseDTO {
     LoginResponseDTO loginResponseDTO = (LoginResponseDTO) o;
     return Objects.equals(this.nome, loginResponseDTO.nome) &&
         Objects.equals(this.authorization, loginResponseDTO.authorization) &&
-        Objects.equals(this.perfil, loginResponseDTO.perfil);
+        Objects.equals(this.perfil, loginResponseDTO.perfil) &&
+        Objects.equals(this.organizacoesIds, loginResponseDTO.organizacoesIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nome, authorization, perfil);
+    return Objects.hash(nome, authorization, perfil, organizacoesIds);
   }
 
   @Override
@@ -114,6 +149,7 @@ public class LoginResponseDTO {
     sb.append("    nome: ").append(toIndentedString(nome)).append("\n");
     sb.append("    authorization: ").append(toIndentedString(authorization)).append("\n");
     sb.append("    perfil: ").append(toIndentedString(perfil)).append("\n");
+    sb.append("    organizacoesIds: ").append(toIndentedString(organizacoesIds)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -4,11 +4,12 @@ import com.dasad.empresa.exception.EmailAlreadyExistsException;
 import com.dasad.empresa.jooq.tables.Cidade;
 import com.dasad.empresa.jooq.tables.Estado;
 import com.dasad.empresa.jooq.tables.Pais;
-import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.jooq.tables.UsuarioPerfil;
 import com.dasad.empresa.model.CidadeModel;
 import com.dasad.empresa.model.EnderecoModel;
 import com.dasad.empresa.model.EstadoModel;
+import com.dasad.empresa.model.LoginRequestDTO;
+import com.dasad.empresa.model.OrganizacaoModel;
 import com.dasad.empresa.model.PaisModel;
 import com.dasad.empresa.model.PerfilModel;
 import com.dasad.empresa.model.UsuarioFotoModel;
@@ -25,7 +26,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,8 +33,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.dasad.empresa.jooq.tables.Endereco.ENDERECO;
+import static com.dasad.empresa.jooq.tables.Organizacao.ORGANIZACAO;
 import static com.dasad.empresa.jooq.tables.Perfil.PERFIL;
+import static com.dasad.empresa.jooq.tables.Usuario.USUARIO;
 import static com.dasad.empresa.jooq.tables.UsuarioFoto.USUARIO_FOTO;
+import static com.dasad.empresa.jooq.tables.UsuarioOrganizacao.USUARIO_ORGANIZACAO;
 import static com.dasad.empresa.jooq.tables.UsuarioPerfil.USUARIO_PERFIL;
 
 @Repository
@@ -50,8 +53,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<List<UsuarioModel>> find(UsuarioRequest usuarioRequest) {
+    public Optional<List<UsuarioModel>> find(UsuarioRequest usuarioRequest, Integer organizacaoId) {
         UsuarioQueryBuilder queryBuilder = new UsuarioQueryBuilder(this.dsl)
+                .withOrganizacao(organizacaoId)
                 .withId(usuarioRequest.getId())
                 .withNome(usuarioRequest.getNome())
                 .withEmail(usuarioRequest.getEmail())
@@ -64,8 +68,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return Optional.ofNullable(result.isEmpty() ? null : result);
     }
 
-    public Optional<Integer> countTotalRecords(UsuarioRequest usuarioRequest) {
+    public Optional<Integer> countTotalRecords(UsuarioRequest usuarioRequest, Integer organizacaoId) {
         UsuarioQueryBuilder queryBuilder = new UsuarioQueryBuilder(this.dsl)
+                .withOrganizacao(organizacaoId)
                 .withId(usuarioRequest.getId())
                 .withNome(usuarioRequest.getNome())
                 .withEmail(usuarioRequest.getEmail())
@@ -80,10 +85,10 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     public Optional<UsuarioModel> findById(Integer id) {
         return dsl.select(
-                        Usuario.USUARIO.ID,
-                        Usuario.USUARIO.NOME,
-                        Usuario.USUARIO.EMAIL,
-                        Usuario.USUARIO.DATA_NASCIMENTO,
+                        USUARIO.ID,
+                        USUARIO.NOME,
+                        USUARIO.EMAIL,
+                        USUARIO.DATA_NASCIMENTO,
                         PERFIL.ID.as("perfil_id"),
                         PERFIL.NOME.as("perfil_nome"),
                         ENDERECO.ID.as("endereco_id"),
@@ -105,26 +110,26 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                         USUARIO_FOTO.DATA_CRIACAO,
                         USUARIO_FOTO.DATA_ATUALIZACAO
                 )
-                .from(Usuario.USUARIO)
+                .from(USUARIO)
                 .leftJoin(UsuarioPerfil.USUARIO_PERFIL)
-                .on(Usuario.USUARIO.ID.eq(UsuarioPerfil.USUARIO_PERFIL.USUARIO_ID))
+                .on(USUARIO.ID.eq(UsuarioPerfil.USUARIO_PERFIL.USUARIO_ID))
                 .leftJoin(PERFIL)
                 .on(UsuarioPerfil.USUARIO_PERFIL.PERFIL_ID.eq(PERFIL.ID))
-                .leftJoin(ENDERECO).on(Usuario.USUARIO.ID.eq(ENDERECO.USUARIO_ID))
+                .leftJoin(ENDERECO).on(USUARIO.ID.eq(ENDERECO.USUARIO_ID))
                 .leftJoin(Cidade.CIDADE).on(ENDERECO.CIDADE_ID.eq(Cidade.CIDADE.ID))
                 .leftJoin(Estado.ESTADO).on(Cidade.CIDADE.ESTADO_ID.eq(Estado.ESTADO.ID))
                 .leftJoin(Pais.PAIS).on(Estado.ESTADO.PAIS_ID.eq(Pais.PAIS.ID))
-                .leftJoin(USUARIO_FOTO).on(USUARIO_FOTO.USUARIO_ID.eq(Usuario.USUARIO.ID))
-                .where(Usuario.USUARIO.ID.eq(id))
+                .leftJoin(USUARIO_FOTO).on(USUARIO_FOTO.USUARIO_ID.eq(USUARIO.ID))
+                .where(USUARIO.ID.eq(id))
 //                .and(USUARIO_FOTO.ATIVO.isTrue())
                 .fetchOptional()
                 .map(record -> {
                     UsuarioModel usuario = new UsuarioModel();
-                    usuario.setId(record.get(Usuario.USUARIO.ID));
-                    usuario.setNome(record.get(Usuario.USUARIO.NOME));
-                    usuario.setEmail(record.get(Usuario.USUARIO.EMAIL));
+                    usuario.setId(record.get(USUARIO.ID));
+                    usuario.setNome(record.get(USUARIO.NOME));
+                    usuario.setEmail(record.get(USUARIO.EMAIL));
 //                    usuario.setDataNascimento(convertLocalDateToString(record.get(Usuario.USUARIO.DATA_NASCIMENTO)));
-                    usuario.setDataNascimento(record.get(Usuario.USUARIO.DATA_NASCIMENTO));
+                    usuario.setDataNascimento(record.get(USUARIO.DATA_NASCIMENTO));
                     if (record.get("perfil_id") != null) {
                         PerfilModel perfil = new PerfilModel();
                         perfil.setId(record.get("perfil_id", Integer.class));
@@ -177,38 +182,84 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 });
     }
 
+
     public Optional<UsuarioModel> findByEmail(String email) {
-        return dsl.select(Usuario.USUARIO.fields())
-                .select(USUARIO_PERFIL.PERFIL_ID)
-                .select(PERFIL.NOME)
-                .from(Usuario.USUARIO)
-                .leftJoin(USUARIO_PERFIL).on(Usuario.USUARIO.ID.eq(USUARIO_PERFIL.USUARIO_ID))
-                .leftJoin(PERFIL).on(USUARIO_PERFIL.PERFIL_ID.eq(PERFIL.ID))
-                .where(Usuario.USUARIO.EMAIL.eq(email))
-                .fetchOptional()
-                .map(record -> {
-                    UsuarioModel usuario = new UsuarioModel();
-                    usuario.setId(record.get(Usuario.USUARIO.ID));
-                    usuario.setNome(record.get(Usuario.USUARIO.NOME));
-                    usuario.setEmail(record.get(Usuario.USUARIO.EMAIL));
-                    usuario.setSenha(record.get(Usuario.USUARIO.SENHA));
-//                    usuario.setDataNascimento(convertLocalDateToString(record.get(Usuario.USUARIO.DATA_NASCIMENTO)));
-                    usuario.setDataNascimento(record.get(Usuario.USUARIO.DATA_NASCIMENTO));
-                    if (record.get(USUARIO_PERFIL.PERFIL_ID) != null) {
-                        PerfilModel perfil = new PerfilModel();
-                        perfil.setId(record.get(USUARIO_PERFIL.PERFIL_ID));
-                        perfil.setNome(record.get(PERFIL.NOME));
-                        List<PerfilModel> perfis = new ArrayList<>();
-                        perfis.add(perfil);
-                        usuario.setPerfis(perfis);
-                    } else {
-                        usuario.setPerfis(Collections.emptyList());
-                    }
-                    return usuario;
-                });
+        // Primeiro busca apenas o usuário
+        Optional<UsuarioModel> usuario = dsl.select(USUARIO.fields())
+                .from(USUARIO)
+                .where(USUARIO.EMAIL.eq(email))
+                .fetchOptionalInto(UsuarioModel.class);
+
+        // Se encontrar, carrega as associações
+        if (usuario.isPresent()) {
+            UsuarioModel u = usuario.get();
+
+            // Carrega perfis
+            List<com.dasad.empresa.model.PerfilModel> perfis = dsl.select(PERFIL.fields())
+                    .from(PERFIL)
+                    .join(USUARIO_PERFIL)
+                    .on(USUARIO_PERFIL.PERFIL_ID.eq(PERFIL.ID))
+                    .where(USUARIO_PERFIL.USUARIO_ID.eq(u.getId()))
+                    .fetchInto(com.dasad.empresa.model.PerfilModel.class);
+
+            u.setPerfis(perfis);
+
+            // Carrega organizações
+            List<OrganizacaoModel> organizacoes = dsl.select(ORGANIZACAO.fields())
+                    .from(ORGANIZACAO)
+                    .join(USUARIO_ORGANIZACAO)
+                    .on(USUARIO_ORGANIZACAO.ORGANIZACAO_ID.eq(ORGANIZACAO.ID))
+                    .where(USUARIO_ORGANIZACAO.USUARIO_ID.eq(u.getId()))
+                    .fetchInto(OrganizacaoModel.class);
+
+            u.setOrganizacoes(organizacoes);
+
+            return Optional.of(u);
+        }
+
+        return Optional.empty();
     }
 
-    public UsuarioModel create(UsuarioModel usuario) {
+    public Optional<UsuarioModel> findByEmailAndOrganizacaoId(String email, Integer organizacaoId) {
+        // Primeiro busca apenas o usuário
+        Optional<UsuarioModel> usuario = dsl.select(USUARIO.fields())
+                .from(USUARIO)
+                .where(USUARIO.EMAIL.eq(email))
+                .fetchOptionalInto(UsuarioModel.class);
+
+        // Se encontrar, carrega as associações
+        if (usuario.isPresent()) {
+            UsuarioModel u = usuario.get();
+
+            // Carrega perfis
+            List<com.dasad.empresa.model.PerfilModel> perfis = dsl.select(PERFIL.fields())
+                    .from(PERFIL)
+                    .join(USUARIO_PERFIL)
+                    .on(USUARIO_PERFIL.PERFIL_ID.eq(PERFIL.ID))
+                    .where(USUARIO_PERFIL.USUARIO_ID.eq(u.getId()))
+                    .fetchInto(com.dasad.empresa.model.PerfilModel.class);
+
+            u.setPerfis(perfis);
+
+            // Carrega organizações
+            List<OrganizacaoModel> organizacoes = dsl.select(ORGANIZACAO.fields())
+                    .from(ORGANIZACAO)
+                    .join(USUARIO_ORGANIZACAO)
+                    .on(USUARIO_ORGANIZACAO.ORGANIZACAO_ID.eq(ORGANIZACAO.ID))
+                    .where(USUARIO_ORGANIZACAO.USUARIO_ID.eq(u.getId()))
+                    .and(organizacaoId != null ? ORGANIZACAO.ID.eq(organizacaoId) : DSL.noCondition())
+                    .fetchInto(OrganizacaoModel.class);
+
+            u.setOrganizacoes(organizacoes);
+
+            return Optional.of(u);
+        }
+
+        return Optional.empty();
+    }
+
+
+    public UsuarioModel create(UsuarioModel usuario, Integer organizacaoId) {
         if (isEmailExists(usuario)) {
             throw new EmailAlreadyExistsException("Email já existe: " + usuario.getEmail());
         }
@@ -219,41 +270,44 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             String encryptedPassword = passwordEncoder.encode(usuario.getSenha());
             usuario.setSenha(encryptedPassword);
 
-            ctx.insertInto(Usuario.USUARIO)
-                    .set(Usuario.USUARIO.NOME, usuario.getNome())
-                    .set(Usuario.USUARIO.EMAIL, usuario.getEmail())
-                    .set(Usuario.USUARIO.SENHA, usuario.getSenha())
+            ctx.insertInto(USUARIO)
+                    .set(USUARIO.NOME, usuario.getNome())
+                    .set(USUARIO.EMAIL, usuario.getEmail())
+                    .set(USUARIO.SENHA, usuario.getSenha())
 //                    .set(Usuario.USUARIO.DATA_NASCIMENTO, convertStringToLocalDate(usuario.getDataNascimento()))
-                    .set(Usuario.USUARIO.DATA_NASCIMENTO, usuario.getDataNascimento())
+                    .set(USUARIO.DATA_NASCIMENTO, usuario.getDataNascimento())
                     .execute();
 
-            Integer userId = ctx.select(Usuario.USUARIO.ID)
-                    .from(Usuario.USUARIO)
-                    .where(Usuario.USUARIO.EMAIL.eq(usuario.getEmail()))
+            Integer userId = ctx.select(USUARIO.ID)
+                    .from(USUARIO)
+                    .where(USUARIO.EMAIL.eq(usuario.getEmail()))
                     .fetchOneInto(Integer.class);
             usuario.setId(userId);
 
             saveUserProfiles(usuario, ctx);
             saveUserAddresses(usuario, ctx);
+            saveUserOrganizacao(usuario, organizacaoId, ctx);
 
             return usuario;
         });
     }
 
-    public UsuarioModel update(UsuarioModel usuarioModel) {
+    public UsuarioModel update(UsuarioModel usuarioModel, Integer organizacaoId) {
         return dsl.transactionResult(configuration -> {
             DSLContext ctx = DSL.using(configuration);
 
-            ctx.update(Usuario.USUARIO)
-                    .set(Usuario.USUARIO.NOME, usuarioModel.getNome())
-                    .set(Usuario.USUARIO.EMAIL, usuarioModel.getEmail())
-                    .set(Usuario.USUARIO.DATA_NASCIMENTO, usuarioModel.getDataNascimento())
-                    .where(Usuario.USUARIO.ID.eq(usuarioModel.getId()))
+            ctx.update(USUARIO)
+                    .set(USUARIO.NOME, usuarioModel.getNome())
+                    .set(USUARIO.EMAIL, usuarioModel.getEmail())
+                    .set(USUARIO.DATA_NASCIMENTO, usuarioModel.getDataNascimento())
+                    .where(USUARIO.ID.eq(usuarioModel.getId()))
                     .execute();
 
             deletePerfilUsuarioById(usuarioModel.getId(), ctx);
             saveUserProfiles(usuarioModel, ctx);
             saveUserAddresses(usuarioModel, ctx);
+            deleteUserOrganizacaoById(usuarioModel.getId(), organizacaoId, ctx);
+            saveUserOrganizacao(usuarioModel, organizacaoId, ctx);
 
             return findById(usuarioModel.getId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         });
@@ -266,14 +320,14 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     public void deleteById(Integer id) {
-        dsl.deleteFrom(Usuario.USUARIO).where(Usuario.USUARIO.ID.eq(id)).execute();
+        dsl.deleteFrom(USUARIO).where(USUARIO.ID.eq(id)).execute();
     }
 
     public void updatePassword(Integer id, String password) {
         String encryptedPassword = passwordEncoder.encode(password);
-        dsl.update(Usuario.USUARIO)
-                .set(Usuario.USUARIO.SENHA, encryptedPassword)
-                .where(Usuario.USUARIO.ID.eq(id))
+        dsl.update(USUARIO)
+                .set(USUARIO.SENHA, encryptedPassword)
+                .where(USUARIO.ID.eq(id))
                 .execute();
     }
 
@@ -388,11 +442,28 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         });
     }
 
+    @Override
+    public Optional<PerfilModel> findPerfilUsuario(LoginRequestDTO loginRequestDTO) {
+        // Validação inicial dos parâmetros
+        if (loginRequestDTO == null || loginRequestDTO.getEmail() == null || loginRequestDTO.getSenha() == null) {
+            return Optional.empty();
+        }
+
+        // Busca o usuário pelo email
+        return findByEmail(
+                loginRequestDTO.getEmail())
+                .filter(usuario -> this.passwordEncoder.matches(loginRequestDTO.getSenha(), usuario.getSenha()))
+                .flatMap(usuario -> {
+                    List<PerfilModel> perfis = usuario.getPerfis();
+                    return perfis.isEmpty() ? Optional.empty() : Optional.of(perfis.getFirst());
+                });
+    }
+
 
     private boolean isEmailExists(UsuarioModel usuario) {
         return dsl.fetchExists(
-                dsl.selectFrom(Usuario.USUARIO)
-                        .where(DSL.lower(Usuario.USUARIO.EMAIL).eq(usuario.getEmail().toLowerCase()))
+                dsl.selectFrom(USUARIO)
+                        .where(DSL.lower(USUARIO.EMAIL).eq(usuario.getEmail().toLowerCase()))
         );
     }
 
@@ -447,5 +518,19 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .where(ENDERECO.ID.eq(endereco.getId())
                         .and(ENDERECO.USUARIO_ID.eq(usuario.getId())))
                 .execute();
+    }
+
+    private void saveUserOrganizacao(UsuarioModel usuario, Integer organizacaoId,  DSLContext ctx) {
+        ctx.insertInto(USUARIO_ORGANIZACAO)
+                .set(USUARIO_ORGANIZACAO.USUARIO_ID, usuario.getId())
+                .set(USUARIO_ORGANIZACAO.ORGANIZACAO_ID, organizacaoId)
+                .execute();
+    }
+
+    private static void deleteUserOrganizacaoById(Integer usuarioId, Integer organizacaoId, DSLContext ctx) {
+    ctx.deleteFrom(USUARIO_ORGANIZACAO)
+                    .where(USUARIO_ORGANIZACAO.USUARIO_ID.eq(usuarioId))
+                            .and(USUARIO_ORGANIZACAO.ORGANIZACAO_ID.eq(organizacaoId))
+                                    .execute();
     }
 }

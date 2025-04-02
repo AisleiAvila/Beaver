@@ -1,18 +1,19 @@
 package com.dasad.empresa.controller;
 
 import com.dasad.empresa.api.OrganizacaoApi;
+import com.dasad.empresa.exception.OrganizacaoServiceException;
 import com.dasad.empresa.model.OrganizacaoModel;
 import com.dasad.empresa.model.OrganizacaoRequest;
 import com.dasad.empresa.model.OrganizacaoRequestDTO;
 import com.dasad.empresa.model.OrganizacaoResponseDTO;
 import com.dasad.empresa.service.OrganizacaoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,10 @@ import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080", "http://localhost:8100"})
 public class OrganizacaoController implements OrganizacaoApi {
 
-    @Autowired
-    private OrganizacaoService organizacaoService;
+    private final OrganizacaoService organizacaoService;
 
-    public OrganizacaoController() {
+    public OrganizacaoController(OrganizacaoService organizacaoService) {
+        this.organizacaoService = organizacaoService;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class OrganizacaoController implements OrganizacaoApi {
     @Override
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<Void> deleteOrganizacao(Integer id) {
+    public ResponseEntity<Void> deleteOrganizacao(@PathVariable Integer id) {
         if (this.organizacaoService.findById(id).isPresent()) {
             this.organizacaoService.deleteById(id);
             return ResponseEntity.noContent().build();
@@ -67,7 +68,7 @@ public class OrganizacaoController implements OrganizacaoApi {
     @Override
     @GetMapping("/detail/{id}")
     @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
-    public ResponseEntity<OrganizacaoResponseDTO> detailOrganizacao(Integer id) {
+    public ResponseEntity<OrganizacaoResponseDTO> detailOrganizacao(@PathVariable Integer id) {
         Optional<OrganizacaoModel> organizacao = this.organizacaoService.findById(id);
         return organizacao.map(u -> {
             OrganizacaoResponseDTO responseDTO = new OrganizacaoResponseDTO();
@@ -78,7 +79,7 @@ public class OrganizacaoController implements OrganizacaoApi {
 
     @Override
     @PostMapping("/find")
-    @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
+//    @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
     public ResponseEntity<OrganizacaoResponseDTO> findOrganizacao(OrganizacaoRequest organizacaoRequest) {
         try {
             Optional<List<OrganizacaoModel>> organizacoes = this.organizacaoService.find(organizacaoRequest);
@@ -92,7 +93,7 @@ public class OrganizacaoController implements OrganizacaoApi {
             responseDTO.setTotalRecords(totalRecords);
             return ResponseEntity.ok(responseDTO);
         } catch (Exception e) {
-            throw new RuntimeException("Erro interno do servidor", e);
+            throw new OrganizacaoServiceException("Erro ao processar busca de organizações", e);
         }
     }
 

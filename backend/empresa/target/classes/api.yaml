@@ -135,6 +135,13 @@ paths:
       tags:
         - Auth
       operationId: register
+      parameters:
+        - name: organizacaoId
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Id da organização
       requestBody:
         required: true
         content:
@@ -181,8 +188,8 @@ paths:
   /organizacao/find:
     post:
       summary: Busca Organizações
-      security:
-        - bearerAuth: []
+#      security:
+#        - bearerAuth: []
       tags:
         - Organização
       operationId: findOrganizacao
@@ -303,6 +310,13 @@ paths:
       tags:
         - Usuario
       operationId: findUsuario
+      parameters:
+        - name: organizacaoId
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Id da organização
       requestBody:
         content:
           application/json:
@@ -344,6 +358,13 @@ paths:
       tags:
         - Usuario
       operationId: createUsuario
+      parameters:
+        - name: organizacaoId
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Id da organização
       requestBody:
         content:
           application/json:
@@ -364,6 +385,13 @@ paths:
       tags:
         - Usuario
       operationId: updateUsuario
+      parameters:
+        - name: organizacaoId
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Id da organização
       requestBody:
         content:
           application/json:
@@ -385,6 +413,12 @@ paths:
         - Usuario
       operationId: deleteUsuario
       parameters:
+        - name: organizacaoId
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Id da organização
         - name: id
           in: path
           required: true
@@ -479,6 +513,25 @@ paths:
       responses:
         '204':
           description: No Content
+  /usuario/perfil:
+    get:
+      summary: Busca perfil do usuário
+      tags:
+        - Usuario
+      operationId: findPerfilUsuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerfilModel'
   /endereco:
     post:
       summary: Cria um novo endereço
@@ -1085,6 +1138,9 @@ components:
           format: email
         senha:
           type: string
+        organizacaoId:
+          type: integer
+          nullable: true
     OrganizacaoRequest:
       type: object
       properties:
@@ -1152,7 +1208,7 @@ components:
             dataRegisto:
               type: string
               format: date
-              nullable: true
+#              nullable: true
               description: Data de registo comercial
               example: "2021-09-01"
     ProdutoRequest:
@@ -1266,6 +1322,10 @@ components:
           type: string
         perfil:
           type: string
+        organizacoesIds:
+            type: array
+            items:
+                type: integer
     UsuarioResponseDTO:
       type: object
       properties:
@@ -1346,7 +1406,7 @@ components:
         dataRegisto:
             type: string
             format: date
-            nullable: true
+#            nullable: true
     ProdutoModel:
       type: object
       properties:
@@ -1386,6 +1446,10 @@ components:
             type: array
             items:
                 $ref: '#/components/schemas/PerfilModel'
+        organizacoes:
+            type: array
+            items:
+                $ref: '#/components/schemas/OrganizacaoModel'
         foto:
           $ref: '#/components/schemas/UsuarioFotoModel'
     UsuarioFotoModel:

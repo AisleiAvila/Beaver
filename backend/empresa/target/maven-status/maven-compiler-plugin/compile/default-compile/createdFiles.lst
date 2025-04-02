@@ -45,6 +45,7 @@ com\dasad\empresa\jooq\tables\Cidade$CidadePath.class
 com\dasad\empresa\jooq\tables\Organizacao$OrganizacaoPath.class
 com\dasad\empresa\jooq\tables\records\PaisRecord.class
 com\dasad\empresa\config\RestTemplateConfig.class
+com\dasad\empresa\controller\ChatController$1.class
 com\dasad\empresa\jooq\tables\UsuarioFoto.class
 com\dasad\empresa\repository\CategoriaRepository.class
 com\dasad\empresa\exception\EmailAlreadyExistsException.class
@@ -74,6 +75,7 @@ com\dasad\empresa\service\CidadeService.class
 com\dasad\empresa\jooq\tables\Estoque$EstoquePath.class
 com\dasad\empresa\model\OrganizacaoResponseDTO.class
 com\dasad\empresa\repository\StatusServicoRepository.class
+com\dasad\empresa\filter\OrganizacaoContextFilter.class
 com\dasad\empresa\repository\SubCategoriaRepositoryImpl.class
 com\dasad\empresa\jooq\tables\records\ProdutoFornecedorRecord.class
 com\dasad\empresa\jooq\tables\records\EnderecoRecord.class
@@ -168,6 +170,7 @@ com\dasad\empresa\model\UsuarioRequest.class
 com\dasad\empresa\model\CategoriaModel.class
 com\dasad\empresa\jooq\tables\Perfil$PerfilPath.class
 com\dasad\empresa\jooq\tables\UsuarioPerfil.class
+com\dasad\empresa\exception\OrganizacaoServiceException.class
 com\dasad\empresa\repository\query\UsuarioQueryBuilder.class
 com\dasad\empresa\jooq\tables\PasswordResetToken$PasswordResetTokenPath.class
 com\dasad\empresa\model\SalvarSenhaRequest.class
@@ -180,6 +183,7 @@ com\dasad\empresa\config\JacksonConfig.class
 com\dasad\empresa\api\PaisApi.class
 com\dasad\empresa\jooq\tables\records\UsuarioRecord.class
 com\dasad\empresa\jooq\tables\records\UsuarioPerfilRecord.class
+com\dasad\empresa\filter\OrganizacaoContextFilter$OrganizacaoContext.class
 com\dasad\empresa\model\CidadeModel.class
 com\dasad\empresa\EmpresaApplication.class
 com\dasad\empresa\jooq\tables\UsuarioOrganizacao.class

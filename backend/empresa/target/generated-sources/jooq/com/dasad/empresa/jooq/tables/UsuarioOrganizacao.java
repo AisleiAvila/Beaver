@@ -4,6 +4,7 @@
 package com.dasad.empresa.jooq.tables;
 
 
+import com.dasad.empresa.jooq.Indexes;
 import com.dasad.empresa.jooq.Keys;
 import com.dasad.empresa.jooq.Public;
 import com.dasad.empresa.jooq.tables.Organizacao.OrganizacaoPath;
@@ -17,6 +18,7 @@ import java.util.List;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Path;
@@ -132,6 +134,11 @@ public class UsuarioOrganizacao extends TableImpl<UsuarioOrganizacaoRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
+    }
+
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.asList(Indexes.IDX_USUARIO_ORGANIZACAO);
     }
 
     @Override

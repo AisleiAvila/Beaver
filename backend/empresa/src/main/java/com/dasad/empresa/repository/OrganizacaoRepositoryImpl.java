@@ -5,21 +5,16 @@ import com.dasad.empresa.jooq.tables.Organizacao;
 import com.dasad.empresa.model.OrganizacaoModel;
 import com.dasad.empresa.model.OrganizacaoRequest;
 import com.dasad.empresa.repository.query.OrganizacaoQueryBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
-import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class OrganizacaoRepositoryImpl implements  OrganizacaoRepository {
-    private static final Logger log = LogManager.getLogger(UsuarioRepositoryImpl.class);
     private final DSLContext dsl;
 
     @Autowired
@@ -72,20 +67,19 @@ public class OrganizacaoRepositoryImpl implements  OrganizacaoRepository {
                 .from(Organizacao.ORGANIZACAO)
                 .where(Organizacao.ORGANIZACAO.ID.eq(id))
                 .fetchOptional()
-                .map(record -> {
+                .map(item -> {
                     OrganizacaoModel organizacao = new OrganizacaoModel();
-                    organizacao.setId(record.get(Organizacao.ORGANIZACAO.ID));
-                    organizacao.setNome(record.get(Organizacao.ORGANIZACAO.NOME));
-                    organizacao.setNif(record.get(Organizacao.ORGANIZACAO.NIF));
-                    organizacao.setEmail(record.get(Organizacao.ORGANIZACAO.EMAIL));
-                    organizacao.setWebsite(record.get(Organizacao.ORGANIZACAO.WEBSITE));
-                    organizacao.setSetorAtividade(record.get(Organizacao.ORGANIZACAO.SETOR_ATIVIDADE));
-                    organizacao.setMissao(record.get(Organizacao.ORGANIZACAO.MISSAO));
-                    organizacao.setRepresentanteLegal(record.get(Organizacao.ORGANIZACAO.REPRESENTANTE_LEGAL));
-                    organizacao.setCargo(record.get(Organizacao.ORGANIZACAO.CARGO));
-                    organizacao.setNumeroRegistoComercial(record.get(Organizacao.ORGANIZACAO.NUMERO_REGISTO_COMERCIAL));
-                    LocalDate dataRegisto = record.get(Organizacao.ORGANIZACAO.DATA_REGISTO);
-                    organizacao.setDataRegisto(dataRegisto != null ? JsonNullable.of(dataRegisto) : JsonNullable.undefined());
+                    organizacao.setId(item.get(Organizacao.ORGANIZACAO.ID));
+                    organizacao.setNome(item.get(Organizacao.ORGANIZACAO.NOME));
+                    organizacao.setNif(item.get(Organizacao.ORGANIZACAO.NIF));
+                    organizacao.setEmail(item.get(Organizacao.ORGANIZACAO.EMAIL));
+                    organizacao.setWebsite(item.get(Organizacao.ORGANIZACAO.WEBSITE));
+                    organizacao.setSetorAtividade(item.get(Organizacao.ORGANIZACAO.SETOR_ATIVIDADE));
+                    organizacao.setMissao(item.get(Organizacao.ORGANIZACAO.MISSAO));
+                    organizacao.setRepresentanteLegal(item.get(Organizacao.ORGANIZACAO.REPRESENTANTE_LEGAL));
+                    organizacao.setCargo(item.get(Organizacao.ORGANIZACAO.CARGO));
+                    organizacao.setNumeroRegistoComercial(item.get(Organizacao.ORGANIZACAO.NUMERO_REGISTO_COMERCIAL));
+                    organizacao.setDataRegisto(item.get(Organizacao.ORGANIZACAO.DATA_REGISTO));
                     return organizacao;
                 });
     }
@@ -113,7 +107,7 @@ public class OrganizacaoRepositoryImpl implements  OrganizacaoRepository {
                     .set(Organizacao.ORGANIZACAO.REPRESENTANTE_LEGAL, organizacao.getRepresentanteLegal())
                     .set(Organizacao.ORGANIZACAO.CARGO, organizacao.getCargo())
                     .set(Organizacao.ORGANIZACAO.NUMERO_REGISTO_COMERCIAL, organizacao.getNumeroRegistoComercial())
-                     .set(Organizacao.ORGANIZACAO.DATA_REGISTO, organizacao.getDataRegisto().orElse(null))
+                     .set(Organizacao.ORGANIZACAO.DATA_REGISTO, organizacao.getDataRegisto())
                     .execute();
 
             Integer userId = ctx.select(Organizacao.ORGANIZACAO.ID)
@@ -141,7 +135,7 @@ public class OrganizacaoRepositoryImpl implements  OrganizacaoRepository {
                     .set(Organizacao.ORGANIZACAO.REPRESENTANTE_LEGAL, organizacaoModel.getRepresentanteLegal())
                     .set(Organizacao.ORGANIZACAO.CARGO, organizacaoModel.getCargo())
                     .set(Organizacao.ORGANIZACAO.NUMERO_REGISTO_COMERCIAL, organizacaoModel.getNumeroRegistoComercial())
-                    .set(Organizacao.ORGANIZACAO.DATA_REGISTO, organizacaoModel.getDataRegisto().orElse(null))
+                    .set(Organizacao.ORGANIZACAO.DATA_REGISTO, organizacaoModel.getDataRegisto())
                     .where(Organizacao.ORGANIZACAO.ID.eq(organizacaoModel.getId()))
                     .execute();
 

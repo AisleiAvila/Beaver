@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -27,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthControllerTest {
+class AuthControllerTest {
 
     @Mock
     private UsuarioRepository usuarioRepository;
@@ -51,6 +52,7 @@ public class AuthControllerTest {
         loginRequestDTO = new LoginRequestDTO();
         loginRequestDTO.setEmail("email@teste.com");
         loginRequestDTO.setSenha("senha123");
+        loginRequestDTO.setOrganizacaoId(JsonNullable.of(1));
 
         registerRequestDTO = new RegisterRequestDTO();
         registerRequestDTO.setEmail("email@teste.com");
@@ -70,7 +72,7 @@ public class AuthControllerTest {
     class VerifyAuthorizationTests {
 
         @Test
-        public void shouldVerifyAuthorizationSuccessfully() {
+        void shouldVerifyAuthorizationSuccessfully() {
             // Arrange
             String token = "valid-token";
             when(authorizationService.validateToken(token)).thenReturn("authorized");
@@ -84,7 +86,7 @@ public class AuthControllerTest {
         }
 
         @Test
-        public void shouldReturnBadRequestWhenAuthorizationIsNull() {
+        void shouldReturnBadRequestWhenAuthorizationIsNull() {
             // Arrange
             String token = "invalid-token";
             when(authorizationService.validateToken(token)).thenReturn(null);
@@ -101,27 +103,12 @@ public class AuthControllerTest {
     @Nested
     class LoginTests {
 
-//        @Test
-//        public void shouldLoginSuccessfully() {
-//            // Arrange
-//            when(usuarioRepository.findByEmail(loginRequestDTO.getEmail())).thenReturn(Optional.of(usuarioModel));
-//            when(passwordEncoder.matches(loginRequestDTO.getSenha(), usuarioModel.getSenha())).thenReturn(true);
-//            when(authorizationService.generateToken(usuarioModel)).thenReturn("valid-token");
-//
-//            // Act
-//            ResponseEntity<LoginResponseDTO> response = authController.login(loginRequestDTO);
-//
-//            // Assert
-//            assertNotNull(response);
-//            assertEquals(ResponseEntity.ok().build().getStatusCode(), response.getStatusCode());
-//            assertNotNull(response.getBody());
-//            assertEquals("valid-token", response.getBody().getAuthorization());
-//        }
-
         @Test
-        public void shouldReturnBadRequestWhenPasswordDoesNotMatch() {
+        void shouldReturnBadRequestWhenPasswordDoesNotMatch() {
             // Arrange
-            when(usuarioRepository.findByEmail(loginRequestDTO.getEmail())).thenReturn(Optional.of(usuarioModel));
+            when(usuarioRepository.findByEmailAndOrganizacaoId(
+                    loginRequestDTO.getEmail(),
+                    loginRequestDTO.getOrganizacaoId().orElse(null))).thenReturn(Optional.of(usuarioModel));
             when(passwordEncoder.matches(loginRequestDTO.getSenha(), usuarioModel.getSenha())).thenReturn(false);
 
             // Act
@@ -133,9 +120,12 @@ public class AuthControllerTest {
         }
 
         @Test
-        public void shouldReturnBadRequestWhenUserIsNotPresent() {
+        void shouldReturnBadRequestWhenUserIsNotPresent() {
             // Arrange
-            when(usuarioRepository.findByEmail(loginRequestDTO.getEmail())).thenReturn(Optional.empty());
+            when(usuarioRepository.findByEmailAndOrganizacaoId(
+                    loginRequestDTO.getEmail(),
+                    loginRequestDTO.getOrganizacaoId().orElse(null)
+            )).thenReturn(Optional.empty());
 
             // Act
             ResponseEntity<LoginResponseDTO> response = authController.login(loginRequestDTO);
@@ -148,30 +138,13 @@ public class AuthControllerTest {
     @Nested
     class RegisterTests {
 
-//        @Test
-//        public void shouldRegisterSuccessfully() {
-//            // Arrange
-//            when(usuarioRepository.findByEmail(registerRequestDTO.getEmail())).thenReturn(Optional.empty());
-//            when(passwordEncoder.encode(registerRequestDTO.getSenha())).thenReturn("encoded-password");
-//            when(authorizationService.generateToken(any(UsuarioModel.class))).thenReturn("valid-token");
-//
-//            // Act
-//            ResponseEntity<LoginResponseDTO> response = authController.register(registerRequestDTO);
-//
-//            // Assert
-//            assertNotNull(response);
-//            assertEquals(ResponseEntity.ok().build().getStatusCode(), response.getStatusCode());
-//            assertNotNull(response.getBody());
-//            assertEquals("valid-token", response.getBody().getAuthorization());
-//        }
-
         @Test
-        public void shouldReturnBadRequestWhenUserAlreadyExists() {
+        void shouldReturnBadRequestWhenUserAlreadyExists() {
             // Arrange
             when(usuarioRepository.findByEmail(registerRequestDTO.getEmail())).thenReturn(Optional.of(usuarioModel));
 
             // Act
-            ResponseEntity<LoginResponseDTO> response = authController.register(registerRequestDTO);
+            ResponseEntity<LoginResponseDTO> response = authController.register(1, registerRequestDTO);
 
             // Assert
             assertNotNull(response);
@@ -183,7 +156,7 @@ public class AuthControllerTest {
     class RevokeTokenTests {
 
         @Test
-        public void shouldRevokeTokenSuccessfully() {
+        void shouldRevokeTokenSuccessfully() {
             // Act
             ResponseEntity<RevokeToken200Response> response = authController.revokeToken(revokeTokenRequest);
 
@@ -193,7 +166,7 @@ public class AuthControllerTest {
         }
 
         @Test
-        public void shouldThrowIllegalArgumentExceptionWhenTokenIsNullOrEmpty() {
+        void shouldThrowIllegalArgumentExceptionWhenTokenIsNullOrEmpty() {
             // Arrange
             revokeTokenRequest.setToken(null);
 

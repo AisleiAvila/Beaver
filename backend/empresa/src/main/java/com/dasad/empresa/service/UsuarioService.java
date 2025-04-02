@@ -1,5 +1,7 @@
 package com.dasad.empresa.service;
 
+import com.dasad.empresa.model.LoginRequestDTO;
+import com.dasad.empresa.model.PerfilModel;
 import com.dasad.empresa.model.UsuarioFotoModel;
 import com.dasad.empresa.model.UsuarioModel;
 import com.dasad.empresa.model.UsuarioRequest;
@@ -26,8 +28,8 @@ public class UsuarioService {
     public UsuarioService() {
     }
 
-    public Optional<List<UsuarioModel>> find(UsuarioRequest usuarioRequest) {
-        return this.usuarioRepository.find(usuarioRequest);
+    public Optional<List<UsuarioModel>> find(UsuarioRequest usuarioRequest, Integer organizacaoId) {
+        return this.usuarioRepository.find(usuarioRequest, organizacaoId);
     }
 
     public  Optional<List<UsuarioFotoModel>> findFoto(Integer usuarioId, Boolean ativo) {
@@ -41,8 +43,8 @@ public class UsuarioService {
     }
 
 
-    public Optional<Integer> countTotalRecords(UsuarioRequest usuarioRequest) {
-        return this.usuarioRepository.countTotalRecords(usuarioRequest);
+    public Optional<Integer> countTotalRecords(UsuarioRequest usuarioRequest, Integer organizacaoId) {
+        return this.usuarioRepository.countTotalRecords(usuarioRequest, organizacaoId);
     }
 
     public Optional<UsuarioModel> findById(Integer id) {
@@ -53,12 +55,12 @@ public class UsuarioService {
         return this.usuarioRepository.findByEmail(email);
     }
 
-    public UsuarioModel create(UsuarioModel usuario) {
-        return this.usuarioRepository.create(usuario);
+    public UsuarioModel create(UsuarioModel usuario, Integer organizacaoId) {
+        return this.usuarioRepository.create(usuario, organizacaoId);
     }
 
-    public UsuarioModel update(UsuarioModel usuario) {
-        return this.usuarioRepository.update(usuario);
+    public UsuarioModel update(UsuarioModel usuario, Integer organizacaoId) {
+        return this.usuarioRepository.update(usuario, organizacaoId);
     }
 
     public void deleteById(Integer id) {
@@ -79,5 +81,10 @@ public class UsuarioService {
 
     public UsuarioFotoModel updateFoto(UsuarioFotoModel usuarioFotoModel) {
         return this.usuarioRepository.updateFoto(usuarioFotoModel);
+    }
+
+    public Optional<PerfilModel> findPerfilUsuario(LoginRequestDTO loginRequestDTO) {
+        return this.usuarioRepository.findPerfilUsuario(loginRequestDTO);
+
     }
 }

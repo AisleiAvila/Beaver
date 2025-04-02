@@ -119,47 +119,46 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
                 .join(Pais.PAIS).on(Estado.ESTADO.PAIS_ID.eq(Pais.PAIS.ID));
     }
 
-    private static EnderecoModel getenderecoModel(Record15<Integer, String, String, String, String, String, BigDecimal, BigDecimal, Integer, Integer, String, Integer, String, Integer, String> record) {
-        if (record == null) {
+    private static EnderecoModel getenderecoModel(Record15<Integer, String, String, String, String, String, BigDecimal, BigDecimal, Integer, Integer, String, Integer, String, Integer, String> item) {
+        if (item == null) {
             return null;
         }
 
         var endereco = new EnderecoModel();
-        endereco.setId(record.get(ENDERECO.ID));
-        endereco.setLogradouro(record.get(ENDERECO.LOGRADOURO));
-        endereco.setNumero(record.get(ENDERECO.NUMERO));
-        endereco.setComplemento(record.get(ENDERECO.COMPLEMENTO));
-        endereco.setBairro(record.get(ENDERECO.BAIRRO));
-        endereco.setCep(record.get(ENDERECO.CEP));
-        endereco.setLatitude(record.get(ENDERECO.LATITUDE));
-        endereco.setLongitude(record.get(ENDERECO.LONGITUDE));
-        endereco.setUsuarioId(record.get(ENDERECO.USUARIO_ID));
+        endereco.setId(item.get(ENDERECO.ID));
+        endereco.setLogradouro(item.get(ENDERECO.LOGRADOURO));
+        endereco.setNumero(item.get(ENDERECO.NUMERO));
+        endereco.setComplemento(item.get(ENDERECO.COMPLEMENTO));
+        endereco.setBairro(item.get(ENDERECO.BAIRRO));
+        endereco.setCep(item.get(ENDERECO.CEP));
+        endereco.setLatitude(item.get(ENDERECO.LATITUDE));
+        endereco.setLongitude(item.get(ENDERECO.LONGITUDE));
+        endereco.setUsuarioId(item.get(ENDERECO.USUARIO_ID));
 
-        endereco.setCidadeId(createCidadeModel(record));
+        endereco.setCidadeId(createCidadeModel(item));
         return endereco;
     }
 
-    private static CidadeModel createCidadeModel(Record15<Integer, String, String, String, String, String, BigDecimal, BigDecimal, Integer, Integer, String, Integer, String, Integer, String> record) {
+    private static CidadeModel createCidadeModel(Record15<Integer, String, String, String, String, String, BigDecimal, BigDecimal, Integer, Integer, String, Integer, String, Integer, String> item) {
         CidadeModel cidade = new CidadeModel();
-        cidade.setId(record.get(Cidade.CIDADE.ID.as("cidadeId")));
-        cidade.setNome(record.get(Cidade.CIDADE.NOME.as("cidadeNome")));
-        cidade.setEstadoId(createEstadoModel(record));
+        cidade.setId(item.get(Cidade.CIDADE.ID.as("cidadeId")));
+        cidade.setNome(item.get(Cidade.CIDADE.NOME.as("cidadeNome")));
+        cidade.setEstadoId(createEstadoModel(item));
         return cidade;
     }
 
-    private static EstadoModel createEstadoModel(Record15<Integer, String, String, String, String, String, BigDecimal, BigDecimal, Integer, Integer, String, Integer, String, Integer, String> record) {
+    private static EstadoModel createEstadoModel(Record15<Integer, String, String, String, String, String, BigDecimal, BigDecimal, Integer, Integer, String, Integer, String, Integer, String> item) {
         EstadoModel estado = new EstadoModel();
-        estado.setId(record.get(Estado.ESTADO.ID.as("estadoId")));
-        estado.setNome(record.get(Estado.ESTADO.NOME.as("estadoNome")));
-        estado.setPaisId(createPaisModel(record));
-//        estado.setPaisId(record.get(Pais.PAIS.ID.as("paisId")));
+        estado.setId(item.get(Estado.ESTADO.ID.as("estadoId")));
+        estado.setNome(item.get(Estado.ESTADO.NOME.as("estadoNome")));
+        estado.setPaisId(createPaisModel(item));
         return estado;
     }
 
-    private static PaisModel createPaisModel(Record15<Integer, String, String, String, String, String, BigDecimal, BigDecimal, Integer, Integer, String, Integer, String, Integer, String> record) {
+    private static PaisModel createPaisModel(Record15<Integer, String, String, String, String, String, BigDecimal, BigDecimal, Integer, Integer, String, Integer, String, Integer, String> item) {
         PaisModel pais = new PaisModel();
-        pais.setId(record.get(Pais.PAIS.ID.as("paisId")));
-        pais.setNome(record.get(Pais.PAIS.NOME.as("paisNome")));
+        pais.setId(item.get(Pais.PAIS.ID.as("paisId")));
+        pais.setNome(item.get(Pais.PAIS.NOME.as("paisNome")));
         return pais;
     }
 }

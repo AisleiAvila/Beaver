@@ -2,7 +2,6 @@ package com.dasad.empresa.repository;
 
 import com.dasad.empresa.jooq.enums.StatusServico;
 import com.dasad.empresa.jooq.tables.Categoria;
-import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
 import com.dasad.empresa.repository.query.CategoriaQueryBuilder;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class CategoriaRepositoryImpl implements CategoriaRepository {
@@ -32,7 +30,7 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
                 .withStatus(categoriarequest.getStatus() != null ?
                         categoriarequest.getStatus().stream()
                                 .map(status -> StatusServico.valueOf(status.name()))
-                                .collect(Collectors.toList())
+                                .toList()
                         : null)
                 .withRequerCertificacao(categoriarequest.getRequerCertificacao())
                 .withNivelRisco(categoriarequest.getNivelRisco())

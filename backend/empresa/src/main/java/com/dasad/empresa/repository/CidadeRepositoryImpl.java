@@ -51,14 +51,14 @@ public class CidadeRepositoryImpl implements CidadeRepository {
                 .from(Cidade.CIDADE);
     }
 
-    private static CidadeModel getCidadeModel(Record2<Integer, String> record) {
-        if (record == null) {
+    private static CidadeModel getCidadeModel(Record2<Integer, String> registro) {
+        if (registro == null) {
             return null;
         }
 
         var cidade = new CidadeModel();
-        cidade.setId(record.get(Cidade.CIDADE.ID));
-        cidade.setNome(record.get(Cidade.CIDADE.NOME));
+        cidade.setId(registro.get(Cidade.CIDADE.ID));
+        cidade.setNome(registro.get(Cidade.CIDADE.NOME));
         return cidade;
     }
 }

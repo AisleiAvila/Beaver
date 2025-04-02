@@ -1,12 +1,16 @@
 package com.dasad.empresa.controller;
 
 import com.dasad.empresa.api.UsuarioApi;
+import com.dasad.empresa.model.LoginRequestDTO;
+import com.dasad.empresa.model.PerfilModel;
 import com.dasad.empresa.model.RegisterRequestDTO;
 import com.dasad.empresa.model.UsuarioFotoModel;
 import com.dasad.empresa.model.UsuarioModel;
 import com.dasad.empresa.model.UsuarioRequest;
 import com.dasad.empresa.model.UsuarioResponseDTO;
 import com.dasad.empresa.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
@@ -35,7 +40,9 @@ public class UsuarioController implements UsuarioApi{
     @Override
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<UsuarioModel> createUsuario(@RequestBody RegisterRequestDTO registerRequestDTO) {
+    public ResponseEntity<UsuarioModel> createUsuario(
+            @RequestParam(value = "organizaoId") Integer organizacaoId,
+            @RequestBody RegisterRequestDTO registerRequestDTO) {
 
         UsuarioModel usuarioModel = new UsuarioModel();
         usuarioModel.setId(registerRequestDTO.getId());
@@ -46,7 +53,7 @@ public class UsuarioController implements UsuarioApi{
         usuarioModel.setEnderecos(registerRequestDTO.getEnderecos());
         usuarioModel.setPerfis(registerRequestDTO.getPerfis());
 
-        return ResponseEntity.ok(this.usuarioService.create(usuarioModel));
+        return ResponseEntity.ok(this.usuarioService.create(usuarioModel, organizacaoId));
     }
 
     @Override
@@ -69,9 +76,24 @@ public class UsuarioController implements UsuarioApi{
     }
 
     @Override
+    @PostMapping("/perfil")
+    public ResponseEntity<PerfilModel> findPerfilUsuario(
+            @Parameter(description = "Credenciais do usuário",
+                    required = true,
+                    schema = @Schema(implementation = LoginRequestDTO.class))
+            @RequestBody LoginRequestDTO loginRequestDTO
+    ) {
+        return this.usuarioService.findPerfilUsuario(loginRequestDTO)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Override
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<Void> deleteUsuario(Integer id) {
+    public ResponseEntity<Void> deleteUsuario(
+            @RequestParam(value = "organizaoId") Integer organizacaoId,
+            @PathVariable Integer id) {
         if (this.usuarioService.findById(id).isPresent()) {
             this.usuarioService.deleteById(id);
             return ResponseEntity.noContent().build();
@@ -83,19 +105,21 @@ public class UsuarioController implements UsuarioApi{
     @Override
     @DeleteMapping("/foto/{usuarioId}")
     @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
-    public ResponseEntity<Void> deleteFotoUsuario(Integer usuarioId) {
+    public ResponseEntity<Void> deleteFotoUsuario(@PathVariable Integer usuarioId) {
         return null;
     }
 
     @Override
     @PostMapping("/find")
     @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
-    public ResponseEntity<UsuarioResponseDTO> findUsuario(@RequestBody UsuarioRequest usuarioRequest) {
+    public ResponseEntity<UsuarioResponseDTO> findUsuario(
+            @RequestParam(value = "organizaoId") Integer organizacaoId,
+            @RequestBody UsuarioRequest usuarioRequest){
         try {
-            Optional<List<UsuarioModel>> usuarios = this.usuarioService.find(usuarioRequest);
+            Optional<List<UsuarioModel>> usuarios = this.usuarioService.find(usuarioRequest, organizacaoId);
             var totalRecords = 0;
             if (usuarioRequest.getOffset() == null || usuarioRequest.getOffset() == 0) {
-                var retorno = this.usuarioService.countTotalRecords(usuarioRequest);
+                var retorno = this.usuarioService.countTotalRecords(usuarioRequest, organizacaoId);
                 totalRecords = retorno.orElse(0);
             }
             UsuarioResponseDTO responseDTO = new UsuarioResponseDTO();
@@ -110,8 +134,10 @@ public class UsuarioController implements UsuarioApi{
     @Override
     @PatchMapping
     @PreAuthorize("hasRole('Administrador')")
-    public ResponseEntity<UsuarioModel> updateUsuario(UsuarioModel usuarioModel) {
-        var usuario = this.usuarioService.update(usuarioModel);
+    public ResponseEntity<UsuarioModel> updateUsuario(
+            @RequestParam(value = "organizaoId") Integer organizacaoId,
+            @RequestBody UsuarioModel usuarioModel) {
+        var usuario = this.usuarioService.update(usuarioModel, organizacaoId);
         return ResponseEntity.ok(usuario);
     }
 

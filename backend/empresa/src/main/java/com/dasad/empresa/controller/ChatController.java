@@ -4,8 +4,8 @@ import com.dasad.empresa.api.ChatApi;
 import com.dasad.empresa.model.ChatRequestDTO;
 import com.dasad.empresa.model.ChatResponseDTO;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -35,8 +35,7 @@ public class ChatController implements ChatApi {
     @Value("${llama.url}")
     private String llamaUrl;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public ChatController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -60,11 +59,11 @@ public class ChatController implements ChatApi {
 
         try {
             // Fazer a chamada ao serviço Ollama
-            ResponseEntity<Map> response = restTemplate.exchange(
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
                     llamaUrl,
                     HttpMethod.POST,
                     httpRequest,
-                    Map.class
+                    new ParameterizedTypeReference<Map<String, Object>>() {}
             );
 
             log.info("Resposta do Llama: {}", response);

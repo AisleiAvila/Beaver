@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class SenhaControllerTest {
+class SenhaControllerTest {
 
     @Mock
     private SenhaService senhaService;
@@ -45,7 +45,7 @@ public class SenhaControllerTest {
     class RecuperarSenhaTests {
 
         @Test
-        public void shouldRecuperarSenhaSuccessfully() {
+        void shouldRecuperarSenhaSuccessfully() {
             // Arrange
             RecuperarSenha200Response responseMock = new RecuperarSenha200Response();
             when(senhaService.getRecuperarSenha(any(RecuperarSenhaRequest.class))).thenReturn(ResponseEntity.ok(responseMock));
@@ -63,7 +63,7 @@ public class SenhaControllerTest {
     class SalvarSenhaTests {
 
         @Test
-        public void shouldSalvarSenhaSuccessfully() {
+        void shouldSalvarSenhaSuccessfully() {
             // Arrange
             SalvarSenha200Response responseMock = new SalvarSenha200Response();
             when(senhaService.getSalvarSenha(any(SalvarSenhaRequest.class))).thenReturn(ResponseEntity.ok(responseMock));
@@ -81,7 +81,7 @@ public class SenhaControllerTest {
     class ValidarResetTokenTests {
 
         @Test
-        public void shouldValidarResetTokenSuccessfully() {
+        void shouldValidarResetTokenSuccessfully() {
             // Arrange
             ValidarResetToken200Response responseMock = new ValidarResetToken200Response();
             when(senhaService.getValidarResetToken(token)).thenReturn(ResponseEntity.ok(responseMock));

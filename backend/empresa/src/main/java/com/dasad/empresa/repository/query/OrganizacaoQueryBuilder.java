@@ -3,13 +3,11 @@ package com.dasad.empresa.repository.query;
 import com.dasad.empresa.jooq.tables.Organizacao;
 import com.dasad.empresa.jooq.tables.Usuario;
 import com.dasad.empresa.model.OrganizacaoModel;
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.Record11;
 import org.jooq.SelectJoinStep;
 import org.jooq.impl.DSL;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,40 +37,40 @@ public class OrganizacaoQueryBuilder {
                 .from(Organizacao.ORGANIZACAO);
     }
 
-    public OrganizacaoQueryBuilder withId(@Nonnull Integer id) {
+    public OrganizacaoQueryBuilder withId(Integer id) {
         if(id != null) {
             this.query.where(Organizacao.ORGANIZACAO.ID.eq(id));
         }
         return this;
     }
 
-    public OrganizacaoQueryBuilder withNome(@Nonnull String nome) {
+    public OrganizacaoQueryBuilder withNome(String nome) {
         if (nome != null) {
             this.query.where(DSL.lower(Organizacao.ORGANIZACAO.NOME).like("%" + nome.toLowerCase() + "%"));
         }
         return this;
     }
 
-    public OrganizacaoQueryBuilder withNif(@Nonnull String nif) {
+    public OrganizacaoQueryBuilder withNif(String nif) {
         if (nif != null) {
             this.query.where(DSL.lower(Organizacao.ORGANIZACAO.NIF).like("%" + nif.toLowerCase() + "%"));
         }
         return this;
     }
 
-    public OrganizacaoQueryBuilder withEmail(@Nonnull String email) {
+    public OrganizacaoQueryBuilder withEmail(String email) {
         if (email != null) {
             this.query.where(DSL.lower(Organizacao.ORGANIZACAO.EMAIL).like("%" + email.toLowerCase() + "%"));
         }
         return this;
     }
 
-    public OrganizacaoQueryBuilder withLimit(@Nonnull Integer limit) {
+    public OrganizacaoQueryBuilder withLimit(Integer limit) {
         this.query.limit(limit != null && limit > 0 ? limit : DEFAULT_LIMIT);
         return this;
     }
 
-    public OrganizacaoQueryBuilder withOffset(@Nonnull Integer offset) {
+    public OrganizacaoQueryBuilder withOffset(Integer offset) {
         this.query.offset(offset != null  ? offset : 0);
         return this;
     }
@@ -95,8 +93,7 @@ public class OrganizacaoQueryBuilder {
                 organizacao.setRepresentanteLegal(record.get(Organizacao.ORGANIZACAO.REPRESENTANTE_LEGAL));
                 organizacao.setCargo(record.get(Organizacao.ORGANIZACAO.CARGO));
                 organizacao.setNumeroRegistoComercial(record.get(Organizacao.ORGANIZACAO.NUMERO_REGISTO_COMERCIAL));
-                LocalDate dataRegisto = record.get(Organizacao.ORGANIZACAO.DATA_REGISTO);
-                organizacao.setDataRegisto(dataRegisto != null ? JsonNullable.of(dataRegisto) : JsonNullable.undefined());
+                organizacao.setDataRegisto(record.get(Organizacao.ORGANIZACAO.DATA_REGISTO));
                 return organizacao;
             }).collect(Collectors.toList());
         });

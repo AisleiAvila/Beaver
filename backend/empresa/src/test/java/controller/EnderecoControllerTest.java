@@ -25,7 +25,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class EnderecoControllerTest {
+class EnderecoControllerTest {
 
     @Mock
     private EnderecoService enderecoService;
@@ -58,7 +58,7 @@ public class EnderecoControllerTest {
     class FindAllTests {
 
         @Test
-        public void shouldReturnAllEnderecos() {
+        void shouldReturnAllEnderecos() {
             // Arrange
             when(enderecoService.findAll()).thenReturn(Collections.singletonList(enderecoModel));
 
@@ -76,7 +76,7 @@ public class EnderecoControllerTest {
     class GetEnderecoByIdTests {
 
         @Test
-        public void shouldReturnEnderecoWhenExists() {
+        void shouldReturnEnderecoWhenExists() {
             // Arrange
             when(enderecoService.findById(1)).thenReturn(Optional.of(enderecoModel));
 
@@ -89,7 +89,7 @@ public class EnderecoControllerTest {
         }
 
         @Test
-        public void shouldReturnNotFoundWhenEnderecoDoesNotExist() {
+        void shouldReturnNotFoundWhenEnderecoDoesNotExist() {
             // Arrange
             when(enderecoService.findById(1)).thenReturn(Optional.empty());
 
@@ -106,7 +106,7 @@ public class EnderecoControllerTest {
     class CreateEnderecoTests {
 
         @Test
-        public void shouldCreateEnderecoSuccessfully() {
+        void shouldCreateEnderecoSuccessfully() {
             // Arrange
             when(enderecoService.save(any(EnderecoModel.class))).thenReturn(enderecoModel);
 
@@ -123,7 +123,7 @@ public class EnderecoControllerTest {
     class UpdateEnderecoTests {
 
         @Test
-        public void shouldUpdateEnderecoSuccessfully() {
+        void shouldUpdateEnderecoSuccessfully() {
             // Arrange
             when(enderecoService.findById(1)).thenReturn(Optional.of(enderecoModel));
             when(enderecoService.save(any(EnderecoModel.class))).thenReturn(enderecoModel);
@@ -137,7 +137,7 @@ public class EnderecoControllerTest {
         }
 
         @Test
-        public void shouldReturnNotFoundWhenEnderecoDoesNotExist() {
+        void shouldReturnNotFoundWhenEnderecoDoesNotExist() {
             // Arrange
             when(enderecoService.findById(1)).thenReturn(Optional.empty());
 
@@ -154,7 +154,7 @@ public class EnderecoControllerTest {
     class DeleteEnderecoTests {
 
         @Test
-        public void shouldDeleteEnderecoSuccessfully() {
+        void shouldDeleteEnderecoSuccessfully() {
             // Arrange
             when(enderecoService.findById(1)).thenReturn(Optional.of(enderecoModel));
             doNothing().when(enderecoService).deleteById(1);
@@ -168,7 +168,7 @@ public class EnderecoControllerTest {
         }
 
         @Test
-        public void shouldReturnNotFoundWhenEnderecoDoesNotExist() {
+        void shouldReturnNotFoundWhenEnderecoDoesNotExist() {
             // Arrange
             when(enderecoService.findById(1)).thenReturn(Optional.empty());
 

@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-29T12:01:59.756847Z[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-03T00:09:08.080519600+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 @Validated
 @Tag(name = "Auth", description = "Operações relacionadas a autenticação")
 public interface AuthApi {
@@ -82,6 +82,7 @@ public interface AuthApi {
      * POST /auth/register : Register endpoint
      * Endpoint para registrar novos usuários.
      *
+     * @param organizacaoId Id da organização (required)
      * @param registerRequestDTO  (required)
      * @return Registro bem-sucedido (status code 200)
      *         or Requisição inválida (status code 400)
@@ -108,6 +109,7 @@ public interface AuthApi {
     )
     
     ResponseEntity<LoginResponseDTO> register(
+        @NotNull @Parameter(name = "organizacaoId", description = "Id da organização", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "organizacaoId", required = true) Integer organizacaoId,
         @Parameter(name = "RegisterRequestDTO", description = "", required = true) @Valid @RequestBody RegisterRequestDTO registerRequestDTO
     );
 
