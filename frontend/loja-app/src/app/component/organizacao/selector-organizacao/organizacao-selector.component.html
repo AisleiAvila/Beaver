@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Selecione sua Organização</h2>
+
+<mat-dialog-content>
+  <p>
+    Você tem acesso a múltiplas organizações. Selecione qual deseja acessar:
+  </p>
+  <mat-selection-list #organizacoesList [multiple]="false">
+    <mat-list-option *ngFor="let org of data.organizacoes" [value]="org">
+      {{
+        org?.organizacoes && org?.organizacoes?.length > 0
+          ? org?.organizacoes[0]?.nome || "Nome indisponível"
+          : "Organização sem nome"
+      }}
+    </mat-list-option>
+  </mat-selection-list>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!organizacoesList.selectedOptions.selected[0]?.value"
+    (click)="
+      selecionarOrganizacao(organizacoesList.selectedOptions.selected[0]?.value)
+    "
+  >
+    Continuar
+  </button>
+</mat-dialog-actions>

@@ -1,13 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { LoginService } from '../../service/login.service';
-import { AuthService } from 'src/app/shared/service/auth.service';
-import { TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { TranslateModule } from '@ngx-translate/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NavigationEnd, Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { OrganizacaoStateService } from 'src/app/service/organizacao-state.service';
+import { AuthService } from 'src/app/shared/service/auth.service';
+import { LoginService } from '../../service/login.service';
 
 @Component({
   selector: 'app-header',
@@ -22,15 +23,21 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
   ],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   router = inject(Router);
   loginService = inject(LoginService);
   authService = inject(AuthService);
   translate = inject(TranslateService);
+  organizacaoStateService = inject(OrganizacaoStateService);
 
   isLoginScreen = false;
   title = 'Loja XPTO';
+
+  nomeOrganizacao = '';
+  private subscription: Subscription = new Subscription();
+
   nomeUsuario: string | null = localStorage.getItem('nomeUsuario');
+  //nomeOrganizacao: string | null = localStorage.getItem('organizacaoNome');
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -39,12 +46,24 @@ export class HeaderComponent implements OnInit {
       }
     });
 
+    // Inscrever-se para receber atualizações do nome da organização
+    this.subscription.add(
+      this.organizacaoStateService.nomeOrganizacao$.subscribe((nome) => {
+        this.nomeOrganizacao = nome;
+      })
+    );
+
     this.checkAuthorization();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   private limparDadosELogout(): void {
     localStorage.removeItem('Authorization');
     localStorage.removeItem('nomeUsuario');
+    this.organizacaoStateService.limparOrganizacao();
     this.router.navigate(['/login']);
   }
 

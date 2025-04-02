@@ -7,6 +7,9 @@
     <div class="user-info center-screen" *ngIf="nomeUsuario">
       <span> {{ "LABLE_BEM_VINDO" | translate }}, {{ nomeUsuario }}</span>
     </div>
+    <div class="user-info center-screen" *ngIf="nomeOrganizacao">
+      <span> {{ "LABLE_ORGANIZACAO" | translate }}: {{ nomeOrganizacao }}</span>
+    </div>
     <div class="right-side">
       <div class="language-icons">
         <img

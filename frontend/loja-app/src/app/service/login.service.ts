@@ -27,7 +27,11 @@ export class LoginService {
   private apiUrl = environment.apiUrl + '/auth';
 
   // Método getLogin para fazer login
-  getLogin(email: string, senha: string): Observable<LoginResponse> {
+  getLogin(
+    email: string,
+    senha: string,
+    organizacaoId?: number
+  ): Observable<LoginResponse> {
     const url = `${this.apiUrl}/login`;
 
     return this.http.post<LoginResponse>(url, { email, senha }).pipe(
@@ -37,7 +41,8 @@ export class LoginService {
           localStorage.setItem('Authorization', response.authorization);
           localStorage.setItem('nomeUsuario', response.nome || '');
           localStorage.setItem('perfil', response.perfil.toUpperCase() || '');
-          window.location.href = '/home';
+          // Removido o redirecionamento direto para '/home'
+          console.log('Login bem-sucedido. Dados armazenados no localStorage.');
         }
       }),
       catchError((error: HttpErrorResponse) => {

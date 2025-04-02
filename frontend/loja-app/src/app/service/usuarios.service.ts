@@ -1,11 +1,21 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { catchError, firstValueFrom, Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import {
+  catchError,
+  firstValueFrom,
+  Observable,
+  of,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/service/auth.service';
 import { UsuarioResponseDTO } from '../model/usuarioResponseDTO.model';
 import { Usuario } from '../model/usuario.model';
 import { Foto } from '../model/foto.model';
+import { Perfil } from '../model/perfil.model';
+import { TranslateService } from '@ngx-translate/core';
+import { ModalCommunicationService } from './modal-communication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +24,9 @@ import { Foto } from '../model/foto.model';
  * Serviço responsável por realizar a comunicação com a API de usuarios.
  */
 export class UsuariosService {
+  translate = inject(TranslateService);
+  modalService = inject(ModalCommunicationService);
+
   private apiUrl = environment.apiUrl + '/usuario';
   private apiUrlFoto = environment.apiUrl + '/usuario/foto';
   // private usuarios: any[] = [];
@@ -59,14 +72,25 @@ export class UsuariosService {
   }): Promise<UsuarioResponseDTO> {
     const headers = this.authService.getAuthHeaders();
 
+    // Adicionar ao body o idOrganizacao
+    const organizacaoId = localStorage.getItem('organizacaoId');
+    if (!organizacaoId) {
+      throw new Error('ID da organização não encontrado no localStorage');
+    }
+
     // Garantir que params sempre seja um objeto JSON
     const body = { ...params };
 
+    const options = {
+      headers: headers,
+      params: {
+        organizaoId: Number(organizacaoId),
+      },
+    };
+
     try {
       return await firstValueFrom(
-        this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/find`, body, {
-          headers: headers,
-        })
+        this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/find`, body, options)
       );
     } catch (error) {
       console.error('Erro ao buscar usuários:', error);
@@ -331,6 +355,40 @@ export class UsuariosService {
         }
 
         console.error('Erro ao excluir foto do usuário:', errorMessage);
+        return throwError(() => new Error(errorMessage));
+      })
+    );
+  }
+
+  getPerfilUsuario(email: string, senha: string): Observable<Perfil> {
+    const url = `${this.apiUrl}/perfil`;
+
+    return this.http.post<Perfil>(url, { email, senha }).pipe(
+      tap((response: Perfil) => {
+        // Atualiza o localStorage com o authorization
+        if (response.id) {
+          localStorage.setItem('perfilId', response.id.toString());
+          localStorage.setItem('perfilNome', response.nome.toUpperCase() || '');
+          // Removido o redirecionamento direto para '/home'
+          console.log(
+            'Perfil do usuário encontrado. Dados armazenados no localStorage.'
+          );
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // Limpa o localStorage e exibe uma mensagem de erro
+        localStorage.removeItem('perfilId');
+        localStorage.removeItem('perfilNome');
+        this.translate.get('ERRO_LOGIN').subscribe((texto: string) => {
+          this.modalService.abrirModal(texto, 'Erro');
+        });
+        let errorMessage = 'Erro desconhecido ao fazer login';
+        if (error.error instanceof ErrorEvent) {
+          errorMessage = `Erro do lado do cliente: ${error.error.message}`;
+        } else {
+          errorMessage = `Erro do servidor: ${error.status}, mensagem: ${error.message}`;
+        }
+        console.error('Erro:', errorMessage, 'Detalhes:', error);
         return throwError(() => new Error(errorMessage));
       })
     );
