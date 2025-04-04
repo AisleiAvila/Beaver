@@ -72,6 +72,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Método responsável por realizar o login do usuário.
+   * @returns {Promise<void>}
+   */
   async onLogin(): Promise<void> {
     this.isProcessing = true;
 
@@ -109,6 +113,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Método responsável por realizar o login do usuário.
+   * @param {string} email - Email do usuário.
+   * @param {string} senha - Senha do usuário.
+   * @param {number} [oganzacaoId] - ID da organização do usuário.
+   */
   private getLogin(email: string, senha: string, oganzacaoId?: number): void {
     this.loginService.getLogin(email, senha, oganzacaoId).subscribe({
       next: (response) => {
@@ -129,7 +139,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Método responsável por recuperar a senha do usuário.
+   * Método responsável por redirecionar para a tela de recuperação de senha do usuário.
    */
   recuperarSenha(): void {
     this.router.navigate(['/lembrar-senha']);
@@ -146,6 +156,11 @@ export class LoginComponent implements OnInit {
     // }
   }
 
+  /**
+   * Método responsável por obter os dados da organização do usuário.
+   * @param {number} organizacaoId - ID da organização do usuário.
+   * @returns {Promise<void>}
+   */
   async getOrganizacao(organizacaoId: number): Promise<void> {
     // Aqui você pode usar o ID da organização retornado na resposta do login
     // para buscar os dados da organização
@@ -248,6 +263,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Método responsável por exibir o modal de seleção de organização.
+   * @param {OrganizacaoWrapper[]} organizacoes - Lista de organizações.
+   */
   private exibirSelecaoOrganizacao(organizacoes: OrganizacaoWrapper[]): void {
     const dialogRef =
       this.modalService.abrirModalSelecaoOrganizacao(organizacoes);
@@ -329,7 +348,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Validar as credenciais de login
+   * Método responsável por validar as credenciais de login.
    * @returns Verdadeiro se as credenciais são válidas, falso caso contrário
    */
   private validarCredenciais(): boolean {
@@ -343,7 +362,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Exibir mensagem de erro de login
+   * Método responsável por exibir mensagem de erro de login.
    * @param chaveTraducao Chave para tradução da mensagem
    */
   private exibirErroLogin(chaveTraducao: string): void {
@@ -353,7 +372,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Obter o perfil do usuário de forma assíncrona
+   * Método responsável por obter o perfil do usuário de forma assíncrona.
    * @returns Promise com o perfil do usuário
    */
   private async obterPerfil(): Promise<string | null> {
