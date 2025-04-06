@@ -147,6 +147,12 @@ export class MenuComponent implements OnInit {
       action: () => this.navigateToGeolocalizacao(),
       route: '/geolocalizacao',
     },
+    {
+      labelKey: 'TITLE_SERVICO',
+      icon: 'build',
+      action: () => this.navigateToServico(),
+      route: '/servico', // Ensure this route matches the routing configuration
+    },
     // {
     //   label: 'Webcam-Capture',
     //   icon: 'photo_camera',
@@ -229,6 +235,12 @@ export class MenuComponent implements OnInit {
   navigateToGeolocalizacao(): void {
     if (this.isAuthorization()) {
       this.router.navigate(['/geolocalizacao']);
+    }
+  }
+
+  navigateToServico(): void {
+    if (this.isAuthorization()) {
+      this.router.navigate(['/servico']);
     }
   }
 

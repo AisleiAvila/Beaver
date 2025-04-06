@@ -1,0 +1,156 @@
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.service-card {
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #e0f2fe; // Cor de fundo ao passar o mouse
+    border-color: #0284c7; // Cor da borda ao passar o mouse
+  }
+}
+
+.main-container {
+  padding: 24px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 64px);
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.form-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+  margin-bottom: 32px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column; // Garante que os elementos fiquem empilhados
+  gap: 20px;
+  margin-bottom: 16px;
+
+  mat-form-field {
+    flex: 1;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .text-area {
+    display: block; // Garante que o elemento ocupe toda a largura disponível
+    width: 100%; // Ajusta a largura para ocupar todo o espaço disponível
+    max-width: 90%; // Garante que não ultrapasse o tamanho do contêiner
+    box-sizing: border-box; // Inclui padding e borda no cálculo da largura
+    margin: 0; // Remove margens extras
+    padding: 10px; // Adiciona espaçamento interno
+    background-color: white; // Ajusta o fundo para branco
+    border: 1px solid #ccc; // Adiciona uma borda para melhor visualização
+    border-radius: 4px; // Bordas arredondadas
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+
+  button {
+    display: inline-block; // Ajusta o botão para se ajustar ao conteúdo
+    padding: 12px 24px; // Espaçamento interno para o texto e ícone
+    width: auto; // Permite que o botão se ajuste ao conteúdo
+    min-width: calc(100% + 10%); // Adiciona 10% de largura extra ao conteúdo
+    box-sizing: content-box; // Garante que o padding não afete a largura total
+    min-width: 200px; // Define uma largura mínima maior para o botão
+    max-width: 100%; // Garante que o botão não ultrapasse o contêiner
+    padding: 12px 24px; // Ajusta o espaçamento interno para melhorar a aparência
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.button-enabled {
+  background-color: #1e3a8a; // Azul escuro
+  color: #ffffff; // Fonte branca
+  &:hover {
+    background-color: #1d4ed8; // Azul mais claro no hover
+  }
+}
+
+.button-disabled {
+  background-color: #d1d5db; // Cinza claro
+  color: #6b7280; // Fonte cinza
+  cursor: not-allowed;
+}
+
+.align-items {
+  display: flex; // Define o contêiner como flexível
+  align-items: flex-start; // Alinha os itens verticalmente à esquerda
+  gap: 16px; // Adiciona espaçamento horizontal entre os elementos
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // Define três colunas
+  gap: 1.5rem; // Espaçamento entre os itens
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr; // Ajusta para uma coluna em telas menores
+  }
+}
