@@ -21,8 +21,12 @@
 .service-card {
   transition: all 0.3s ease;
   &:hover {
-    background-color: #e0f2fe; // Cor de fundo ao passar o mouse
-    border-color: #0284c7; // Cor da borda ao passar o mouse
+    background-color: #f0f9ff; // Cor de fundo ao passar o mouse
+    border-color: #38bdf8; // Cor da borda ao passar o mouse
+  }
+  &.selected {
+    background-color: #bae6fd; // Cor de fundo mais escura ao clicar
+    border-color: #0284c7; // Cor da borda ao clicar
   }
 }
 
@@ -105,9 +109,8 @@
     width: auto; // Permite que o botão se ajuste ao conteúdo
     min-width: calc(100% + 10%); // Adiciona 10% de largura extra ao conteúdo
     box-sizing: content-box; // Garante que o padding não afete a largura total
-    min-width: 200px; // Define uma largura mínima maior para o botão
     max-width: 100%; // Garante que o botão não ultrapasse o contêiner
-    padding: 12px 24px; // Ajusta o espaçamento interno para melhorar a aparência
+    margin: 16px; // Espaçamento externo ao redor do botão
 
     mat-icon {
       margin-right: 8px;
@@ -126,6 +129,8 @@
 .button-enabled {
   background-color: #1e3a8a; // Azul escuro
   color: #ffffff; // Fonte branca
+  padding: 12px 24px; // Espaçamento interno para o texto e ícone
+  margin: 5px; // Espaçamento externo ao redor do botão
   &:hover {
     background-color: #1d4ed8; // Azul mais claro no hover
   }
@@ -135,6 +140,8 @@
   background-color: #d1d5db; // Cinza claro
   color: #6b7280; // Fonte cinza
   cursor: not-allowed;
+  padding: 12px 24px; // Espaçamento interno para o texto e ícone
+  margin: 5px; // Espaçamento externo ao redor do botão
 }
 
 .align-items {
