@@ -1,6 +1,7 @@
 package infra.security;
 
 import com.dasad.empresa.infra.security.AuthorizationService;
+import com.dasad.empresa.model.OrganizacaoModel;
 import com.dasad.empresa.model.PerfilModel;
 import com.dasad.empresa.model.UsuarioModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,8 +41,12 @@ class AuthorizationServiceTest {
     void testGenerateToken() {
         PerfilModel perfilModel = new PerfilModel();
         perfilModel.setNome("USER");
+        OrganizacaoModel organizacaoModel = new OrganizacaoModel();
+        organizacaoModel.setId(1);
+
         when(usuarioModel.getEmail()).thenReturn("user@example.com");
         when(usuarioModel.getPerfis()).thenReturn(Collections.singletonList(perfilModel));
+        when(usuarioModel.getOrganizacoes()).thenReturn(Collections.singletonList(organizacaoModel));
 
         String token = authorizationService.generateToken(usuarioModel);
 
@@ -50,8 +56,20 @@ class AuthorizationServiceTest {
 
     @Test
     void testGenerateTokenWithoutSecret() {
+        // Configura o mock do usuário para evitar NoSuchElementException
+        PerfilModel perfilModel = new PerfilModel();
+        perfilModel.setNome("USER");
+        OrganizacaoModel organizacaoModel = new OrganizacaoModel();
+        organizacaoModel.setId(1);
+
+        lenient().when(usuarioModel.getEmail()).thenReturn("user@example.com");
+        lenient().when(usuarioModel.getPerfis()).thenReturn(Collections.singletonList(perfilModel));
+        lenient().when(usuarioModel.getOrganizacoes()).thenReturn(Collections.singletonList(organizacaoModel));
+
+        // Configura o campo secret como vazio para forçar a exceção
         ReflectionTestUtils.setField(authorizationService, "secret", "");
 
+        // Verifica se a exceção correta é lançada
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
             authorizationService.generateToken(usuarioModel);
         });
@@ -63,8 +81,12 @@ class AuthorizationServiceTest {
     void testValidateToken() {
         PerfilModel perfilModel = new PerfilModel();
         perfilModel.setNome("USER");
+        OrganizacaoModel organizacaoModel = new OrganizacaoModel();
+        organizacaoModel.setId(1);
+
         when(usuarioModel.getEmail()).thenReturn("user@example.com");
         when(usuarioModel.getPerfis()).thenReturn(Collections.singletonList(perfilModel));
+        when(usuarioModel.getOrganizacoes()).thenReturn(Collections.singletonList(organizacaoModel));
 
         String token = authorizationService.generateToken(usuarioModel);
         String userEmail = authorizationService.validateToken(token);

@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -42,6 +43,10 @@ public class AuthorizationService {
     }
 
     public String generateToken(UsuarioModel usuarioModel) {
+        if (usuarioModel.getPerfis().isEmpty()) {
+            throw new NoSuchElementException("User has no profiles");
+        }
+
         if (!StringUtils.hasText(this.secret)) {
             log.error("Token secret is not configured properly.");
             throw new IllegalStateException("Token secret is not configured properly.");
@@ -56,6 +61,10 @@ public class AuthorizationService {
         List<Integer> organizacoesIds = usuarioModel.getOrganizacoes().stream()
                 .map(OrganizacaoModel::getId)
                 .toList();
+
+        if (organizacoesIds.isEmpty()) {
+            throw new NoSuchElementException("User has no organizations");
+        }
 
         return JWT.create()
                 .withSubject(usuarioModel.getEmail())
