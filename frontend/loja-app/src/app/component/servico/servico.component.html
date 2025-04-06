@@ -88,6 +88,91 @@
             </div>
           </div>
         </div>
+
+        <!-- Step 3: Service Address -->
+        <div *ngIf="currentStep === 3">
+          <div class="form-row align-items">
+            <h3>Informe o endereço onde será realizado o serviço</h3>
+            <input
+              type="text"
+              [(ngModel)]="serviceData.address"
+              class="input-field w-9/10"
+              placeholder="Ex: Rua das Flores, 123, Bairro Jardim, São Paulo - SP"
+            />
+            <label for="street">Rua</label>
+            <input
+              id="street"
+              type="text"
+              [(ngModel)]="serviceData.street"
+              class="input-field w-9/10"
+              placeholder="Rua"
+            />
+            <label for="number">Número</label>
+            <input
+              id="number"
+              type="text"
+              [(ngModel)]="serviceData.number"
+              class="input-field w-9/10"
+              placeholder="Número"
+            />
+            <label for="neighborhood">Bairro</label>
+            <input
+              id="neighborhood"
+              type="text"
+              [(ngModel)]="serviceData.neighborhood"
+              class="input-field w-9/10"
+              placeholder="Bairro"
+            />
+            <label for="city">Cidade</label>
+            <input
+              id="city"
+              type="text"
+              [(ngModel)]="serviceData.city"
+              class="input-field w-9/10"
+              placeholder="Cidade"
+            />
+            <label for="state">Estado</label>
+            <input
+              id="state"
+              type="text"
+              [(ngModel)]="serviceData.state"
+              class="input-field w-9/10"
+              placeholder="Estado"
+            />
+            <label for="zipCode">CEP</label>
+            <input
+              id="zipCode"
+              type="text"
+              [(ngModel)]="serviceData.zipCode"
+              class="input-field w-9/10"
+              placeholder="CEP"
+            />
+          </div>
+
+          <div class="form-action">
+            <button
+              type="button"
+              color="primary"
+              (click)="prevStep()"
+              class="button-enabled"
+            >
+              <i class="fas fa-arrow-left mr-3"></i> Voltar
+            </button>
+            <button
+              type="button"
+              color="primary"
+              (click)="nextStep()"
+              [disabled]="!serviceData.address"
+              class="px-8 py-3 rounded-lg transition flex items-center shadow-md"
+              [ngClass]="{
+                'button-enabled': serviceData.address,
+                'button-disabled': !serviceData.address
+              }"
+            >
+              Próximo <i class="fas fa-arrow-right ml-3"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

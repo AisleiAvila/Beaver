@@ -29,6 +29,8 @@ export class ServicoComponent implements OnInit {
     city: '',
     state: '',
     complement: '',
+    address: '', // Adicionada a propriedade address
+    zipCode: '', // Adiciona a propriedade zipCode
   };
 
   serviceTypes = [
