@@ -153,6 +153,12 @@ export class MenuComponent implements OnInit {
       action: () => this.navigateToServico(),
       route: '/servico', // Ensure this route matches the routing configuration
     },
+    {
+      labelKey: 'TITLE_SERVICO',
+      icon: 'build',
+      action: () => this.navigateToLandingPage(),
+      route: '/servico', // Ensure this route matches the routing configuration
+    },
     // {
     //   label: 'Webcam-Capture',
     //   icon: 'photo_camera',
@@ -241,6 +247,12 @@ export class MenuComponent implements OnInit {
   navigateToServico(): void {
     if (this.isAuthorization()) {
       this.router.navigate(['/servico']);
+    }
+  }
+
+  navigateToLandingPage(): void {
+    if (this.isAuthorization()) {
+      this.router.navigate(['/landingpage']);
     }
   }
 

@@ -1,0 +1,74 @@
+import { Component } from "@angular/core";
+import { faApple, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { TranslateModule } from "@ngx-translate/core";
+
+@Component({
+  selector: "app-hero",
+  standalone: true,
+  imports: [FontAwesomeModule, TranslateModule],
+  template: `
+    <section id="home" class="hero-gradient text-white py-16 md:py-24">
+      <div
+        class="container mx-auto px-4 flex flex-col md:flex-row items-center"
+      >
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            {{ "hero.title" | translate }}
+          </h1>
+          <p class="text-xl mb-8">
+            {{ "hero.subtitle" | translate }}
+          </p>
+          <div
+            class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+          >
+            <a
+              href="#download"
+              class="bg-white text-orange-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-bold text-center transition duration-300"
+            >
+              <div class="flex items-center justify-center">
+                <fa-icon [icon]="faApple" class="mr-2 text-xl"></fa-icon>
+                <div class="text-left">
+                  <div class="text-xs">
+                    {{ "download.appStore" | translate }}
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a
+              href="#download"
+              class="bg-blue-800 hover:bg-blue-900 text-white px-6 py-3 rounded-lg font-bold text-center transition duration-300"
+            >
+              <div class="flex items-center justify-center">
+                <fa-icon [icon]="faGooglePlay" class="mr-2 text-xl"></fa-icon>
+                <div class="text-left">
+                  <div class="text-xs">
+                    {{ "download.playStore" | translate }}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            alt="Happy homeowner"
+            class="rounded-lg shadow-2xl max-w-md w-full"
+          />
+        </div>
+      </div>
+    </section>
+  `,
+  styles: [
+    `
+      .hero-gradient {
+        background: linear-gradient(135deg, #f97316 0%, #78350f 100%);
+      }
+    `,
+  ],
+})
+export class HeroComponent {
+  faApple = faApple;
+  faGooglePlay = faGooglePlay;
+}

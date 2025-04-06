@@ -1,0 +1,146 @@
+{
+  "header": {
+    "home": "Inicio",
+    "howItWorks": "Cómo funciona",
+    "services": "Servicios",
+    "testimonials": "Testimonios",
+    "providers": "Conviértete en proveedor",
+    "download": "Descargar App"
+  },
+  "hero": {
+    "title": "Mantenimiento doméstico simple y rápido, como debe ser",
+    "subtitle": "Te conectamos con profesionales verificados para resolver cualquier problema en tu hogar con facilidad y seguridad.",
+    "downloadAppStore": "Descargar en App Store",
+    "downloadPlayStore": "Obtener en Google Play"
+  },
+  "howItWorks": {
+    "title": "Cómo funciona BeaverFix",
+    "step1": {
+      "title": "1. Descarga la app",
+      "description": "Disponible para iOS y Android. Regístrate en minutos."
+    },
+    "step2": {
+      "title": "2. Describe el servicio",
+      "description": "Cuéntanos lo que necesitas y recibe presupuestos de profesionales."
+    },
+    "step3": {
+      "title": "3. Elige tu profesional",
+      "description": "Perfiles verificados, reseñas reales y precios transparentes."
+    },
+    "step4": {
+      "title": "4. ¡Problema resuelto!",
+      "description": "Agenda y recibe el servicio con garantía de satisfacción."
+    }
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "subtitle": "Todo lo que necesitas para mantener tu hogar en perfectas condiciones",
+    "items": {
+      "electrical": {
+        "title": "Reparaciones Eléctricas",
+        "description": "Instalación de luminarias, reparación de tomas, cambio de disyuntores y más."
+      },
+      "plumbing": {
+        "title": "Servicios de Plomería",
+        "description": "Reparación de fugas, limpieza de desagües, instalación de duchas y grifos."
+      },
+      "furniture": {
+        "title": "Ensamblaje de Muebles",
+        "description": "Armarios, camas, estantes, mesas y cualquier mueble que necesite ensamblaje."
+      },
+      "installations": {
+        "title": "Instalaciones Generales",
+        "description": "Estantes, cuadros, cortinas, televisores, espejos y otros artículos para tu hogar."
+      },
+      "repairs": {
+        "title": "Pequeñas Reparaciones",
+        "description": "Puertas, ventanas, cerraduras, pestillos y otros ajustes necesarios."
+      },
+      "painting": {
+        "title": "Pintura y Jardinería",
+        "description": "Pintura de áreas pequeñas, poda de plantas, limpieza de jardín y más."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Lo que dicen nuestros clientes"
+  },
+  "benefits": {
+    "title": "¿Por qué elegir BeaverFix?",
+    "items": {
+      "fast": {
+        "title": "Rápido",
+        "description": "Servicios agendados en 24 horas en la mayoría de las áreas."
+      },
+      "reliable": {
+        "title": "Confiable",
+        "description": "Todos los profesionales están verificados y calificados."
+      },
+      "fairPrice": {
+        "title": "Precio Justo",
+        "description": "Presupuestos transparentes sin cargos ocultos."
+      },
+      "warranty": {
+        "title": "Garantía",
+        "description": "30 días de garantía en todos los servicios realizados."
+      }
+    }
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "questions": {
+      "howToHire": {
+        "question": "¿Cómo contrato un servicio?",
+        "answer": "¡Es muy simple! Solo descarga nuestra app, crea tu cuenta y describe el servicio que necesitas. Recibirás presupuestos de profesionales calificados en tu área y podrás elegir la mejor opción para ti."
+      },
+      "providerSelection": {
+        "question": "¿Cómo se seleccionan los profesionales?",
+        "answer": "Todos los profesionales pasan por un riguroso proceso de verificación que incluye análisis de documentos, historial profesional y reseñas de clientes anteriores. Además, monitoreamos continuamente el desempeño de cada proveedor."
+      },
+      "warranty": {
+        "question": "¿Cuál es la garantía del servicio?",
+        "answer": "Todos los servicios realizados a través de BeaverFix cuentan con una garantía de 30 días. Si hay algún problema relacionado con el servicio contratado durante este período, mediamos la solución sin costo adicional para ti."
+      },
+      "payment": {
+        "question": "¿Cómo funciona el pago?",
+        "answer": "El pago se realiza de forma segura a través de la app, después de la finalización y tu aprobación del servicio. Puedes pagar con tarjeta de crédito, débito o Pix. El profesional solo recibe el pago después de tu confirmación de satisfacción."
+      },
+      "cancellation": {
+        "question": "¿Puedo cancelar un servicio agendado?",
+        "answer": "Sí, puedes cancelar sin cargo hasta 24 horas antes de la cita. Las cancelaciones con menos de 24 horas de anticipación pueden estar sujetas a una tarifa, según la política del profesional contratado."
+      }
+    }
+  },
+  "download": {
+    "title": "Descarga la app de BeaverFix ahora",
+    "subtitle": "Disponible para iOS y Android. Resuelve los problemas de tu hogar con solo unos toques.",
+    "appStore": "Descargar en App Store",
+    "playStore": "Obtener en Google Play"
+  },
+  "providerForm": {
+    "title": "Regístrate como proveedor de servicios",
+    "fields": {
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "service": "Servicio principal",
+      "message": "Mensaje (opcional)",
+      "submit": "Enviar registro"
+    },
+    "services": {
+      "select": "Selecciona un servicio",
+      "electrical": "Reparaciones Eléctricas",
+      "plumbing": "Servicios de Plomería",
+      "furniture": "Ensamblaje de Muebles",
+      "installations": "Instalaciones Generales",
+      "repairs": "Pequeñas Reparaciones",
+      "painting": "Pintura y Jardinería"
+    }
+  },
+  "footer": {
+    "quickLinks": "Enlaces Rápidos",
+    "contact": "Contacto",
+    "socialMedia": "Redes Sociales",
+    "copyright": "© 2024 BeaverFix. Todos los derechos reservados."
+  }
+}

@@ -1,0 +1,90 @@
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-4">
+      {{ "services.title" | translate }}
+    </h2>
+    <p class="text-gray-600 text-center mb-12">
+      {{ "services.subtitle" | translate }}
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div
+        class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+      >
+        <fa-icon [icon]="faBolt" class="text-4xl text-blue-600 mb-4"></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "services.items.electrical.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "services.items.electrical.description" | translate }}
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+      >
+        <fa-icon [icon]="faWater" class="text-4xl text-blue-600 mb-4"></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "services.items.plumbing.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "services.items.plumbing.description" | translate }}
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+      >
+        <fa-icon [icon]="faCouch" class="text-4xl text-blue-600 mb-4"></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "services.items.furniture.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "services.items.furniture.description" | translate }}
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+      >
+        <fa-icon [icon]="faTools" class="text-4xl text-blue-600 mb-4"></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "services.items.installations.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "services.items.installations.description" | translate }}
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+      >
+        <fa-icon
+          [icon]="faWrench"
+          class="text-4xl text-blue-600 mb-4"
+        ></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "services.items.repairs.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "services.items.repairs.description" | translate }}
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+      >
+        <fa-icon
+          [icon]="faPaintBrush"
+          class="text-4xl text-blue-600 mb-4"
+        ></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "services.items.painting.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "services.items.painting.description" | translate }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

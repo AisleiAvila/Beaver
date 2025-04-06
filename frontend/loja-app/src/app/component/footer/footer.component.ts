@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'; // Supondo que você esteja usando ngx-translate para internacionalização
 
 @Component({
@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core'; // Supondo que você est
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FooterComponent {
   translate = inject(TranslateService);

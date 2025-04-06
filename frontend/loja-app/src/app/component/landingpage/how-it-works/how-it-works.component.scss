@@ -1,0 +1,57 @@
+.how-it-works {
+  @apply py-16 bg-white;
+
+  &__step {
+    @apply text-center p-6 flex flex-col items-center;
+  }
+
+  &__icon {
+    @apply bg-orange-100 rounded-full p-4 mb-4 flex items-center justify-center;
+
+    fa-icon {
+      @apply text-3xl;
+    }
+
+    &.step1 {
+      @apply bg-orange-100;
+      fa-icon {
+        @apply text-orange-600 text-4xl;
+      }
+    }
+
+    &.step2 {
+      @apply bg-blue-100;
+      fa-icon {
+        @apply text-blue-600;
+        transform: rotate(-45deg) scale(1.2);
+      }
+    }
+
+    &.step3 {
+      @apply bg-amber-100;
+      fa-icon {
+        @apply text-amber-600;
+      }
+    }
+
+    &.step4 {
+      @apply bg-emerald-100;
+      fa-icon {
+        @apply text-emerald-600;
+      }
+    }
+  }
+
+  &__title {
+    @apply text-xl font-semibold mb-2 text-gray-800;
+
+    &::before {
+      content: attr(data-number);
+      @apply mr-2;
+    }
+  }
+
+  &__description {
+    @apply text-gray-600 text-base;
+  }
+}

@@ -1,0 +1,19 @@
+.providers {
+  @apply py-16 bg-white;
+
+  &__card {
+    @apply bg-white rounded-lg shadow-md p-6 text-center transition-transform duration-300 hover:transform hover:scale-105;
+  }
+
+  &__icon {
+    @apply text-4xl text-blue-600 mb-4;
+  }
+
+  &__title {
+    @apply text-xl font-semibold mb-2 text-gray-800;
+  }
+
+  &__description {
+    @apply text-gray-600;
+  }
+}

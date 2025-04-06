@@ -1,0 +1,31 @@
+<section id="download" class="download-section">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-4">{{ "download.title" | translate }}</h2>
+    <p class="text-xl mb-8 max-w-2xl mx-auto">
+      {{ "download.subtitle" | translate }}
+    </p>
+
+    <div
+      class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6"
+    >
+      <a href="#" class="download-button download-button--app-store">
+        <div class="flex items-center justify-center">
+          <fa-icon [icon]="faApple" class="mr-2 text-xl"></fa-icon>
+          <div class="text-left">
+            <div class="text-xs">{{ "download.appStore" | translate }}</div>
+            <div>App Store</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="download-button download-button--play-store">
+        <div class="flex items-center justify-center">
+          <fa-icon [icon]="faGooglePlay" class="mr-2 text-xl"></fa-icon>
+          <div class="text-left">
+            <div class="text-xs">{{ "download.playStore" | translate }}</div>
+            <div>Google Play</div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>

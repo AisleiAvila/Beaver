@@ -22,6 +22,7 @@ import { TermsComponent } from './component/terms/terms.component';
 import { CadastroUsuarioComponent } from './component/usuarios/cadastro-usuario/cadastro-usuario.component';
 import { UsuariosComponent } from './component/usuarios/usuarios.component';
 import { ServicoComponent } from './component/servico/servico.component';
+import { LandingPageComponent } from './component/landingpage/landingpage.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -50,6 +51,7 @@ export const routes: Routes = [
   { path: 'agendamento', component: AgendamentoComponent },
   { path: 'geolocalizacao', component: GeolocalizacaoComponent },
   { path: 'servico', component: ServicoComponent },
+  { path: 'landingpage', component: LandingPageComponent },
   // { path: 'webcam-capture', component: WebcamCaptureComponent },
   { path: '**', redirectTo: '/home' },
 ];

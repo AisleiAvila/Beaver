@@ -38,6 +38,7 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { GeolocalizacaoService } from './services/geolocalizacao.service';
@@ -103,6 +104,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       defaultLanguage: 'pt-BR',
     }),
+
+    FontAwesomeModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

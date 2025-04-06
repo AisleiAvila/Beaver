@@ -1,0 +1,101 @@
+<section class="provider-form">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">
+      {{ "providerForm.title" | translate }}
+    </h2>
+
+    <div class="max-w-2xl mx-auto">
+      <form class="space-y-6" (ngSubmit)="onSubmit()">
+        <div class="provider-form__field">
+          <label class="provider-form__label">
+            <fa-icon [icon]="faUser" class="mr-2"></fa-icon>
+            {{ "providerForm.fields.name" | translate }}
+          </label>
+          <input
+            type="text"
+            [(ngModel)]="formData.name"
+            name="name"
+            class="provider-form__input"
+            required
+          />
+        </div>
+
+        <div class="provider-form__field">
+          <label class="provider-form__label">
+            <fa-icon [icon]="faEnvelope" class="mr-2"></fa-icon>
+            {{ "providerForm.fields.email" | translate }}
+          </label>
+          <input
+            type="email"
+            [(ngModel)]="formData.email"
+            name="email"
+            class="provider-form__input"
+            required
+          />
+        </div>
+
+        <div class="provider-form__field">
+          <label class="provider-form__label">
+            <fa-icon [icon]="faPhone" class="mr-2"></fa-icon>
+            {{ "providerForm.fields.phone" | translate }}
+          </label>
+          <input
+            type="tel"
+            [(ngModel)]="formData.phone"
+            name="phone"
+            class="provider-form__input"
+            required
+          />
+        </div>
+
+        <div class="provider-form__field">
+          <label class="provider-form__label">
+            <fa-icon [icon]="faBriefcase" class="mr-2"></fa-icon>
+            {{ "providerForm.fields.service" | translate }}
+          </label>
+          <select
+            [(ngModel)]="formData.service"
+            name="service"
+            class="provider-form__input"
+            required
+          >
+            <option value="">
+              {{ "providerForm.services.select" | translate }}
+            </option>
+            <option value="electrical">
+              {{ "providerForm.services.electrical" | translate }}
+            </option>
+            <option value="plumbing">
+              {{ "providerForm.services.plumbing" | translate }}
+            </option>
+            <option value="furniture">
+              {{ "providerForm.services.furniture" | translate }}
+            </option>
+            <option value="installations">
+              {{ "providerForm.services.installations" | translate }}
+            </option>
+            <option value="repairs">
+              {{ "providerForm.services.repairs" | translate }}
+            </option>
+            <option value="painting">
+              {{ "providerForm.services.painting" | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="provider-form__field">
+          <label class="provider-form__label">
+            {{ "providerForm.fields.message" | translate }}
+          </label>
+          <textarea rows="4" class="provider-form__input" required></textarea>
+        </div>
+
+        <div>
+          <button type="submit" class="provider-form__submit-btn">
+            {{ "providerForm.fields.submit" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

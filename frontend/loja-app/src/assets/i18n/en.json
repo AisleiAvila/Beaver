@@ -167,5 +167,203 @@
   "TITLE_USUARIOS": "Users",
   "TITLE_WEBCAM_CAPTURE": "Webcam Capture",
   "LABLE_HOME": "Home",
-  "TITLE_USUARIOS_ATIVOS": "Active Users"
+  "TITLE_USUARIOS_ATIVOS": "Active Users",
+
+  "header": {
+    "home": "Início",
+    "howItWorks": "Como funciona",
+    "services": "Serviços",
+    "testimonials": "Depoimentos",
+    "providers": "Profissionais",
+    "download": "Baixar App",
+    "login": "Entrar",
+    "language": "Idioma"
+  },
+  "hero": {
+    "title": "Manutenções domésticas simples e rápidas, como deve ser.",
+    "subtitle": "Conectamos você com os melhores profissionais da sua região.",
+    "downloadButton": "Baixar o app"
+  },
+  "howItWorks": {
+    "title": "Como o BeaverFix funciona",
+    "step1": {
+      "title": "Baixe o app",
+      "description": "Disponível para iOS e Android. Cadastre-se em minutos."
+    },
+    "step2": {
+      "title": "Descreva o serviço",
+      "description": "Informe o que precisa e receba orçamentos de profissionais."
+    },
+    "step3": {
+      "title": "Escolha seu profissional",
+      "description": "Perfis verificados, avaliações reais e preços transparentes."
+    },
+    "step4": {
+      "title": "Problema resolvido!",
+      "description": "Agende e receba o serviço com garantia de satisfação."
+    }
+  },
+  "services": {
+    "title": "Nossos Serviços",
+    "subtitle": "Oferecemos uma ampla variedade de serviços para sua casa, todos realizados por profissionais qualificados e verificados.",
+    "items": {
+      "electrical": {
+        "title": "Reparos Elétricos",
+        "description": "Instalações, reparos e manutenção elétrica"
+      },
+      "plumbing": {
+        "title": "Encanamento",
+        "description": "Reparos e instalações hidráulicas"
+      },
+      "furniture": {
+        "title": "Montagem de Móveis",
+        "description": "Montagem e desmontagem de móveis"
+      },
+      "installations": {
+        "title": "Instalações",
+        "description": "Instalação de equipamentos e acessórios"
+      },
+      "repairs": {
+        "title": "Reparos Gerais",
+        "description": "Diversos tipos de reparos domésticos"
+      },
+      "painting": {
+        "title": "Pintura",
+        "description": "Serviços de pintura residencial"
+      }
+    }
+  },
+  "testimonials": {
+    "title": "O que nossos clientes dizem",
+    "items": {
+      "testimonial1": {
+        "quote": "Excelente serviço! O profissional foi pontual e muito competente.",
+        "author": "Ana Silva"
+      },
+      "testimonial2": {
+        "quote": "Preço justo e trabalho de qualidade. Recomendo!",
+        "author": "Pedro Medeiros"
+      },
+      "testimonial3": {
+        "quote": "Muito prático e rápido. Vou usar sempre!",
+        "author": "Maria Oliveira"
+      }
+    }
+  },
+  "benefits": {
+    "title": "Por que escolher o BeaverFix?",
+    "items": {
+      "security": {
+        "title": "Segurança",
+        "description": "Profissionais verificados e avaliados"
+      },
+      "speed": {
+        "title": "Rapidez",
+        "description": "Serviços agendados em até 24 horas"
+      },
+      "quality": {
+        "title": "Qualidade",
+        "description": "Garantia de 30 dias em todos os serviços"
+      },
+      "price": {
+        "title": "Preço Justo",
+        "description": "Orçamentos transparentes sem cobranças ocultas"
+      }
+    }
+  },
+  "providers": {
+    "title": "Nossos Profissionais",
+    "items": {
+      "electrician": {
+        "description": "Eletricista com mais de 10 anos de experiência",
+        "price": "A partir de R$ 80"
+      },
+      "plumber": {
+        "description": "Encanador especializado em reparos de emergência",
+        "price": "A partir de R$ 100"
+      },
+      "painter": {
+        "description": "Pintor profissional com vasta experiência",
+        "price": "A partir de R$ 60"
+      }
+    },
+    "contactButton": "Contatar"
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "questions": {
+      "howToHire": {
+        "question": "Como faço para contratar um serviço?",
+        "answer": "É muito simples! Basta baixar nosso app, criar sua conta e descrever o serviço que precisa. Você receberá orçamentos de profissionais qualificados na sua região e poderá escolher a melhor opção para você."
+      },
+      "providerSelection": {
+        "question": "Como os profissionais são selecionados?",
+        "answer": "Todos os profissionais passam por um rigoroso processo de verificação que inclui análise de documentos, histórico profissional e avaliações de clientes anteriores. Além disso, monitoramos continuamente o desempenho de cada prestador."
+      },
+      "warranty": {
+        "question": "Qual a garantia dos serviços?",
+        "answer": "Todos os serviços realizados através do BeaverFix têm garantia de 30 dias. Se houver qualquer problema relacionado ao serviço contratado dentro deste período, nós intermediaremos a solução sem custo adicional para você."
+      },
+      "payment": {
+        "question": "Como funciona o pagamento?",
+        "answer": "O pagamento é feito de forma segura através do app, após a conclusão e sua aprovação do serviço. Você pode pagar com cartão de crédito, débito ou Pix. O profissional só recebe após sua confirmação de satisfação."
+      },
+      "cancellation": {
+        "question": "Posso cancelar um serviço agendado?",
+        "answer": "Sim, você pode cancelar sem custo até 24 horas antes do agendamento. Cancelamentos com menos de 24 horas podem estar sujeitos a uma taxa, dependendo da política do profissional contratado."
+      }
+    }
+  },
+  "download": {
+    "title": "Baixe o app agora",
+    "subtitle": "Disponível para iOS e Android",
+    "appStore": "Baixar na App Store",
+    "playStore": "Baixar no Google Play"
+  },
+  "providerForm": {
+    "title": "Cadastre-se como prestador de serviços",
+    "fields": {
+      "name": "Nome completo",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "service": "Serviço principal",
+      "message": "Mensagem (opcional)"
+    },
+    "services": {
+      "electrical": "Reparos Elétricos",
+      "plumbing": "Encanamento",
+      "furniture": "Montagem de Móveis",
+      "installations": "Instalações",
+      "repairs": "Reparos Gerais",
+      "painting": "Pintura"
+    },
+    "submit": "Enviar cadastro"
+  },
+  "footer": {
+    "title": "BeaverFix",
+    "description": "Conectando você com os melhores profissionais para serviços domésticos.",
+    "quickLinks": {
+      "title": "Links Rápidos",
+      "home": "Início",
+      "howItWorks": "Como funciona",
+      "services": "Serviços",
+      "testimonials": "Depoimentos",
+      "providers": "Profissionais",
+      "contact": "Contato"
+    },
+    "contact": {
+      "title": "Contato",
+      "email": "aislei@outlook.com.br",
+      "phone": "+351 96000-3323",
+      "address": "Setúbal, PT"
+    },
+    "social": {
+      "title": "Redes Sociais",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn"
+    },
+    "copyright": "© 2024 BeaverFix. Todos os direitos reservados."
+  }
 }

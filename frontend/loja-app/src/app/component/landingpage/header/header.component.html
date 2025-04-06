@@ -1,0 +1,182 @@
+<header class="bg-white shadow-md">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <a href="/" class="flex items-center">
+        <img src="assets/images/logo.png" alt="BeaverFix Logo" class="h-8" />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="/" class="text-gray-700 hover:text-blue-600">{{
+          "header.home" | translate
+        }}</a>
+        <a href="/how-it-works" class="text-gray-700 hover:text-blue-600">{{
+          "header.howItWorks" | translate
+        }}</a>
+        <a href="/services" class="text-gray-700 hover:text-blue-600">{{
+          "header.services" | translate
+        }}</a>
+        <a href="/testimonials" class="text-gray-700 hover:text-blue-600">{{
+          "header.testimonials" | translate
+        }}</a>
+        <a href="/providers" class="text-gray-700 hover:text-blue-600">{{
+          "header.providers" | translate
+        }}</a>
+
+        <!-- Language Selector -->
+        <div class="relative group">
+          <button class="flex items-center text-gray-700 hover:text-blue-600">
+            <fa-icon [icon]="faGlobe" class="mr-2"></fa-icon>
+            {{ "header.language" | translate }}
+            <fa-icon [icon]="faChevronDown" class="ml-1"></fa-icon>
+          </button>
+          <div
+            class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block"
+          >
+            <button
+              (click)="translationService.setLanguage('pt')"
+              class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              Português
+            </button>
+            <button
+              (click)="translationService.setLanguage('en')"
+              class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              English
+            </button>
+            <button
+              (click)="translationService.setLanguage('es')"
+              class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              Español
+            </button>
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <a
+          href="/login"
+          class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700"
+        >
+          {{ "header.login" | translate }}
+        </a>
+
+        <!-- Download Button -->
+        <div class="relative group">
+          <button class="flex items-center text-gray-700 hover:text-blue-600">
+            {{ "header.download" | translate }}
+            <fa-icon [icon]="faChevronDown" class="ml-1"></fa-icon>
+          </button>
+          <div
+            class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block"
+          >
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              <fa-icon [icon]="faApple" class="mr-2"></fa-icon>
+              App Store
+            </a>
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              <fa-icon [icon]="faGooglePlay" class="mr-2"></fa-icon>
+              Google Play
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden" (click)="toggleMobileMenu()">
+        <fa-icon [icon]="faBars" class="text-2xl text-gray-700"></fa-icon>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="md:hidden" [class.hidden]="!isMobileMenuOpen">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a href="/" class="block px-3 py-2 text-gray-700 hover:text-blue-600">{{
+          "header.home" | translate
+        }}</a>
+        <a
+          href="/how-it-works"
+          class="block px-3 py-2 text-gray-700 hover:text-blue-600"
+          >{{ "header.howItWorks" | translate }}</a
+        >
+        <a
+          href="/services"
+          class="block px-3 py-2 text-gray-700 hover:text-blue-600"
+          >{{ "header.services" | translate }}</a
+        >
+        <a
+          href="/testimonials"
+          class="block px-3 py-2 text-gray-700 hover:text-blue-600"
+          >{{ "header.testimonials" | translate }}</a
+        >
+        <a
+          href="/providers"
+          class="block px-3 py-2 text-gray-700 hover:text-blue-600"
+          >{{ "header.providers" | translate }}</a
+        >
+        <a
+          href="/login"
+          class="block px-3 py-2 text-gray-700 hover:text-blue-600"
+          >{{ "header.login" | translate }}</a
+        >
+        <div class="px-3 py-2">
+          <button class="flex items-center text-gray-700 hover:text-blue-600">
+            <fa-icon [icon]="faGlobe" class="mr-2"></fa-icon>
+            {{ "header.language" | translate }}
+            <fa-icon [icon]="faChevronDown" class="ml-1"></fa-icon>
+          </button>
+          <div class="mt-2 space-y-1">
+            <button
+              (click)="translationService.setLanguage('pt')"
+              class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              Português
+            </button>
+            <button
+              (click)="translationService.setLanguage('en')"
+              class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              English
+            </button>
+            <button
+              (click)="translationService.setLanguage('es')"
+              class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              Español
+            </button>
+          </div>
+        </div>
+        <div class="px-3 py-2">
+          <button class="flex items-center text-gray-700 hover:text-blue-600">
+            {{ "header.download" | translate }}
+            <fa-icon [icon]="faChevronDown" class="ml-1"></fa-icon>
+          </button>
+          <div class="mt-2 space-y-1">
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              <fa-icon [icon]="faApple" class="mr-2"></fa-icon>
+              App Store
+            </a>
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              <fa-icon [icon]="faGooglePlay" class="mr-2"></fa-icon>
+              Google Play
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,54 @@
+// Estilos específicos do header
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  // Animação do menu mobile
+  .mobile-menu {
+    transition: all 0.3s ease-in-out;
+  }
+
+  // Estilos dos dropdowns
+  .group {
+    &:hover {
+      .group-hover\:block {
+        display: block;
+      }
+    }
+  }
+
+  // Estilos dos botões
+  button {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  // Estilos dos links
+  a {
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #2563eb; // blue-600
+    }
+  }
+
+  // Estilos do logo
+  img {
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  // Estilos do menu mobile
+  @media (max-width: 768px) {
+    .mobile-menu {
+      background-color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">
+      {{ "benefits.title" | translate }}
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="text-center">
+        <fa-icon
+          [icon]="faShieldAlt"
+          class="text-4xl text-blue-600 mb-4"
+        ></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "benefits.items.security.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "benefits.items.security.description" | translate }}
+        </p>
+      </div>
+
+      <div class="text-center">
+        <fa-icon [icon]="faClock" class="text-4xl text-blue-600 mb-4"></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "benefits.items.speed.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "benefits.items.speed.description" | translate }}
+        </p>
+      </div>
+
+      <div class="text-center">
+        <fa-icon
+          [icon]="faUserCheck"
+          class="text-4xl text-blue-600 mb-4"
+        ></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "benefits.items.quality.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "benefits.items.quality.description" | translate }}
+        </p>
+      </div>
+
+      <div class="text-center">
+        <fa-icon
+          [icon]="faHandHoldingUsd"
+          class="text-4xl text-blue-600 mb-4"
+        ></fa-icon>
+        <h3 class="text-xl font-semibold mb-2">
+          {{ "benefits.items.price.title" | translate }}
+        </h3>
+        <p class="text-gray-600">
+          {{ "benefits.items.price.description" | translate }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
