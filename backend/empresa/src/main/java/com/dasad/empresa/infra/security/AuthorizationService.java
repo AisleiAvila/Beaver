@@ -24,14 +24,36 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+/**
+ * Serviço responsável pela gestão de autorizações e tokens JWT.
+ *
+ * Esta classe gerencia o ciclo de vida completo dos tokens:
+ * - Geração de tokens JWT para usuários autenticados
+ * - Validação de tokens recebidos
+ * - Revogação de tokens quando necessário
+ *
+ * O serviço utiliza o algoritmo HMAC512 para assinatura e verificação
+ * dos tokens, garantindo a integridade e autenticidade dos mesmos.
+ */
 @Service
 @Log4j2
 public class AuthorizationService {
-    private static final long JWT_EXPIRATION = 2L * 60 * 60 * 1000; // 2 hours in milliseconds // 2 hours in milliseconds
+    /**
+     * Tempo de expiração do token JWT (2 horas em milissegundos).
+     */
+    private static final long JWT_EXPIRATION = 2L * 60 * 60 * 1000;
 
+    /**
+     * Chave secreta usada para assinar os tokens JWT.
+     * Obtida a partir de configurações externas.
+     */
     @Value("${api.security.token.secret}")
     private String secret;
 
+    /**
+     * Conjunto de tokens revogados.
+     * Tokens neste conjunto serão considerados inválidos mesmo antes de sua expiração.
+     */
     private final Set<String> revokedTokens = new HashSet<>();
 
     /**
@@ -42,29 +64,23 @@ public class AuthorizationService {
         // Construtor padrão necessário para injeção de dependências
     }
 
+    /**
+     * Gera um token JWT para o usuário especificado.
+     *
+     * O token contém informações do usuário como email, ID, nome, perfil,
+     * organização e permissões (roles).
+     *
+     * @param usuarioModel O modelo de usuário para o qual o token será gerado
+     * @return O token JWT gerado como string
+     * @throws NoSuchElementException Se o usuário não possui perfis ou organizações
+     * @throws IllegalStateException Se a chave secreta não estiver configurada
+     */
     public String generateToken(UsuarioModel usuarioModel) {
-        if (usuarioModel.getPerfis().isEmpty()) {
-            throw new NoSuchElementException("User has no profiles");
-        }
+        hasPerfil(usuarioModel);
+        hasTokenSecret();
 
-        if (!StringUtils.hasText(this.secret)) {
-            log.error("Token secret is not configured properly.");
-            throw new IllegalStateException("Token secret is not configured properly.");
-        }
-
-        List<String> roles = usuarioModel.getPerfis().stream()
-                .map(PerfilModel::getNome)
-                .toList();
-        String rolesString = String.join(",", roles);
-
-        // Extrair IDs das organizações
-        List<Integer> organizacoesIds = usuarioModel.getOrganizacoes().stream()
-                .map(OrganizacaoModel::getId)
-                .toList();
-
-        if (organizacoesIds.isEmpty()) {
-            throw new NoSuchElementException("User has no organizations");
-        }
+        var rolesString = getRolesString(usuarioModel);
+        var organizacoesIds = getOrganizacoesIds(usuarioModel);
 
         return JWT.create()
                 .withSubject(usuarioModel.getEmail())
@@ -78,8 +94,72 @@ public class AuthorizationService {
                 .sign(Algorithm.HMAC512(this.secret.getBytes()));
     }
 
-    public String validateToken(String token) {
+    /**
+     * Obtém a lista de IDs das organizações associadas ao usuário.
+     *
+     * @param usuarioModel O modelo de usuário
+     * @return Lista de IDs das organizações
+     * @throws NoSuchElementException Se o usuário não possui organizações
+     */
+    private static List<Integer> getOrganizacoesIds(UsuarioModel usuarioModel) {
+        // Extrair IDs das organizações
+        List<Integer> organizacoesIds = usuarioModel.getOrganizacoes().stream()
+                .map(OrganizacaoModel::getId)
+                .toList();
 
+        if (organizacoesIds.isEmpty()) {
+            throw new NoSuchElementException("User has no organizations");
+        }
+        return organizacoesIds;
+    }
+
+    /**
+     * Obtém uma string contendo as roles (perfis) do usuário, separadas por vírgula.
+     *
+     * @param usuarioModel O modelo de usuário
+     * @return String com as roles separadas por vírgula
+     */
+    private static String getRolesString(UsuarioModel usuarioModel) {
+        List<String> roles = usuarioModel.getPerfis().stream()
+                .map(PerfilModel::getNome)
+                .toList();
+        return String.join(",", roles);
+    }
+
+    /**
+     * Verifica se a chave secreta foi configurada adequadamente.
+     *
+     * @throws IllegalStateException Se a chave secreta não estiver configurada
+     */
+    private void hasTokenSecret() {
+        if (!StringUtils.hasText(this.secret)) {
+            log.error("Token secret is not configured properly.");
+            throw new IllegalStateException("Token secret is not configured properly.");
+        }
+    }
+
+    /**
+     * Verifica se o usuário possui ao menos um perfil associado.
+     *
+     * @param usuarioModel O modelo de usuário
+     * @throws NoSuchElementException Se o usuário não possui perfis
+     */
+    private static void hasPerfil(UsuarioModel usuarioModel) {
+        if (usuarioModel.getPerfis().isEmpty()) {
+            throw new NoSuchElementException("User has no profiles");
+        }
+    }
+
+    /**
+     * Valida um token JWT e configura a autenticação no contexto de segurança.
+     *
+     * Este método verifica a integridade e validade do token, extraindo informações
+     * do usuário e suas permissões para configurar o SecurityContext.
+     *
+     * @param token O token JWT a ser validado
+     * @return O email do usuário se o token for válido, ou null caso contrário
+     */
+    public String validateToken(String token) {
         if (!StringUtils.hasText(token)) {
             log.error("Token inexistente ");
             return null;
@@ -121,9 +201,13 @@ public class AuthorizationService {
         }
     }
 
+    /**
+     * Revoga um token, impedindo seu uso futuro mesmo antes da expiração.
+     *
+     * @param token O token JWT a ser revogado
+     */
     public void revokeToken(String token) {
         log.info("Revogando token");
         revokedTokens.add(token);
     }
-
 }
