@@ -23,7 +23,7 @@ import {
   Coordenadas,
   GeolocalizacaoService,
   ResultadoGeocodificacao,
-} from '../../services/geolocalizacao.service';
+} from '../../service/geolocalizacao.service';
 
 @Component({
   selector: 'app-geolocalizacao',

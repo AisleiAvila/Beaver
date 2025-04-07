@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
   catchError,
@@ -363,7 +367,11 @@ export class UsuariosService {
   getPerfilUsuario(email: string, senha: string): Observable<Perfil> {
     const url = `${this.apiUrl}/perfil`;
 
-    return this.http.post<Perfil>(url, { email, senha }).pipe(
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.post<Perfil>(url, { email, senha }, { headers }).pipe(
       tap((response: Perfil) => {
         // Atualiza o localStorage com o authorization
         if (response.id) {

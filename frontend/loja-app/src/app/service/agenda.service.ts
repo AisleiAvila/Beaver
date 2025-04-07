@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Agendamento } from '../models/agendamento.model';
+import { Agendamento } from '../model/agendamentos.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

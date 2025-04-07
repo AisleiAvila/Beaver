@@ -2,7 +2,7 @@ import { Cliente } from './cliente.model';
 import { Servico } from './servico.model';
 import { Profissional } from './profissional.model';
 
-export interface Agendamento {
+export interface Agendamentos {
   id?: number;
   data: string;
   hora: string;

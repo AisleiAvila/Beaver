@@ -25,7 +25,7 @@ import { ServicoComponent } from './component/servico/servico.component';
 import { LandingPageComponent } from './component/landingpage/landingpage.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/landingpage', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomePageComponent },
   { path: 'usuarios', component: UsuariosComponent },
@@ -52,8 +52,7 @@ export const routes: Routes = [
   { path: 'geolocalizacao', component: GeolocalizacaoComponent },
   { path: 'servico', component: ServicoComponent },
   { path: 'landingpage', component: LandingPageComponent },
-  // { path: 'webcam-capture', component: WebcamCaptureComponent },
-  { path: '**', redirectTo: '/home' },
+  { path: '**', redirectTo: '/landingpage' },
 ];
 
 @NgModule({

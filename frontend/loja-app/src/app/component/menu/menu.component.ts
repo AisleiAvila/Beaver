@@ -157,7 +157,7 @@ export class MenuComponent implements OnInit {
       labelKey: 'TITLE_SERVICO',
       icon: 'build',
       action: () => this.navigateToLandingPage(),
-      route: '/servico', // Ensure this route matches the routing configuration
+      route: '/landingpage', // Ensure this route matches the routing configuration
     },
     // {
     //   label: 'Webcam-Capture',
@@ -170,7 +170,8 @@ export class MenuComponent implements OnInit {
   home(): void {
     const authorization = localStorage.getItem('Authorization');
     if (!authorization) {
-      this.router.navigate(['/login']);
+      // this.router.navigate(['/login']);
+      this.router.navigate(['/landingpage']);
       return;
     }
 

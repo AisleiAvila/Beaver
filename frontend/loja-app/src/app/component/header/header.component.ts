@@ -95,13 +95,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.router.url === '/lembrar-senha') {
       this.isLoginScreen = true;
     } else if (!authorization && this.router.url !== '/lembrar-senha') {
-      this.navigateToLogin();
+      this.navigateToLandingpage();
     }
   }
 
-  navigateToLogin(): void {
+  navigateToLandingpage(): void {
     localStorage.removeItem('navigateToLogin');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/landingpage']);
   }
 
   changeLanguage(lang: string) {

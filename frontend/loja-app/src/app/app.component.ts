@@ -31,20 +31,6 @@ export class AppComponent {
   isLoginScreen = false;
   isExpanded = false;
 
-  // constructor() {
-  //   // Definir idioma padrão
-  //   this.translate.setDefaultLang('pt');
-
-  //   // Usar idioma padrão
-  //   this.translate.use('pt');
-
-  //   this.router.events.subscribe((event) => {
-  //     if (event instanceof NavigationEnd) {
-  //       this.isLoginScreen = this.router.url === '/login';
-  //     }
-  //   });
-  // }
-
   // Inicializador que substitui o constructor
   private initialize = (() => {
     // Definir idioma padrão
@@ -53,8 +39,14 @@ export class AppComponent {
     // Usar idioma padrão
     this.translate.use('pt');
 
+    // Redirecionar para a landing page ao iniciar
+    if (this.router.url === '/') {
+      this.router.navigate(['/landingpage']);
+    }
+
+    // Monitorar eventos de navegação do Angular Router
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd)) // Filtrar apenas eventos de navegação concluída
       .subscribe((event) => {
         if (event instanceof NavigationEnd) {
           this.isLoginScreen = this.router.url === '/login';

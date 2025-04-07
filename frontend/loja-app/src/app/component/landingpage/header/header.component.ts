@@ -1,17 +1,17 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 import {
   faGlobe,
   faBars,
   faChevronDown,
   faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import { faApple, faGooglePlay } from "@fortawesome/free-brands-svg-icons";
-import { TranslationService } from "../../../services/translation.service";
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { TranslateModule } from "@ngx-translate/core";
+} from '@fortawesome/free-solid-svg-icons';
+import { faApple, faGooglePlay } from '@fortawesome/free-brands-svg-icons';
+import { TranslationService } from '../../../service/translation.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: "app-header",
+  selector: 'app-header',
   standalone: true,
   imports: [FontAwesomeModule, TranslateModule],
   template: `
@@ -24,22 +24,22 @@ import { TranslateModule } from "@ngx-translate/core";
 
           <div class="hidden md:flex items-center space-x-8">
             <a href="#" class="text-gray-600 hover:text-blue-600">{{
-              "header.home" | translate
+              'header.home' | translate
             }}</a>
             <a href="#" class="text-gray-600 hover:text-blue-600">{{
-              "header.howItWorks" | translate
+              'header.howItWorks' | translate
             }}</a>
             <a href="#" class="text-gray-600 hover:text-blue-600">{{
-              "header.services" | translate
+              'header.services' | translate
             }}</a>
             <a href="#" class="text-gray-600 hover:text-blue-600">{{
-              "header.testimonials" | translate
+              'header.testimonials' | translate
             }}</a>
             <a href="#" class="text-gray-600 hover:text-blue-600">{{
-              "header.providers" | translate
+              'header.providers' | translate
             }}</a>
             <a href="#" class="text-gray-600 hover:text-blue-600">{{
-              "header.download" | translate
+              'header.download' | translate
             }}</a>
           </div>
 
@@ -77,7 +77,7 @@ import { TranslateModule } from "@ngx-translate/core";
               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               <fa-icon [icon]="faUser" class="mr-2"></fa-icon>
-              {{ "header.login" | translate }}
+              {{ 'header.login' | translate }}
             </a>
           </div>
 
@@ -96,44 +96,44 @@ import { TranslateModule } from "@ngx-translate/core";
             <a
               href="#"
               class="block px-3 py-2 text-gray-600 hover:text-blue-600"
-              >{{ "header.home" | translate }}</a
+              >{{ 'header.home' | translate }}</a
             >
             <a
               href="#"
               class="block px-3 py-2 text-gray-600 hover:text-blue-600"
-              >{{ "header.howItWorks" | translate }}</a
+              >{{ 'header.howItWorks' | translate }}</a
             >
             <a
               href="#"
               class="block px-3 py-2 text-gray-600 hover:text-blue-600"
-              >{{ "header.services" | translate }}</a
+              >{{ 'header.services' | translate }}</a
             >
             <a
               href="#"
               class="block px-3 py-2 text-gray-600 hover:text-blue-600"
-              >{{ "header.testimonials" | translate }}</a
+              >{{ 'header.testimonials' | translate }}</a
             >
             <a
               href="#"
               class="block px-3 py-2 text-gray-600 hover:text-blue-600"
-              >{{ "header.providers" | translate }}</a
+              >{{ 'header.providers' | translate }}</a
             >
             <a
               href="#"
               class="block px-3 py-2 text-gray-600 hover:text-blue-600"
-              >{{ "header.download" | translate }}</a
+              >{{ 'header.download' | translate }}</a
             >
             <a
               href="#"
               class="block px-3 py-2 text-gray-600 hover:text-blue-600"
-              >{{ "header.login" | translate }}</a
+              >{{ 'header.login' | translate }}</a
             >
             <div class="px-3 py-2">
               <button
                 class="flex items-center text-gray-600 hover:text-blue-600"
               >
                 <fa-icon [icon]="faGlobe" class="mr-2"></fa-icon>
-                <span>{{ "header.language" | translate }}</span>
+                <span>{{ 'header.language' | translate }}</span>
                 <fa-icon [icon]="faChevronDown" class="ml-2"></fa-icon>
               </button>
               <div class="mt-2 space-y-1">

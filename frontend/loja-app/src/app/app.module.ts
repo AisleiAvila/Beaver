@@ -41,7 +41,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { GeolocalizacaoService } from './services/geolocalizacao.service';
+import { GeolocalizacaoService } from './service/geolocalizacao.service';
 import { CustomPaginatorIntl } from './shared/service/custom-paginator-intl';
 import { OrganizacaoInterceptor } from './interceptor/organizacao.Interceptor';
 
@@ -94,6 +94,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     // Bootstrap
     NgbModule,
     NgbModalModule,
+
+    FontAwesomeModule,
 
     // Traduções
     TranslateModule.forRoot({

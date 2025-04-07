@@ -4,7 +4,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 
-import { GeolocalizacaoService } from './geolocalizacao.service';
+import { GeolocalizacaoService } from '../service/geolocalizacao.service';
 
 describe('GeolocalizacaoService', () => {
   let service: GeolocalizacaoService;
