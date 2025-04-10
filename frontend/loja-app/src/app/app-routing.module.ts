@@ -9,7 +9,6 @@ import { CadastroCategoriaComponent } from './component/categorias/cadastro-cate
 import { CategoriasComponent } from './component/categorias/categorias.component';
 import { ChatComponent } from './component/chat/chat.component';
 import { GeolocalizacaoComponent } from './component/geolocalizacao/geolocalizacao.component';
-import { HomePageComponent } from './component/home-page/home-page.component';
 import { LembrarSenhaComponent } from './component/lembrar-senha/lembrar-senha.component';
 import { LoginComponent } from './component/login/login.component';
 import { NovaSenhaComponent } from './component/nova-senha/nova-senha.component';
@@ -23,11 +22,12 @@ import { CadastroUsuarioComponent } from './component/usuarios/cadastro-usuario/
 import { UsuariosComponent } from './component/usuarios/usuarios.component';
 import { ServicoComponent } from './component/servico/servico.component';
 import { LandingPageComponent } from './component/landingpage/landingpage.component';
+import { DashboardComponent } from './component/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/landingpage', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomePageComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'cadastro-usuario', component: CadastroUsuarioComponent },
   { path: 'cadastro-usuario/:id', component: CadastroUsuarioComponent },
@@ -52,6 +52,7 @@ export const routes: Routes = [
   { path: 'geolocalizacao', component: GeolocalizacaoComponent },
   { path: 'servico', component: ServicoComponent },
   { path: 'landingpage', component: LandingPageComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: '**', redirectTo: '/landingpage' },
 ];
 

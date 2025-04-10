@@ -16,7 +16,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, map, tap } from 'rxjs';
-import { Organizacao } from 'src/app/model/organizacao.model';
 import { OrganizacaoStateService } from 'src/app/service/organizacao-state.service';
 import { OrganizacoesService } from 'src/app/service/organizacoes.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
@@ -85,32 +84,67 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    // Obter perfil do usuário
-    const perfil = await this.obterPerfil();
-    if (!perfil) {
-      return; // Erro já tratado em obterPerfil()
+    try {
+      // Aguarda a execução do getLogin
+      await this.getLogin(this.email, this.senha);
+
+      // Após o login, executa o getOrganizacoes
+      await this.getOrganizacoes();
+    } catch (error) {
+      console.error('Erro durante o login ou ao buscar organizações:', error);
+      this.isProcessing = false;
     }
+  }
 
-    if (perfil === 'ADMINISTRADOR') {
-      try {
-        // Aguarda a conclusão da busca de organizações
-        this.organizacoes = await this.buscarOrganizacoes();
+  async getOrganizacoes(): Promise<void> {
+    try {
+      // Busca as organizações por ID
+      this.organizacoes = await this.buscarOrganizacoesPorId();
 
-        console.log('Organizações carregadas, pronto para mostrar modal');
-
-        // Agora podemos exibir o modal com segurança
-        this.exibirSelecaoOrganizacao(this.organizacoes || []);
-      } catch (error) {
-        console.error('Falha ao buscar organizações:', error);
+      // Verifica se há organizações disponíveis
+      if (!this.organizacoes || this.organizacoes.length === 0) {
+        console.error('Nenhuma organização encontrada para o usuário.');
         this.isProcessing = false;
-        this.modalService.abrirModal(
-          'Não foi possível carregar as organizações. Tente novamente mais tarde.',
-          'Erro'
-        );
+        return;
       }
-    } else {
-      this.getLogin(this.email, this.senha);
+
+      // Caso haja apenas uma organização, seleciona automaticamente
+      if (this.organizacoes.length === 1) {
+        this.selecionarOrganizacao(this.organizacoes[0]);
+        return;
+      }
+
+      // Caso haja mais de uma organização, exibe o modal de seleção
+      this.exibirSelecaoOrganizacao(this.organizacoes);
+    } catch (error) {
+      console.error('Erro ao buscar organizações:', error);
+      this.isProcessing = false;
     }
+  }
+
+  /**
+   * Método responsável por selecionar uma organização e armazenar seus dados.
+   * @param organizacaoWrapper Organização selecionada
+   */
+  private selecionarOrganizacao(organizacaoWrapper: OrganizacaoWrapper): void {
+    this.organizacaoSelecionada = organizacaoWrapper;
+
+    let org;
+
+    organizacaoWrapper.organizacoes.forEach((organizacao) => {
+      org = organizacao;
+    });
+
+    org.organizacoes.forEach((organizacao2) => {
+      // Armazena o ID e o nome da organização no localStorage
+      localStorage.setItem('organizacaoId', organizacao2.id.toString());
+      localStorage.setItem('organizacaoNome', organizacao2.nome);
+    });
+
+    this.isProcessing = false;
+
+    // Redireciona para o dashboard
+    this.router.navigate(['/dashboard']);
   }
 
   /**
@@ -119,22 +153,23 @@ export class LoginComponent implements OnInit {
    * @param {string} senha - Senha do usuário.
    * @param {number} [oganzacaoId] - ID da organização do usuário.
    */
-  private getLogin(email: string, senha: string, oganzacaoId?: number): void {
-    this.loginService.getLogin(email, senha, oganzacaoId).subscribe({
-      next: (response) => {
-        console.log('Login bem-sucedido', response);
-        this.router.navigate(['/dashboard']);
-        this.isProcessing = false;
-        //        this.getOrganizacao(response.organizacoesIds[0]);
-      },
-      error: (error) => {
-        console.error('Erro no login', error);
-        this.isProcessing = false;
-        this.renderer.addClass(this.loginButton.nativeElement, 'error');
-        setTimeout(() => {
-          this.renderer.removeClass(this.loginButton.nativeElement, 'error');
-        }, 1000);
-      },
+  private getLogin(email: string, senha: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.loginService.getLogin(email, senha).subscribe({
+        next: (response) => {
+          console.log('Login bem-sucedido', response);
+          resolve();
+        },
+        error: (error) => {
+          console.error('Erro no login', error);
+          this.isProcessing = false;
+          this.renderer.addClass(this.loginButton.nativeElement, 'error');
+          setTimeout(() => {
+            this.renderer.removeClass(this.loginButton.nativeElement, 'error');
+          }, 1000);
+          reject(error); // Rejeita a Promise em caso de erro
+        },
+      });
     });
   }
 
@@ -157,113 +192,6 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Método responsável por obter os dados da organização do usuário.
-   * @param {number} organizacaoId - ID da organização do usuário.
-   * @returns {Promise<void>}
-   */
-  async getOrganizacao(organizacaoId: number): Promise<void> {
-    // Aqui você pode usar o ID da organização retornado na resposta do login
-    // para buscar os dados da organização
-
-    if (!organizacaoId || organizacaoId === 0) {
-      console.error('Nenhuma organização encontrada para o usuário.');
-      return;
-    }
-
-    try {
-      // Criar um array para armazenar a requisição (observável)
-      const request =
-        this.organizacoesService.getOrganizacaoById(organizacaoId);
-
-      // Criar um array com esta única requisição
-      const requests = [request];
-
-      // Verificar se temos a requisição
-      if (!request) {
-        console.error('Nenhuma requisição encontrada para a organização.');
-        return;
-      }
-
-      try {
-        const respostasAPI = await Promise.all(
-          requests.map((request) => firstValueFrom(request))
-        );
-
-        // Transformar as respostas para o formato esperado
-        const organizacoes: OrganizacaoWrapper[] = respostasAPI.map(
-          (resposta) => {
-            // Verificar a estrutura da resposta e adaptá-la
-            if (resposta && Array.isArray(resposta)) {
-              // Se a resposta for um array, considere o primeiro item
-              return {
-                organizacoes: resposta,
-                totalRecords: resposta.length,
-              };
-            } else if (resposta && typeof resposta === 'object') {
-              // Se já for um objeto com a estrutura esperada
-              if ('organizacoes' in resposta) {
-                return resposta as unknown as OrganizacaoWrapper;
-              }
-
-              // Se for um objeto simples (Organizacao), transforme em wrapper
-              return {
-                organizacoes: [resposta as Organizacao],
-                totalRecords: 1,
-              };
-            }
-
-            // Caso não seja possível determinar, crie um wrapper vazio
-            console.error('Estrutura de resposta não reconhecida:', resposta);
-            return {
-              organizacoes: [],
-              totalRecords: 0,
-            };
-          }
-        );
-
-        if (organizacoes.length === 1) {
-          // Agora temos o objeto Organizacao resolvido, não mais uma Promise
-          const org = organizacoes[0].organizacoes[0];
-
-          this.organizacaoSelecionada = {
-            organizacoes: [org],
-            totalRecords: 1,
-          };
-
-          // Armazenar o ID da organização para uso em todo o aplicativo
-          localStorage.setItem(
-            'organizacaoId',
-            this.organizacaoSelecionada.organizacoes[0].id.toString()
-          );
-
-          localStorage.setItem(
-            'organizacaoNome',
-            this.organizacaoSelecionada.organizacoes[0].nome
-          );
-
-          this.organizacaoStateService.atualizarOrganizacao(
-            this.organizacaoSelecionada.organizacoes[0].nome,
-            this.organizacaoSelecionada.organizacoes[0].id
-          );
-
-          // Redirecionar para a página principal
-          this.router.navigate(['/dashboard']);
-        } else if (organizacoes.length > 1) {
-          this.isProcessing = false;
-          // Exibir modal para seleção de organização
-          this.exibirSelecaoOrganizacao(organizacoes);
-        }
-      } catch (error) {
-        console.error('Erro ao obter organizações:', error);
-        this.isProcessing = false;
-      }
-    } catch (error) {
-      console.error('Erro ao buscar organizações:', error);
-      this.isProcessing = false;
-    }
-  }
-
-  /**
    * Método responsável por exibir o modal de seleção de organização.
    * @param {OrganizacaoWrapper[]} organizacoes - Lista de organizações.
    */
@@ -281,27 +209,27 @@ export class LoginComponent implements OnInit {
           this.organizacaoSelecionada = {
             organizacoes: [organizacoes[0].organizacoes[0]], // Atribui a primeira organização
             totalRecords: 1,
-          }; // Atribui a primeira organização
+          };
 
-          // Armazenar no localStorage
-          localStorage.setItem(
-            'organizacaoId',
-            resultado.organizacoes[0].id.toString()
-          );
-          localStorage.setItem(
-            'organizacaoNome',
-            resultado.organizacoes[0].nome
-          );
+          let org;
+
+          resultado.organizacoes.forEach((organizacao) => {
+            org = organizacao;
+          });
+
+          org.organizacoes.forEach((organizacao2) => {
+            // Armazena o ID e o nome da organização no localStorage
+            localStorage.setItem('organizacaoId', organizacao2.id.toString());
+            localStorage.setItem('organizacaoNome', organizacao2.nome);
+          });
 
           this.organizacaoStateService.atualizarOrganizacao(
-            resultado.organizacoes[0].nome,
-            resultado.organizacoes[0].id
+            localStorage.getItem('organizacaoNome'),
+            Number(localStorage.getItem('organizacaoId'))
           );
 
-          this.getLogin(this.email, this.senha, resultado.organizacoes[0].id);
-
           // Redirecionar
-          // this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard']);
         } else {
           console.log('Nenhuma organização válida selecionada');
         }
@@ -343,6 +271,46 @@ export class LoginComponent implements OnInit {
             console.error('Erro ao buscar organizações:', error);
             reject(error); // Rejeita a Promise em caso de erro
           },
+        });
+    });
+  }
+
+  /**
+   * Método responsável por buscar organizações por ID.
+   * Retorna uma Promise que é resolvida quando as organizações forem carregadas.
+   */
+  private buscarOrganizacoesPorId(): Promise<OrganizacaoWrapper[]> {
+    return new Promise((resolve, reject) => {
+      const organizacoesIds = localStorage
+        .getItem('organizacoesIds')
+        ?.split(',')
+        .map(Number);
+
+      if (!organizacoesIds || organizacoesIds.length === 0) {
+        console.error('Nenhum ID de organização encontrado.');
+        reject('Nenhum ID de organização encontrado');
+        return;
+      }
+
+      // Usar Promise.all para aguardar todas as consultas
+      const consultas = organizacoesIds.map((organizacaoId) =>
+        this.organizacoesService.getOrganizacaoById(organizacaoId).toPromise()
+      );
+
+      Promise.all(consultas)
+        .then((responses) => {
+          const organizacoesWrappers: OrganizacaoWrapper[] = responses.map(
+            (response) => ({
+              organizacoes: [response],
+              totalRecords: 1,
+            })
+          );
+
+          resolve(organizacoesWrappers);
+        })
+        .catch((error) => {
+          console.error('Erro ao carregar organizações:', error);
+          reject(error);
         });
     });
   }

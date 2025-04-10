@@ -16,7 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { filter } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-menu',
@@ -57,211 +57,125 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.breakpointObserver
       .observe([Breakpoints.Handset])
-      .subscribe((result) => {
-        this.isHandset = result.matches;
-        if (this.isHandset) {
-          this.isExpanded = false;
-        } else {
-          this.isExpanded = true;
-        }
-        this.expansionChange.emit(this.isExpanded);
-      });
+      .pipe(
+        map((result) => result.matches),
+        tap((matches) => (this.isHandset = matches)),
+        tap((matches) => {
+          this.isExpanded = !matches;
+          this.expansionChange.emit(this.isExpanded);
+        })
+      )
+      .subscribe();
   }
 
   menuItems = [
     {
-      labelKey: 'Home',
-      icon: 'home',
-      action: () => this.home(),
-      route: '/home',
+      labelKey: 'TITLE_DASHBOARD',
+      icon: 'dashboard',
+      action: () => this.navigateTo('/dashboard'),
+      route: '/dashboard',
     },
+
     {
       labelKey: 'TITLE_ORGANIZACOES',
       icon: 'business',
-      action: () => this.navigateToOrganizacoes(),
+      action: () => this.navigateTo('/organizacao'),
       route: '/organizacao',
     },
     {
       labelKey: 'TITLE_PRODUTOS',
       icon: 'inventory_2',
-      action: () => this.navigateToProdutos(),
+      action: () => this.navigateTo('/produtos'),
       route: '/produtos',
     },
     {
       labelKey: 'TITLE_CHAT',
       icon: 'chat',
-      action: () => this.navigateToChat(),
+      action: () => this.navigateTo('/chat'),
       route: '/chat',
     },
     {
       labelKey: 'login',
       icon: 'login',
-      action: () => this.navigateToLogin(),
+      action: () => this.navigateTo('/login'),
       route: '/login',
     },
     {
       labelKey: 'TERMS_OF_SERVICE',
       icon: 'description',
-      action: () => this.navigateToTerms(),
+      action: () => this.navigateTo('/terms'),
       route: '/terms',
     },
     {
       labelKey: 'PRIVACY_POLICY',
       icon: 'security',
-      action: () => this.navigateToPrivacy(),
+      action: () => this.navigateTo('/privacy'),
       route: '/privacy',
     },
     {
       labelKey: 'LABLE_BACKLOG',
       icon: 'list',
       route: '/backlog',
-      action: () => this.navigateToBackLog(),
+      action: () => this.navigateTo('/backlog'),
     },
     {
       labelKey: 'TITLE_AGENDAMENTOS',
       icon: 'event',
+      action: () => this.navigateTo('/agendamentos'),
       route: '/agendamentos',
-      action: () => this.navigateToAgendamentos(),
     },
     {
       labelKey: 'TITLE_AGENDAMENTOS',
       icon: 'event',
       route: '/agendamento',
-      action: () => this.navigateToAgendamento(),
+      action: () => this.navigateTo('/agendamento'),
     },
     {
       labelKey: 'TITLE_USUARIOS',
       icon: 'people',
-      action: () => this.navigateToUsuarios(),
+      action: () => this.navigateTo('/usuarios'),
       route: '/usuarios',
     },
     {
       labelKey: 'LABLE_CATEGORIA',
       icon: 'category',
-      action: () => this.navigateToCategorias(),
+      action: () => this.navigateTo('/categorias'),
       route: '/categorias',
     },
     {
       labelKey: 'TITLE_GEOLOCALIZACAO',
       icon: 'map',
-      action: () => this.navigateToGeolocalizacao(),
+      action: () => this.navigateTo('/geolocalizacao'),
       route: '/geolocalizacao',
     },
     {
       labelKey: 'TITLE_SERVICO',
       icon: 'build',
-      action: () => this.navigateToServico(),
-      route: '/servico', // Ensure this route matches the routing configuration
+      action: () => this.navigateTo('/servico'),
+      route: '/servico',
     },
     {
       labelKey: 'TITLE_SERVICO',
       icon: 'build',
-      action: () => this.navigateToLandingPage(),
-      route: '/landingpage', // Ensure this route matches the routing configuration
+      action: () => this.navigateTo('/landingpage'),
+      route: '/landingpage',
     },
-    // {
-    //   label: 'Webcam-Capture',
-    //   icon: 'photo_camera',
-    //   action: () => this.navigateToWebcamCapture(),
-    //   route: '/webcam-capture',
-    // },
   ];
 
   home(): void {
     const authorization = localStorage.getItem('Authorization');
-    if (!authorization) {
-      // this.router.navigate(['/login']);
-      this.router.navigate(['/landingpage']);
-      return;
-    }
-
-    this.router.navigate(['/home']);
-  }
-
-  navigateToUsuarios(): void {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/usuarios']);
-    }
-  }
-
-  navigateToLogin(): void {
-    localStorage.removeItem('Authorization');
-    this.router.navigate(['/login']);
-  }
-
-  navigateToChat(): void {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/chat']);
-    }
-  }
-
-  navigateToTerms() {
-    this.router.navigate(['/terms']);
-  }
-
-  navigateToPrivacy() {
-    this.router.navigate(['/privacy']);
-  }
-
-  navigateToOrganizacoes() {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/organizacao']);
-    }
-  }
-
-  navigateToProdutos() {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/produtos']);
-    }
-  }
-
-  navigateToBackLog() {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/backlog']);
-    }
-  }
-
-  navigateToAgendamentos(): void {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/agendamentos']);
-    }
-  }
-
-  navigateToAgendamento(): void {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/agendamento']);
-    }
-  }
-
-  navigateToCategorias(): void {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/categorias']);
-    }
-  }
-
-  navigateToGeolocalizacao(): void {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/geolocalizacao']);
-    }
-  }
-
-  navigateToServico(): void {
-    if (this.isAuthorization()) {
-      this.router.navigate(['/servico']);
-    }
-  }
-
-  navigateToLandingPage(): void {
-    if (this.isAuthorization()) {
+    if (authorization) {
+      this.router.navigate(['/home']);
+    } else {
       this.router.navigate(['/landingpage']);
     }
   }
 
-  // navigateToWebcamCapture(): void {
-  //   if (this.isAuthorization()) {
-  //     this.router.navigate(['/webcam-capture']);
-  //   }
-  // }
+  private navigateTo(route: string): void {
+    if (this.isAuthorization()) {
+      this.router.navigate([route]);
+    }
+  }
 
   toggleExpansion(): void {
     if (!this.isHandset) {

@@ -14,6 +14,25 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { OrganizacaoWrapper } from 'src/app/wrapper/0rganizacao-wrapper.interface';
 
+interface Organizacao {
+  organizacoes: {
+    organizacoes: {
+      id: number;
+      nome: string;
+      nif: string;
+      email: string;
+      website: string;
+      setorAtividade: string;
+      missao: string;
+      representante_legal: string | null;
+      cargo: string;
+      numeroRegistoComercial: string | null;
+      dataRegisto: string | null;
+    }[];
+    totalRecords: number | null;
+  }[];
+}
+
 @Component({
   selector: 'app-organizacao-selector',
   templateUrl: './organizacao-selector.component.html',
@@ -36,7 +55,7 @@ export class OrganizacaoSelectorComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialogRef: MatDialogRef<OrganizacaoSelectorComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { organizacoes: OrganizacaoWrapper[] }
+    @Inject(MAT_DIALOG_DATA) public data: { organizacoes: Organizacao[] }
   ) {
     // Impedir fechamento ao clicar fora
     this.dialogRef.disableClose = true;

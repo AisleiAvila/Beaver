@@ -1,16 +1,34 @@
+import { provideHttpClient } from '@angular/common/http';
+import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from './app/app.component';
-import { importProvidersFrom } from '@angular/core';
-import { AppModule } from './app/app.module';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 import { routes } from './app/app-routing.module';
+import { AppComponent } from './app/app.component';
 
-// Inicializar o AppComponent como aplicação standalone
+import { environment } from './environments/environment';
+
+// Função para criar o loader de tradução
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+if (environment.production) {
+  enableProdMode();
+}
+
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(AppModule), // Importar providers do AppModule
-    provideAnimations(), // Prover animações
-    provideRouter(routes), // Prover rotas
+    provideRouter(routes),
+    provideHttpClient(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }).providers || [],
   ],
-}).catch((err) => console.error('Erro ao inicializar aplicação:', err));
+}).catch((err) => console.error(err));

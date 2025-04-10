@@ -7,9 +7,7 @@
   <mat-selection-list #organizacoesList [multiple]="false">
     <mat-list-option *ngFor="let org of data.organizacoes" [value]="org">
       {{
-        org?.organizacoes && org?.organizacoes?.length > 0
-          ? org?.organizacoes[0]?.nome || "Nome indisponível"
-          : "Organização sem nome"
+        org?.organizacoes?.[0]?.organizacoes?.[0]?.nome || "Nome indisponível"
       }}
     </mat-list-option>
   </mat-selection-list>

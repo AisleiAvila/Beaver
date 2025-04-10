@@ -40,3 +40,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Backend (Java/Spring)
+backend/target/
+backend/.settings/
+
+# Ignore the target directory
+target/

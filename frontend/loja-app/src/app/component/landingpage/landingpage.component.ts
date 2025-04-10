@@ -4,8 +4,6 @@ import { HeroComponent } from './hero/hero.component';
 import { HowItWorksComponent } from './how-it-works/how-it-works.component';
 import { ServicesComponent } from './services/services.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
-import { FooterComponent } from '../footer/footer.component';
-import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-landingpage',
@@ -16,8 +14,6 @@ import { HeaderComponent } from '../header/header.component';
     HowItWorksComponent,
     ServicesComponent,
     TestimonialsComponent,
-    FooterComponent,
-    HeaderComponent,
   ],
   templateUrl: './landingpage.component.html',
   styleUrls: ['./landingpage.component.scss'],

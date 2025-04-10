@@ -23,9 +23,23 @@ export class OrganizacoesService {
   getOrganizacaoById(id: number): Observable<Organizacao> {
     const headers = this.authService.getAuthHeaders();
 
-    return this.http.get<Organizacao>(`${this.apiUrl}/detail/${id}`, {
-      headers: headers,
-    });
+    const organizacao = this.http.get<Organizacao>(
+      `${this.apiUrl}/detail/${id}`,
+      {
+        headers: headers,
+      }
+    );
+
+    organizacao.subscribe(
+      (data) => {
+        console.log('Dados da organização:', data);
+      },
+      (error) => {
+        console.error('Erro ao obter dados da organização:', error);
+      }
+    );
+
+    return organizacao;
   }
 
   // Método para obter usuários com parâmetros opcionais
