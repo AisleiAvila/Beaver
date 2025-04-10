@@ -47,6 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 endpoint.equals("/senha/recuperar") ||
                 endpoint.startsWith("/senha/validar-reset-token") ||
                 endpoint.equals("/auth/register") ||
+                endpoint.equals("/auth/authenticate") ||
                 endpoint.equals("/lembrar-senha") ||
                 endpoint.equals("/api/public/**") ||
                 endpoint.equals("/favicon.ico") ||

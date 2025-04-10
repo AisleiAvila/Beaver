@@ -10,6 +10,7 @@ import com.dasad.empresa.model.UsuarioModel;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -50,18 +51,16 @@ public class AuthorizationService {
     @Value("${api.security.token.secret}")
     private String secret;
 
+    private final JwtService jwtService;
+
     /**
      * Conjunto de tokens revogados.
      * Tokens neste conjunto serão considerados inválidos mesmo antes de sua expiração.
      */
     private final Set<String> revokedTokens = new HashSet<>();
 
-    /**
-     * Construtor padrão sem parâmetros.
-     * Utilizado pela injeção de dependências do Spring.
-     */
-    public AuthorizationService() {
-        // Construtor padrão necessário para injeção de dependências
+    public AuthorizationService(JwtService jwtService) {
+        this.jwtService = jwtService;
     }
 
     /**
@@ -82,16 +81,22 @@ public class AuthorizationService {
         var rolesString = getRolesString(usuarioModel);
         var organizacoesIds = getOrganizacoesIds(usuarioModel);
 
+
         return JWT.create()
                 .withSubject(usuarioModel.getEmail())
                 .withClaim("userId", usuarioModel.getId())
                 .withClaim("nome", usuarioModel.getNome())
                 .withClaim("perfil", usuarioModel.getPerfis().getFirst().getNome())
-                .withClaim("organizacaoId", organizacoesIds.getFirst())
+//                .withClaim("organizacaoId", organizacoesIds.getFirst())
+                .withClaim("organizacaoIds", organizacoesIds)
                 .withIssuer("login-auth-api")
                 .withClaim("role", rolesString)
                 .withExpiresAt(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
                 .sign(Algorithm.HMAC512(this.secret.getBytes()));
+    }
+
+    public String authenticate(Authentication authentication) {
+        return jwtService.generateToken(authentication);
     }
 
     /**

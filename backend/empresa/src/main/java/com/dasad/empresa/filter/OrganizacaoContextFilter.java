@@ -49,17 +49,36 @@ public class OrganizacaoContextFilter extends OncePerRequestFilter {
                 DecodedJWT jwt = JWT.decode(token);
 
                 OrganizacaoContext context = new OrganizacaoContext();
-                context.setOrganizacaoAtual(jwt.getClaim("organizacaoId").asLong());
-                context.setAdmin(jwt.getClaim("isAdmin").asBoolean());
 
                 // Extrair lista de organizações permitidas
                 List<Long> organizacoes = new ArrayList<>();
-                jwt.getClaim("organizacoesIds").asList(Long.class).forEach(organizacoes::add);
+                try {
+                    List<Integer> orgIds = jwt.getClaim("organizacaoIds").asList(Integer.class);
+                    if (orgIds != null) {
+                        orgIds.forEach(id -> organizacoes.add(id.longValue()));
+                    }
+                } catch (Exception e) {
+                    log.warn("Erro ao extrair organizacaoIds: {}", e.getMessage());
+                }
+
                 context.setOrganizacoesPermitidas(organizacoes);
+
+                // Define a organização atual como a primeira da lista, se existir
+                if (!organizacoes.isEmpty()) {
+                    context.setOrganizacaoAtual(organizacoes.get(0));
+                }
+
+//                // Extrair flag de admin
+//                try {
+//                    context.setAdmin(jwt.getClaim("isAdmin").asBoolean());
+//                } catch (Exception e) {
+//                    log.warn("Erro ao extrair isAdmin: {}", e.getMessage());
+//                    context.setAdmin(false);
+//                }
 
                 CONTEXTO.set(context);
             } catch (Exception e) {
-                 log.error("Erro ao decodificar o token JWT: {}", e.getMessage());
+                log.error("Erro ao decodificar o token JWT: {}", e.getMessage());
             }
         }
 

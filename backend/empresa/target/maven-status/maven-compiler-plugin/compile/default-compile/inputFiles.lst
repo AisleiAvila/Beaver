@@ -25,6 +25,8 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\CustomAccessDeniedHandler.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\CustomUserDetailService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\JwtAuthenticationFilter.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\JwtConfig.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\JwtService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\SecurityConfig.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\SecurityFilter.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\models\EnderecoModel.java

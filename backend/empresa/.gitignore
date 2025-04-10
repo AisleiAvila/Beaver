@@ -1,0 +1,4 @@
+# Arquivo .gitignore na raiz do projeto
+target/
+.idea/
+*.iml

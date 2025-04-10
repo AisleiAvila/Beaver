@@ -41,6 +41,7 @@ com\dasad\empresa\service\EmailService.class
 com\dasad\empresa\infra\security\JwtAuthenticationFilter.class
 com\dasad\empresa\jooq\tables\records\PedidoRecord.class
 com\dasad\empresa\controller\PerfilController.class
+com\dasad\empresa\infra\security\JwtConfig.class
 com\dasad\empresa\jooq\tables\Cidade$CidadePath.class
 com\dasad\empresa\jooq\tables\Organizacao$OrganizacaoPath.class
 com\dasad\empresa\jooq\tables\records\PaisRecord.class
@@ -62,6 +63,7 @@ com\dasad\empresa\controller\SenhaController.class
 com\dasad\empresa\api\EnderecoApi.class
 com\dasad\empresa\model\RecuperarSenha200Response.class
 com\dasad\empresa\model\UsuarioModel.class
+com\dasad\empresa\infra\security\JwtService.class
 com\dasad\empresa\jooq\tables\Desconto.class
 com\dasad\empresa\model\UsuarioFotoModel.class
 com\dasad\empresa\model\RegisterRequestDTO.class

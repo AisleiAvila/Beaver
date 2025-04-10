@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-05T17:52:15.110897700+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-09T15:28:55.250776700+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 @Validated
 @Tag(name = "Geolocalização", description = "Operações relacionadas a geolocalização")
 public interface GeolocalizacaoApi {
