@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("updateendereco_404_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-09T15:28:55.250776700+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-17T13:03:56.201480700+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class Updateendereco404Response {
 
   private @Nullable String error;

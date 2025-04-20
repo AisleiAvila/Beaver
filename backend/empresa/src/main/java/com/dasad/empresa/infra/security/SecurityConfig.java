@@ -65,8 +65,7 @@ public class SecurityConfig {
             SecurityFilter securityFilter,
             CustomAccessDeniedHandler customAccessDeniedHandler,
             @Value("${security.excludedUrls}") String[] excludedUrls,
-            @Value("${cors.allowed-origins:http://localhost:4200}") String[] corsOrigins) {
-
+            @Value("${cors.allowed-origins:http://localhost:4200,http://localhost:8100}") String[] corsOrigins) {
         this.customUserDetailService = customUserDetailService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.securityFilter = securityFilter;

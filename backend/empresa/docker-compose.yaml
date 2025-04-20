@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Variáveis necessárias para a geração do JOOQ durante o build
+        DB_HOST: db
+        DB_PORT: 5432
+        DB_NAME: empresa
+        DB_USER: postgres
+        DB_PASSWORD: admin
+    container_name: empresa-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/empresa
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      db:
+        condition: service_healthy  # Aguarda o banco estar saudável
+    networks:
+      - empresa-network
+    restart: unless-stopped
+
+  db:
+    image: postgres:latest
+    container_name: empresa-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=empresa
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/schema.sql  # Schema inicial
+    healthcheck:  # Verificação de saúde do banco
+      test: ["CMD-SHELL", "pg_isready -U postgres -d empresa"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - empresa-network
+    restart: unless-stopped
+
+  llama-api:
+    image: ollama/ollama:latest
+    container_name: empresa-llama-api
+    ports:
+      - "11434:11434"
+    volumes:
+      - llama_data:/root/.ollama
+    networks:
+      - empresa-network
+    restart: unless-stopped
+
+networks:
+  empresa-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  llama_data:
