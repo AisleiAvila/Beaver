@@ -45,5 +45,4 @@ Thumbs.db
 backend/target/
 backend/.settings/
 
-# Ignore the target directory
-target/
+
