@@ -2,27 +2,30 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  inject,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
-  inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { firstValueFrom, map, tap } from 'rxjs';
+import { firstValueFrom, map, Subscription, tap } from 'rxjs';
 import { OrganizacaoStateService } from 'src/app/service/organizacao-state.service';
 import { OrganizacoesService } from 'src/app/service/organizacoes.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
+import { DeviceService } from 'src/app/shared/service/device.service';
 import { LoginService } from '../../service/login.service';
 import { ModalCommunicationService } from '../../service/modal-communication.service';
 import { OrganizacaoWrapper } from './../../wrapper/0rganizacao-wrapper.interface';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -37,12 +40,14 @@ import { OrganizacaoWrapper } from './../../wrapper/0rganizacao-wrapper.interfac
     MatInputModule,
     MatButtonModule,
     MatTooltipModule,
+    MatProgressBarModule,
+    MatCheckboxModule,
   ],
 })
 /**
  * Componente responsável por exibir a tela de login da aplicação.
  */
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginService = inject(LoginService);
   router = inject(Router);
   modalService = inject(ModalCommunicationService);
@@ -52,6 +57,7 @@ export class LoginComponent implements OnInit {
   organizacoesService = inject(OrganizacoesService);
   organizacaoStateService = inject(OrganizacaoStateService);
   usuarioService = inject(UsuariosService);
+  deviceService = inject(DeviceService);
 
   @ViewChild('loginButton') loginButton!: ElementRef;
 
@@ -61,6 +67,9 @@ export class LoginComponent implements OnInit {
   mensagem: string;
   isProcessing = false;
 
+  isMobile = false;
+  private subscription = new Subscription();
+
   organizacaoSelecionada: OrganizacaoWrapper | undefined;
   organizacoes: OrganizacaoWrapper[] | undefined;
 
@@ -69,6 +78,19 @@ export class LoginComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.mensagem = params['mensagem'];
     });
+
+    this.subscription.add(
+      this.deviceService.isMobile$.subscribe((isMobile) => {
+        this.isMobile = isMobile;
+        console.log('Login - dispositivo móvel:', isMobile);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   /**

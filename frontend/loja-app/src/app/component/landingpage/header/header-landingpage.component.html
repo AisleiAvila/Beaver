@@ -95,33 +95,78 @@
         <a href="#" class="block px-3 py-2 text-gray-600 hover:text-blue-600">{{
           "header.download" | translate
         }}</a>
-        <a href="#" class="block px-3 py-2 text-gray-600 hover:text-blue-600">{{
-          "header.login" | translate
-        }}</a>
-        <div class="px-3 py-2">
-          <button class="flex items-center text-gray-600 hover:text-blue-600">
-            <fa-icon [icon]="faGlobe" class="mr-2"></fa-icon>
-            <span>{{ "header.language" | translate }}</span>
-            <fa-icon [icon]="faChevronDown" class="ml-2"></fa-icon>
+        <a
+          href="#"
+          class="block px-3 py-2 rounded-md bg-blue-600 text-white my-2"
+          (click)="navigateToLogin($event)"
+        >
+          <fa-icon [icon]="faUser" class="mr-2"></fa-icon>
+          {{ "header.login" | translate }}
+        </a>
+        <div class="px-3 py-2 border-t mt-2 pt-2">
+          <button
+            class="flex items-center justify-between w-full text-gray-600 hover:text-blue-600 py-2"
+            (click)="toggleLanguageDropdown()"
+          >
+            <div class="flex items-center">
+              <fa-icon [icon]="faGlobe" class="mr-2"></fa-icon>
+              <span>{{ "header.language" | translate }}</span>
+            </div>
+            <fa-icon
+              [icon]="isLanguageDropdownOpen ? faChevronUp : faChevronDown"
+            ></fa-icon>
           </button>
-          <div class="mt-2 space-y-1">
+          <div
+            class="mt-2 space-y-1 rounded-md bg-gray-50"
+            [class.hidden]="!isLanguageDropdownOpen"
+          >
             <button
               (click)="setLanguage('pt')"
-              class="block w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-blue-600"
+              class="block w-full text-left px-4 py-3 text-sm rounded-t-md transition-colors duration-200 relative"
+              [class.bg-blue-100]="currentLanguage === 'pt'"
+              [class.text-blue-700]="currentLanguage === 'pt'"
+              [class.text-gray-600]="currentLanguage !== 'pt'"
             >
-              Português
+              <span class="flex items-center">
+                <span class="font-medium">Português</span>
+                <fa-icon
+                  *ngIf="currentLanguage === 'pt'"
+                  [icon]="faCheck"
+                  class="ml-auto text-blue-600"
+                ></fa-icon>
+              </span>
             </button>
             <button
               (click)="setLanguage('en')"
-              class="block w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-blue-600"
+              class="block w-full text-left px-4 py-3 text-sm transition-colors duration-200 relative"
+              [class.bg-blue-100]="currentLanguage === 'en'"
+              [class.text-blue-700]="currentLanguage === 'en'"
+              [class.text-gray-600]="currentLanguage !== 'en'"
             >
-              English
+              <span class="flex items-center">
+                <span class="font-medium">English</span>
+                <fa-icon
+                  *ngIf="currentLanguage === 'en'"
+                  [icon]="faCheck"
+                  class="ml-auto text-blue-600"
+                ></fa-icon>
+              </span>
             </button>
             <button
               (click)="setLanguage('es')"
-              class="block w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-blue-600"
+              class="block w-full text-left px-4 py-3 text-sm rounded-b-md transition-colors duration-200 relative"
+              [class.bg-blue-100]="currentLanguage === 'es'"
+              [class.text-blue-700]="currentLanguage === 'es'"
+              [class.text-gray-600]="currentLanguage !== 'es'"
             >
-              Español
+              <span class="flex items-center">
+                <span class="font-medium">Español</span>
+                <fa-icon
+                  *ngIf="currentLanguage === 'es'"
+                  [icon]="faCheck"
+                  class="ml-auto text-blue-600"
+                ></fa-icon>
+              </span>
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 <div class="body">
-  <ng-container *ngIf="showMenu">
+  <ng-container *ngIf="showMenu && !isMobile">
     <app-menu
       [class.expanded]="isExpanded"
       [class.collapsed]="!isExpanded"

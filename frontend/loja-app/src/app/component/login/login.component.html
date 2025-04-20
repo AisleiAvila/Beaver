@@ -1,83 +1,92 @@
-<div class="login-container" style="display: flex; align-items: center;">
-  <div>
-    <img
-      src="assets/images/Logotipo.jpg"
-      alt="Login Icon"
-      class="responsive-img"
-    />
-  </div>
-  <div class="card">
-    <mat-card class="card-title">
-      <div class="welcome-text">
-        <h2>Bem-vindo</h2>
-        <p>Faça login para continuar</p>
+<div
+  class="login-container"
+  [ngClass]="{ 'mobile-view': isMobile, 'desktop-view': !isMobile }"
+>
+  <mat-card class="login-card">
+    <!-- Logo posicionada dentro do card para garantir visibilidade -->
+    <div
+      class="logo-container"
+      [ngClass]="{ 'logo-desktop': !isMobile, 'logo-mobile': isMobile }"
+    >
+      <img
+        src="assets/images/Logotipo.jpg"
+        alt="Login Icon"
+        class="responsive-img"
+      />
+    </div>
+
+    <mat-card-header>
+      <mat-card-title>{{ "login" | translate }}</mat-card-title>
+    </mat-card-header>
+
+    <!-- Mensagem acima dos campos no mobile -->
+    <div *ngIf="isMobile && mensagem" class="message-container">
+      <p class="login-message">{{ mensagem }}</p>
+    </div>
+
+    <mat-card-content>
+      <!-- Mensagem apenas para desktop -->
+      <div *ngIf="!isMobile && mensagem" class="message-container">
+        <p class="login-message">{{ mensagem }}</p>
       </div>
-      <mat-card-header
-        class="custom-card-header"
-        style="display: flex; flex-direction: column; align-items: center"
+
+      <form class="login-form">
+        <mat-form-field class="full-width">
+          <mat-label>E-mail</mat-label>
+          <input
+            matInput
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            placeholder="{{ 'LABLE_DIGITE_SEU_EMAIL' | translate }}"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>{{ "LABLE_SENHA" | translate }}</mat-label>
+          <input
+            matInput
+            type="password"
+            [(ngModel)]="senha"
+            name="senha"
+            required
+          />
+        </mat-form-field>
+
+        <div class="remember-forgot" [class.mobile-layout]="isMobile">
+          <mat-checkbox [(ngModel)]="lembrarSenha" name="lembrarSenha">
+            {{ "LABLE_LEMBRAR_ME" | translate }}
+          </mat-checkbox>
+          <a
+            (click)="recuperarSenha()"
+            (keyup.enter)="recuperarSenha()"
+            class="forgot-link"
+            tabindex="0"
+            role="button"
+          >
+            {{ "LABLE_ESQUECEU_SENHA" | translate }}
+          </a>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end" [ngClass]="{ 'center-actions': isMobile }">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onLogin()"
+        [disabled]="isProcessing"
+        #loginButton
+        class="login-btn"
+        [class.full-width-btn]="isMobile"
       >
-      </mat-card-header>
-      <!-- <p></p> -->
+        {{ "login" | translate }}
+      </button>
+    </mat-card-actions>
 
-      <div
-        *ngIf="mensagem"
-        matTooltip="{{ mensagem }}"
-        matTooltipClass="custom-tooltip"
-      ></div>
-
-      <mat-card-content>
-        <form>
-          <mat-form-field appearance="fill" class="email-field">
-            <mat-label>E-mail</mat-label>
-            <input
-              matInput
-              type="email"
-              [(ngModel)]="email"
-              name="email"
-              required
-              placeholder="{{ 'LABLE_DIGITE_SEU_EMAIL' | translate }}"
-            />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill" class="senha-field">
-            <mat-label>Senha</mat-label>
-            <input
-              matInput
-              type="password"
-              [(ngModel)]="senha"
-              name="senha"
-              required
-            />
-          </mat-form-field>
-
-          <div class="button-container">
-            <button
-              mat-raised-button
-              color="primary"
-              class="login-button"
-              [class.processing]="isProcessing"
-              #loginButton
-              (click)="onLogin()"
-            >
-              {{ isProcessing ? "Processando..." : "Login" }}
-            </button>
-          </div>
-
-          <div class="actions">
-            <div class="senha-direita">
-              <a
-                mat-button
-                (click)="recuperarSenha()"
-                (keydown.enter)="recuperarSenha()"
-                (keydown.space)="recuperarSenha()"
-                tabindex="0"
-              >
-                {{ "LABLE_ESQUECEU_SENHA" | translate }}
-              </a>
-            </div>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
+    <mat-card-footer *ngIf="isProcessing">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
 </div>
