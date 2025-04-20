@@ -1,21 +1,41 @@
 <header class="header" *ngIf="!isLoginScreen">
   <mat-toolbar class="toolbar" color="primary">
+    <!-- Mobile menu button (only shown on small screens) -->
+    <button
+      mat-icon-button
+      class="mobile-menu-button"
+      (click)="toggleMobileMenu()"
+      aria-label="Toggle menu"
+    >
+      <mat-icon>{{ isMobileMenuOpen ? "close" : "menu" }}</mat-icon>
+    </button>
+
     <div class="left-side">
       <img src="assets/images/Logotipo.svg" alt="Logotipo" class="logo" />
-      <!-- Exibir imagem Logotipo.png -->
     </div>
-    <div class="user-info center-screen" *ngIf="nomeUsuario">
-      <span> {{ "LABLE_BEM_VINDO" | translate }}, {{ nomeUsuario }}</span>
+
+    <!-- Original desktop user info, hidden on mobile -->
+    <div class="desktop-view">
+      <div class="user-info center-screen" *ngIf="nomeUsuario">
+        <span
+          >{{ "LABLE_USUARIO" | translate }}: {{ primeiroNomeUsuario }}</span
+        >
+      </div>
+      <div class="user-info center-screen" *ngIf="nomeOrganizacao">
+        <span
+          >{{ "LABLE_ORGANIZACAO" | translate }}: {{ nomeOrganizacao }}</span
+        >
+      </div>
     </div>
-    <div class="user-info center-screen" *ngIf="nomeOrganizacao">
-      <span> {{ "LABLE_ORGANIZACAO" | translate }}: {{ nomeOrganizacao }}</span>
-    </div>
-    <div class="right-side">
+
+    <!-- Original desktop actions, hidden on mobile -->
+    <div class="right-side desktop-view">
       <div class="language-icons">
         <img
           src="assets/icons/brazil-flag-icon.svg"
           alt="Português"
           class="flag-icon"
+          [class.active]="currentLanguage === 'pt'"
           tabindex="0"
           (click)="changeLanguage('pt')"
           (keydown.enter)="changeLanguage('pt')"
@@ -24,6 +44,7 @@
           src="assets/icons/united-kingdom-flag-icon.svg"
           alt="English"
           class="flag-icon"
+          [class.active]="currentLanguage === 'en'"
           tabindex="0"
           (click)="changeLanguage('en')"
           (keydown.enter)="changeLanguage('en')"
@@ -33,7 +54,6 @@
       <div class="encerra-sessao">
         <mat-list-item
           class="clickable logout-item"
-          *ngIf="!isLoginScreen"
           tabindex="0"
           (click)="logout()"
           (keydown.enter)="logout()"
@@ -44,4 +64,59 @@
       </div>
     </div>
   </mat-toolbar>
+
+  <!-- Mobile dropdown menu (shown/hidden based on state, only on mobile) -->
+  <div class="mobile-menu" [class.mobile-menu-open]="isMobileMenuOpen">
+    <div class="mobile-menu-content">
+      <!-- Mobile user info -->
+      <div class="mobile-user-info">
+        <div *ngIf="nomeUsuario" class="mobile-menu-item user-name">
+          <mat-icon>account_circle</mat-icon>
+          <span>{{ nomeUsuario }}</span>
+        </div>
+        <div *ngIf="nomeOrganizacao" class="mobile-menu-item org-name">
+          <mat-icon>business</mat-icon>
+          <span>{{ nomeOrganizacao }}</span>
+        </div>
+      </div>
+
+      <!-- Mobile language options -->
+      <div class="mobile-menu-item language-selector">
+        <mat-icon>language</mat-icon>
+        <span>{{ "LABLE_IDIOMA" | translate }}</span>
+        <div class="mobile-language-options">
+          <button
+            mat-button
+            [class.selected]="currentLanguage === 'pt'"
+            (click)="changeLanguage('pt')"
+          >
+            <img
+              src="assets/icons/brazil-flag-icon.svg"
+              alt="Português"
+              class="small-flag"
+            />
+            Português
+          </button>
+          <button
+            mat-button
+            [class.selected]="currentLanguage === 'en'"
+            (click)="changeLanguage('en')"
+          >
+            <img
+              src="assets/icons/united-kingdom-flag-icon.svg"
+              alt="English"
+              class="small-flag"
+            />
+            English
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile logout button -->
+      <button mat-button class="mobile-menu-item logout" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>{{ "LABLE_SAIR" | translate }}</span>
+      </button>
+    </div>
+  </div>
 </header>

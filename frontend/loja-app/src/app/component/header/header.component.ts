@@ -37,7 +37,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   nomeUsuario: string | null = localStorage.getItem('nomeUsuario');
-  //nomeOrganizacao: string | null = localStorage.getItem('organizacaoNome');
+  primeiroNomeUsuario: string | null = this.nomeUsuario?.split(' ')[0] || null;
+  isMobileMenuOpen = false;
+  currentLanguage: string;
+
+  constructor() {
+    this.currentLanguage = this.translate.currentLang || 'pt';
+  }
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -82,6 +88,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.limparDadosELogout();
     }
+    this.isMobileMenuOpen = false; // Close mobile menu after logout action
   }
 
   getNomeUsuario(): string {
@@ -104,7 +111,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/landingpage']);
   }
 
-  changeLanguage(lang: string) {
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  changeLanguage(lang: string): void {
+    this.currentLanguage = lang;
     this.translate.use(lang);
+    this.isMobileMenuOpen = false; // Close mobile menu after language change
   }
 }

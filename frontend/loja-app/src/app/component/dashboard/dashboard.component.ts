@@ -18,6 +18,16 @@ export class DashboardComponent {
       image: 'assets/icons/list.svg',
     },
     {
+      name: 'Agenda',
+      route: '/agendamentos',
+      image: 'assets/icons/calendar_month.svg',
+    },
+    {
+      name: 'Agenda',
+      route: '/agendamento',
+      image: 'assets/icons/calendar_month.svg',
+    },
+    {
       name: 'Produtos',
       route: '/produtos',
       image: 'assets/icons/inventory_2.svg',
