@@ -42,7 +42,10 @@ export class BodyComponent implements OnInit {
 
   checkRoute() {
     const currentRoute = this.router.url;
-    this.showMenu = !currentRoute.includes('login');
+    // Ocultar menu tanto para login quanto para landingpage
+    this.showMenu = !(
+      currentRoute.includes('login') || currentRoute.includes('landingpage')
+    );
   }
 
   toggleMenu() {

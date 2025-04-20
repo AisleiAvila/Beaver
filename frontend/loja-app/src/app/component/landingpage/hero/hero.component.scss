@@ -19,6 +19,10 @@
   }
 }
 
+.hero-gradient {
+  background: linear-gradient(135deg, #f97316 0%, #78350f 100%);
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);

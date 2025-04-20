@@ -1,6 +1,27 @@
-<main>
-  <app-hero></app-hero>
-  <app-how-it-works></app-how-it-works>
-  <app-services></app-services>
-  <app-testimonials></app-testimonials>
-</main>
+<app-header-landingpage></app-header-landingpage>
+
+<div
+  class="landing-container"
+  [ngClass]="{ 'mobile-layout': isMobile, 'desktop-layout': !isMobile }"
+>
+  <!-- Componentes com propriedade isMobile -->
+  <app-hero [isMobile]="isMobile"></app-hero>
+
+  <!-- Layout específico para mobile -->
+  <ng-container *ngIf="isMobile">
+    <app-how-it-works [isMobile]="true"></app-how-it-works>
+    <app-services [isMobile]="true"></app-services>
+    <app-testimonials [isMobile]="true"></app-testimonials>
+  </ng-container>
+
+  <!-- Layout específico para desktop -->
+  <ng-container *ngIf="!isMobile">
+    <div class="desktop-sections">
+      <app-how-it-works [isMobile]="false"></app-how-it-works>
+      <app-services [isMobile]="false"></app-services>
+      <app-testimonials [isMobile]="false"></app-testimonials>
+    </div>
+  </ng-container>
+</div>
+
+<app-footer-landingpage></app-footer-landingpage>

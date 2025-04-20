@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,6 +14,8 @@ import { TestimonialsService } from '../../../service/testimonials.service';
   providers: [TestimonialsService],
 })
 export class TestimonialsComponent implements OnInit {
+  @Input() isMobile = false;
+
   faQuoteLeft = faQuoteLeft;
   faStar = faStar;
   testimonials: any[] = [];

@@ -4,6 +4,15 @@
   height: 100vh; /* Altura total da viewport */
 }
 
+.app-content {
+  flex: 1;
+  padding-top: 64px; /* Ajuste conforme a altura do seu header */
+}
+
+.app-content.no-header {
+  padding-top: 0; /* Remove o padding quando não há header */
+}
+
 .header {
   flex: 0 0 auto; /* Altura fixa para o header */
 }

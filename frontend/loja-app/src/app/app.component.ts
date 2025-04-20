@@ -29,6 +29,7 @@ export class AppComponent {
   private translate = inject(TranslateService);
 
   isLoginScreen = false;
+  isLandingPage = false;
   isExpanded = false;
 
   // Inicializador que substitui o constructor
@@ -50,6 +51,7 @@ export class AppComponent {
       .subscribe((event) => {
         if (event instanceof NavigationEnd) {
           this.isLoginScreen = this.router.url === '/login';
+          this.isLandingPage = this.router.url === '/landingpage';
         }
       });
   })();

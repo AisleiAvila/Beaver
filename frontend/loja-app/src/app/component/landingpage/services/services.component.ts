@@ -1,27 +1,29 @@
-import { Component } from "@angular/core";
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { TranslateModule } from "@ngx-translate/core";
+import { Component, Input } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
-  faWrench,
-  faPaintRoller,
   faBolt,
-  faShower,
-  faTree,
   faBroom,
-  faWater,
   faCouch,
-  faTools,
   faPaintBrush,
-} from "@fortawesome/free-solid-svg-icons";
+  faPaintRoller,
+  faShower,
+  faTools,
+  faTree,
+  faWater,
+  faWrench,
+} from '@fortawesome/free-solid-svg-icons';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: "app-services",
+  selector: 'app-services',
   standalone: true,
   imports: [FontAwesomeModule, TranslateModule],
-  templateUrl: "./services.component.html",
-  styleUrls: ["./services.component.scss"],
+  templateUrl: './services.component.html',
+  styleUrls: ['./services.component.scss'],
 })
 export class ServicesComponent {
+  @Input() isMobile = false;
+
   faWrench = faWrench;
   faPaintRoller = faPaintRoller;
   faBolt = faBolt;

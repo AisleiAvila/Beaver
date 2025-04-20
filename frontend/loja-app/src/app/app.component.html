@@ -1,3 +1,9 @@
-<app-header></app-header>
-<app-body></app-body>
-<router-outlet></router-outlet>
+<div class="app-container">
+  <!-- Exibir header apenas se não for login ou landing page -->
+  <app-header *ngIf="!isLoginScreen && !isLandingPage"></app-header>
+
+  <!-- Usar app-body como container principal -->
+  <app-body [class.no-header]="isLoginScreen || isLandingPage">
+    <router-outlet></router-outlet>
+  </app-body>
+</div>

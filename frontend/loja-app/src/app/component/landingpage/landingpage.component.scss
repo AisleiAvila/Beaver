@@ -1,7 +1,31 @@
-// Add styles specific to the landing page component here
-main {
-  // Example styles
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.landing-container {
+  width: 100%;
+  margin: 0 auto;
+
+  // Estilos para desktop
+  &.desktop-layout {
+    max-width: 1200px;
+    padding: 0 2rem;
+
+    .desktop-sections {
+      display: inline;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  // Estilos para mobile
+  &.mobile-layout {
+    padding: 0 1rem;
+
+    // Os componentes ficam em coluna natural no mobile
+    // então não precisamos de estrutura adicional
+  }
+}
+
+// Media queries adicionais se precisar
+@media (max-width: 768px) {
+  .landing-container {
+    // Ajustes adicionais para tablets
+  }
 }
