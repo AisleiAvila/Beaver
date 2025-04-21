@@ -2,11 +2,23 @@
   padding: 24px;
   background-color: #f5f5f5;
   min-height: calc(100vh - 64px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 0;
+  max-width: 100%;
 }
 
 .content-wrapper {
   max-width: 1000px;
   margin: 0 auto;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .page-title {
@@ -23,6 +35,15 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex: 1;
   min-width: 0; /* Importante para evitar overflow em layouts flexbox */
+  padding: 0 5px;
+}
+
+@media (min-width: 768px) {
+  .form-container:not(.mobile) {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding: 0 10px;
+  }
 }
 
 .form-section {
@@ -314,6 +335,11 @@
 
 .form-content {
   width: 100%;
+  margin: 0;
+  padding: 0 8px;
+  box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Seção de profile com layout unificado e simplificado */
@@ -386,4 +412,377 @@
 .profile-image-container,
 .profile-image-actions {
   display: none;
+}
+
+/* Add these styles to your component's stylesheet */
+
+/* Mobile Styles */
+.main-container.mobile {
+  padding: 10px;
+}
+
+.content-wrapper.mobile {
+  padding: 10px;
+}
+
+.form-container.mobile {
+  max-width: 100%;
+}
+
+.profile-section.mobile {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-image-wrapper.mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-image.mobile {
+  width: 120px;
+  height: 120px;
+}
+
+.profile-actions.mobile {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.form-row.mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-section.mobile {
+  margin-bottom: 20px;
+}
+
+.form-actions.mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-width-btn {
+  width: 100%;
+}
+
+.mt-2 {
+  margin-top: 8px;
+}
+
+/* Desktop styles remain the same */
+.form-row:not(.mobile) {
+  display: flex;
+  gap: 16px;
+}
+
+.form-actions:not(.mobile) {
+  display: flex;
+  gap: 16px;
+}
+
+.logradouro-field:not(.mobile) {
+  flex: 3;
+}
+
+.numero-field:not(.mobile) {
+  flex: 1;
+}
+
+/* Estilos para o layout com labels ao lado dos campos */
+.field-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.side-label {
+  min-width: 120px;
+  margin-right: 15px;
+  text-align: right;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.field-group mat-form-field {
+  flex: 1;
+}
+
+/* Estilos para layout móvel */
+.mobile-field {
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.mobile-field mat-form-field {
+  width: 100%;
+}
+
+/* Estilos para campos mais largos */
+.wide-field {
+  flex: 1.5; /* Aumenta a proporção de espaço que este campo ocupa */
+}
+
+.expanded-field {
+  width: 100%; /* Garante que o campo de formulário ocupe toda a largura disponível */
+}
+
+/* Para telas maiores, podemos ajustar ainda mais */
+@media (min-width: 768px) {
+  .wide-field {
+    min-width: 280px; /* Define uma largura mínima para desktop */
+  }
+
+  .form-row:not(.mobile) .wide-field {
+    margin-right: 24px; /* Adiciona mais espaçamento entre os campos */
+  }
+
+  .form-row:not(.mobile) .wide-field:last-child {
+    margin-right: 0; /* Remove a margem do último elemento */
+  }
+}
+
+/* Ajustes para telas móveis */
+.mobile-field.wide-field {
+  width: 100%; /* Em dispositivos móveis, ocupa a largura total */
+}
+
+/* Estilos para ajuste dinâmico */
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.fluid-width {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.fluid-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+.fluid-row {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.fluid-field {
+  flex: 1;
+  min-width: 0; /* Importante para permitir encolhimento */
+  transition: width 0.3s ease, flex 0.3s ease;
+}
+
+/* Ajusta a largura dos campos em dispositivos diferentes */
+@media (min-width: 768px) {
+  .fluid-field mat-form-field {
+    width: 100%;
+  }
+
+  .wide-field {
+    flex: 2; /* Campos nome e email ocupam mais espaço */
+  }
+}
+
+/* Ajuste para campos expandidos */
+.expanded-field {
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Classes existentes */
+.wide-field {
+  flex: 1.5;
+}
+
+.expanded-field {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .wide-field {
+    min-width: 280px;
+  }
+
+  .form-row:not(.mobile) .wide-field {
+    margin-right: 24px;
+  }
+
+  .form-row:not(.mobile) .wide-field:last-child {
+    margin-right: 0;
+  }
+}
+
+.mobile-field.wide-field {
+  width: 100%;
+}
+
+/* Ajustes para container de formulário */
+.full-width-container {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: border-box;
+  max-width: unset;
+}
+
+/* Estilos para ajuste dinâmico com o menu */
+.dynamic-container {
+  width: 100%;
+  max-width: 100%;
+  transition: width 0.3s ease, margin 0.3s ease;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .content-wrapper {
+    padding: 16px;
+  }
+
+  .dynamic-container {
+    padding: 0;
+  }
+}
+
+/* Estilos para ajuste dinâmico de largura */
+.main-container {
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.dynamic-container {
+  width: 100% !important;
+  margin: 0 !important;
+  max-width: none !important;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  padding: 0 !important;
+}
+
+.form-content {
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+.fluid-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Estilos para campos */
+.field-group {
+  flex: 1;
+  min-width: 0; /* Importante para permitir que o elemento encolha abaixo do seu conteúdo */
+}
+
+.wide-field {
+  flex: 2;
+}
+
+.expanded-field {
+  width: 100%;
+}
+
+/* Ajuste automático para quando redimensionar a janela */
+@media (max-width: 1200px) {
+  .field-group {
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 992px) {
+  .field-group:not(.mobile-field) {
+    min-width: 200px;
+  }
+}
+
+/* Estilos para o layout móvel já existentes */
+.mobile-field {
+  width: 100%;
+}
+
+/* Ajustes para eliminar espaço lateral excessivo */
+.full-width-wrapper {
+  width: 100%;
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+/* Mantém apenas um padding mínimo para evitar que o conteúdo cole nas bordas */
+.form-container {
+  padding: 0 5px;
+}
+
+/* Garante que os campos do formulário se expandam adequadamente */
+.form-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ajuste responsivo para diferentes tamanhos de tela */
+@media (min-width: 768px) {
+  .full-width-wrapper:not(.mobile) {
+    padding: 0; /* Removido o padding para maximizar espaço */
+  }
+
+  .form-container:not(.mobile) {
+    padding: 0; /* Removido o padding para maximizar espaço */
+  }
+
+  .content-wrapper {
+    max-width: 100%; /* Usando toda a largura disponível */
+    padding: 8px; /* Mínimo padding para não colar nas bordas */
+  }
+}
+
+/* Quando o menu está recolhido, maximizar o uso do espaço */
+.menu-collapsed .form-container {
+  transition: width 0.3s ease;
+  width: 100%;
+}
+
+/* Estilos específicos para o content-wrapper */
+.content-wrapper.full-width-wrapper {
+  max-width: 100%;
+  padding: 8px;
 }

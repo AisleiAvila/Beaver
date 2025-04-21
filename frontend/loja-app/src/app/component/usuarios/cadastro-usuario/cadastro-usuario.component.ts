@@ -1,5 +1,11 @@
 import { CommonModule, formatDate, Location } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -13,7 +19,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { forkJoin, tap } from 'rxjs';
+import { forkJoin, Subscription, tap } from 'rxjs';
 import { ApiError } from 'src/app/model/apiError.model';
 import { Cidade } from 'src/app/model/cidade.model';
 import { Estado } from 'src/app/model/estado.model';
@@ -33,6 +39,8 @@ import { UsuariosService } from '../../../service/usuarios.service';
 import { WebcamModalComponent } from '../../../shared/components/webcam-modal/webcam-modal.component';
 import { CharCountService } from '../../../shared/service/char-count.service';
 import { Endereco } from './../../../model/endereco.model';
+import { DeviceService } from 'src/app/shared/service/device.service';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -54,7 +62,7 @@ import { Endereco } from './../../../model/endereco.model';
     TranslateModule,
   ],
 })
-export class CadastroUsuarioComponent implements OnInit {
+export class CadastroUsuarioComponent implements OnInit, OnDestroy {
   route = inject(ActivatedRoute);
   usuariosService = inject(UsuariosService);
   perfisService = inject(PerfisService);
@@ -70,6 +78,8 @@ export class CadastroUsuarioComponent implements OnInit {
   utilService = inject(UtilService);
   translate = inject(TranslateService);
   dialog = inject(MatDialog);
+  deviceService = inject(DeviceService);
+  private layoutService = inject(LayoutService);
 
   isEditMode = false;
   isCreateMode = false;
@@ -84,6 +94,10 @@ export class CadastroUsuarioComponent implements OnInit {
   lstCidades: Cidade[] = [];
   cidadeId: number;
   nomeCidade = '';
+
+  isMobile = false;
+  private subscription = new Subscription();
+  private layoutSubscription: Subscription;
 
   lstPerfis: Perfil[] = []; // Certifique-se de que lstPerfis é um array
   id = 0;
@@ -146,11 +160,53 @@ export class CadastroUsuarioComponent implements OnInit {
 
   // Add these properties to your component class
   profileImageUrl: string | null = null;
+  isMenuCollapsed: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    // Força a atualização do layout quando o tamanho da janela mudar
+    setTimeout(() => {
+      // Trigger change detection
+      this.isMobile = this.checkIfMobile(); // ou qualquer lógica que você use para determinar isso
+    }, 0);
+  }
+
+  private checkIfMobile(): boolean {
+    // Implemente sua lógica para verificar se é mobile
+    // Por exemplo:
+    return window.innerWidth < 768;
+  }
 
   ngOnInit(): void {
     forkJoin([this.getPerfis(), this.getPaises()]).subscribe(() => {
       this.initializeComponent();
     });
+
+    this.subscription.add(
+      this.deviceService.isMobile$.subscribe((isMobile) => {
+        this.isMobile = isMobile;
+        console.log('CadastroUsuarioComponent - dispositivo móvel:', isMobile);
+      })
+    );
+
+    // Assinar ao serviço de layout para detectar mudanças no menu
+    this.layoutSubscription = this.layoutService.menuState$.subscribe(
+      (isCollapsed) => {
+        this.isMenuCollapsed = isCollapsed;
+        // Forçar detecção de alterações para atualizar o layout
+        setTimeout(() => {}, 0);
+      }
+    );
+
+    // Inicializa o estado mobile
+    this.isMobile = this.checkIfMobile();
+  }
+
+  ngOnDestroy(): void {
+    if (this.layoutSubscription) {
+      this.layoutSubscription.unsubscribe();
+    }
+    this.subscription.unsubscribe();
   }
 
   onInputChange(inputId: string, charCountId: string, maxLength: number): void {
