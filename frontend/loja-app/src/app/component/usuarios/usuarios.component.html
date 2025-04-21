@@ -19,7 +19,7 @@
         class="filters-container"
         [class.hidden-mobile]="isMobile && !showFilters"
       >
-        <div class="field-with-side-label filter-field">
+        <div class="field-with-side-label filter-field wide-field">
           <label class="side-label" for="nome-input"
             >{{ "LABLE_NOME" | translate }}:</label
           >
@@ -28,7 +28,7 @@
           </mat-form-field>
         </div>
 
-        <div class="field-with-side-label filter-field">
+        <div class="field-with-side-label filter-field wide-field">
           <label class="side-label" for="email-input"
             >{{ "LABLE_EMAIL" | translate }}:</label
           >
@@ -37,41 +37,43 @@
           </mat-form-field>
         </div>
 
-        <div class="field-with-side-label filter-field">
-          <label class="side-label" for="data-nascimento-input"
-            >{{ "LABLE_DATA_NASCIMENTO" | translate }}:</label
-          >
-          <mat-form-field appearance="fill" class="side-input">
-            <input
-              id="data-nascimento-input"
-              matInput
-              [matDatepicker]="picker"
-              #dataNascimentoInput
-              (dateInput)="onDateInput($event)"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
+        <div class="small-fields-row">
+          <div class="field-with-side-label filter-field">
+            <label class="side-label" for="data-nascimento-input"
+              >{{ "LABLE_DATA_NASCIMENTO" | translate }}:</label
+            >
+            <mat-form-field appearance="fill" class="side-input">
+              <input
+                id="data-nascimento-input"
+                matInput
+                [matDatepicker]="picker"
+                #dataNascimentoInput
+                (dateInput)="onDateInput($event)"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
 
-        <div class="field-with-side-label filter-field">
-          <label class="side-label" for="perfil-input"
-            >{{ "LABLE_PERFIL" | translate }}:</label
-          >
-          <mat-form-field appearance="fill" class="side-input">
-            <mat-select id="perfil-input" multiple>
-              <mat-option
-                *ngFor="let option of options"
-                [value]="option"
-                (click)="toggleSelection(option)"
-              >
-                {{ option.nome }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div class="field-with-side-label filter-field">
+            <label class="side-label" for="perfil-input"
+              >{{ "LABLE_PERFIL" | translate }}:</label
+            >
+            <mat-form-field appearance="fill" class="side-input">
+              <mat-select id="perfil-input" multiple>
+                <mat-option
+                  *ngFor="let option of options"
+                  [value]="option"
+                  (click)="toggleSelection(option)"
+                >
+                  {{ option.nome }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
       </div>
 

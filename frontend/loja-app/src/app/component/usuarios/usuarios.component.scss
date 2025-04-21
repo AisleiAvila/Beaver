@@ -109,15 +109,132 @@ body {
   align-items: center;
 }
 
+/* Adjust field widths and layout with minimal spacing */
 .filters-container {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
+  flex-direction: column;
+  gap: 4px; /* Reduced even further */
+  width: 100%;
+  margin-bottom: 8px;
+}
 
-  mat-form-field {
-    flex: 1;
-    min-width: 200px;
+.field-with-side-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  height: 60px; /* Explicit height constraint */
+  max-height: 60px;
+}
+
+.small-fields-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Reduced even further */
+  width: 100%;
+  margin: 0;
+}
+
+/* Compact form field styling */
+.side-input {
+  margin-bottom: 0 !important; /* Override material margins */
+}
+
+/* Reduce internal padding of mat-form-field */
+::ng-deep .filter-field .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+  height: 40px !important;
+}
+
+::ng-deep .filter-field .mat-form-field-infix {
+  padding: 0 !important;
+  border-top-width: 0.4em !important;
+  height: 28px !important;
+}
+
+/* Override Material's default form field height */
+::ng-deep .filter-field .mat-form-field {
+  height: 45px;
+  line-height: normal;
+}
+
+/* Adjust input text positioning */
+::ng-deep .filter-field input.mat-input-element {
+  margin-top: 0 !important;
+  line-height: 28px !important;
+}
+
+/* Make select fields same height as inputs */
+::ng-deep .filter-field .mat-select {
+  margin-top: 0 !important;
+  line-height: 28px !important;
+}
+
+/* Reduce flex area height */
+::ng-deep .filter-field .mat-form-field-flex {
+  height: 36px !important;
+  min-height: 36px !important;
+  align-items: center !important;
+}
+
+/* Make field outline smaller */
+::ng-deep .filter-field .mat-form-field-outline {
+  top: 0 !important;
+}
+
+/* Reduce space between the label and input */
+::ng-deep .filter-field .mat-form-field-flex {
+  align-items: center !important;
+  min-height: 40px !important;
+}
+
+/* Adjust label vertical position */
+.side-label {
+  font-size: 14px;
+  margin: 0;
+  padding: 0 8px 0 0;
+}
+
+/* For desktop view */
+@media (min-width: 769px) {
+  .small-fields-row {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 12px; /* Slight reduction */
+  }
+
+  .small-fields-row .field-with-side-label {
+    width: calc(50% - 6px);
+    margin-bottom: 0;
+  }
+}
+
+/* For mobile view, fields should take full width */
+@media (max-width: 768px) {
+  .field-with-side-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    height: auto; /* Auto height for stacked layout */
+    max-height: none;
+    padding: 4px 0;
+  }
+
+  .side-label {
+    text-align: left;
+    padding-left: 4px;
+  }
+
+  .side-input {
+    width: 100%;
+  }
+
+  .wide-field,
+  .small-fields-row,
+  .small-fields-row .field-with-side-label {
+    width: 100%;
   }
 }
 
@@ -292,8 +409,9 @@ mat-paginator {
 .field-with-side-label {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px; /* Reduced from 12px */
   width: 100%;
+  margin-bottom: 4px; /* Add small bottom margin */
 }
 
 .side-label {
