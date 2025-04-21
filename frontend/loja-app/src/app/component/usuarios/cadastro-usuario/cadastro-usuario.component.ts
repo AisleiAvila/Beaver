@@ -160,10 +160,10 @@ export class CadastroUsuarioComponent implements OnInit, OnDestroy {
 
   // Add these properties to your component class
   profileImageUrl: string | null = null;
-  isMenuCollapsed: boolean = false;
+  isMenuCollapsed = false;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
+  @HostListener('window:resize', [])
+  onResize(): void {
     // Força a atualização do layout quando o tamanho da janela mudar
     setTimeout(() => {
       // Trigger change detection
@@ -194,7 +194,9 @@ export class CadastroUsuarioComponent implements OnInit, OnDestroy {
       (isCollapsed) => {
         this.isMenuCollapsed = isCollapsed;
         // Forçar detecção de alterações para atualizar o layout
-        setTimeout(() => {}, 0);
+        setTimeout(() => {
+          // Add meaningful logic here if needed, or remove this setTimeout entirely
+        }, 0);
       }
     );
 

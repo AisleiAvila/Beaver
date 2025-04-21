@@ -9,32 +9,70 @@
             {{ "Pesquisar Categorias" | translate }}
           </h3>
           <div class="form-row">
-            <mat-form-field appearance="outline" class="filtro-nome-field">
-              <mat-label>{{ "LABLE_NOME" | translate }}</mat-label>
-              <input matInput [(ngModel)]="filtroNome" name="filtroNome" />
-            </mat-form-field>
-
-            <!-- Adicionar seleção múltipla de status -->
-            <mat-form-field appearance="outline" class="filtro-status-field">
-              <mat-label>{{ "LABLE_STATUS" | translate }}</mat-label>
-              <mat-select
-                [(ngModel)]="statusSelecionados"
-                name="statusSelecionados"
-                multiple
-              >
-                <mat-option
-                  *ngFor="let status of statusOptions"
-                  [value]="status"
+            <div class="field-group name-field-group wide-field">
+              <div class="compact-label">
+                <label class="side-label closer-label" for="nome-input-id">
+                  {{ "LABLE_NOME" | translate }}:
+                </label>
+              </div>
+              <div class="field-container expanded-field">
+                <mat-form-field
+                  appearance="fill"
+                  class="filtro-nome-field full-width"
                 >
-                  {{ status }}
-                </mat-option>
-                <mat-option (click)="toggleAllStatus()">
-                  {{
-                    allStatusSelected ? "Desmarcar Todos" : "Selecionar Todos"
-                  }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                  <input
+                    matInput
+                    [(ngModel)]="filtroNome"
+                    name="filtroNome"
+                    id="nome-input-id"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Status field with selected values display -->
+            <div class="field-group status-field-group">
+              <div class="compact-label">
+                <label class="side-label closer-label" for="status-select-id">
+                  {{ "LABLE_STATUS" | translate }}:
+                </label>
+                <div
+                  class="inline-selected-values compact-values"
+                  *ngIf="statusSelecionados?.length"
+                >
+                  <span class="selected-value-text">{{
+                    statusSelecionados.join(", ")
+                  }}</span>
+                </div>
+              </div>
+              <div class="field-container expanded-field">
+                <mat-form-field
+                  appearance="fill"
+                  class="filtro-status-field full-width"
+                >
+                  <mat-select
+                    [(ngModel)]="statusSelecionados"
+                    name="statusSelecionados"
+                    multiple
+                    id="status-select-id"
+                  >
+                    <mat-option
+                      *ngFor="let status of statusOptions"
+                      [value]="status"
+                    >
+                      {{ status }}
+                    </mat-option>
+                    <mat-option (click)="toggleAllStatus()">
+                      {{
+                        allStatusSelected
+                          ? "Desmarcar Todos"
+                          : "Selecionar Todos"
+                      }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
           </div>
 
           <div class="form-actions">
@@ -48,19 +86,24 @@
               {{ "LABLE_PESQUISAR" | translate }}
             </button>
 
-            <button mat-raised-button type="button" (click)="limparFiltros()">
-              <mat-icon>clear</mat-icon>
-              {{ "LABLE_LIMPAR_FILTROS" | translate }}
-            </button>
-
             <button
               mat-raised-button
-              color="accent"
+              color="primary"
               type="button"
               (click)="cadastrarCategoria()"
             >
               <mat-icon>add</mat-icon>
               {{ "LABLE_CADASTRAR" | translate }}
+            </button>
+
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="limparFiltros()"
+            >
+              <mat-icon>clear</mat-icon>
+              {{ "LABLE_LIMPAR_FILTROS" | translate }}
             </button>
           </div>
         </div>
@@ -109,7 +152,7 @@
             </button>
             <button
               mat-icon-button
-              color="accent"
+              color="primary"
               (click)="cadastroCategoria(categoria.id, 'Alterar')"
               matTooltip="{{ 'LABLE_ALTERAR_USUARIO' | translate }}"
             >

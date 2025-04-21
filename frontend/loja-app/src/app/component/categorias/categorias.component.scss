@@ -34,3 +34,121 @@ button {
   flex: 1; /* Ocupa 1 parte do espaço disponível */
   min-width: 200px;
 }
+
+/* Styles for displaying selected status values */
+.field-group {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.side-label {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.field-with-selections {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.selected-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.selected-chip {
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 3px 10px;
+  font-size: 13px;
+  color: #333;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-field-group {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 5px;
+}
+
+/* Makes selected values more compact */
+.compact-values {
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+.label-with-selections {
+  display: flex;
+  align-items: center;
+  min-width: 120px;
+  margin-right: 15px;
+}
+
+.inline-selected-values {
+  font-size: 13px;
+  color: #666;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selected-value-text {
+  font-style: italic;
+}
+
+.field-container {
+  flex: 1;
+  width: 100%;
+}
+
+.name-field-group {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Width adjustments for fields */
+.wide-field {
+  flex: 2; /* Take more space than other fields */
+}
+
+.expanded-field {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Make labels closer to fields */
+.compact-label {
+  margin-right: 5px; /* Reduce the right margin */
+  display: flex;
+  align-items: center;
+}
+
+.closer-label {
+  margin-right: 0; /* Remove right margin from the label */
+  white-space: nowrap;
+  min-width: 80px; /* Smaller min-width */
+}
+
+/* Adjust the field group to have tighter spacing */
+.field-group.name-field-group {
+  gap: 5px; /* Reduce the gap between label and field */
+  display: flex;
+  align-items: center;
+}
