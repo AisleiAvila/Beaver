@@ -2,171 +2,230 @@
   <div class="content-wrapper">
     <h2 class="page-title">{{ "TITLE_USUARIOS" | translate }}</h2>
 
-    <div class="filters-section">
-      <h3 class="filters-title">{{ "TITLE_FILTROS" | translate }}:</h3>
-      <div class="filters-container">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ "LABLE_NOME" | translate }}</mat-label>
-          <input
-            matInput
-            #nomeInput
-            placeholder="{{ 'LABLE_FILTRAR_NOME' | translate }}"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ "LABLE_EMAIL" | translate }}</mat-label>
-          <input
-            matInput
-            #emailInput
-            placeholder="{{ 'LABLE_FILTRAR_EMAIL' | translate }}"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ "LABLE_DATA_NASCIMENTO" | translate }}</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            #dataNascimentoInput
-            (dateInput)="onDateInput($event)"
-            placeholder="{{ 'LABLE_FILTRAR_DATA_NASCIMENTO' | translate }}"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>{{ "LABLE_PERFIL" | translate }}</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            #dataNascimentoInput
-            (dateInput)="onDateInput($event)"
-            placeholder="{{ 'LABLE_FILTRAR_PERFIL' | translate }}"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field> -->
-
-        <mat-form-field appearance="fill">
-          <mat-label>{{ "LABLE_PERFIL" | translate }}</mat-label>
-          <mat-select multiple>
-            <mat-option
-              *ngFor="let option of options"
-              [value]="option"
-              (click)="toggleSelection(option)"
-            >
-              {{ option.nome }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+    <div class="filters-section" [class.mobile-layout]="isMobile">
+      <div class="filters-header">
+        <h3 class="filters-title">{{ "TITLE_FILTROS" | translate }}:</h3>
+        <button
+          *ngIf="isMobile"
+          mat-icon-button
+          color="primary"
+          (click)="toggleFiltersVisibility()"
+        >
+          <mat-icon>{{ showFilters ? "expand_less" : "expand_more" }}</mat-icon>
+        </button>
       </div>
 
-      <div class="actions-container">
-        <button mat-raised-button color="primary" (click)="applyFilters()">
+      <div
+        class="filters-container"
+        [class.hidden-mobile]="isMobile && !showFilters"
+      >
+        <div class="field-with-side-label filter-field">
+          <label class="side-label" for="nome-input"
+            >{{ "LABLE_NOME" | translate }}:</label
+          >
+          <mat-form-field appearance="fill" class="side-input">
+            <input id="nome-input" matInput #nomeInput />
+          </mat-form-field>
+        </div>
+
+        <div class="field-with-side-label filter-field">
+          <label class="side-label" for="email-input"
+            >{{ "LABLE_EMAIL" | translate }}:</label
+          >
+          <mat-form-field appearance="fill" class="side-input">
+            <input id="email-input" matInput #emailInput />
+          </mat-form-field>
+        </div>
+
+        <div class="field-with-side-label filter-field">
+          <label class="side-label" for="data-nascimento-input"
+            >{{ "LABLE_DATA_NASCIMENTO" | translate }}:</label
+          >
+          <mat-form-field appearance="fill" class="side-input">
+            <input
+              id="data-nascimento-input"
+              matInput
+              [matDatepicker]="picker"
+              #dataNascimentoInput
+              (dateInput)="onDateInput($event)"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="field-with-side-label filter-field">
+          <label class="side-label" for="perfil-input"
+            >{{ "LABLE_PERFIL" | translate }}:</label
+          >
+          <mat-form-field appearance="fill" class="side-input">
+            <mat-select id="perfil-input" multiple>
+              <mat-option
+                *ngFor="let option of options"
+                [value]="option"
+                (click)="toggleSelection(option)"
+              >
+                {{ option.nome }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="actions-container" [class.mobile-actions]="isMobile">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="applyFilters()"
+          class="action-button"
+        >
           <mat-icon>search</mat-icon>
-          {{ "LABLE_PESQUISAR_USUARIOS" | translate }}
+          <span>{{ "LABLE_PESQUISAR" | translate }}</span>
         </button>
 
         <button
           mat-raised-button
-          color="accent"
+          color="primary"
           (click)="navigateToCadastroUsuario()"
+          class="action-button"
         >
           <mat-icon>add</mat-icon>
-          {{ "LABLE_CADASTRAR" | translate }}
+          <span>{{ "LABLE_CADASTRAR" | translate }}</span>
         </button>
 
         <button
           mat-raised-button
-          color="warn"
+          color="primary"
           (click)="limparFiltros(nomeInput, emailInput, dataNascimentoInput)"
+          class="action-button"
         >
           <mat-icon>clear</mat-icon>
-          {{ "LABLE_LIMPAR_FILTROS" | translate }}
+          <span>{{ "LABLE_LIMPAR_FILTROS" | translate }}</span>
         </button>
       </div>
     </div>
 
-    <div class="table-container mat-elevation-z8">
-      <mat-table [dataSource]="usuarios" matSort>
-        <!-- Colunas da tabela -->
-        <ng-container matColumnDef="nome">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ "LABLE_NOME" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let usuario">{{ usuario.nome }}</mat-cell>
-        </ng-container>
+    <!-- Column toggle for mobile -->
+    <div class="column-toggle" *ngIf="isMobile">
+      <button mat-button [matMenuTriggerFor]="columnMenu">
+        <mat-icon>view_column</mat-icon>
+        {{ "LABLE_EXIBIR_COLUNAS" | translate }}
+      </button>
+      <mat-menu #columnMenu="matMenu">
+        <mat-checkbox
+          *ngFor="let column of availableColumns"
+          class="column-checkbox"
+          [(ngModel)]="column.visible"
+          (change)="updateDisplayedColumns()"
+        >
+          {{ column.name | translate }}
+        </mat-checkbox>
+      </mat-menu>
+    </div>
 
-        <ng-container matColumnDef="email">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ "LABLE_EMAIL" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let usuario">{{ usuario.email }}</mat-cell>
-        </ng-container>
+    <div
+      class="table-container mat-elevation-z8"
+      [class.mobile-table]="isMobile"
+    >
+      <div class="table-wrapper">
+        <mat-table [dataSource]="usuarios" matSort>
+          <!-- Nome Column -->
+          <ng-container matColumnDef="nome">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "LABLE_NOME" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let usuario">{{ usuario.nome }}</mat-cell>
+          </ng-container>
 
-        <ng-container matColumnDef="dataNascimento">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ "LABLE_DATA_NASCIMENTO" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let usuario">{{
-            usuario.dataNascimento
-          }}</mat-cell>
-        </ng-container>
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "LABLE_EMAIL" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let usuario">{{ usuario.email }}</mat-cell>
+          </ng-container>
 
-        <ng-container matColumnDef="perfis">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "LABLE_PERFIS" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let usuario">
-            <span *ngFor="let perfil of usuario.perfis; let i = index">
-              {{ perfil.nome }}{{ i < usuario.perfis.length - 1 ? ", " : "" }}
-            </span>
-          </mat-cell>
-        </ng-container>
+          <!-- Data Nascimento Column -->
+          <ng-container matColumnDef="dataNascimento">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "LABLE_DATA_NASCIMENTO" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let usuario">
+              {{
+                usuario.dataNascimento
+                  | date : (isMobile ? "shortDate" : "mediumDate")
+              }}
+            </mat-cell>
+          </ng-container>
 
-        <ng-container matColumnDef="acoes">
-          <mat-header-cell *matHeaderCellDef class="actions-column">
-            {{ "LABLE_ACOES" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let usuario" class="actions-column">
-            <button
-              mat-icon-button
-              color="primary"
-              (click)="cadastroUsuario(usuario.id, 'Detalhar')"
-              matTooltip="{{ 'LABLE_DETALHAR_USUARIO' | translate }}"
-            >
-              <mat-icon>visibility</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="accent"
-              (click)="cadastroUsuario(usuario.id, 'Alterar')"
-              matTooltip="{{ 'LABLE_ALTERAR_USUARIO' | translate }}"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="excluirUsuario(usuario.id)"
-              matTooltip="{{ 'LABLE_EXCLUIR_USUARIO' | translate }}"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
+          <!-- Perfis Column -->
+          <ng-container matColumnDef="perfis">
+            <mat-header-cell *matHeaderCellDef>
+              {{ "LABLE_PERFIS" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let usuario">
+              <span *ngFor="let perfil of usuario.perfis; let i = index">
+                {{ perfil.nome }}{{ i < usuario.perfis.length - 1 ? ", " : "" }}
+              </span>
+            </mat-cell>
+          </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-      </mat-table>
+          <!-- Acoes Column -->
+          <ng-container matColumnDef="acoes">
+            <mat-header-cell *matHeaderCellDef class="actions-column">
+              {{ "LABLE_ACOES" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let usuario" class="actions-column">
+              <div
+                class="action-buttons"
+                [class.mobile-actions-group]="isMobile"
+              >
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="cadastroUsuario(usuario.id, 'Detalhar')"
+                  matTooltip="{{ 'LABLE_DETALHAR_USUARIO' | translate }}"
+                  class="action-icon"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="cadastroUsuario(usuario.id, 'Alterar')"
+                  matTooltip="{{ 'LABLE_ALTERAR_USUARIO' | translate }}"
+                  class="action-icon"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="excluirUsuario(usuario.id)"
+                  matTooltip="{{ 'LABLE_EXCLUIR_USUARIO' | translate }}"
+                  class="action-icon"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      </div>
+
+      <!-- Empty state message -->
+      <div *ngIf="usuarios.data.length === 0" class="empty-state">
+        <mat-icon>search_off</mat-icon>
+        <p>{{ "MESSAGE_NENHUM_USUARIO_ENCONTRADO" | translate }}</p>
+      </div>
 
       <mat-paginator
         [length]="totalUsuarios"

@@ -3,9 +3,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  ViewChild,
-  OnInit,
   inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +19,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import {
   MatPaginator,
   MatPaginatorIntl,
@@ -36,14 +38,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Usuario } from 'src/app/model/usuario.model';
-import { UsuarioResponseDTO } from 'src/app/model/usuarioResponseDTO.model';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { CustomPaginatorIntl } from 'src/app/shared/service/custom-paginator-intl';
-import { MessageModalComponent } from '../../shared/components/modal/message-modal/message-modal.component';
+import { DeviceService } from 'src/app/shared/service/device.service';
 import { Perfil } from '../../model/perfil.model';
 import { PerfisService } from '../../service/perfis.service';
+import { MessageModalComponent } from '../../shared/components/modal/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -65,6 +68,7 @@ import { PerfisService } from '../../service/perfis.service';
     MatSelectModule,
     MatOptionModule,
     MatSnackBarModule,
+    MatMenuModule,
     TranslateModule,
     NgbModalModule,
     MatCheckboxModule,
@@ -72,7 +76,7 @@ import { PerfisService } from '../../service/perfis.service';
     ReactiveFormsModule,
   ],
 })
-export class UsuariosComponent implements AfterViewInit, OnInit {
+export class UsuariosComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('nomeInput') nomeInput!: ElementRef;
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('dataNascimentoInput') dataNascimentoInput!: ElementRef;
@@ -100,6 +104,14 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
     'acoes',
   ];
 
+  availableColumns = [
+    { name: 'LABLE_NOME', key: 'nome', visible: true },
+    { name: 'LABLE_EMAIL', key: 'email', visible: true },
+    { name: 'LABLE_DATA_NASCIMENTO', key: 'dataNascimento', visible: true },
+    { name: 'LABLE_PERFIS', key: 'perfis', visible: true },
+    { name: 'LABLE_ACOES', key: 'acoes', visible: true },
+  ];
+
   usuariosService = inject(UsuariosService);
   perfisService = inject(PerfisService);
   modalService = inject(NgbModal);
@@ -107,16 +119,11 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
   snackBar = inject(MatSnackBar);
   paginatorIntl = inject(MatPaginatorIntl);
   translate = inject(TranslateService);
+  deviceService = inject(DeviceService);
 
-  // constructor(
-  // private usuariosService: UsuariosService,
-  // private modalService: NgbModal,
-  // private router: Router,
-  // private snackBar: MatSnackBar,
-  // private paginatorIntl: MatPaginatorIntl,
-  // private translate: TranslateService,
-  // private perfisService: PerfisService
-  // ) {}
+  isMobile = false;
+  showFilters = false;
+  private subscription = new Subscription();
 
   ngOnInit(): void {
     this.perfisService.getPerfis().subscribe((perfis) => {
@@ -126,6 +133,21 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
         selected: false,
       }));
     });
+
+    this.subscription.add(
+      this.deviceService.isMobile$.subscribe((isMobile) => {
+        this.isMobile = isMobile;
+        console.log('UsuariosComponent - dispositivo móvel:', isMobile);
+      })
+    );
+
+    this.checkIfMobile();
+
+    window.addEventListener('resize', () => {
+      this.checkIfMobile();
+    });
+
+    this.updateDisplayedColumns();
   }
 
   ngAfterViewInit(): void {
@@ -147,6 +169,12 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
         });
 
       this.applyFilters();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 
@@ -241,20 +269,6 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
     modalRef.componentInstance.type = type;
   }
 
-  // cadastroUsuario(id: number, acao: string): void {
-  //   this.usuariosService.getUsuarios({ id }).subscribe(
-  //     (usuario) => {
-  //       this.router.navigate(['/cadastro-usuario', id], {
-  //         state: { usuario, acao: acao },
-  //       });
-  //     },
-  //     (error) => {
-  //       console.error('Erro ao carregar usuário:', error);
-  //       this.abrirModal('Erro ao carregar usuário', 'error');
-  //     }
-  //   );
-  // }
-
   async cadastroUsuario(id: number, acao: string): Promise<void> {
     try {
       const response = await this.usuariosService.getUsuarios({ id });
@@ -272,23 +286,6 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
       this.abrirModal('Erro ao carregar usuário', 'error');
     }
   }
-
-  // excluirUsuario(id: number): void {
-  //   this.usuariosService.deleteUsuario({ id }).subscribe(
-  //     () => {
-  //       this.snackBar.open('Usuário excluído com sucesso!', 'Fechar', {
-  //         duration: 3000,
-  //         horizontalPosition: 'center',
-  //         verticalPosition: 'top',
-  //       } as MatSnackBarConfig);
-  //       this.loadUsuarios();
-  //     },
-  //     (error) => {
-  //       console.error('Erro ao excluir usuário:', error);
-  //       this.abrirModal('Erro ao excluir usuário' + error, 'error');
-  //     }
-  //   );
-  // }
 
   async excluirUsuario(id: number): Promise<void> {
     try {
@@ -326,13 +323,11 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
     this.translate.use(language);
   }
 
-  // Função para atualizar a seleção
   toggleSelection(option: Perfil) {
     option.selected = !option.selected;
     this.selectedOptions = this.options.filter((option) => option.selected);
   }
 
-  // Função para chamar loadUsuarios com os filtros
   applyFilters() {
     const filters = {
       nome: this.nomeInput.nativeElement.value,
@@ -341,5 +336,26 @@ export class UsuariosComponent implements AfterViewInit, OnInit {
       perfis: (this.selectedOptions ?? []).map((option) => option.id),
     };
     this.loadUsuarios(filters);
+  }
+
+  checkIfMobile() {
+    this.isMobile = window.innerWidth < 768;
+    if (this.isMobile) {
+      this.availableColumns[1].visible = false;
+      this.availableColumns[2].visible = false;
+    } else {
+      this.availableColumns.forEach((col) => (col.visible = true));
+    }
+    this.updateDisplayedColumns();
+  }
+
+  toggleFiltersVisibility() {
+    this.showFilters = !this.showFilters;
+  }
+
+  updateDisplayedColumns() {
+    this.displayedColumns = this.availableColumns
+      .filter((col) => col.visible)
+      .map((col) => col.key);
   }
 }

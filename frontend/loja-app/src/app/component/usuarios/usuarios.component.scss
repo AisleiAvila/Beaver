@@ -69,7 +69,9 @@ body {
 }
 
 .main-container {
-  padding: 24px;
+  padding: 16px;
+  box-sizing: border-box;
+  width: 100%;
   background-color: #f5f5f5;
   min-height: calc(100vh - 64px);
 }
@@ -81,14 +83,14 @@ body {
 
 .page-title {
   color: #333;
-  font-size: 24px;
+  font-size: 1.5rem;
   margin-bottom: 24px;
   font-weight: 500;
 }
 
 .filters-section {
-  background-color: white;
-  padding: 20px;
+  background-color: #f5f5f5;
+  padding: 16px;
   border-radius: 8px;
   margin-bottom: 24px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -99,6 +101,12 @@ body {
     margin-bottom: 16px;
     font-weight: 500;
   }
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .filters-container {
@@ -113,9 +121,13 @@ body {
   }
 }
 
+.filter-field {
+  flex: 1 1 200px;
+}
+
 .actions-container {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
 
   button {
@@ -125,9 +137,15 @@ body {
   }
 }
 
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .table-container {
   background: white;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 
   mat-table {
@@ -162,7 +180,7 @@ body {
 
   .actions-column {
     max-width: 150px;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   mat-row:hover {
@@ -170,8 +188,85 @@ body {
   }
 }
 
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.column-toggle {
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.column-checkbox {
+  display: block;
+  padding: 8px 16px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  color: #666;
+
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    margin-bottom: 16px;
+  }
+}
+
 mat-paginator {
   border-top: 1px solid #eee;
+}
+
+// Mobile-specific styles
+.mobile-layout {
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .filter-field {
+    width: 100%;
+  }
+}
+
+.mobile-actions {
+  flex-direction: column;
+
+  .action-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.mobile-table {
+  .mat-cell {
+    padding: 8px;
+  }
+
+  .action-icon {
+    min-width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+.mobile-actions-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.hidden-mobile {
+  display: none;
 }
 
 // Responsividade
@@ -190,5 +285,44 @@ mat-paginator {
     button {
       width: 100%;
     }
+  }
+}
+
+// Styles for field with side-by-side label
+.field-with-side-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.side-label {
+  min-width: 80px;
+  text-align: right;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.6); /* Match Material label color */
+  font-size: 14px;
+  padding-right: 8px;
+}
+
+.side-input {
+  flex: 1; /* Take up remaining space */
+}
+
+// Ensure responsive behavior
+@media (max-width: 768px) {
+  .field-with-side-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .side-label {
+    text-align: left;
+    padding-left: 4px;
+  }
+
+  .side-input {
+    width: 100%;
   }
 }
