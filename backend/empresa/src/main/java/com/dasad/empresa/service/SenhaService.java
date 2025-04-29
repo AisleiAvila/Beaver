@@ -1,7 +1,7 @@
 package com.dasad.empresa.service;
 
 import com.dasad.empresa.infra.security.AuthorizationService;
-import com.dasad.empresa.jooq.tables.records.UsuarioRecuperarSenhaRecord;
+import com.dasad.empresa.jooq.model.tables.records.UsuarioRecuperarSenhaRecord;
 import com.dasad.empresa.model.RecuperarSenha200Response;
 import com.dasad.empresa.model.RecuperarSenhaRequest;
 import com.dasad.empresa.model.SalvarSenha200Response;
@@ -108,7 +108,7 @@ public class SenhaService {
         return ResponseEntity.ok(response);
     }
 
-    public  ResponseEntity<ValidarResetToken200Response> getValidarResetToken(String token) {
+    public ResponseEntity<ValidarResetToken200Response> getValidarResetToken(String token) {
         try {
             String email = authorizationService.validateToken(token);
             if (email != null) {
@@ -125,7 +125,7 @@ public class SenhaService {
         }
     }
 
-    public  ResponseEntity<SalvarSenha200Response> getSalvarSenha(SalvarSenhaRequest salvarSenhaRequest) {
+    public ResponseEntity<SalvarSenha200Response> getSalvarSenha(SalvarSenhaRequest salvarSenhaRequest) {
         var response = new SalvarSenha200Response();
         try {
             String email = authorizationService.validateToken(salvarSenhaRequest.getToken());
@@ -136,7 +136,7 @@ public class SenhaService {
             }
 
             // TODO: Implementar a lógica para buscar o id do usuário pelo e-mail
-            var usuario =  usuarioService.findByEmail(email);
+            var usuario = usuarioService.findByEmail(email);
 
             if (usuario.isEmpty()) {
                 response.message("Usuário não encontrado");
@@ -157,7 +157,6 @@ public class SenhaService {
             return ResponseEntity.badRequest().body(response);
         }
     }
-
 
 
 }

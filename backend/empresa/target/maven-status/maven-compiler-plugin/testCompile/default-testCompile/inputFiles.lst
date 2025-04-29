@@ -4,6 +4,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\test\java\controlle
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\test\java\controller\EnderecoControllerTest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\test\java\controller\SenhaControllerTest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\test\java\controller\UsuarioControllerTest.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\test\java\controller\UsuarioSubcategoriaControllerTest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\test\java\infra\security\AuthorizationServiceTest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\test\java\infra\security\CustomAccessDeniedHandlerTest.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\test\java\infra\security\CustomUserDetailServiceTest.java

@@ -1,7 +1,7 @@
 package com.dasad.empresa.repository.query;
 
-import com.dasad.empresa.jooq.tables.Organizacao;
-import com.dasad.empresa.jooq.tables.Usuario;
+import com.dasad.empresa.jooq.model.tables.Organizacao;
+import com.dasad.empresa.jooq.model.tables.Usuario;
 import com.dasad.empresa.model.OrganizacaoModel;
 import jakarta.validation.constraints.NotNull;
 import org.jooq.DSLContext;
@@ -38,7 +38,7 @@ public class OrganizacaoQueryBuilder {
     }
 
     public OrganizacaoQueryBuilder withId(Integer id) {
-        if(id != null) {
+        if (id != null) {
             this.query.where(Organizacao.ORGANIZACAO.ID.eq(id));
         }
         return this;
@@ -71,7 +71,7 @@ public class OrganizacaoQueryBuilder {
     }
 
     public OrganizacaoQueryBuilder withOffset(Integer offset) {
-        this.query.offset(offset != null  ? offset : 0);
+        this.query.offset(offset != null ? offset : 0);
         return this;
     }
 

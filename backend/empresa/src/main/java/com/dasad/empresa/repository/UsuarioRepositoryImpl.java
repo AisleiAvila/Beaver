@@ -1,10 +1,10 @@
 package com.dasad.empresa.repository;
 
 import com.dasad.empresa.exception.EmailAlreadyExistsException;
-import com.dasad.empresa.jooq.tables.Cidade;
-import com.dasad.empresa.jooq.tables.Estado;
-import com.dasad.empresa.jooq.tables.Pais;
-import com.dasad.empresa.jooq.tables.UsuarioPerfil;
+import com.dasad.empresa.jooq.model.tables.Cidade;
+import com.dasad.empresa.jooq.model.tables.Estado;
+import com.dasad.empresa.jooq.model.tables.Pais;
+import com.dasad.empresa.jooq.model.tables.UsuarioPerfil;
 import com.dasad.empresa.model.CidadeModel;
 import com.dasad.empresa.model.EnderecoModel;
 import com.dasad.empresa.model.EstadoModel;
@@ -32,13 +32,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.dasad.empresa.jooq.tables.Endereco.ENDERECO;
-import static com.dasad.empresa.jooq.tables.Organizacao.ORGANIZACAO;
-import static com.dasad.empresa.jooq.tables.Perfil.PERFIL;
-import static com.dasad.empresa.jooq.tables.Usuario.USUARIO;
-import static com.dasad.empresa.jooq.tables.UsuarioFoto.USUARIO_FOTO;
-import static com.dasad.empresa.jooq.tables.UsuarioOrganizacao.USUARIO_ORGANIZACAO;
-import static com.dasad.empresa.jooq.tables.UsuarioPerfil.USUARIO_PERFIL;
+import static com.dasad.empresa.jooq.model.tables.Endereco.ENDERECO;
+import static com.dasad.empresa.jooq.model.tables.Organizacao.ORGANIZACAO;
+import static com.dasad.empresa.jooq.model.tables.Perfil.PERFIL;
+import static com.dasad.empresa.jooq.model.tables.Usuario.USUARIO;
+import static com.dasad.empresa.jooq.model.tables.UsuarioFoto.USUARIO_FOTO;
+import static com.dasad.empresa.jooq.model.tables.UsuarioOrganizacao.USUARIO_ORGANIZACAO;
+import static com.dasad.empresa.jooq.model.tables.UsuarioPerfil.USUARIO_PERFIL;
 
 @Repository
 //@Transactional
@@ -520,7 +520,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .execute();
     }
 
-    private void saveUserOrganizacao(UsuarioModel usuario, Integer organizacaoId,  DSLContext ctx) {
+    private void saveUserOrganizacao(UsuarioModel usuario, Integer organizacaoId, DSLContext ctx) {
         ctx.insertInto(USUARIO_ORGANIZACAO)
                 .set(USUARIO_ORGANIZACAO.USUARIO_ID, usuario.getId())
                 .set(USUARIO_ORGANIZACAO.ORGANIZACAO_ID, organizacaoId)
@@ -528,9 +528,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     private static void deleteUserOrganizacaoById(Integer usuarioId, Integer organizacaoId, DSLContext ctx) {
-    ctx.deleteFrom(USUARIO_ORGANIZACAO)
-                    .where(USUARIO_ORGANIZACAO.USUARIO_ID.eq(usuarioId))
-                            .and(USUARIO_ORGANIZACAO.ORGANIZACAO_ID.eq(organizacaoId))
-                                    .execute();
+        ctx.deleteFrom(USUARIO_ORGANIZACAO)
+                .where(USUARIO_ORGANIZACAO.USUARIO_ID.eq(usuarioId))
+                .and(USUARIO_ORGANIZACAO.ORGANIZACAO_ID.eq(organizacaoId))
+                .execute();
     }
 }

@@ -1,6 +1,6 @@
 package com.dasad.empresa.repository;
 
-import com.dasad.empresa.jooq.tables.records.UsuarioRecuperarSenhaRecord;
+import com.dasad.empresa.jooq.model.tables.records.UsuarioRecuperarSenhaRecord;
 
 public interface SenhaRepository {
 

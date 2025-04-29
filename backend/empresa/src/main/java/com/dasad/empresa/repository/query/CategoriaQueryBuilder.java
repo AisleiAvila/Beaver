@@ -1,8 +1,8 @@
 package com.dasad.empresa.repository.query;
 
-import com.dasad.empresa.jooq.enums.StatusServico;
-import com.dasad.empresa.jooq.tables.Categoria;
-import com.dasad.empresa.jooq.tables.Usuario;
+import com.dasad.empresa.jooq.model.enums.StatusServico;
+import com.dasad.empresa.jooq.model.tables.Categoria;
+import com.dasad.empresa.jooq.model.tables.Usuario;
 import com.dasad.empresa.model.CategoriaModel;
 import jakarta.validation.constraints.NotNull;
 import org.jooq.DSLContext;
@@ -51,60 +51,61 @@ public class CategoriaQueryBuilder {
     }
 
     public CategoriaQueryBuilder withId(Integer id) {
-        if (id != null &&  id != 0) {
+        if (id != null && id != 0) {
             this.query = this.query.and(Categoria.CATEGORIA.ID.eq(id));
         }
         return this;
     }
 
     public CategoriaQueryBuilder withNome(String nome) {
-        if (nome != null &&  !nome.isEmpty()) {
+        if (nome != null && !nome.isEmpty()) {
             this.query = this.query.and(DSL.lower(Categoria.CATEGORIA.NOME).like("%" + nome.toLowerCase() + "%"));
         }
         return this;
     }
 
-    public  CategoriaQueryBuilder withStatus(List<StatusServico> status) {
+    public CategoriaQueryBuilder withStatus(List<StatusServico> status) {
         if (status != null && !status.isEmpty()) {
             this.query = this.query.and(Categoria.CATEGORIA.STATUS.in(status));
         }
         return this;
     }
 
-    public  CategoriaQueryBuilder withRequerCertificacao(Boolean requerCertificacao) {
+    public CategoriaQueryBuilder withRequerCertificacao(Boolean requerCertificacao) {
         if (requerCertificacao != null) {
-            this.query = this.query.and(Categoria.CATEGORIA.REQUER_CERTIFICACAO.eq(requerCertificacao));        }
+            this.query = this.query.and(Categoria.CATEGORIA.REQUER_CERTIFICACAO.eq(requerCertificacao));
+        }
         return this;
     }
 
-    public  CategoriaQueryBuilder withTipoCertificacao(String tipoCertificacao) {
-        if (tipoCertificacao != null &&  !tipoCertificacao.isEmpty()) {
+    public CategoriaQueryBuilder withTipoCertificacao(String tipoCertificacao) {
+        if (tipoCertificacao != null && !tipoCertificacao.isEmpty()) {
             this.query = this.query.and(Categoria.CATEGORIA.TIPO_CERTIFICACAO.eq(tipoCertificacao));
         }
         return this;
     }
 
-    public  CategoriaQueryBuilder withExperienciaMinimaMeses(Integer experienciaMinimaMeses) {
+    public CategoriaQueryBuilder withExperienciaMinimaMeses(Integer experienciaMinimaMeses) {
         if (experienciaMinimaMeses != null && experienciaMinimaMeses != 0) {
             this.query = this.query.and(Categoria.CATEGORIA.EXPERIENCIA_MINIMA_MESES.eq(experienciaMinimaMeses));
         }
         return this;
     }
 
-    public  CategoriaQueryBuilder withNivelRisco( String nivelRisco) {
-        if (nivelRisco != null &&  !nivelRisco.isEmpty()) {
+    public CategoriaQueryBuilder withNivelRisco(String nivelRisco) {
+        if (nivelRisco != null && !nivelRisco.isEmpty()) {
             this.query = this.query.and(Categoria.CATEGORIA.NIVEL_RISCO.eq(nivelRisco));
         }
         return this;
     }
 
     public CategoriaQueryBuilder withLimit(Integer limit) {
-        this.query.limit(limit != null &&  limit > 0 ? limit : DEFAULT_LIMIT);
+        this.query.limit(limit != null && limit > 0 ? limit : DEFAULT_LIMIT);
         return this;
     }
 
     public CategoriaQueryBuilder withOffset(Integer offset) {
-        this.query.offset(offset != null  ? offset : 0);
+        this.query.offset(offset != null ? offset : 0);
         return this;
     }
 

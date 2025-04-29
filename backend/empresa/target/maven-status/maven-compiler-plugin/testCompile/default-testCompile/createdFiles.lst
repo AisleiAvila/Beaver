@@ -9,6 +9,7 @@ controller\UsuarioControllerTest.class
 infra\security\CustomUserDetailServiceTest.class
 controller\AuthControllerTest$RegisterTests.class
 service\EnderecoServiceTest.class
+controller\UsuarioSubCategoriaControllerTest.class
 infra\security\CustomAccessDeniedHandlerTest.class
 controller\CategoriaControllerTest.class
 util\DataUtilTest.class

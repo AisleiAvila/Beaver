@@ -1,7 +1,7 @@
 package com.dasad.empresa.repository;
 
-import com.dasad.empresa.jooq.enums.StatusServico;
-import com.dasad.empresa.jooq.tables.Categoria;
+import com.dasad.empresa.jooq.model.enums.StatusServico;
+import com.dasad.empresa.jooq.model.tables.Categoria;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
 import com.dasad.empresa.repository.query.CategoriaQueryBuilder;

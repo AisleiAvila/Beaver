@@ -10,4 +10,6 @@ public interface SubCategoriaRepository {
 
     Optional<List<SubCategoriaModel>> find(SubCategoriaRequest categoriarequest);
 
+    Optional<SubCategoriaModel> findById(Integer id);
+
 }

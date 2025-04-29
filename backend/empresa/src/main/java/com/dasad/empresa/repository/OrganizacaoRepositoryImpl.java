@@ -1,7 +1,7 @@
 package com.dasad.empresa.repository;
 
 import com.dasad.empresa.exception.OrganizacaoAlreadyExistsException;
-import com.dasad.empresa.jooq.tables.Organizacao;
+import com.dasad.empresa.jooq.model.tables.Organizacao;
 import com.dasad.empresa.model.OrganizacaoModel;
 import com.dasad.empresa.model.OrganizacaoRequest;
 import com.dasad.empresa.repository.query.OrganizacaoQueryBuilder;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class OrganizacaoRepositoryImpl implements  OrganizacaoRepository {
+public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
     private final DSLContext dsl;
 
     @Autowired
@@ -97,7 +97,7 @@ public class OrganizacaoRepositoryImpl implements  OrganizacaoRepository {
         return dsl.transactionResult(configuration -> {
             DSLContext ctx = DSL.using(configuration);
 
-             ctx.insertInto(Organizacao.ORGANIZACAO)
+            ctx.insertInto(Organizacao.ORGANIZACAO)
                     .set(Organizacao.ORGANIZACAO.NOME, organizacao.getNome())
                     .set(Organizacao.ORGANIZACAO.NIF, organizacao.getNif())
                     .set(Organizacao.ORGANIZACAO.EMAIL, organizacao.getEmail())
@@ -107,7 +107,7 @@ public class OrganizacaoRepositoryImpl implements  OrganizacaoRepository {
                     .set(Organizacao.ORGANIZACAO.REPRESENTANTE_LEGAL, organizacao.getRepresentanteLegal())
                     .set(Organizacao.ORGANIZACAO.CARGO, organizacao.getCargo())
                     .set(Organizacao.ORGANIZACAO.NUMERO_REGISTO_COMERCIAL, organizacao.getNumeroRegistoComercial())
-                     .set(Organizacao.ORGANIZACAO.DATA_REGISTO, organizacao.getDataRegisto())
+                    .set(Organizacao.ORGANIZACAO.DATA_REGISTO, organizacao.getDataRegisto())
                     .execute();
 
             Integer userId = ctx.select(Organizacao.ORGANIZACAO.ID)

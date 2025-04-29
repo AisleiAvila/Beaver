@@ -1,8 +1,7 @@
 package com.dasad.empresa.repository.query;
 
-import com.dasad.empresa.jooq.tables.UsuarioFoto;
+import com.dasad.empresa.jooq.model.tables.UsuarioFoto;
 import com.dasad.empresa.model.UsuarioFotoModel;
-import jakarta.annotation.Nonnull;
 import org.jooq.DSLContext;
 import org.jooq.Record6;
 import org.jooq.SelectConditionStep;
@@ -34,14 +33,14 @@ public class UsuarioFotoQueryBuilder {
     }
 
     public UsuarioFotoQueryBuilder withUsuarioId(Integer usuarioId) {
-        if(usuarioId != null) {
+        if (usuarioId != null) {
             this.query = this.query.and(UsuarioFoto.USUARIO_FOTO.USUARIO_ID.eq(usuarioId));
         }
         return this;
     }
 
     public UsuarioFotoQueryBuilder withAtivo(Boolean ativo) {
-        if(ativo != null && ativo) {
+        if (ativo != null && ativo) {
             this.query = this.query.and(UsuarioFoto.USUARIO_FOTO.ATIVO.eq(ativo));
         }
         return this;

@@ -1,13 +1,13 @@
 package com.dasad.empresa.repository.query;
 
-import com.dasad.empresa.jooq.tables.Cidade;
-import com.dasad.empresa.jooq.tables.Estado;
-import com.dasad.empresa.jooq.tables.Organizacao;
-import com.dasad.empresa.jooq.tables.Pais;
-import com.dasad.empresa.jooq.tables.Perfil;
-import com.dasad.empresa.jooq.tables.Usuario;
-import com.dasad.empresa.jooq.tables.UsuarioOrganizacao;
-import com.dasad.empresa.jooq.tables.UsuarioPerfil;
+import com.dasad.empresa.jooq.model.tables.Cidade;
+import com.dasad.empresa.jooq.model.tables.Estado;
+import com.dasad.empresa.jooq.model.tables.Organizacao;
+import com.dasad.empresa.jooq.model.tables.Pais;
+import com.dasad.empresa.jooq.model.tables.Perfil;
+import com.dasad.empresa.jooq.model.tables.Usuario;
+import com.dasad.empresa.jooq.model.tables.UsuarioOrganizacao;
+import com.dasad.empresa.jooq.model.tables.UsuarioPerfil;
 import com.dasad.empresa.model.CidadeModel;
 import com.dasad.empresa.model.EnderecoModel;
 import com.dasad.empresa.model.EstadoModel;
@@ -26,12 +26,12 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import static com.dasad.empresa.jooq.tables.Endereco.ENDERECO;
+import static com.dasad.empresa.jooq.model.tables.Endereco.ENDERECO;
 
 @Slf4j
 public class UsuarioQueryBuilder {
     private final @NotNull SelectOnConditionStep<Record20<Integer, String, String, String, LocalDate, Integer, String, Integer, String, String, String, String, Integer, String, String, Integer, String, Integer, String, Integer>> query;
-    private static final  Integer DEFAULT_LIMIT = 10;
+    private static final Integer DEFAULT_LIMIT = 10;
 
     public UsuarioQueryBuilder(DSLContext db) {
         this.query = db.select(
@@ -98,14 +98,14 @@ public class UsuarioQueryBuilder {
     }
 
     public UsuarioQueryBuilder withPerfil(List<Integer> perfis) {
-        if(perfis != null && !perfis.isEmpty()) {
+        if (perfis != null && !perfis.isEmpty()) {
             this.query.where(Perfil.PERFIL.ID.in(perfis));
         }
         return this;
     }
 
     public UsuarioQueryBuilder withId(Integer id) {
-        if(id != null) {
+        if (id != null) {
             this.query.where(Usuario.USUARIO.ID.eq(id));
         }
         return this;
@@ -117,7 +117,7 @@ public class UsuarioQueryBuilder {
     }
 
     public UsuarioQueryBuilder withOffset(Integer offset) {
-        this.query.offset(offset != null  ? offset : 0);
+        this.query.offset(offset != null ? offset : 0);
         return this;
     }
 
@@ -180,7 +180,7 @@ public class UsuarioQueryBuilder {
 
     public CompletableFuture<Integer> countTotalRecords() {
         return CompletableFuture.supplyAsync(() -> {
-           return Math.toIntExact(this.query.fetch().size());
+            return Math.toIntExact(this.query.fetch().size());
         });
     }
 }

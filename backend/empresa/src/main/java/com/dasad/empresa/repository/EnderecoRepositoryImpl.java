@@ -1,8 +1,8 @@
 package com.dasad.empresa.repository;
 
-import com.dasad.empresa.jooq.tables.Cidade;
-import com.dasad.empresa.jooq.tables.Estado;
-import com.dasad.empresa.jooq.tables.Pais;
+import com.dasad.empresa.jooq.model.tables.Cidade;
+import com.dasad.empresa.jooq.model.tables.Estado;
+import com.dasad.empresa.jooq.model.tables.Pais;
 import com.dasad.empresa.model.CidadeModel;
 import com.dasad.empresa.model.EnderecoModel;
 import com.dasad.empresa.model.EstadoModel;
@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static com.dasad.empresa.jooq.tables.Endereco.ENDERECO;
+import static com.dasad.empresa.jooq.model.tables.Endereco.ENDERECO;
 
 @Repository
 public class EnderecoRepositoryImpl implements EnderecoRepository {

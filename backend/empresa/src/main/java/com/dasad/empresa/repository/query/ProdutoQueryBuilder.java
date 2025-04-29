@@ -1,7 +1,7 @@
 package com.dasad.empresa.repository.query;
 
-import com.dasad.empresa.jooq.tables.Produto;
-import com.dasad.empresa.jooq.tables.Usuario;
+import com.dasad.empresa.jooq.model.tables.Produto;
+import com.dasad.empresa.jooq.model.tables.Usuario;
 import com.dasad.empresa.model.ProdutoModel;
 import jakarta.annotation.Nonnull;
 import org.jooq.DSLContext;
@@ -34,7 +34,7 @@ public class ProdutoQueryBuilder {
     }
 
     public ProdutoQueryBuilder withId(Integer id) {
-        if(id != null) {
+        if (id != null) {
             this.query.where(Produto.PRODUTO.ID.eq(id));
         }
         return this;
@@ -53,7 +53,7 @@ public class ProdutoQueryBuilder {
     }
 
     public ProdutoQueryBuilder withOffset(Integer offset) {
-        this.query.offset(offset != null  ? offset : 0);
+        this.query.offset(offset != null ? offset : 0);
         return this;
     }
 

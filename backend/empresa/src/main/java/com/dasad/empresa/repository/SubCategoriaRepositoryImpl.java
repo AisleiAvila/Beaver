@@ -33,5 +33,14 @@ public class SubCategoriaRepositoryImpl implements SubCategoriaRepository {
         return Optional.ofNullable(result.isEmpty() ? null : result);
     }
 
+    @Override
+    public Optional<SubCategoriaModel> findById(Integer id) {
+        SubCategoriaQueryBuilder queryBuilder = new SubCategoriaQueryBuilder(this.dsl)
+                .withId(id)
+                .withLimit(1)
+                .withOffset(0);
+        List<SubCategoriaModel> result = queryBuilder.build().join();
+        return Optional.ofNullable(result.isEmpty() ? null : result.getFirst());
+    }
 
 }

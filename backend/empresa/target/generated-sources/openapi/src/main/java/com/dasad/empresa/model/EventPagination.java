@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * EventPagination
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-17T13:03:56.201480700+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-29T17:05:43.943920800+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class EventPagination {
 
   private @Nullable Integer length;

@@ -15,6 +15,8 @@ tags:
     description: Operações relacionadas a endereços
   - name: Estado
     description: Operações relacionadas a estados
+  - name: Geolocalização
+    description: Operações relacionadas a geolocalização
   - name: Organização
     description: Operações relacionadas a organizações
   - name: País
@@ -29,8 +31,8 @@ tags:
     description: Operações relacionadas a subcategorias
   - name: Usuario
     description: Operações relacionadas a usuários
-  - name: Geolocalização
-    description: Operações relacionadas a geolocalização
+  - name: UsuarioSubcategoria
+    description: Operações relacionadas a associação de usuários com subcategorias
 
 paths:
   /auth/revoke:
@@ -167,7 +169,7 @@ paths:
                     example: "Usuário já cadastrado."
   /chat/generate:
     post:
-      summary:  Generate endpoint
+      summary: Generate endpoint
       description: Endpoint para gerar resposta baseada no modelo e prompt fornecidos.
       tags:
         - chat
@@ -188,8 +190,8 @@ paths:
   /organizacao/find:
     post:
       summary: Busca Organizações
-#      security:
-#        - bearerAuth: []
+      #      security:
+      #        - bearerAuth: []
       tags:
         - Organização
       operationId: findOrganizacao
@@ -209,7 +211,7 @@ paths:
     get:
       summary: Detalha  uma organização
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Organização
       operationId: detailOrganizacao
@@ -230,7 +232,7 @@ paths:
     put:
       summary: Cria uma organização
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Organização
       operationId: createOrganizacao
@@ -249,7 +251,7 @@ paths:
     patch:
       summary: Atualiza uma organização
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Organização
       operationId: updateOrganizacao
@@ -269,7 +271,7 @@ paths:
     delete:
       summary: Deleta uma organização
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Organização
       operationId: deleteOrganizacao
@@ -286,7 +288,7 @@ paths:
     post:
       summary: Busca Produtos
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Produto
       operationId: findProduto
@@ -306,7 +308,7 @@ paths:
     post:
       summary: Busca usuários
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: findUsuario
@@ -333,7 +335,7 @@ paths:
     get:
       summary: Detalha  um usuário
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: detailUsuario
@@ -354,7 +356,7 @@ paths:
     put:
       summary: Cria um usuário
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: createUsuario
@@ -381,7 +383,7 @@ paths:
     patch:
       summary: Atualiza um usuário
       security:
-          - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: updateUsuario
@@ -408,7 +410,7 @@ paths:
     delete:
       summary: Deleta um usuário
       security:
-          - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: deleteUsuario
@@ -431,7 +433,7 @@ paths:
     get:
       summary: Busca a foto de perfil do usuário
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: getFotoUsuario
@@ -441,12 +443,12 @@ paths:
           required: true
           schema:
             type: integer
-          description:  Id do usuário
+          description: Id do usuário
         - name: ativo
           in: path
           required: true
           schema:
-              type: boolean
+            type: boolean
           description: Indica se a foto está ativa
       responses:
         '200':
@@ -461,7 +463,7 @@ paths:
     put:
       summary: Insere foto do usuário
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: createFotoUsuario
@@ -480,7 +482,7 @@ paths:
     patch:
       summary: Atualiza foto do usuário
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: updateFotoUsuario
@@ -499,7 +501,7 @@ paths:
     delete:
       summary: Deleta foto do usuário
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Usuario
       operationId: deleteFotoUsuario
@@ -509,7 +511,7 @@ paths:
           required: true
           schema:
             type: integer
-          description:  Id do usuário
+          description: Id do usuário
       responses:
         '204':
           description: No Content
@@ -532,11 +534,87 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PerfilModel'
+  /usuariosubcategoria/{usuario_id}/{ativo}:
+    get:
+      summary: Listar subcategorias de um usuário
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - UsuarioSubcategoria
+      operationId: getUsuarioSubcategoria
+      parameters:
+        - name: usuario_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Id do usuário
+        - name: ativo
+          in: path
+          required: true
+          schema:
+            type: boolean
+          description: Indica se a subcategoria está ativa
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UsuarioSubcategoriaModel'
+  /usuariosubcategoria:
+    post:
+      summary: Associar subcategoria a um usuário
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - UsuarioSubcategoria
+      operationId: associarUsuarioSubcategoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioSubcategoriaRequest'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UsuarioSubcategoriaModel'
+    put:
+      summary: Desassociar subcategoria a um usuário
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - UsuarioSubcategoria
+      operationId: desassociarUsuarioSubcategoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioSubcategoriaRequest'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UsuarioSubcategoriaModel'
+
   /endereco:
     post:
       summary: Cria um novo endereço
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Endereço
       operationId: createendereco
@@ -576,7 +654,7 @@ paths:
     get:
       summary: Busca Enderecos
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Perfil
       operationId: findendereco
@@ -636,7 +714,7 @@ paths:
     get:
       summary: Detalha um endereço
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Endereço
       operationId: detailendereco
@@ -673,7 +751,7 @@ paths:
     get:
       summary: Busca Países
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - País
       operationId: findPais
@@ -696,7 +774,7 @@ paths:
     get:
       summary: Detalha um País
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - País
       operationId: detailPais
@@ -717,7 +795,7 @@ paths:
     get:
       summary: Busca Estados
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Estado
       operationId: findEstado
@@ -745,7 +823,7 @@ paths:
     get:
       summary: Detalha um Estado
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Estado
       operationId: detailEstado
@@ -766,7 +844,7 @@ paths:
     get:
       summary: Busca Cidades
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Cidade
       operationId: findCidade
@@ -794,7 +872,7 @@ paths:
     get:
       summary: Detalha uma Cidade
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Cidade
       operationId: detailCidade
@@ -816,7 +894,7 @@ paths:
     post:
       summary: Cria uma categoria
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Categoria
       operationId: createCategoria
@@ -835,7 +913,7 @@ paths:
     patch:
       summary: Atualiza uma categoria
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Categoria
       operationId: updateCategoria
@@ -854,7 +932,7 @@ paths:
     delete:
       summary: Deleta uma categoria
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Categoria
       operationId: deleteCategoria
@@ -871,7 +949,7 @@ paths:
     post:
       summary: Busca Categorias
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Categoria
       operationId: findCategoria
@@ -893,7 +971,7 @@ paths:
     post:
       summary: Busca SubCategorias
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - SubCategoria
       operationId: findSubCategoria
@@ -915,7 +993,7 @@ paths:
     get:
       summary: Busca Status de Serviço
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Categoria
       operationId: findStatusServico
@@ -932,7 +1010,7 @@ paths:
     get:
       summary: Busca Perfis
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Perfil
       operationId: findPerfil
@@ -1044,14 +1122,14 @@ paths:
                   format: email
                   example: "usuario@exemplo.com"
                 senha:
-                    type: string
-                    example: "novaSenha"
+                  type: string
+                  example: "novaSenha"
                 repeatSenha:
-                    type: string
-                    example: "novaSenha"
+                  type: string
+                  example: "novaSenha"
                 token:
-                    type: string
-                    example: "eyJhbGciOi"
+                  type: string
+                  example: "eyJhbGciOi"
       responses:
         '200':
           description: Senha alterada com sucesso.
@@ -1078,7 +1156,7 @@ paths:
     post:
       summary: Obter coordenadas de um endereço
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       tags:
         - Geolocalização
       operationId: getCoordenadas
@@ -1163,54 +1241,54 @@ components:
         event:
           $ref: '#/components/schemas/EventPagination'
     OrganizacaoRequestDTO:
-        type: object
-        properties:
-            id:
-              type: integer
-              description: Identificador da organização
-              example: 1
-            nome:
-              type: string
-              description: Nome da organização
-              example: "XPTO Lda"
-            nif:
-              type: string
-              description: Número de Identificação Fiscal
-              example: "123456789"
-            email:
-              type: string
-              description: Endereço de e-mail
-              example: "Baker Street 221B"
-            website:
-              type: string
-              description: Endereço do website
-              example: "https://www.exemplo.com"
-            setorAtividade:
-              type: string
-              description: Setor de atividade
-              example: "Educação"
-            missao:
-              type: string
-              description: Missão da organização
-              example: "Promover a educação"
-            representanteLegal:
-              type: string
-              description: Representante legal
-              example: "João Silva"
-            cargo:
-              type: string
-              description: Cargo do representante legal
-              example: "CEO"
-            numeroRegistoComercial:
-              type: string
-              description: Número de registo comercial
-              example: "123456789"
-            dataRegisto:
-              type: string
-              format: date
-#              nullable: true
-              description: Data de registo comercial
-              example: "2021-09-01"
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Identificador da organização
+          example: 1
+        nome:
+          type: string
+          description: Nome da organização
+          example: "XPTO Lda"
+        nif:
+          type: string
+          description: Número de Identificação Fiscal
+          example: "123456789"
+        email:
+          type: string
+          description: Endereço de e-mail
+          example: "Baker Street 221B"
+        website:
+          type: string
+          description: Endereço do website
+          example: "https://www.exemplo.com"
+        setorAtividade:
+          type: string
+          description: Setor de atividade
+          example: "Educação"
+        missao:
+          type: string
+          description: Missão da organização
+          example: "Promover a educação"
+        representanteLegal:
+          type: string
+          description: Representante legal
+          example: "João Silva"
+        cargo:
+          type: string
+          description: Cargo do representante legal
+          example: "CEO"
+        numeroRegistoComercial:
+          type: string
+          description: Número de registo comercial
+          example: "123456789"
+        dataRegisto:
+          type: string
+          format: date
+          #              nullable: true
+          description: Data de registo comercial
+          example: "2021-09-01"
     ProdutoRequest:
       type: object
       properties:
@@ -1245,7 +1323,7 @@ components:
           items:
             type: integer
         limit:
-            type: integer
+          type: integer
         offset:
           type: integer
         event:
@@ -1258,9 +1336,9 @@ components:
         pageIndex:
           type: integer
         pageSize:
-            type: integer
+          type: integer
         previousPageIndex:
-            type: integer
+          type: integer
     CategoriaRequest:
       type: object
       properties:
@@ -1277,9 +1355,9 @@ components:
         tipo_certificacao:
           type: string
         experiencia_minima_meses:
-            type: integer
+          type: integer
         nivel_risco:
-            type: string
+          type: string
         limit:
           type: integer
         offset:
@@ -1301,18 +1379,25 @@ components:
           type: integer
         offset:
           type: integer
+    UsuarioSubcategoriaRequest:
+      type: object
+      properties:
+        usuario_id:
+          type: integer
+        subcategoria_id:
+          type: integer
 
     ChatResponseDTO:
-        type: object
-        properties:
-            model:
-              type: string
-            createdAt:
-              type: string
-            response:
-              type: string
-            done:
-                type: boolean
+      type: object
+      properties:
+        model:
+          type: string
+        createdAt:
+          type: string
+        response:
+          type: string
+        done:
+          type: boolean
     LoginResponseDTO:
       type: object
       properties:
@@ -1323,9 +1408,9 @@ components:
         perfil:
           type: string
         organizacoesIds:
-            type: array
-            items:
-                type: integer
+          type: array
+          items:
+            type: integer
     UsuarioResponseDTO:
       type: object
       properties:
@@ -1394,19 +1479,19 @@ components:
         website:
           type: string
         setorAtividade:
-            type: string
+          type: string
         missao:
-            type: string
+          type: string
         representante_legal:
-            type: string
+          type: string
         cargo:
-            type: string
+          type: string
         numeroRegistoComercial:
-            type: string
+          type: string
         dataRegisto:
-            type: string
-            format: date
-#            nullable: true
+          type: string
+          format: date
+    #            nullable: true
     ProdutoModel:
       type: object
       properties:
@@ -1443,13 +1528,13 @@ components:
           items:
             $ref: '#/components/schemas/enderecoModel'
         perfis:
-            type: array
-            items:
-                $ref: '#/components/schemas/PerfilModel'
+          type: array
+          items:
+            $ref: '#/components/schemas/PerfilModel'
         organizacoes:
-            type: array
-            items:
-                $ref: '#/components/schemas/OrganizacaoModel'
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizacaoModel'
         foto:
           $ref: '#/components/schemas/UsuarioFotoModel'
     UsuarioFotoModel:
@@ -1468,6 +1553,23 @@ components:
           type: string
           format: date-time
         data_atualizacao:
+          type: string
+          format: date-time
+    UsuarioSubcategoriaModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        usuario_id:
+          type: integer
+        categoria:
+          $ref: '#/components/schemas/CategoriaModel'
+        subcategoria:
+          $ref: '#/components/schemas/SubCategoriaModel'
+        data_criacao:
+          type: string
+          format: date-time
+        data_exclusao:
           type: string
           format: date-time
     enderecoModel:
@@ -1490,7 +1592,7 @@ components:
         latitude:
           type: number
         longitude:
-            type: number
+          type: number
         usuario_id:
           type: integer
 
@@ -1527,49 +1629,49 @@ components:
         nome:
           type: string
     CategoriaModel:
-        type: object
-        properties:
-            id:
-              type: integer
-            nome:
-              type: string
-            descricao:
-              type: string
-            status:
-              $ref: '#/components/schemas/StatusServico'
-#              type: string
-            requer_certificacao:
-                type: boolean
-            tipo_certificacao:
-                type: string
-            experiencia_minima_meses:
-              type: integer
-            nivel_risco:
-              type: string
-            seguro_obrigatorio:
-                type: boolean
-            valor_base_hora:
-                type: number
-            data_criacao:
-                type: string
-                format: date-time
-            data_atualizacao:
-                type: string
-                format: date-time
-            url_imagem:
-                type: string
-            palavras_chave:
-                type: string
-            horas_minimas_agendamento:
-                type: integer
-            horas_cancelamento_gratis:
-                type: integer
-            percentual_comissao:
-                type: number
-                format: float
-                nullable: true
-            documentos_necessarios:
-                type: string
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        descricao:
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusServico'
+        #              type: string
+        requer_certificacao:
+          type: boolean
+        tipo_certificacao:
+          type: string
+        experiencia_minima_meses:
+          type: integer
+        nivel_risco:
+          type: string
+        seguro_obrigatorio:
+          type: boolean
+        valor_base_hora:
+          type: number
+        data_criacao:
+          type: string
+          format: date-time
+        data_atualizacao:
+          type: string
+          format: date-time
+        url_imagem:
+          type: string
+        palavras_chave:
+          type: string
+        horas_minimas_agendamento:
+          type: integer
+        horas_cancelamento_gratis:
+          type: integer
+        percentual_comissao:
+          type: number
+          format: float
+          nullable: true
+        documentos_necessarios:
+          type: string
     SubCategoriaModel:
       type: object
       properties:

@@ -1,6 +1,6 @@
 package com.dasad.empresa.repository;
 
-import com.dasad.empresa.jooq.tables.Pais;
+import com.dasad.empresa.jooq.model.tables.Pais;
 import com.dasad.empresa.model.PaisModel;
 import org.jooq.DSLContext;
 import org.jooq.Record2;
