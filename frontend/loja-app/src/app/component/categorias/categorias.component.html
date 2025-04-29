@@ -1,25 +1,37 @@
-<main class="main-container">
-  <div class="content-wrapper">
+<main class="main-container flex-container" [ngClass]="{ mobile: isMobile }">
+  <div
+    class="content-wrapper full-width-wrapper"
+    [ngClass]="{ mobile: isMobile }"
+  >
     <h2 class="page-title">{{ "Categorias" | translate }}</h2>
 
-    <div class="form-container">
+    <div
+      class="form-container fluid-width dynamic-container"
+      [ngClass]="{ mobile: isMobile, 'menu-collapsed': isMenuCollapsed }"
+    >
       <form>
-        <div class="form-section">
-          <h3 class="section-title">
-            {{ "Pesquisar Categorias" | translate }}
-          </h3>
-          <div class="form-row">
-            <div class="field-group name-field-group wide-field">
-              <div class="compact-label">
-                <label class="side-label closer-label" for="nome-input-id">
+        <div
+          class="form-content fluid-content"
+          [ngClass]="{ mobile: isMobile }"
+        >
+          <div class="filters-section" [ngClass]="{ mobile: isMobile }">
+            <h3 class="filters-title">
+              {{ "TITLE_FILTROS" | translate }}
+            </h3>
+
+            <div class="form-row fluid-row" [ngClass]="{ mobile: isMobile }">
+              <div
+                class="field-group wide-field fluid-field"
+                [ngClass]="{ 'mobile-field': isMobile }"
+              >
+                <label class="side-label" *ngIf="!isMobile" for="nome-input-id">
                   {{ "LABLE_NOME" | translate }}:
                 </label>
-              </div>
-              <div class="field-container expanded-field">
-                <mat-form-field
-                  appearance="fill"
-                  class="filtro-nome-field full-width"
-                >
+                <mat-form-field appearance="fill" class="expanded-field">
+                  <mat-label *ngIf="isMobile">{{
+                    "LABLE_NOME" | translate
+                  }}</mat-label>
+                  <mat-label *ngIf="!isMobile">&nbsp;</mat-label>
                   <input
                     matInput
                     [(ngModel)]="filtroNome"
@@ -28,28 +40,23 @@
                   />
                 </mat-form-field>
               </div>
-            </div>
 
-            <!-- Status field with selected values display -->
-            <div class="field-group status-field-group">
-              <div class="compact-label">
-                <label class="side-label closer-label" for="status-select-id">
+              <div
+                class="field-group fluid-field"
+                [ngClass]="{ 'mobile-field': isMobile }"
+              >
+                <label
+                  class="side-label"
+                  *ngIf="!isMobile"
+                  for="status-select-id"
+                >
                   {{ "LABLE_STATUS" | translate }}:
                 </label>
-                <div
-                  class="inline-selected-values compact-values"
-                  *ngIf="statusSelecionados?.length"
-                >
-                  <span class="selected-value-text">{{
-                    statusSelecionados.join(", ")
-                  }}</span>
-                </div>
-              </div>
-              <div class="field-container expanded-field">
-                <mat-form-field
-                  appearance="fill"
-                  class="filtro-status-field full-width"
-                >
+                <mat-form-field appearance="fill">
+                  <mat-label *ngIf="isMobile">{{
+                    "LABLE_STATUS" | translate
+                  }}</mat-label>
+                  <mat-label *ngIf="!isMobile">&nbsp;</mat-label>
                   <mat-select
                     [(ngModel)]="statusSelecionados"
                     name="statusSelecionados"
@@ -73,38 +80,43 @@
                 </mat-form-field>
               </div>
             </div>
-          </div>
 
-          <div class="form-actions">
-            <button
-              mat-raised-button
-              color="primary"
-              type="button"
-              (click)="pesquisarCategorias()"
-            >
-              <mat-icon>search</mat-icon>
-              {{ "LABLE_PESQUISAR" | translate }}
-            </button>
+            <div class="actions-container" [ngClass]="{ mobile: isMobile }">
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                (click)="pesquisarCategorias()"
+                [class.full-width-btn]="isMobile"
+                [class.mt-2]="isMobile"
+              >
+                <mat-icon>search</mat-icon>
+                {{ "LABLE_PESQUISAR" | translate }}
+              </button>
 
-            <button
-              mat-raised-button
-              color="primary"
-              type="button"
-              (click)="cadastrarCategoria()"
-            >
-              <mat-icon>add</mat-icon>
-              {{ "LABLE_CADASTRAR" | translate }}
-            </button>
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                (click)="cadastrarCategoria()"
+                [class.full-width-btn]="isMobile"
+                [class.mt-2]="isMobile"
+              >
+                <mat-icon>add</mat-icon>
+                {{ "LABLE_CADASTRAR" | translate }}
+              </button>
 
-            <button
-              mat-raised-button
-              color="primary"
-              type="button"
-              (click)="limparFiltros()"
-            >
-              <mat-icon>clear</mat-icon>
-              {{ "LABLE_LIMPAR_FILTROS" | translate }}
-            </button>
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                (click)="limparFiltros()"
+                [class.full-width-btn]="isMobile"
+              >
+                <mat-icon>clear</mat-icon>
+                {{ "LABLE_LIMPAR_FILTROS" | translate }}
+              </button>
+            </div>
           </div>
         </div>
       </form>

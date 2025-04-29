@@ -1,154 +1,683 @@
-.categorias-container {
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin: 20px;
-}
+// .categorias-container {
+//   padding: 20px;
+//   background-color: #fff;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   border-radius: 8px;
+//   margin: 20px;
+// }
 
-h2 {
-  margin-bottom: 20px;
-}
+// h2 {
+//   margin-bottom: 20px;
+// }
 
-button {
-  margin-right: 10px;
-}
+// button {
+//   margin-right: 10px;
+// }
 
-.table {
-  width: 100%;
-  margin-top: 20px;
-}
+// .table {
+//   width: 100%;
+//   margin-top: 20px;
+// }
 
-.form-row {
+// .form-row {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 16px;
+// }
+
+// .filtro-nome-field {
+//   flex: 3; /* Ocupa 3 partes do espaço disponível */
+//   min-width: 300px;
+// }
+
+// .filtro-status-field {
+//   flex: 1; /* Ocupa 1 parte do espaço disponível */
+//   min-width: 200px;
+// }
+
+// /* Styles for displaying selected status values */
+// .field-group {
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 15px;
+// }
+
+// .side-label {
+//   font-weight: 500;
+//   color: rgba(0, 0, 0, 0.6);
+//   margin-right: 15px;
+//   white-space: nowrap;
+//   min-width: 100px;
+//   text-align: right;
+// }
+
+// .field-with-selections {
+//   display: flex;
+//   flex-direction: column;
+//   flex: 1;
+// }
+
+// .selected-values {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 5px;
+//   margin-top: 8px;
+// }
+
+// .selected-chip {
+//   background-color: #f0f0f0;
+//   border: 1px solid #e0e0e0;
+//   border-radius: 16px;
+//   padding: 3px 10px;
+//   font-size: 13px;
+//   color: #333;
+//   max-width: 200px;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+// }
+
+// .status-field-group {
+//   display: flex;
+//   align-items: center;
+//   flex: 1;
+//   gap: 5px;
+// }
+
+// /* Makes selected values more compact */
+// .compact-values {
+//   margin-left: 5px;
+//   font-size: 12px;
+// }
+
+// .label-with-selections {
+//   display: flex;
+//   align-items: center;
+//   min-width: 120px;
+//   margin-right: 15px;
+// }
+
+// .inline-selected-values {
+//   font-size: 13px;
+//   color: #666;
+//   max-width: 200px;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+// }
+
+// .selected-value-text {
+//   font-style: italic;
+// }
+
+// .field-container {
+//   flex: 1;
+//   width: 100%;
+// }
+
+// .name-field-group {
+//   display: flex;
+//   align-items: center;
+//   flex: 1;
+//   min-width: 250px;
+// }
+
+// /* Width adjustments for fields */
+// .wide-field {
+//   flex: 1.5; /* Take more space than other fields */
+// }
+
+// .expanded-field {
+//   width: 100%;
+// }
+
+// .full-width {
+//   width: 100%;
+// }
+
+// /* Make labels closer to fields */
+// .compact-label {
+//   margin-right: 5px; /* Reduce the right margin */
+//   display: flex;
+//   align-items: center;
+// }
+
+// .closer-label {
+//   margin-right: 0; /* Remove right margin from the label */
+//   white-space: nowrap;
+//   min-width: 80px; /* Smaller min-width */
+// }
+
+// /* Adjust the field group to have tighter spacing */
+// .field-group.name-field-group {
+//   gap: 5px; /* Reduce the gap between label and field */
+//   display: flex;
+//   align-items: center;
+// }
+
+// /* Mobile and responsive styles */
+// .mobile-field {
+//   width: 100%;
+//   flex-direction: column;
+//   align-items: flex-start;
+// }
+
+// .fluid-row {
+//   display: flex;
+//   width: 100%;
+//   flex-wrap: wrap;
+//   gap: 16px;
+// }
+
+// .fluid-field {
+//   flex: 1;
+//   min-width: 0;
+//   transition: width 0.3s ease, flex 0.3s ease;
+// }
+
+// .form-actions:not(.mobile) {
+//   display: flex;
+//   justify-content: flex-end;
+//   gap: 16px;
+// }
+
+// .form-actions.mobile {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+// }
+
+// .full-width-btn {
+//   width: 100%;
+// }
+
+// .mt-2 {
+//   margin-top: 8px;
+// }
+
+// /* Button positioning styles */
+// .form-actions {
+//   display: flex;
+//   justify-content: space-between;
+//   padding-top: 16px;
+//   margin-top: 16px;
+// }
+
+// .left-actions {
+//   display: flex;
+//   gap: 8px;
+// }
+
+// .right-actions {
+//   display: flex;
+//   gap: 8px;
+// }
+
+// .ml-2 {
+//   margin-left: 8px;
+// }
+
+// /* Mobile layout adjustments */
+// .form-actions.mobile {
+//   flex-direction: column;
+//   gap: 8px;
+// }
+
+// .form-actions.mobile .left-actions,
+// .form-actions.mobile .right-actions {
+//   width: 100%;
+//   flex-direction: column;
+// }
+
+// .form-actions.mobile button {
+//   width: 100%;
+//   margin-left: 0 !important;
+//   margin-bottom: 8px;
+// }
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
   display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 10px;
+}
+
+#app-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.snackbar-multiline .mat-simple-snackbar {
+  white-space: pre-line;
+}
+
+.titulo-usuarios {
+  padding-left: 10px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
 }
 
-.filtro-nome-field {
-  flex: 3; /* Ocupa 3 partes do espaço disponível */
-  min-width: 300px;
-}
-
-.filtro-status-field {
-  flex: 1; /* Ocupa 1 parte do espaço disponível */
-  min-width: 200px;
-}
-
-/* Styles for displaying selected status values */
-.field-group {
+.search-and-buttons-container {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#filtros {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  // align-items: auto;
+}
+
+.left-margin {
+  margin-left: 10px;
+}
+
+.align-right {
+  margin-left: 10px;
+}
+
+.filtros-titulo {
+  padding-left: 10px;
+}
+
+.custom-header-cell {
+  background-color: darkslategrey !important;
+  color: white !important;
+}
+
+.main-container {
+  padding: 16px;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 64px);
+}
+
+.content-wrapper {
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.page-title {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.filters-section {
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .filters-title {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Adjust field widths and layout with minimal spacing */
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Reduced even further */
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.field-with-side-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  height: 60px; /* Explicit height constraint */
+  max-height: 60px;
+}
+
+.small-fields-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Reduced even further */
+  width: 100%;
+  margin: 0;
+}
+
+/* Compact form field styling */
+.side-input {
+  margin-bottom: 0 !important; /* Override material margins */
+}
+
+/* Reduce internal padding of mat-form-field */
+::ng-deep .filter-field .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+  height: 40px !important;
+}
+
+::ng-deep .filter-field .mat-form-field-infix {
+  padding: 0 !important;
+  border-top-width: 0.4em !important;
+  height: 28px !important;
+}
+
+/* Override Material's default form field height */
+::ng-deep .filter-field .mat-form-field {
+  height: 45px;
+  line-height: normal;
+}
+
+/* Adjust input text positioning */
+::ng-deep .filter-field input.mat-input-element {
+  margin-top: 0 !important;
+  line-height: 28px !important;
+}
+
+/* Make select fields same height as inputs */
+::ng-deep .filter-field .mat-select {
+  margin-top: 0 !important;
+  line-height: 28px !important;
+}
+
+/* Reduce flex area height */
+::ng-deep .filter-field .mat-form-field-flex {
+  height: 36px !important;
+  min-height: 36px !important;
+  align-items: center !important;
+}
+
+/* Make field outline smaller */
+::ng-deep .filter-field .mat-form-field-outline {
+  top: 0 !important;
+}
+
+/* Reduce space between the label and input */
+::ng-deep .filter-field .mat-form-field-flex {
+  align-items: center !important;
+  min-height: 40px !important;
+}
+
+/* Adjust label vertical position */
+.side-label {
+  font-size: 14px;
+  margin: 0;
+  padding: 0 8px 0 0;
+}
+
+/* For desktop view */
+@media (min-width: 769px) {
+  .small-fields-row {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 12px; /* Slight reduction */
+  }
+
+  .small-fields-row .field-with-side-label {
+    width: calc(50% - 6px);
+    margin-bottom: 0;
+  }
+}
+
+/* For mobile view, fields should take full width */
+@media (max-width: 768px) {
+  .field-with-side-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    height: auto; /* Auto height for stacked layout */
+    max-height: none;
+    padding: 4px 0;
+  }
+
+  .side-label {
+    text-align: left;
+    padding-left: 4px;
+  }
+
+  .side-input {
+    width: 100%;
+  }
+
+  .wide-field,
+  .small-fields-row,
+  .small-fields-row .field-with-side-label {
+    width: 100%;
+  }
+}
+
+.filter-field {
+  flex: 1 1 200px;
+}
+
+.actions-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  button {
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-container {
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+
+  mat-table {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-mdc-header-row {
+    background-color: #2c3e50 !important;
+  }
+
+  ::ng-deep .mat-mdc-header-cell {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    .mat-sort-header-content {
+      color: white !important;
+    }
+
+    .mat-sort-header-arrow {
+      color: white !important;
+    }
+  }
+
+  mat-cell {
+    padding: 12px 16px;
+  }
+
+  .actions-column {
+    max-width: 150px;
+    justify-content: center;
+  }
+
+  mat-row:hover {
+    background-color: #f8f8f8;
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.column-toggle {
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.column-checkbox {
+  display: block;
+  padding: 8px 16px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  color: #666;
+
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    margin-bottom: 16px;
+  }
+}
+
+mat-paginator {
+  border-top: 1px solid #eee;
+}
+
+// Mobile-specific styles
+.mobile-layout {
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .filter-field {
+    width: 100%;
+  }
+}
+
+.mobile-actions {
+  flex-direction: column;
+
+  .action-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.mobile-table {
+  .mat-cell {
+    padding: 8px;
+  }
+
+  .action-icon {
+    min-width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+.mobile-actions-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.hidden-mobile {
+  display: none;
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .actions-container {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+// Styles for field with side-by-side label
+.field-with-side-label {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Reduced from 12px */
+  width: 100%;
+  margin-bottom: 4px; /* Add small bottom margin */
 }
 
 .side-label {
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.6);
-  margin-right: 8px;
+  min-width: 80px;
+  text-align: right;
   white-space: nowrap;
+  color: rgba(0, 0, 0, 0.6); /* Match Material label color */
+  font-size: 14px;
+  padding-right: 8px;
 }
 
-.field-with-selections {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+.side-input {
+  flex: 1; /* Take up remaining space */
 }
 
-.selected-values {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 8px;
-}
+// Ensure responsive behavior
+@media (max-width: 768px) {
+  .field-with-side-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 
-.selected-chip {
-  background-color: #f0f0f0;
-  border: 1px solid #e0e0e0;
-  border-radius: 16px;
-  padding: 3px 10px;
-  font-size: 13px;
-  color: #333;
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  .side-label {
+    text-align: left;
+    padding-left: 4px;
+  }
 
-.status-field-group {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  gap: 5px;
-}
-
-/* Makes selected values more compact */
-.compact-values {
-  margin-left: 5px;
-  font-size: 12px;
-}
-
-.label-with-selections {
-  display: flex;
-  align-items: center;
-  min-width: 120px;
-  margin-right: 15px;
-}
-
-.inline-selected-values {
-  font-size: 13px;
-  color: #666;
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.selected-value-text {
-  font-style: italic;
-}
-
-.field-container {
-  flex: 1;
-  width: 100%;
-}
-
-.name-field-group {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  min-width: 250px;
-}
-
-/* Width adjustments for fields */
-.wide-field {
-  flex: 2; /* Take more space than other fields */
-}
-
-.expanded-field {
-  width: 100%;
-}
-
-.full-width {
-  width: 100%;
-}
-
-/* Make labels closer to fields */
-.compact-label {
-  margin-right: 5px; /* Reduce the right margin */
-  display: flex;
-  align-items: center;
-}
-
-.closer-label {
-  margin-right: 0; /* Remove right margin from the label */
-  white-space: nowrap;
-  min-width: 80px; /* Smaller min-width */
-}
-
-/* Adjust the field group to have tighter spacing */
-.field-group.name-field-group {
-  gap: 5px; /* Reduce the gap between label and field */
-  display: flex;
-  align-items: center;
+  .side-input {
+    width: 100%;
+  }
 }

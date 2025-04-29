@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -17,10 +17,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { StatusServico } from 'src/app/enum/status-servico.enum';
 import { CategoriaRequest } from 'src/app/interfaces/categoria-request.interface';
 import { Categoria } from 'src/app/model/categoria.model';
 import { CategoriasService } from 'src/app/service/categorias.service';
+import { LayoutService } from 'src/app/services/layout.service';
+import { DeviceService } from 'src/app/shared/service/device.service';
 
 @Component({
   selector: 'app-categorias',
@@ -49,10 +52,12 @@ import { CategoriasService } from 'src/app/service/categorias.service';
     TranslateModule,
   ],
 })
-export class CategoriasComponent implements OnInit {
+export class CategoriasComponent implements OnInit, OnDestroy {
   categoriasService = inject(CategoriasService);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
+  deviceService = inject(DeviceService);
+  private layoutService = inject(LayoutService);
 
   categorias: Categoria[] = [];
   filtroNome = '';
@@ -62,9 +67,39 @@ export class CategoriasComponent implements OnInit {
   statusSelecionados: StatusServico[] = [];
   allStatusSelected = false;
 
+  isMobile = false;
+  private subscription = new Subscription();
+  private layoutSubscription: Subscription;
+
+  isMenuCollapsed = false;
+
   ngOnInit(): void {
     this.loadCategorias();
     this.loadStatusOptions();
+
+    this.subscription.add(
+      this.deviceService.isMobile$.subscribe((isMobile) => {
+        this.isMobile = isMobile;
+        console.log('CategoriasComponent - dispositivo móvel:', isMobile);
+      })
+    );
+
+    // Assinar ao serviço de layout para detectar mudanças no menu
+    this.layoutSubscription = this.layoutService.menuState$.subscribe(
+      (isCollapsed) => {
+        this.isMenuCollapsed = isCollapsed;
+        // Forçar detecção de alterações para atualizar o layout
+        setTimeout(() => {
+          // Add meaningful logic here if needed, or remove this setTimeout entirely
+        }, 0);
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   loadCategorias(): void {
