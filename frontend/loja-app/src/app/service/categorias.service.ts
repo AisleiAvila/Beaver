@@ -20,49 +20,23 @@ export class CategoriasService {
     { id: 2, nome: 'Categoria 2' },
   ];
 
-  // getCategorias(): Observable<Categoria[]> {
-  //   return of(this.categorias);
-  // }
-
   getCategorias(params: CategoriaRequest = {}): Observable<Categoria[]> {
     const headers = this.authService.getAuthHeaders();
 
     // Garante que params sempre seja um objeto JSON
     const body = { ...params };
 
+    // Garante que withSubcategorias seja enviado ao backend, mesmo se for false
+    if (params.withSubcategorias === undefined) {
+      body.withSubcategorias = false;
+    } else {
+      body.withSubcategorias = params.withSubcategorias;
+    }
+
     return this.http.post<Categoria[]>(`${this.apiUrl}/find`, body, {
       headers: headers,
     });
   }
-
-  // getCategoriaById(id: number): Observable<Categoria> {
-  //   const headers = this.authService.getAuthHeaders();
-
-  //   const params: CategoriaRequest = {
-  //     id: id,
-  //     offset: 0,
-  //     limit: 1,
-  //   };
-
-  //   return this.http
-  //     .post<Categoria[]>(`${this.apiUrl}/find`, params, {
-  //       headers: headers,
-  //     })
-  //     .pipe(
-  //       map((categorias) => {
-  //         if (categorias && categorias.length > 0) {
-  //           return categorias[0];
-  //         }
-  //         return {
-  //           id: 0,
-  //           nome: '',
-  //           status: StatusServico.ATIVO,
-  //           documentos_necessarios: [],
-  //           requer_certificacao: false,
-  //         } as Categoria;
-  //       })
-  //     );
-  // }
 
   async getCategoriaById(id: number): Promise<Categoria> {
     const headers = this.authService.getAuthHeaders();

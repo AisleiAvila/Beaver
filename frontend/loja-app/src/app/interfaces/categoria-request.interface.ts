@@ -8,6 +8,7 @@ export interface CategoriaRequest {
   tipo_certificacao?: string;
   experiencia_minima_meses?: number;
   nivel_risco?: string;
+  withSubcategorias?: boolean;
   limit?: number;
   offset?: number;
 }

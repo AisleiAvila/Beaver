@@ -73,9 +73,9 @@ export class CategoriasComponent implements OnInit, OnDestroy {
 
   isMenuCollapsed = false;
 
-  totalCategorias: number = 0;
-  pageSize: number = 10;
-  pageIndex: number = 0;
+  totalCategorias = 0;
+  pageSize = 10;
+  pageIndex = 0;
 
   ngOnInit(): void {
     this.loadCategorias();
@@ -110,6 +110,7 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     const params: CategoriaRequest = {
       limit: this.pageSize,
       offset: this.pageIndex * this.pageSize,
+      withSubcategorias: true,
     };
     this.categoriasService
       .getCategorias(params)
