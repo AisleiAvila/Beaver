@@ -1,3 +1,5 @@
+import { Subcategoria } from './subcategoria.model';
+
 export interface Categoria {
   id: number;
   nome: string;
@@ -17,4 +19,5 @@ export interface Categoria {
   horas_cancelamento_gratis?: number;
   percentual_comissao?: number;
   documentos_necessarios?: string[];
+  subcategorias?: Subcategoria[];
 }

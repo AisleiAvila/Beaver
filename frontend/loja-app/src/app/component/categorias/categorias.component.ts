@@ -25,6 +25,12 @@ import { CategoriasService } from 'src/app/service/categorias.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { DeviceService } from 'src/app/shared/service/device.service';
 
+// Interface local para garantir subcategorias e expanded
+interface CategoriaComSubcategorias extends Categoria {
+  subcategorias: any[]; // Substitua 'any' pelo tipo correto se souber
+  expanded?: boolean;
+}
+
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -59,9 +65,15 @@ export class CategoriasComponent implements OnInit, OnDestroy {
   deviceService = inject(DeviceService);
   private layoutService = inject(LayoutService);
 
-  categorias: Categoria[] = [];
+  categorias: CategoriaComSubcategorias[] = [];
   filtroNome = '';
-  displayedColumns: string[] = ['nome', 'descricao', 'status', 'acoes'];
+  displayedColumns: string[] = [
+    'expand',
+    'nome',
+    'descricao',
+    'status',
+    'acoes',
+  ];
 
   statusOptions: StatusServico[] = [];
   statusSelecionados: StatusServico[] = [];
@@ -76,6 +88,8 @@ export class CategoriasComponent implements OnInit, OnDestroy {
   totalCategorias = 0;
   pageSize = 10;
   pageIndex = 0;
+
+  dataSourceExpandido: any[] = [];
 
   ngOnInit(): void {
     this.loadCategorias();
@@ -98,6 +112,8 @@ export class CategoriasComponent implements OnInit, OnDestroy {
         }, 0);
       }
     );
+
+    this.atualizarDataSourceExpandido();
   }
 
   ngOnDestroy(): void {
@@ -108,17 +124,56 @@ export class CategoriasComponent implements OnInit, OnDestroy {
 
   loadCategorias(): void {
     const params: CategoriaRequest = {
+      nome: this.filtroNome,
+      status:
+        this.statusSelecionados.length > 0
+          ? this.statusSelecionados
+          : undefined,
       limit: this.pageSize,
       offset: this.pageIndex * this.pageSize,
-      withSubcategorias: true,
+      withSubcategorias: true, // Garante que subcategorias venham do backend
     };
-    this.categoriasService
-      .getCategorias(params)
-      .subscribe((data: Categoria[]) => {
-        this.categorias = data;
-        // Atualize totalCategorias com o valor correto do backend
-        this.totalCategorias = data.length; // Exemplo: ajuste conforme necessário
-      });
+
+    this.categoriasService.getCategorias(params).subscribe({
+      next: (data: any[]) => {
+        this.categorias = data.map((cat: any) => ({
+          ...cat,
+          subcategorias: Array.isArray(cat.subcategorias)
+            ? cat.subcategorias
+            : [],
+          expanded: false,
+        }));
+        // Ajuste totalCategorias conforme resposta do backend, se disponível
+        this.totalCategorias = Array.isArray(data) ? data.length : 0;
+        this.atualizarDataSourceExpandido();
+      },
+      error: (error) => {
+        if (error.status === 404) {
+          this.categorias = [];
+          this.totalCategorias = 0;
+          this.snackBar.open(
+            'Nenhuma categoria encontrada com os filtros aplicados',
+            'Fechar',
+            {
+              duration: 5000,
+              horizontalPosition: 'end',
+              verticalPosition: 'bottom',
+            }
+          );
+        } else {
+          this.categorias = [];
+          this.totalCategorias = 0;
+          this.snackBar.open('Erro ao pesquisar categorias', 'Fechar', {
+            duration: 5000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'],
+          });
+          console.error('Erro ao pesquisar categorias:', error);
+        }
+        this.atualizarDataSourceExpandido();
+      },
+    });
   }
 
   toggleAllStatus(): void {
@@ -139,12 +194,18 @@ export class CategoriasComponent implements OnInit, OnDestroy {
           : undefined,
       limit: this.pageSize,
       offset: this.pageIndex * this.pageSize,
+      withSubcategorias: true,
     };
+    alert('Entrei: ');
     this.categoriasService.getCategorias(params).subscribe({
       next: (data: Categoria[]) => {
-        this.categorias = data;
-        // Atualize totalCategorias com o valor correto do backend
+        this.categorias = data.map((cat) => ({
+          ...cat,
+          subcategorias: cat.subcategorias || [],
+          expanded: false,
+        }));
         this.totalCategorias = data.length; // Exemplo: ajuste conforme necessário
+        this.atualizarDataSourceExpandido();
       },
       error: (error) => {
         // Verificar se é erro 404
@@ -171,6 +232,7 @@ export class CategoriasComponent implements OnInit, OnDestroy {
           });
           console.error('Erro ao pesquisar categorias:', error);
         }
+        this.atualizarDataSourceExpandido();
       },
     });
   }
@@ -218,4 +280,28 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     this.pageSize = event.pageSize;
     this.loadCategorias();
   }
+
+  toggleExpand(element: CategoriaComSubcategorias): void {
+    // Sempre altere o expanded na lista original de categorias
+    const categoria = this.categorias.find((cat) => cat.id === element.id);
+    if (categoria) {
+      categoria.expanded = !categoria.expanded;
+      this.atualizarDataSourceExpandido();
+    }
+  }
+
+  atualizarDataSourceExpandido(): void {
+    this.dataSourceExpandido = [];
+    for (const cat of this.categorias) {
+      this.dataSourceExpandido.push({ tipo: 'categoria', ...cat });
+      if (cat.expanded && cat.subcategorias && cat.subcategorias.length) {
+        for (const sub of cat.subcategorias) {
+          this.dataSourceExpandido.push({ tipo: 'subcategoria', ...sub });
+        }
+      }
+    }
+  }
+
+  isCategoria = (index: number, row: any) => row.tipo === 'categoria';
+  isSubcategoria = (index: number, row: any) => row.tipo === 'subcategoria';
 }
