@@ -73,6 +73,10 @@ export class CategoriasComponent implements OnInit, OnDestroy {
 
   isMenuCollapsed = false;
 
+  totalCategorias: number = 0;
+  pageSize: number = 10;
+  pageIndex: number = 0;
+
   ngOnInit(): void {
     this.loadCategorias();
     this.loadStatusOptions();
@@ -104,14 +108,15 @@ export class CategoriasComponent implements OnInit, OnDestroy {
 
   loadCategorias(): void {
     const params: CategoriaRequest = {
-      // Você pode adicionar valores padrão, como limit e offset se necessário
-      limit: 50, // exemplo: limite de 50 categorias
-      offset: 0,
+      limit: this.pageSize,
+      offset: this.pageIndex * this.pageSize,
     };
     this.categoriasService
       .getCategorias(params)
       .subscribe((data: Categoria[]) => {
         this.categorias = data;
+        // Atualize totalCategorias com o valor correto do backend
+        this.totalCategorias = data.length; // Exemplo: ajuste conforme necessário
       });
   }
 
@@ -131,12 +136,14 @@ export class CategoriasComponent implements OnInit, OnDestroy {
         this.statusSelecionados.length > 0
           ? this.statusSelecionados
           : undefined,
-      limit: 50,
-      offset: 0,
+      limit: this.pageSize,
+      offset: this.pageIndex * this.pageSize,
     };
     this.categoriasService.getCategorias(params).subscribe({
       next: (data: Categoria[]) => {
         this.categorias = data;
+        // Atualize totalCategorias com o valor correto do backend
+        this.totalCategorias = data.length; // Exemplo: ajuste conforme necessário
       },
       error: (error) => {
         // Verificar se é erro 404
@@ -203,5 +210,11 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     this.router.navigate(['/cadastro-categoria', id], {
       state: { id, acao: acao },
     });
+  }
+
+  onPageChange(event: any): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadCategorias();
   }
 }
