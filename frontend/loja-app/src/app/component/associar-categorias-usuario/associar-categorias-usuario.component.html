@@ -1,0 +1,22 @@
+<h2>Associar Categorias ao Usuário</h2>
+<div *ngFor="let categoria of categorias">
+  <mat-checkbox
+    [(ngModel)]="categoria.selected"
+    (change)="onCategoriaChange(categoria)"
+  >
+    {{ categoria.nome }}
+  </mat-checkbox>
+  <div *ngIf="categoria.subcategorias" style="margin-left: 24px">
+    <mat-checkbox
+      *ngFor="let sub of categoria.subcategorias"
+      [(ngModel)]="sub.selected"
+      (change)="onSubcategoriaChange(sub)"
+    >
+      {{ sub.nome }}
+    </mat-checkbox>
+  </div>
+</div>
+<div style="margin-top: 24px; text-align: right">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
+</div>

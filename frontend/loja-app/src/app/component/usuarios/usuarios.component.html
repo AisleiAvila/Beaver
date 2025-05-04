@@ -177,12 +177,26 @@
 
           <!-- Acoes Column -->
           <ng-container matColumnDef="acoes">
-            <mat-header-cell *matHeaderCellDef class="actions-column">
+            <mat-header-cell
+              *matHeaderCellDef
+              class="actions-column"
+              style="min-width: 120px"
+            >
               {{ "LABLE_ACOES" | translate }}
             </mat-header-cell>
-            <mat-cell *matCellDef="let usuario" class="actions-column">
+            <mat-cell
+              *matCellDef="let usuario"
+              class="actions-column"
+              style="min-width: 120px"
+            >
               <div
                 class="action-buttons"
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 4px;
+                  align-items: center;
+                "
                 [class.mobile-actions-group]="isMobile"
               >
                 <button
@@ -211,6 +225,15 @@
                   class="action-icon"
                 >
                   <mat-icon>delete</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="accent"
+                  (click)="abrirAssociarCategorias(usuario)"
+                  matTooltip="Associar Categorias"
+                  class="action-icon"
+                >
+                  <mat-icon>category</mat-icon>
                 </button>
               </div>
             </mat-cell>

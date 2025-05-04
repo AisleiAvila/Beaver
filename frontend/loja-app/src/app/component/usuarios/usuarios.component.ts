@@ -47,6 +47,8 @@ import { DeviceService } from 'src/app/shared/service/device.service';
 import { Perfil } from '../../model/perfil.model';
 import { PerfisService } from '../../service/perfis.service';
 import { MessageModalComponent } from '../../shared/components/modal/message-modal/message-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AssociarCategoriasUsuarioComponent } from '../associar-categorias-usuario/associar-categorias-usuario.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -124,6 +126,8 @@ export class UsuariosComponent implements AfterViewInit, OnInit, OnDestroy {
   isMobile = false;
   showFilters = false;
   private subscription = new Subscription();
+
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.perfisService.getPerfis().subscribe((perfis) => {
@@ -357,5 +361,12 @@ export class UsuariosComponent implements AfterViewInit, OnInit, OnDestroy {
     this.displayedColumns = this.availableColumns
       .filter((col) => col.visible)
       .map((col) => col.key);
+  }
+
+  abrirAssociarCategorias(usuario: any) {
+    this.dialog.open(AssociarCategoriasUsuarioComponent, {
+      width: '500px',
+      data: { usuario },
+    });
   }
 }
