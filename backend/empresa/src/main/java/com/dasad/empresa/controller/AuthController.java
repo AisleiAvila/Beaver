@@ -22,7 +22,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,9 +36,6 @@ import java.util.Optional;
 @RestController
 @Log4j2
 @RequestMapping({"/auth"})
-@CrossOrigin(
-        origins = {"http://localhost:4200", "http://localhost:8080", "http://localhost:8100"}
-)
 @Tag(name = "Autenticação", description = "API para autenticação e gerenciamento de tokens")
 public class AuthController implements AuthApi {
     private final UsuarioRepository usuarioRepository;
@@ -86,8 +82,8 @@ public class AuthController implements AuthApi {
     @PostMapping({"/login"})
     public ResponseEntity<LoginResponseDTO> login(
             @Parameter(description = "Credenciais do usuário",
-                                required = true,
-                                schema = @Schema(implementation = LoginRequestDTO.class))
+                    required = true,
+                    schema = @Schema(implementation = LoginRequestDTO.class))
             @RequestBody LoginRequestDTO loginRequestDTO) {
         log.info("Login endpoint");
         Optional<UsuarioModel> optionalUsuario = this.usuarioRepository.findByEmailAndOrganizacaoId(
@@ -98,7 +94,7 @@ public class AuthController implements AuthApi {
             var usuario = optionalUsuario.get();
             if (this.passwordEncoder.matches(loginRequestDTO.getSenha(), usuario.getSenha())) {
                 String authorization = this.authorizationService.generateToken(usuario);
-                var loginResponseDTO  =  new LoginResponseDTO();
+                var loginResponseDTO = new LoginResponseDTO();
                 loginResponseDTO.setNome(usuario.getNome());
                 loginResponseDTO.setAuthorization(authorization);
                 loginResponseDTO.setPerfil(usuario.getPerfis().getFirst().getNome());
@@ -145,7 +141,7 @@ public class AuthController implements AuthApi {
             this.usuarioRepository.create(usuario, organizacaoId);
             log.info("Usuário criado");
             String authorization = this.authorizationService.generateToken(usuario);
-            var loginResponseDTO  =  new LoginResponseDTO();
+            var loginResponseDTO = new LoginResponseDTO();
             loginResponseDTO.setNome(usuario.getNome());
             loginResponseDTO.setAuthorization(authorization);
             loginResponseDTO.setPerfil(usuario.getPerfis().get(0).getNome());

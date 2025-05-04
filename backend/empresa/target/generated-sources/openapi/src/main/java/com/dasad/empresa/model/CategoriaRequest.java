@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  * CategoriaRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-29T17:05:43.943920800+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-04T12:41:46.879636200+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class CategoriaRequest {
 
   private @Nullable Integer id;
@@ -40,6 +40,8 @@ public class CategoriaRequest {
   private @Nullable Integer experienciaMinimaMeses;
 
   private @Nullable String nivelRisco;
+
+  private @Nullable Boolean withSubcategorias;
 
   private @Nullable Integer limit;
 
@@ -193,6 +195,26 @@ public class CategoriaRequest {
     this.nivelRisco = nivelRisco;
   }
 
+  public CategoriaRequest withSubcategorias(Boolean withSubcategorias) {
+    this.withSubcategorias = withSubcategorias;
+    return this;
+  }
+
+  /**
+   * Get withSubcategorias
+   * @return withSubcategorias
+   */
+  
+  @Schema(name = "withSubcategorias", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("withSubcategorias")
+  public Boolean getWithSubcategorias() {
+    return withSubcategorias;
+  }
+
+  public void setWithSubcategorias(Boolean withSubcategorias) {
+    this.withSubcategorias = withSubcategorias;
+  }
+
   public CategoriaRequest limit(Integer limit) {
     this.limit = limit;
     return this;
@@ -249,13 +271,14 @@ public class CategoriaRequest {
         Objects.equals(this.tipoCertificacao, categoriaRequest.tipoCertificacao) &&
         Objects.equals(this.experienciaMinimaMeses, categoriaRequest.experienciaMinimaMeses) &&
         Objects.equals(this.nivelRisco, categoriaRequest.nivelRisco) &&
+        Objects.equals(this.withSubcategorias, categoriaRequest.withSubcategorias) &&
         Objects.equals(this.limit, categoriaRequest.limit) &&
         Objects.equals(this.offset, categoriaRequest.offset);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nome, status, requerCertificacao, tipoCertificacao, experienciaMinimaMeses, nivelRisco, limit, offset);
+    return Objects.hash(id, nome, status, requerCertificacao, tipoCertificacao, experienciaMinimaMeses, nivelRisco, withSubcategorias, limit, offset);
   }
 
   @Override
@@ -269,6 +292,7 @@ public class CategoriaRequest {
     sb.append("    tipoCertificacao: ").append(toIndentedString(tipoCertificacao)).append("\n");
     sb.append("    experienciaMinimaMeses: ").append(toIndentedString(experienciaMinimaMeses)).append("\n");
     sb.append("    nivelRisco: ").append(toIndentedString(nivelRisco)).append("\n");
+    sb.append("    withSubcategorias: ").append(toIndentedString(withSubcategorias)).append("\n");
     sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
     sb.append("}");

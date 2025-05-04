@@ -3,12 +3,15 @@ package com.dasad.empresa.model;
 import java.net.URI;
 import java.util.Objects;
 import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.SubCategoriaModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
@@ -27,7 +30,7 @@ import jakarta.annotation.Generated;
  * CategoriaModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-04-29T17:05:43.943920800+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-04T12:41:46.879636200+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class CategoriaModel {
 
   private @Nullable Integer id;
@@ -67,6 +70,9 @@ public class CategoriaModel {
   private JsonNullable<Float> percentualComissao = JsonNullable.<Float>undefined();
 
   private @Nullable String documentosNecessarios;
+
+  @Valid
+  private List<@Valid SubCategoriaModel> subcategorias = new ArrayList<>();
 
   public CategoriaModel id(Integer id) {
     this.id = id;
@@ -428,6 +434,34 @@ public class CategoriaModel {
     this.documentosNecessarios = documentosNecessarios;
   }
 
+  public CategoriaModel subcategorias(List<@Valid SubCategoriaModel> subcategorias) {
+    this.subcategorias = subcategorias;
+    return this;
+  }
+
+  public CategoriaModel addSubcategoriasItem(SubCategoriaModel subcategoriasItem) {
+    if (this.subcategorias == null) {
+      this.subcategorias = new ArrayList<>();
+    }
+    this.subcategorias.add(subcategoriasItem);
+    return this;
+  }
+
+  /**
+   * Get subcategorias
+   * @return subcategorias
+   */
+  @Valid 
+  @Schema(name = "subcategorias", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("subcategorias")
+  public List<@Valid SubCategoriaModel> getSubcategorias() {
+    return subcategorias;
+  }
+
+  public void setSubcategorias(List<@Valid SubCategoriaModel> subcategorias) {
+    this.subcategorias = subcategorias;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -454,7 +488,8 @@ public class CategoriaModel {
         Objects.equals(this.horasMinimasAgendamento, categoriaModel.horasMinimasAgendamento) &&
         Objects.equals(this.horasCancelamentoGratis, categoriaModel.horasCancelamentoGratis) &&
         equalsNullable(this.percentualComissao, categoriaModel.percentualComissao) &&
-        Objects.equals(this.documentosNecessarios, categoriaModel.documentosNecessarios);
+        Objects.equals(this.documentosNecessarios, categoriaModel.documentosNecessarios) &&
+        Objects.equals(this.subcategorias, categoriaModel.subcategorias);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -463,7 +498,7 @@ public class CategoriaModel {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nome, descricao, status, requerCertificacao, tipoCertificacao, experienciaMinimaMeses, nivelRisco, seguroObrigatorio, valorBaseHora, dataCriacao, dataAtualizacao, urlImagem, palavrasChave, horasMinimasAgendamento, horasCancelamentoGratis, hashCodeNullable(percentualComissao), documentosNecessarios);
+    return Objects.hash(id, nome, descricao, status, requerCertificacao, tipoCertificacao, experienciaMinimaMeses, nivelRisco, seguroObrigatorio, valorBaseHora, dataCriacao, dataAtualizacao, urlImagem, palavrasChave, horasMinimasAgendamento, horasCancelamentoGratis, hashCodeNullable(percentualComissao), documentosNecessarios, subcategorias);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -495,6 +530,7 @@ public class CategoriaModel {
     sb.append("    horasCancelamentoGratis: ").append(toIndentedString(horasCancelamentoGratis)).append("\n");
     sb.append("    percentualComissao: ").append(toIndentedString(percentualComissao)).append("\n");
     sb.append("    documentosNecessarios: ").append(toIndentedString(documentosNecessarios)).append("\n");
+    sb.append("    subcategorias: ").append(toIndentedString(subcategorias)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -55,6 +55,13 @@ springdoc:
 security:
   excludedUrls: /auth/login,/auth/register,/auth/authenticate,/senha/recuperar,/senha/validar-reset-token,/usuario/perfil,/organizacao/find,/documentation.html,/favicon.ico,/swagger-ui/**,/v3/api-docs/**,"/api/public/**"
 
+app:
+  security:
+    public-endpoints: "/auth/login,/auth/register,/swagger-ui/**,/v3/api-docs/**,/api/public/**,/auth/authenticate,/senha/recuperar,/senha/validar-reset-token,/usuario/perfil,/organizacao/find,/documentation.html,/favicon.ico,/api-docs/swagger-config,/lembrar-senha"
+
+
+
+
 logging:
   pattern:
     console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"

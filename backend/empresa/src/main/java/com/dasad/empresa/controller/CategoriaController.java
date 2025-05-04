@@ -5,6 +5,8 @@ import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
 import com.dasad.empresa.model.StatusServico;
 import com.dasad.empresa.service.CategoriaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,8 +48,16 @@ public class CategoriaController implements CategoriaApi {
 
     @Override
     @PostMapping("/find")
-    public ResponseEntity<List<CategoriaModel>> findCategoria(CategoriaRequest categoriaRequest) {
-        return this.categoriaService.find(categoriaRequest).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    @Operation(
+            summary = "Buscar categorias",
+            description = "Retorna uma lista de categorias conforme os filtros informados no request."
+    )
+    public ResponseEntity<List<CategoriaModel>> findCategoria(
+            @RequestBody(description = "Filtros para busca de categorias", required = true)
+            CategoriaRequest categoriaRequest) {
+        return this.categoriaService.find(categoriaRequest)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override

@@ -1358,6 +1358,8 @@ components:
           type: integer
         nivel_risco:
           type: string
+        withSubcategorias:
+          type: boolean
         limit:
           type: integer
         offset:
@@ -1672,6 +1674,10 @@ components:
           nullable: true
         documentos_necessarios:
           type: string
+        subcategorias:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubCategoriaModel'
     SubCategoriaModel:
       type: object
       properties:

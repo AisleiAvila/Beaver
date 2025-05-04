@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,8 +31,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuario")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080", "http://localhost:8100"})
-public class UsuarioController implements UsuarioApi{
+public class UsuarioController implements UsuarioApi {
     @Autowired
     private UsuarioService usuarioService;
 
@@ -114,7 +112,7 @@ public class UsuarioController implements UsuarioApi{
     @PreAuthorize("hasAnyRole('Administrador', 'Moderador', 'Usuário')")
     public ResponseEntity<UsuarioResponseDTO> findUsuario(
             @RequestParam(value = "organizaoId") Integer organizacaoId,
-            @RequestBody UsuarioRequest usuarioRequest){
+            @RequestBody UsuarioRequest usuarioRequest) {
         try {
             Optional<List<UsuarioModel>> usuarios = this.usuarioService.find(usuarioRequest, organizacaoId);
             var totalRecords = 0;

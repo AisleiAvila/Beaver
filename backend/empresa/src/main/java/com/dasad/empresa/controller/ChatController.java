@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +25,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping({"/chat"})
-@CrossOrigin(
-        origins = {"http://localhost:4200", "http://localhost:8080", "http://localhost:8100"}
-)
 @Log4j2
 public class ChatController implements ChatApi {
 
@@ -63,7 +59,8 @@ public class ChatController implements ChatApi {
                     llamaUrl,
                     HttpMethod.POST,
                     httpRequest,
-                    new ParameterizedTypeReference<Map<String, Object>>() {}
+                    new ParameterizedTypeReference<Map<String, Object>>() {
+                    }
             );
 
             log.info("Resposta do Llama: {}", response);
