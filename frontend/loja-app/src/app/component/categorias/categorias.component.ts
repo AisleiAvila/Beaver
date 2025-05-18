@@ -196,7 +196,6 @@ export class CategoriasComponent implements OnInit, OnDestroy {
       offset: this.pageIndex * this.pageSize,
       withSubcategorias: true,
     };
-    alert('Entrei: ');
     this.categoriasService.getCategorias(params).subscribe({
       next: (data: Categoria[]) => {
         this.categorias = data.map((cat) => ({

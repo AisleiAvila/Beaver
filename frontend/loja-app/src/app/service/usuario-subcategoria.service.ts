@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { UsuarioSubcategoria } from '../model/usuarioSubcategoria.model';
 import { AuthService } from '../shared/service/auth.service';
 import { ModalCommunicationService } from './modal-communication.service';
+import { UsuarioSubcategoriaRequest } from '../model/usuarioSubcategoriaRequest.model';
 
 @Injectable({
   providedIn: 'root',
@@ -28,11 +29,86 @@ export class UsuarioSubcategoriaService {
     const headers = this.authService.getAuthHeaders();
 
     return this.http.get<UsuarioSubcategoria[]>(
-      `${this.apiUrl}/usuario_id/${id}/ativo/${ativo}`,
+      `${this.apiUrl}?usuario_id=${id}&ativo=${ativo}`,
       {
         headers: headers,
       }
     );
+  }
+
+  salvarAssociacoes(
+    selecionadas: number[],
+    associadas: number[],
+    usuarioId: number
+  ): Observable<any> {
+    const subcategoriasParaSalvar = Array.isArray(selecionadas)
+      ? selecionadas.filter(
+          (subcategoria) => !associadas?.includes(subcategoria)
+        )
+      : [];
+
+    const subcategoriasParaRemover = associadas.filter(
+      (subcategoria) => !selecionadas.includes(subcategoria)
+    );
+
+    const observables: Observable<any>[] = [];
+
+    if (usuarioId && subcategoriasParaSalvar.length > 0) {
+      observables.push(
+        this.associarUsuarioSubcategoria(usuarioId, subcategoriasParaSalvar)
+      );
+    }
+
+    if (usuarioId && subcategoriasParaRemover.length > 0) {
+      observables.push(
+        this.deassociarUsuarioSubcategoria(usuarioId, subcategoriasParaRemover)
+      );
+    }
+
+    return observables.length > 0 ? forkJoin(observables) : of([]);
+  }
+
+  private associarUsuarioSubcategoria(
+    usuarioId: number,
+    subcategorias: number[]
+  ): Observable<void[]> {
+    const headers = this.authService.getAuthHeaders();
+    // Retorna um array de observables para cada requisição
+    const requests = subcategorias.map((subcategoriaId) => {
+      const usuarioSubcategoria: UsuarioSubcategoriaRequest = {
+        usuarioId: usuarioId,
+        subcategoriaId: subcategoriaId,
+      };
+      // Adiciona subscribe para debug
+      const obs = this.http.post<void>(this.apiUrl, usuarioSubcategoria, {
+        headers,
+      });
+      obs.subscribe({
+        next: () => console.log('POST sucesso', usuarioSubcategoria),
+        error: (err) => console.error('POST erro', usuarioSubcategoria, err),
+      });
+      return obs;
+    });
+    // Retorna um único observable que emite quando todas as requisições terminarem
+    return requests.length ? forkJoin(requests) : of([]);
+  }
+
+  private deassociarUsuarioSubcategoria(
+    usuarioId: number,
+    subcategorias: number[]
+  ): Observable<void[]> {
+    const headers = this.authService.getAuthHeaders();
+    // Retorna um array de observables para cada requisição
+    const requests = subcategorias.map((subcategoriaId) => {
+      return this.http.put<void>(
+        `${this.apiUrl}/${usuarioId}/${subcategoriaId}`,
+        {
+          headers: headers,
+        }
+      );
+    });
+    // Retorna um único observable que emite quando todas as requisições terminarem
+    return requests.length ? forkJoin(requests) : of([]);
   }
 
   // async getUsuarios(params: {
