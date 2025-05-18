@@ -58,9 +58,9 @@ public class OrganizacaoController implements OrganizacaoApi {
         if (this.organizacaoService.findById(id).isPresent()) {
             this.organizacaoService.deleteById(id);
             return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.notFound().build();
     }
 
     @Override

@@ -581,12 +581,6 @@ paths:
       responses:
         '200':
           description: Sucesso
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UsuarioSubcategoriaModel'
     put:
       summary: Desassociar subcategoria a um usuário
       security:
@@ -603,12 +597,6 @@ paths:
       responses:
         '200':
           description: Sucesso
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UsuarioSubcategoriaModel'
 
   /endereco:
     post:
@@ -1318,6 +1306,10 @@ components:
         dataNascimento:
           type: string
           format: date
+          description: Data de nascimento do usuário (deve estar no passado)
+          # Extensão personalizada para validar com @Past
+          x-jvm-field-validations:
+            - Past
         perfis:
           type: array
           items:

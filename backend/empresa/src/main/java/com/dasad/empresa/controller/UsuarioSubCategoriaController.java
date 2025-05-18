@@ -59,22 +59,16 @@ public class UsuarioSubCategoriaController implements UsuariosubcategoriaApi {
 
     @Override
     @PostMapping
-    public ResponseEntity<List<UsuarioSubcategoriaModel>> associarUsuarioSubcategoria(UsuarioSubcategoriaRequest usuarioSubcategoriaRequest) {
+    public ResponseEntity<Void> associarUsuarioSubcategoria(UsuarioSubcategoriaRequest usuarioSubcategoriaRequest) {
         // Chama o método do serviço (que não retorna nada)
         this.usuarioSubCategoriaService.associarUsuarioSubcategoria(usuarioSubcategoriaRequest);
-
-        // Após associar, busca a lista atualizada para o usuário
-        var usuarioSubcategorias = this.usuarioSubCategoriaService.find(usuarioSubcategoriaRequest.getUsuarioId(), true);
-        return ResponseEntity.ok(usuarioSubcategorias.orElse(List.of()));
+        return ResponseEntity.ok().build();
     }
 
     @Override
     @PutMapping
-    public ResponseEntity<List<UsuarioSubcategoriaModel>> desassociarUsuarioSubcategoria(UsuarioSubcategoriaRequest usuarioSubcategoriaRequest) {
+    public ResponseEntity<Void> desassociarUsuarioSubcategoria(UsuarioSubcategoriaRequest usuarioSubcategoriaRequest) {
         this.usuarioSubCategoriaService.desassociarUsuarioSubcategoria(usuarioSubcategoriaRequest);
-
-        // Após desassociar, busca a lista atualizada para o usuário
-        var usuarioSubcategorias = this.usuarioSubCategoriaService.find(usuarioSubcategoriaRequest.getUsuarioId(), true);
-        return ResponseEntity.ok(usuarioSubcategorias.orElse(List.of()));
+        return ResponseEntity.ok().build();
     }
 }

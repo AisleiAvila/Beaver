@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  * ProdutoModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-04T12:41:46.879636200+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-05T12:52:25.659801500+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class ProdutoModel {
 
   private @Nullable Integer id;

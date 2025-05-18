@@ -40,9 +40,9 @@ public class CategoriaController implements CategoriaApi {
             // TODO: Verificar se há subcategorias associadas a esta categoria
             this.categoriaService.delete(id);
             return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.notFound().build();
 
     }
 

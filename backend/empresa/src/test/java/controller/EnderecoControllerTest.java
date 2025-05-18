@@ -7,6 +7,7 @@ import com.dasad.empresa.model.EstadoModel;
 import com.dasad.empresa.model.PaisModel;
 import com.dasad.empresa.service.EnderecoService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,17 +58,18 @@ class EnderecoControllerTest {
     @Nested
     class FindAllTests {
 
+        @DisplayName("Quando não há endereços cadastrados")
         @Test
-        void shouldReturnAllEnderecos() {
-            // Arrange
+        void givenEnderecoExistente_whenFindAll_thenRetornaListaSemEndereco() {
+            // Given
             when(enderecoService.findAll()).thenReturn(Collections.singletonList(enderecoModel));
 
-            // Act
+            // When
             var response = enderecoController.findendereco();
 
-            // Assert
+            // Then
             assertNotNull(response);
-            assertEquals(1, response.getBody().size() );
+            assertEquals(1, response.getBody().size());
             assertEquals(enderecoModel, response.getBody().get(0));
         }
     }

@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  * UsuarioRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-04T12:41:46.879636200+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-05T12:52:25.659801500+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class UsuarioRequest {
 
   private @Nullable Integer id;
@@ -112,11 +112,11 @@ public class UsuarioRequest {
   }
 
   /**
-   * Get dataNascimento
+   * Data de nascimento do usuário (deve estar no passado)
    * @return dataNascimento
    */
   @Valid 
-  @Schema(name = "dataNascimento", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "dataNascimento", description = "Data de nascimento do usuário (deve estar no passado)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataNascimento")
   public LocalDate getDataNascimento() {
     return dataNascimento;

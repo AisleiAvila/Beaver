@@ -71,9 +71,9 @@ public class EnderecoController implements EnderecoApi {
         if (this.enderecoService.findById(id).isPresent()) {
             this.enderecoService.deleteById(id);
             return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        
+        return ResponseEntity.notFound().build();
     }
 
     @Override
@@ -116,7 +116,7 @@ public class EnderecoController implements EnderecoApi {
     @ApiResponse(responseCode = "200", description = "Lista de endereços recuperada com sucesso",
             content = @Content(schema = @Schema(implementation = EnderecoModel.class)))
     public ResponseEntity<List<EnderecoModel>> findendereco() {
-        var enderecos =  this.enderecoService.findAll();
+        var enderecos = this.enderecoService.findAll();
         return ResponseEntity.ok(enderecos);
     }
 }
