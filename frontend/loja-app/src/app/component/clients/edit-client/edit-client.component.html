@@ -1,0 +1,72 @@
+<div class="edit-client-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>{{ "EDIT_CLIENT" | translate }}</h2>
+      <button class="close-btn" (click)="onCancel()">×</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">{{ "CLIENT_NAME" | translate }} *</label>
+          <input type="text" id="name" formControlName="name" required />
+          <div
+            class="error-message"
+            *ngIf="
+              clientForm.get('name')?.invalid && clientForm.get('name')?.touched
+            "
+          >
+            {{ "NAME_REQUIRED" | translate }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">{{ "CLIENT_EMAIL" | translate }} *</label>
+          <input type="email" id="email" formControlName="email" required />
+          <div
+            class="error-message"
+            *ngIf="
+              clientForm.get('email')?.invalid &&
+              clientForm.get('email')?.touched
+            "
+          >
+            {{ "VALID_EMAIL_REQUIRED" | translate }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">{{ "CLIENT_PHONE" | translate }} *</label>
+          <input type="tel" id="phone" formControlName="phone" required />
+          <div
+            class="error-message"
+            *ngIf="
+              clientForm.get('phone')?.invalid &&
+              clientForm.get('phone')?.touched
+            "
+          >
+            {{ "PHONE_REQUIRED" | translate }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">{{ "CLIENT_ADDRESS" | translate }}</label>
+          <textarea id="address" formControlName="address" rows="3"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="onCancel()">
+            {{ "CANCEL" | translate }}
+          </button>
+          <button
+            type="submit"
+            class="btn-primary"
+            [disabled]="clientForm.invalid || isSubmitting"
+          >
+            {{
+              isSubmitting ? ("UPDATING" | translate) : ("UPDATE" | translate)
+            }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="clients-container">
+  <div class="clients-header">
+    <h2>{{ "TITLE_CLIENTES" | translate }}</h2>
+    <button class="btn-primary" (click)="openAddForm()">
+      {{ "TITLE_CADASTRAR_CLIENTE" | translate }}
+    </button>
+  </div>
+
+  <div class="clients-content">
+    <div *ngIf="isLoading" class="loading-spinner">
+      <span>{{ "LOADING" | translate }}</span>
+    </div>
+
+    <div *ngIf="!isLoading && clients.length === 0" class="no-clients">
+      <p>{{ "NO_CLIENTS_FOUND" | translate }}</p>
+    </div>
+
+    <table *ngIf="!isLoading && clients.length > 0" class="clients-table">
+      <thead>
+        <tr>
+          <th>{{ "LABLE_NOME" | translate }}</th>
+          <th>{{ "LABLE_EMAIL" | translate }}</th>
+          <th>{{ "TITLE_TELEFONE" | translate }}</th>
+          <th>{{ "LABLE_ACOES" | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients">
+          <td>{{ client.name }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.phone }}</td>
+          <td class="actions">
+            <button class="btn-view" (click)="viewDetails(client)">
+              {{ "VIEW" | translate }}
+            </button>
+            <button class="btn-edit" (click)="openEditForm(client)">
+              {{ "EDIT" | translate }}
+            </button>
+            <button class="btn-delete" (click)="openDeleteConfirmation(client)">
+              {{ "DELETE" | translate }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-client-details
+    *ngIf="selectedClient && !showEditForm && !showDeleteConfirmation"
+    [client]="selectedClient"
+    (close)="selectedClient = null"
+  >
+  </app-client-details>
+
+  <app-add-client
+    *ngIf="showAddForm"
+    (clientAdded)="onClientAdded()"
+    (cancel)="closeAddForm()"
+  >
+  </app-add-client>
+
+  <app-edit-client
+    *ngIf="showEditForm && selectedClient"
+    [client]="selectedClient"
+    (clientUpdated)="onClientUpdated()"
+    (cancel)="closeEditForm()"
+  >
+  </app-edit-client>
+
+  <app-delete-client-confirmation
+    *ngIf="showDeleteConfirmation && selectedClient"
+    [client]="selectedClient"
+    (confirmDelete)="onClientDeleted()"
+    (cancelDelete)="closeDeleteConfirmation()"
+  >
+  </app-delete-client-confirmation>
+</div>

@@ -1,0 +1,31 @@
+<div class="client-details-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>{{ "CLIENT_DETAILS" | translate }}</h2>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-row">
+        <span class="label">{{ "CLIENT_NAME" | translate }}:</span>
+        <span class="value">{{ client.name }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ "CLIENT_EMAIL" | translate }}:</span>
+        <span class="value">{{ client.email }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ "CLIENT_PHONE" | translate }}:</span>
+        <span class="value">{{ client.phone }}</span>
+      </div>
+      <div class="detail-row" *ngIf="client.address">
+        <span class="label">{{ "CLIENT_ADDRESS" | translate }}:</span>
+        <span class="value">{{ client.address }}</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-primary" (click)="onClose()">
+        {{ "CLOSE" | translate }}
+      </button>
+    </div>
+  </div>
+</div>

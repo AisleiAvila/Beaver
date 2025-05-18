@@ -23,6 +23,7 @@ import { UsuariosComponent } from './component/usuarios/usuarios.component';
 import { ServicoComponent } from './component/servico/servico.component';
 import { LandingPageComponent } from './component/landingpage/landingpage.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { ClientsComponent } from './component/clients/clients.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/landingpage', pathMatch: 'full' },
@@ -53,6 +54,7 @@ export const routes: Routes = [
   { path: 'servico', component: ServicoComponent },
   { path: 'landingpage', component: LandingPageComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'clients', component: ClientsComponent },
   { path: '**', redirectTo: '/landingpage' },
 ];
 
