@@ -75,7 +75,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             String login = this.authorizationService.validateToken(token);
             if (login != null) {
-                log.info("Token válido");
                 com.dasad.empresa.model.UsuarioModel user = this.usuarioRepository.findByEmail(login)
                         .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
                 List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));

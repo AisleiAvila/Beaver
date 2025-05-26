@@ -40,19 +40,33 @@ import static com.dasad.empresa.jooq.model.tables.UsuarioFoto.USUARIO_FOTO;
 import static com.dasad.empresa.jooq.model.tables.UsuarioOrganizacao.USUARIO_ORGANIZACAO;
 import static com.dasad.empresa.jooq.model.tables.UsuarioPerfil.USUARIO_PERFIL;
 
+/**
+ * Implementação do repositório de usuários utilizando JOOQ para acesso ao banco de dados.
+ * Responsável por operações de CRUD, autenticação, perfis, endereços, organizações e fotos de usuários.
+ */
 @Repository
-//@Transactional
 public class UsuarioRepositoryImpl implements UsuarioRepository {
     private static final Logger log = LogManager.getLogger(UsuarioRepositoryImpl.class);
     private final DSLContext dsl;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Construtor da classe.
+     * @param dsl contexto JOOQ para execução de queries
+     * @param passwordEncoder encoder de senha do Spring Security
+     */
     @Autowired
     public UsuarioRepositoryImpl(DSLContext dsl, PasswordEncoder passwordEncoder) {
         this.dsl = dsl;
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Busca usuários conforme os filtros do request e organização.
+     * @param usuarioRequest filtros de busca
+     * @param organizacaoId id da organização
+     * @return lista de usuários encontrados
+     */
     public Optional<List<UsuarioModel>> find(UsuarioRequest usuarioRequest, Integer organizacaoId) {
         UsuarioQueryBuilder queryBuilder = new UsuarioQueryBuilder(this.dsl)
                 .withOrganizacao(organizacaoId)
@@ -68,6 +82,12 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return Optional.ofNullable(result.isEmpty() ? null : result);
     }
 
+    /**
+     * Conta o total de registros de usuários conforme os filtros.
+     * @param usuarioRequest filtros de busca
+     * @param organizacaoId id da organização
+     * @return total de registros encontrados
+     */
     public Optional<Integer> countTotalRecords(UsuarioRequest usuarioRequest, Integer organizacaoId) {
         UsuarioQueryBuilder queryBuilder = new UsuarioQueryBuilder(this.dsl)
                 .withOrganizacao(organizacaoId)
@@ -83,6 +103,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return Optional.ofNullable(result == null ? 0 : result);
     }
 
+    /**
+     * Busca usuário por ID, incluindo perfis, endereços e foto.
+     * @param id identificador do usuário
+     * @return usuário encontrado (se existir)
+     */
     public Optional<UsuarioModel> findById(Integer id) {
         return dsl.select(
                         USUARIO.ID,
@@ -182,7 +207,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 });
     }
 
-
+    /**
+     * Busca usuário por e-mail, incluindo perfis e organizações.
+     * @param email e-mail do usuário
+     * @return usuário encontrado (se existir)
+     */
     public Optional<UsuarioModel> findByEmail(String email) {
         // Primeiro busca apenas o usuário
         Optional<UsuarioModel> usuario = dsl.select(USUARIO.fields())
@@ -220,6 +249,12 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return Optional.empty();
     }
 
+    /**
+     * Busca usuário por e-mail e organização, incluindo perfis e organizações.
+     * @param email e-mail do usuário
+     * @param organizacaoId id da organização
+     * @return usuário encontrado (se existir)
+     */
     public Optional<UsuarioModel> findByEmailAndOrganizacaoId(String email, Integer organizacaoId) {
         // Primeiro busca apenas o usuário
         Optional<UsuarioModel> usuario = dsl.select(USUARIO.fields())
@@ -258,7 +293,12 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return Optional.empty();
     }
 
-
+    /**
+     * Cria um novo usuário e associa perfis, endereços e organização.
+     * @param usuario dados do usuário
+     * @param organizacaoId id da organização
+     * @return usuário criado
+     */
     public UsuarioModel create(UsuarioModel usuario, Integer organizacaoId) {
         if (isEmailExists(usuario)) {
             throw new EmailAlreadyExistsException("Email já existe: " + usuario.getEmail());
@@ -292,6 +332,12 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         });
     }
 
+    /**
+     * Atualiza dados do usuário, perfis, endereços e organização.
+     * @param usuarioModel dados do usuário
+     * @param organizacaoId id da organização
+     * @return usuário atualizado
+     */
     public UsuarioModel update(UsuarioModel usuarioModel, Integer organizacaoId) {
         return dsl.transactionResult(configuration -> {
             DSLContext ctx = DSL.using(configuration);
@@ -313,16 +359,30 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         });
     }
 
+    /**
+     * Remove todos os perfis associados ao usuário.
+     * @param id id do usuário
+     * @param ctx contexto JOOQ
+     */
     private static void deletePerfilUsuarioById(Integer id, DSLContext ctx) {
         ctx.deleteFrom(USUARIO_PERFIL)
                 .where(USUARIO_PERFIL.USUARIO_ID.eq(id))
                 .execute();
     }
 
+    /**
+     * Remove usuário pelo ID.
+     * @param id id do usuário
+     */
     public void deleteById(Integer id) {
         dsl.deleteFrom(USUARIO).where(USUARIO.ID.eq(id)).execute();
     }
 
+    /**
+     * Atualiza a senha do usuário.
+     * @param id id do usuário
+     * @param password nova senha
+     */
     public void updatePassword(Integer id, String password) {
         String encryptedPassword = passwordEncoder.encode(password);
         dsl.update(USUARIO)
@@ -331,6 +391,12 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .execute();
     }
 
+    /**
+     * Busca fotos do usuário.
+     * @param usuarioId id do usuário
+     * @param isAtivo se a foto está ativa
+     * @return lista de fotos encontradas
+     */
     @Override
     public Optional<List<UsuarioFotoModel>> findFoto(Integer usuarioId, boolean isAtivo) {
         UsuarioFotoQueryBuilder queryBuilder = new UsuarioFotoQueryBuilder(this.dsl)
@@ -342,6 +408,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     }
 
+    /**
+     * Cria uma nova foto para o usuário.
+     * @param usuarioFotoModel dados da foto
+     * @return foto criada
+     */
     @Override
     public UsuarioFotoModel createFoto(UsuarioFotoModel usuarioFotoModel) {
         if (usuarioFotoModel.getUsuarioId() == null) {
@@ -390,6 +461,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         });
     }
 
+    /**
+     * Atualiza uma foto do usuário.
+     * @param usuarioFotoModel dados da foto
+     * @return foto atualizada
+     */
     @Override
     public UsuarioFotoModel updateFoto(UsuarioFotoModel usuarioFotoModel) {
         if (usuarioFotoModel.getUsuarioId() == null) {
@@ -442,6 +518,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         });
     }
 
+    /**
+     * Busca o perfil do usuário para autenticação.
+     * @param loginRequestDTO dados de login
+     * @return perfil encontrado (se existir)
+     */
     @Override
     public Optional<PerfilModel> findPerfilUsuario(LoginRequestDTO loginRequestDTO) {
         // Validação inicial dos parâmetros
