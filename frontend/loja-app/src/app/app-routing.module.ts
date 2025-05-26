@@ -24,6 +24,7 @@ import { ServicoComponent } from './component/servico/servico.component';
 import { LandingPageComponent } from './component/landingpage/landingpage.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ClientsComponent } from './component/clients/clients.component';
+import { ServicosComponent } from './component/servicos/servicos.component'; // Import ServicosComponent
 
 export const routes: Routes = [
   { path: '', redirectTo: '/landingpage', pathMatch: 'full' },
@@ -52,9 +53,15 @@ export const routes: Routes = [
   { path: 'agendamento', component: AgendamentoComponent },
   { path: 'geolocalizacao', component: GeolocalizacaoComponent },
   { path: 'servico', component: ServicoComponent },
+  { path: 'servicos', component: ServicosComponent },
   { path: 'landingpage', component: LandingPageComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'clients', component: ClientsComponent },
+  {
+    path: 'servicos',
+    component: ServicosComponent,
+    // canActivate: [AuthGuard] // Add AuthGuard here if this route should be protected
+  },
   { path: '**', redirectTo: '/landingpage' },
 ];
 

@@ -1,48 +1,233 @@
-<div class="clients-container">
-  <div class="clients-header">
-    <h2>{{ "TITLE_CLIENTES" | translate }}</h2>
-    <button class="btn-primary" (click)="openAddForm()">
-      {{ "TITLE_CADASTRAR_CLIENTE" | translate }}
-    </button>
-  </div>
+<main class="main-container">
+  <div class="content-wrapper">
+    <h2 class="page-title">{{ "TITLE_CLIENTES" | translate }}</h2>
 
-  <div class="clients-content">
-    <div *ngIf="isLoading" class="loading-spinner">
-      <span>{{ "LOADING" | translate }}</span>
+    <div class="filters-section" [class.mobile-layout]="isMobile">
+      <div class="filters-header">
+        <h3 class="filters-title">{{ "TITLE_FILTROS" | translate }}:</h3>
+        <button
+          *ngIf="isMobile"
+          mat-icon-button
+          color="primary"
+          (click)="toggleFiltersVisibility()"
+        >
+          <mat-icon>{{ showFilters ? "expand_less" : "expand_more" }}</mat-icon>
+        </button>
+      </div>
     </div>
 
-    <div *ngIf="!isLoading && clients.length === 0" class="no-clients">
-      <p>{{ "NO_CLIENTS_FOUND" | translate }}</p>
+    <div
+      class="filters-container"
+      [class.hidden-mobile]="isMobile && !showFilters"
+    >
+      <div class="field-with-side-label filter-field wide-field">
+        <label class="side-label" for="nome-input"
+          >{{ "LABLE_NOME" | translate }}:</label
+        >
+        <mat-form-field appearance="fill" class="side-input">
+          <input id="nome-input" matInput #nomeInput />
+        </mat-form-field>
+      </div>
+
+      <div class="field-with-side-label filter-field wide-field">
+        <label class="side-label" for="email-input"
+          >{{ "LABLE_EMAIL" | translate }}:</label
+        >
+        <mat-form-field appearance="fill" class="side-input">
+          <input id="email-input" matInput #emailInput />
+        </mat-form-field>
+      </div>
+
+      <div class="small-fields-row">
+        <div class="field-with-side-label filter-field wide-field">
+          <label class="side-label" for="phone-input"
+            >{{ "TITLE_TELEFONE" | translate }}:</label
+          >
+          <mat-form-field appearance="fill" class="side-input">
+            <input id="phone-input" matInput #phoneInput />
+          </mat-form-field>
+        </div>
+
+        <div class="field-with-side-label filter-field wide-field">
+          <label class="side-label" for="status-select"
+            >{{ "LABLE_STATUS" | translate }}:</label
+          >
+          <select
+            id="status-select"
+            class="filter-select"
+            [(ngModel)]="statusFilter"
+            name="statusFilter"
+            (change)="applyFilters()"
+          >
+            <option value="">{{ "LABLE_TODOS" | translate }}</option>
+            <option value="active">{{ "LABLE_ATIVO" | translate }}</option>
+            <option value="inactive">{{ "LABLE_INATIVO" | translate }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="actions-container" [class.mobile-actions]="isMobile">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="applyFilters()"
+        class="action-button"
+      >
+        <mat-icon>search</mat-icon>
+        <span>{{ "LABLE_PESQUISAR" | translate }}</span>
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="navigateToCadastroCliente()"
+        class="action-button"
+      >
+        <mat-icon>add</mat-icon>
+        <span>{{ "LABLE_CADASTRAR" | translate }}</span>
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="limparFiltros(nomeInput, emailInput, phoneInput)"
+        class="action-button"
+      >
+        <mat-icon>clear</mat-icon>
+        <span>{{ "LABLE_LIMPAR_FILTROS" | translate }}</span>
+      </button>
     </div>
 
-    <table *ngIf="!isLoading && clients.length > 0" class="clients-table">
-      <thead>
-        <tr>
-          <th>{{ "LABLE_NOME" | translate }}</th>
-          <th>{{ "LABLE_EMAIL" | translate }}</th>
-          <th>{{ "TITLE_TELEFONE" | translate }}</th>
-          <th>{{ "LABLE_ACOES" | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let client of clients">
-          <td>{{ client.name }}</td>
-          <td>{{ client.email }}</td>
-          <td>{{ client.phone }}</td>
-          <td class="actions">
-            <button class="btn-view" (click)="viewDetails(client)">
-              {{ "VIEW" | translate }}
-            </button>
-            <button class="btn-edit" (click)="openEditForm(client)">
-              {{ "EDIT" | translate }}
-            </button>
-            <button class="btn-delete" (click)="openDeleteConfirmation(client)">
-              {{ "DELETE" | translate }}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Column toggle for mobile -->
+    <div class="column-toggle" *ngIf="isMobile">
+      <button mat-button [matMenuTriggerFor]="columnMenu">
+        <mat-icon>view_column</mat-icon>
+        {{ "LABLE_EXIBIR_COLUNAS" | translate }}
+      </button>
+      <mat-menu #columnMenu="matMenu">
+        <!--
+          NOTE: If you're seeing "NG01203: No value accessor for form control" errors for the mat-checkbox below,
+          ensure FormsModule and MatCheckboxModule are imported in this component's NgModule.
+        -->
+        <mat-checkbox
+          *ngFor="let column of availableColumns; let i = index"
+          class="column-checkbox"
+          [(ngModel)]="column.visible"
+          name="column-visible-{{ i }}"
+          (change)="updateDisplayedColumns()"
+        >
+          {{ column.name | translate }}
+        </mat-checkbox>
+      </mat-menu>
+    </div>
+
+    <!--
+      IMPORTANT: If data is not displaying in the table, please ensure the following in your component's TypeScript file and Angular Module:
+      1. MODULE IMPORTS:
+         - MatTableModule, MatSortModule, MatPaginatorModule are imported in the relevant NgModule.
+         - MatFormFieldModule, MatInputModule are imported (to resolve "mat-form-field must contain a MatFormFieldControl" errors).
+         - FormsModule is imported if ngModel is used.
+      2. COMPONENT LOGIC (.ts file):
+         - The 'clients' property (bound to [dataSource]) is correctly populated with data (array or MatTableDataSource).
+         - The 'displayedColumns' array is correctly populated with the names of the columns to display (e.g., ['name', 'email', 'phone', 'actions']).
+         - If using MatTableDataSource, ensure 'matSort' and 'matPaginator' are correctly linked to it in ngAfterViewInit.
+         - 'isLoading' flag is managed correctly.
+         - 'totalItems', 'pageSize', 'pageIndex' for the paginator are correctly set.
+    -->
+    <div class="table-container mat-elevation-z8">
+      <div class="table-wrapper">
+        <mat-table [dataSource]="clients" matSort>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "LABLE_NOME" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let client">{{ client.name }}</mat-cell>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "LABLE_EMAIL" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let client">{{ client.email }}</mat-cell>
+          </ng-container>
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "TITLE_TELEFONE" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let client">{{ client.phone }}</mat-cell>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef class="actions-column">
+              {{ "LABLE_ACOES" | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let client" class="actions-column">
+              <div class="action-buttons">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="viewDetails(client)"
+                  matTooltip="{{ 'VIEW' | translate }}"
+                  class="action-icon"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="openEditForm(client)"
+                  matTooltip="{{ 'EDIT' | translate }}"
+                  class="action-icon"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="openDeleteConfirmation(client)"
+                  matTooltip="{{ 'DELETE' | translate }}"
+                  class="action-icon"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      </div>
+
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+
+    <div class="clients-content">
+      <div *ngIf="isLoading" class="loading-spinner">
+        <span>{{ "LOADING" | translate }}</span>
+      </div>
+
+      <div
+        *ngIf="!isLoading && (!clients || clients.data.length === 0)"
+        class="no-clients"
+      >
+        <p>{{ "NO_CLIENTS_FOUND" | translate }}</p>
+      </div>
+    </div>
   </div>
 
   <app-client-details
@@ -74,4 +259,4 @@
     (cancelDelete)="closeDeleteConfirmation()"
   >
   </app-delete-client-confirmation>
-</div>
+</main>

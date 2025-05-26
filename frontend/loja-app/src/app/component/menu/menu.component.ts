@@ -131,6 +131,12 @@ export class MenuComponent implements OnInit {
       action: () => this.navigateTo('/agendamento'),
     },
     {
+      labelKey: 'LABLE_CLIENTES',
+      icon: 'people',
+      action: () => this.navigateTo('/clients'),
+      route: '/clients',
+    },
+    {
       labelKey: 'TITLE_USUARIOS',
       icon: 'people',
       action: () => this.navigateTo('/usuarios'),
@@ -150,15 +156,15 @@ export class MenuComponent implements OnInit {
     },
     {
       labelKey: 'TITLE_SERVICO',
-      icon: 'build',
+      icon: 'service_toolbox',
       action: () => this.navigateTo('/servico'),
       route: '/servico',
     },
     {
       labelKey: 'TITLE_SERVICO',
       icon: 'build',
-      action: () => this.navigateTo('/landingpage'),
-      route: '/landingpage',
+      action: () => this.navigateTo('/servicos'),
+      route: '/servicos',
     },
   ];
 

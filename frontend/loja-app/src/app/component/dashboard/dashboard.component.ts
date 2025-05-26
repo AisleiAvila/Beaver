@@ -3,6 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
+interface Functionality {
+  name: string;
+  route: string;
+  image: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,9 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [CommonModule, RouterModule, TranslateModule],
 })
 export class DashboardComponent implements OnInit {
-  functionalities: any[] = [];
-
-  constructor() {}
+  functionalities: Functionality[] = [];
 
   ngOnInit(): void {
     this.functionalities = [
@@ -59,8 +63,13 @@ export class DashboardComponent implements OnInit {
         image: 'assets/icons/category.svg',
       },
       {
-        name: 'CLIENTS',
-        image: 'assets/images/clients-icon.png',
+        name: 'Serviços',
+        route: '/servicos',
+        image: 'assets/icons/service_toolbox.svg',
+      },
+      {
+        name: 'Clientes',
+        image: 'assets/icons/person.svg',
         route: '/clients',
       },
     ];

@@ -45,7 +45,6 @@ import { GeolocalizacaoService } from './service/geolocalizacao.service';
 import { CustomPaginatorIntl } from './shared/service/custom-paginator-intl';
 import { OrganizacaoInterceptor } from './interceptor/organizacao.Interceptor';
 import { LayoutModule } from '@angular/cdk/layout';
-import { ClientsModule } from './component/clients/clients.module';
 
 /**
  * Factory para criar o loader de traduções
@@ -111,8 +110,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
 
     FontAwesomeModule,
-
-    ClientsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

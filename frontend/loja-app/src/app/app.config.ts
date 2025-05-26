@@ -1,28 +1,31 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { routes } from './app-routing.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+import { routes } from './app.routes';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-// Factory para carregador de traduções
-export function HttpLoaderFactory(http: HttpClient) {
+// Function to create translation loader
+export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+    provideAnimations(),
+    provideHttpClient(),
     importProvidersFrom(
-      HttpClientModule,
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
+          useFactory: createTranslateLoader,
           deps: [HttpClient],
         },
+        defaultLanguage: 'pt-BR',
       })
     ),
-    // outros providers...
   ],
 };
