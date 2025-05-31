@@ -363,7 +363,7 @@ export class UsuariosComponent implements AfterViewInit, OnInit, OnDestroy {
       .map((col) => col.key);
   }
 
-  abrirAssociarCategorias(usuario: any) {
+  abrirAssociarCategorias(usuario: Usuario) {
     this.dialog.open(AssociarCategoriasUsuarioComponent, {
       width: '500px',
       data: { usuario },

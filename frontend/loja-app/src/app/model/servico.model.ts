@@ -1,8 +1,9 @@
 export interface Servico {
   id?: number;
   nome: string;
-  preco?: number;
-  duracao?: number;
-  descricao?: string;
-  // Add other properties as needed
+  tecnico: string;
+  cliente: string;
+  dataAgendada: Date;
+  valorCobrado: number;
+  status: string;
 }
