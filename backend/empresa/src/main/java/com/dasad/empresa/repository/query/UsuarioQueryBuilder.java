@@ -122,55 +122,53 @@ public class UsuarioQueryBuilder {
     }
 
     public CompletableFuture<List<UsuarioModel>> build() {
-        return CompletableFuture.supplyAsync(() -> {
-            return this.query.fetch().stream().collect(Collectors.groupingBy(
-                    item -> item.get("usuario_id", Integer.class),
-                    Collectors.mapping(item -> item, Collectors.toList())
-            )).values().stream().map(records -> {
-                Record20<Integer, String, String, String, LocalDate, Integer, String, Integer, String, String, String, String, Integer, String, String, Integer, String, Integer, String, Integer> item = records.getFirst();
-                UsuarioModel usuario = new UsuarioModel();
-                usuario.setId(item.get("usuario_id", Integer.class));
-                usuario.setNome(item.get(Usuario.USUARIO.NOME));
-                usuario.setEmail(item.get(Usuario.USUARIO.EMAIL));
-                usuario.setSenha(item.get(Usuario.USUARIO.SENHA));
-                usuario.setDataNascimento(item.get(Usuario.USUARIO.DATA_NASCIMENTO));
-                usuario.setPerfis(records.stream()
-                        .filter(r -> r.get("perfil_id") != null)
-                        .map(r -> {
-                            PerfilModel perfil = new PerfilModel();
-                            perfil.setId(r.get("perfil_id", Integer.class));
-                            perfil.setNome(r.get("perfil_nome", String.class));
-                            return perfil;
-                        })
-                        .toList());
-                usuario.setEnderecos(records.stream()
-                        .filter(r -> r.get(ENDERECO.BAIRRO) != null)
-                        .map(r -> {
-                            var endereco = new EnderecoModel();
-                            endereco.setId(r.get("endereco_id", Integer.class));
-                            endereco.setLogradouro(r.get(ENDERECO.LOGRADOURO));
-                            endereco.setNumero(r.get(ENDERECO.NUMERO));
-                            endereco.setComplemento(r.get(ENDERECO.COMPLEMENTO));
-                            endereco.setBairro(r.get(ENDERECO.BAIRRO));
-                            var pais = new PaisModel();
-                            pais.setId(r.get("pais_id", Integer.class));
-                            pais.setNome(r.get("pais_nome", String.class));
-                            var estado = new EstadoModel();
-                            estado.setId(r.get("estado_id", Integer.class));
-                            estado.setNome(r.get("estado_nome", String.class));
-                            estado.setPaisId(pais);
-                            var cidade = new CidadeModel();
-                            cidade.setId(r.get(ENDERECO.CIDADE_ID));
-                            cidade.setNome(r.get("cidade_nome", String.class));
-                            cidade.setEstadoId(estado);
-                            endereco.setCidadeId(cidade);
-                            endereco.setCep(r.get(ENDERECO.CEP));
-                            return endereco;
-                        })
-                        .toList());
-                return usuario;
-            }).toList();
-        });
+        return CompletableFuture.supplyAsync(this.query.fetch().stream().collect(Collectors.groupingBy(
+                item -> item.get("usuario_id", Integer.class),
+                Collectors.mapping(item -> item, Collectors.toList())
+        )).values().stream().map(records -> {
+            Record20<Integer, String, String, String, LocalDate, Integer, String, Integer, String, String, String, String, Integer, String, String, Integer, String, Integer, String, Integer> item = records.getFirst();
+            UsuarioModel usuario = new UsuarioModel();
+            usuario.setId(item.get("usuario_id", Integer.class));
+            usuario.setNome(item.get(Usuario.USUARIO.NOME));
+            usuario.setEmail(item.get(Usuario.USUARIO.EMAIL));
+            usuario.setSenha(item.get(Usuario.USUARIO.SENHA));
+            usuario.setDataNascimento(item.get(Usuario.USUARIO.DATA_NASCIMENTO));
+            usuario.setPerfis(records.stream()
+                    .filter(r -> r.get("perfil_id") != null)
+                    .map(r -> {
+                        PerfilModel perfil = new PerfilModel();
+                        perfil.setId(r.get("perfil_id", Integer.class));
+                        perfil.setNome(r.get("perfil_nome", String.class));
+                        return perfil;
+                    })
+                    .toList());
+            usuario.setEnderecos(records.stream()
+                    .filter(r -> r.get(ENDERECO.BAIRRO) != null)
+                    .map(r -> {
+                        var endereco = new EnderecoModel();
+                        endereco.setId(r.get("endereco_id", Integer.class));
+                        endereco.setLogradouro(r.get(ENDERECO.LOGRADOURO));
+                        endereco.setNumero(r.get(ENDERECO.NUMERO));
+                        endereco.setComplemento(r.get(ENDERECO.COMPLEMENTO));
+                        endereco.setBairro(r.get(ENDERECO.BAIRRO));
+                        var pais = new PaisModel();
+                        pais.setId(r.get("pais_id", Integer.class));
+                        pais.setNome(r.get("pais_nome", String.class));
+                        var estado = new EstadoModel();
+                        estado.setId(r.get("estado_id", Integer.class));
+                        estado.setNome(r.get("estado_nome", String.class));
+                        estado.setPaisId(pais);
+                        var cidade = new CidadeModel();
+                        cidade.setId(r.get(ENDERECO.CIDADE_ID));
+                        cidade.setNome(r.get("cidade_nome", String.class));
+                        cidade.setEstadoId(estado);
+                        endereco.setCidadeId(cidade);
+                        endereco.setCep(r.get(ENDERECO.CEP));
+                        return endereco;
+                    })
+                    .toList());
+            return usuario;
+        })::toList);
     }
 
     public CompletableFuture<Integer> calculateTotalPages(Integer limit) {
@@ -179,8 +177,6 @@ public class UsuarioQueryBuilder {
     }
 
     public CompletableFuture<Integer> countTotalRecords() {
-        return CompletableFuture.supplyAsync(() -> {
-            return Math.toIntExact(this.query.fetch().size());
-        });
+        return CompletableFuture.supplyAsync(() -> Math.toIntExact(this.query.fetch().size()));
     }
 }

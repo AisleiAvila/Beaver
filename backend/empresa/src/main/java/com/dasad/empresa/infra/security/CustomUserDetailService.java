@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 /**
  * Serviço responsável por carregar os detalhes do usuário para autenticação.
- *
+ * <p>
  * Esta classe implementa a interface UserDetailsService do Spring Security,
  * que é fundamental para o processo de autenticação. Ela busca os detalhes
  * do usuário a partir do email (username) fornecido durante o processo de login.
- *
+ * <p>
  * O serviço consulta o banco de dados através do repositório de usuários e
  * converte o modelo de domínio (UsuarioModel) para o modelo de segurança do
  * Spring (UserDetails).
@@ -36,7 +36,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     /**
      * Construtor com injeção de dependência.
-     *
+     * <p>
      * A anotação @Lazy é utilizada para evitar dependências circulares durante
      * a inicialização dos componentes.
      *
@@ -48,7 +48,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     /**
      * Carrega os detalhes do usuário pelo nome de usuário (email).
-     *
+     * <p>
      * Este método é chamado pelo Spring Security durante o processo de autenticação.
      * Ele busca o usuário pelo email no repositório e, se encontrado, cria um
      * objeto UserDetails com as credenciais necessárias.

@@ -2,9 +2,9 @@ package com.dasad.empresa.service;
 
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
-import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.StatusCategoria;
 import com.dasad.empresa.repository.CategoriaRepository;
-import com.dasad.empresa.repository.StatusServicoRepository;
+import com.dasad.empresa.repository.StatusCategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     @Autowired
-    private StatusServicoRepository statusServicoRepository;
+    private StatusCategoriaRepository statusCategoriaRepository;
 
     /**
      * Construtor padrão sem parâmetros.
@@ -43,7 +43,7 @@ public class CategoriaService {
         return this.categoriaRepository.findById(id);
     }
 
-    public Optional<List<StatusServico>> getStatus() {
-        return this.statusServicoRepository.findAll();
+    public Optional<List<StatusCategoria>> getStatus() {
+        return this.statusCategoriaRepository.findAll();
     }
 }

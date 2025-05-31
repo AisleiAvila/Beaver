@@ -4,7 +4,7 @@
 package com.dasad.empresa.jooq.model.tables.records;
 
 
-import com.dasad.empresa.jooq.model.enums.StatusServico;
+import com.dasad.empresa.jooq.model.enums.StatusCategoria;
 import com.dasad.empresa.jooq.model.tables.Subcategoria;
 
 import java.math.BigDecimal;
@@ -79,31 +79,17 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
     }
 
     /**
-     * Setter for <code>public.subcategoria.status</code>.
-     */
-    public void setStatus(StatusServico value) {
-        set(4, value);
-    }
-
-    /**
-     * Getter for <code>public.subcategoria.status</code>.
-     */
-    public StatusServico getStatus() {
-        return (StatusServico) get(4);
-    }
-
-    /**
      * Setter for <code>public.subcategoria.tempo_medio_minutos</code>.
      */
     public void setTempoMedioMinutos(Integer value) {
-        set(5, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>public.subcategoria.tempo_medio_minutos</code>.
      */
     public Integer getTempoMedioMinutos() {
-        return (Integer) get(5);
+        return (Integer) get(4);
     }
 
     /**
@@ -116,7 +102,7 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
      */
     @Deprecated
     public void setNivelComplexidade(Object value) {
-        set(6, value);
+        set(5, value);
     }
 
     /**
@@ -129,21 +115,21 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
      */
     @Deprecated
     public Object getNivelComplexidade() {
-        return get(6);
+        return get(5);
     }
 
     /**
      * Setter for <code>public.subcategoria.preco_base</code>.
      */
     public void setPrecoBase(BigDecimal value) {
-        set(7, value);
+        set(6, value);
     }
 
     /**
      * Getter for <code>public.subcategoria.preco_base</code>.
      */
     public BigDecimal getPrecoBase() {
-        return (BigDecimal) get(7);
+        return (BigDecimal) get(6);
     }
 
     /**
@@ -156,7 +142,7 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
      */
     @Deprecated
     public void setUnidadeMedida(Object value) {
-        set(8, value);
+        set(7, value);
     }
 
     /**
@@ -169,49 +155,63 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
      */
     @Deprecated
     public Object getUnidadeMedida() {
-        return get(8);
+        return get(7);
     }
 
     /**
      * Setter for <code>public.subcategoria.materiais_tipicos</code>.
      */
     public void setMateriaisTipicos(String[] value) {
-        set(9, value);
+        set(8, value);
     }
 
     /**
      * Getter for <code>public.subcategoria.materiais_tipicos</code>.
      */
     public String[] getMateriaisTipicos() {
-        return (String[]) get(9);
+        return (String[]) get(8);
     }
 
     /**
      * Setter for <code>public.subcategoria.data_criacao</code>.
      */
     public void setDataCriacao(LocalDateTime value) {
-        set(10, value);
+        set(9, value);
     }
 
     /**
      * Getter for <code>public.subcategoria.data_criacao</code>.
      */
     public LocalDateTime getDataCriacao() {
-        return (LocalDateTime) get(10);
+        return (LocalDateTime) get(9);
     }
 
     /**
      * Setter for <code>public.subcategoria.data_atualizacao</code>.
      */
     public void setDataAtualizacao(LocalDateTime value) {
-        set(11, value);
+        set(10, value);
     }
 
     /**
      * Getter for <code>public.subcategoria.data_atualizacao</code>.
      */
     public LocalDateTime getDataAtualizacao() {
-        return (LocalDateTime) get(11);
+        return (LocalDateTime) get(10);
+    }
+
+    /**
+     * Setter for <code>public.subcategoria.status</code>.
+     */
+    public void setStatus(StatusCategoria value) {
+        set(11, value);
+    }
+
+    /**
+     * Getter for <code>public.subcategoria.status</code>.
+     */
+    public StatusCategoria getStatus() {
+        return (StatusCategoria) get(11);
     }
 
     // -------------------------------------------------------------------------
@@ -237,14 +237,13 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
     /**
      * Create a detached, initialised SubcategoriaRecord
      */
-    public SubcategoriaRecord(Integer id, Integer categoriaId, String nome, String descricao, StatusServico status, Integer tempoMedioMinutos, Object nivelComplexidade, BigDecimal precoBase, Object unidadeMedida, String[] materiaisTipicos, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao) {
+    public SubcategoriaRecord(Integer id, Integer categoriaId, String nome, String descricao, Integer tempoMedioMinutos, Object nivelComplexidade, BigDecimal precoBase, Object unidadeMedida, String[] materiaisTipicos, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao, StatusCategoria status) {
         super(Subcategoria.SUBCATEGORIA);
 
         setId(id);
         setCategoriaId(categoriaId);
         setNome(nome);
         setDescricao(descricao);
-        setStatus(status);
         setTempoMedioMinutos(tempoMedioMinutos);
         setNivelComplexidade(nivelComplexidade);
         setPrecoBase(precoBase);
@@ -252,6 +251,7 @@ public class SubcategoriaRecord extends UpdatableRecordImpl<SubcategoriaRecord> 
         setMateriaisTipicos(materiaisTipicos);
         setDataCriacao(dataCriacao);
         setDataAtualizacao(dataAtualizacao);
+        setStatus(status);
         resetTouchedOnNotNull();
     }
 }

@@ -70,9 +70,7 @@ class AuthorizationServiceTest {
         ReflectionTestUtils.setField(authorizationService, "secret", "");
 
         // Verifica se a exceção correta é lançada
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-            authorizationService.generateToken(usuarioModel);
-        });
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> authorizationService.generateToken(usuarioModel));
 
         assertEquals("Token secret is not configured properly.", exception.getMessage());
     }

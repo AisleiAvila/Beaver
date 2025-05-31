@@ -2,7 +2,7 @@ package com.dasad.empresa.model;
 
 import java.net.URI;
 import java.util.Objects;
-import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.StatusCategoria;
 import com.dasad.empresa.model.SubCategoriaModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -30,7 +30,7 @@ import jakarta.annotation.Generated;
  * CategoriaModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-05T12:52:25.659801500+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-31T09:26:11.793249200+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public class CategoriaModel {
 
   private @Nullable Integer id;
@@ -39,7 +39,7 @@ public class CategoriaModel {
 
   private @Nullable String descricao;
 
-  private @Nullable StatusServico status;
+  private @Nullable StatusCategoria status;
 
   private @Nullable Boolean requerCertificacao;
 
@@ -134,7 +134,7 @@ public class CategoriaModel {
     this.descricao = descricao;
   }
 
-  public CategoriaModel status(StatusServico status) {
+  public CategoriaModel status(StatusCategoria status) {
     this.status = status;
     return this;
   }
@@ -146,11 +146,11 @@ public class CategoriaModel {
   @Valid 
   @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("status")
-  public StatusServico getStatus() {
+  public StatusCategoria getStatus() {
     return status;
   }
 
-  public void setStatus(StatusServico status) {
+  public void setStatus(StatusCategoria status) {
     this.status = status;
   }
 

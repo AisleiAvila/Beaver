@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: controller.AuthControllerTest
 -------------------------------------------------------------------------------
-Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.387 s -- in controller.AuthControllerTest
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.850 s -- in controller.AuthControllerTest

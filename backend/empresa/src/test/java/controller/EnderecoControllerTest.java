@@ -70,7 +70,7 @@ class EnderecoControllerTest {
             // Then
             assertNotNull(response);
             assertEquals(1, response.getBody().size());
-            assertEquals(enderecoModel, response.getBody().get(0));
+            assertEquals(enderecoModel, response.getBody().getFirst());
         }
     }
 

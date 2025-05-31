@@ -1,49 +1,26 @@
 package com.dasad.empresa.service;
 
-import com.dasad.empresa.model.CategoriaModel;
-import com.dasad.empresa.model.CategoriaRequest;
-import com.dasad.empresa.model.StatusCategoria;
-import com.dasad.empresa.repository.CategoriaRepository;
-import com.dasad.empresa.repository.StatusCategoriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.repository.StatusServicoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoriaService {
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+public class ServicoService {
 
-    @Autowired
-    private StatusCategoriaRepository statusCategoriaRepository;
+    private final StatusServicoRepository statusServicoRepository;
 
     /**
-     * Construtor padrão sem parâmetros.
-     * Utilizado pela injeção de dependências do Spring.
+     * Construtor que recebe o repositório de StatusServico.
+     * Utilizado para injeção de dependência pelo Spring.
      */
-    public CategoriaService() {
-        // Construtor padrão necessário para injeção de dependências
+    public ServicoService(StatusServicoRepository statusServicoRepository) {
+        this.statusServicoRepository = statusServicoRepository;
     }
 
-    public Optional<List<CategoriaModel>> find(CategoriaRequest categoriaRequest) {
-        return this.categoriaRepository.find(categoriaRequest);
-    }
-
-    public Optional<CategoriaModel> create(CategoriaModel categoriaModel) {
-        return this.categoriaRepository.create(categoriaModel);
-    }
-
-    public void delete(Integer id) {
-        this.categoriaRepository.delete(id);
-    }
-
-    public Optional<Object> findById(Integer id) {
-        return this.categoriaRepository.findById(id);
-    }
-
-    public Optional<List<StatusCategoria>> getStatus() {
-        return this.statusCategoriaRepository.findAll();
+    public Optional<List<StatusServico>> getStatus() {
+        return this.statusServicoRepository.findAll();
     }
 }

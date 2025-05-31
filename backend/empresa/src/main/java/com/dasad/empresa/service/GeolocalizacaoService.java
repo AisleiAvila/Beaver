@@ -58,21 +58,22 @@ public class GeolocalizacaoService {
                     url,
                     HttpMethod.GET,
                     entity,
-                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             List<Map<String, Object>> response = responseEntity.getBody();
 
             if (response != null && !response.isEmpty()) {
-                Map<String, Object> result = response.get(0);
+                Map<String, Object> result = response.getFirst();
 
                 double latitude = Double.parseDouble(result.get("lat").toString());
                 double longitude = Double.parseDouble(result.get("lon").toString());
 
                 log.info("Coordenadas encontradas: Latitude: {}, Longitude: {}", latitude, longitude);
 
-                    enderecoModel.setLatitude(BigDecimal.valueOf(latitude));
-                    enderecoModel.setLongitude(BigDecimal.valueOf(longitude));
+                enderecoModel.setLatitude(BigDecimal.valueOf(latitude));
+                enderecoModel.setLongitude(BigDecimal.valueOf(longitude));
             } else {
                 log.warn("Nenhum resultado encontrado para o endereço: {}", fullAddress);
             }

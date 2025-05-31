@@ -7,7 +7,7 @@ package com.dasad.empresa.jooq.model.tables;
 import com.dasad.empresa.jooq.model.Indexes;
 import com.dasad.empresa.jooq.model.Keys;
 import com.dasad.empresa.jooq.model.Public;
-import com.dasad.empresa.jooq.model.enums.StatusServico;
+import com.dasad.empresa.jooq.model.enums.StatusCategoria;
 import com.dasad.empresa.jooq.model.tables.Categoria.CategoriaPath;
 import com.dasad.empresa.jooq.model.tables.PrecosRegionais.PrecosRegionaisPath;
 import com.dasad.empresa.jooq.model.tables.Regioes.RegioesPath;
@@ -90,11 +90,6 @@ public class Subcategoria extends TableImpl<SubcategoriaRecord> {
     public final TableField<SubcategoriaRecord, String> DESCRICAO = createField(DSL.name("descricao"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>public.subcategoria.status</code>.
-     */
-    public final TableField<SubcategoriaRecord, StatusServico> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR.nullable(false).defaultValue(DSL.field(DSL.raw("'ATIVO'::status_servico"), SQLDataType.VARCHAR)).asEnumDataType(StatusServico.class), this, "");
-
-    /**
      * The column <code>public.subcategoria.tempo_medio_minutos</code>.
      */
     public final TableField<SubcategoriaRecord, Integer> TEMPO_MEDIO_MINUTOS = createField(DSL.name("tempo_medio_minutos"), SQLDataType.INTEGER, this, "");
@@ -140,6 +135,11 @@ public class Subcategoria extends TableImpl<SubcategoriaRecord> {
      * The column <code>public.subcategoria.data_atualizacao</code>.
      */
     public final TableField<SubcategoriaRecord, LocalDateTime> DATA_ATUALIZACAO = createField(DSL.name("data_atualizacao"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("CURRENT_TIMESTAMP"), SQLDataType.LOCALDATETIME)), this, "");
+
+    /**
+     * The column <code>public.subcategoria.status</code>.
+     */
+    public final TableField<SubcategoriaRecord, StatusCategoria> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR.defaultValue(DSL.field(DSL.raw("'ATIVO'::status_categoria"), SQLDataType.VARCHAR)).asEnumDataType(StatusCategoria.class), this, "");
 
     private Subcategoria(Name alias, Table<SubcategoriaRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

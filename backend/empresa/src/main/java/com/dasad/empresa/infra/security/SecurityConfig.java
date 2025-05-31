@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 /**
  * Configuração de segurança da aplicação.
- *
+ * <p>
  * Esta classe configura todos os aspectos de segurança da aplicação, incluindo:
  * - Autenticação e autorização
  * - Configuração de CORS (Cross-Origin Resource Sharing)

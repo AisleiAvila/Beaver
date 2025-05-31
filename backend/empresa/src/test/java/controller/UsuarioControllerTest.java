@@ -173,7 +173,7 @@ class UsuarioControllerTest {
             assertEquals(ResponseEntity.ok().build().getStatusCode(), response.getStatusCode());
             assertNotNull(response.getBody());
             assertEquals(1, response.getBody().getUsuarios().size());
-            assertEquals(usuarioModel, response.getBody().getUsuarios().get(0));
+            assertEquals(usuarioModel, response.getBody().getUsuarios().getFirst());
             verify(usuarioService, times(1)).findById(id);
         }
 

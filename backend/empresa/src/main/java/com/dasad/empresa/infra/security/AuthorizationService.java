@@ -27,12 +27,12 @@ import java.util.Set;
 
 /**
  * Serviço responsável pela gestão de autorizações e tokens JWT.
- *
+ * <p>
  * Esta classe gerencia o ciclo de vida completo dos tokens:
  * - Geração de tokens JWT para usuários autenticados
  * - Validação de tokens recebidos
  * - Revogação de tokens quando necessário
- *
+ * <p>
  * O serviço utiliza o algoritmo HMAC512 para assinatura e verificação
  * dos tokens, garantindo a integridade e autenticidade dos mesmos.
  */
@@ -65,7 +65,7 @@ public class AuthorizationService {
 
     /**
      * Gera um token JWT para o usuário especificado.
-     *
+     * <p>
      * O token contém informações do usuário como email, ID, nome, perfil,
      * organização e permissões (roles).
      *
@@ -157,7 +157,7 @@ public class AuthorizationService {
 
     /**
      * Valida um token JWT e configura a autenticação no contexto de segurança.
-     *
+     * <p>
      * Este método verifica a integridade e validade do token, extraindo informações
      * do usuário e suas permissões para configurar o SecurityContext.
      *

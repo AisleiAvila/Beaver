@@ -13,6 +13,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\PerfilController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\ProdutoController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\SenhaController.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\ServicoController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\SubCategoriaController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\UsuarioController.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\controller\UsuarioSubCategoriaController.java
@@ -31,6 +32,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\SecurityConfig.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\infra\security\SecurityFilter.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\jooq\model\DefaultCatalog.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\jooq\model\enums\StatusCategoria.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\jooq\model\enums\StatusServico.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\jooq\model\Indexes.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\jooq\model\Keys.java
@@ -114,6 +116,8 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\query\UsuarioQueryBuilder.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SenhaRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SenhaRepositoryImpl.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\StatusCategoriaRepository.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\StatusCategoriaRepositoryImpl.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\StatusServicoRepository.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\StatusServicoRepositoryImpl.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\repository\SubCategoriaRepository.java
@@ -133,6 +137,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\PaisService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\PerfilService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\SenhaService.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\ServicoService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\SubCategoriaService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\UsuarioService.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\src\main\java\com\dasad\empresa\service\UsuarioSubCategoriaService.java
@@ -151,6 +156,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\PerfilApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\ProdutoApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\SenhaApi.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\ServicoApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\SubcategoriaApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\UsuarioApi.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\api\UsuariosubcategoriaApi.java
@@ -188,6 +194,7 @@ C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-source
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenha200Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenha404Response.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SalvarSenhaRequest.java
+C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\StatusCategoria.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\StatusServico.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SubCategoriaModel.java
 C:\Users\aisle\Documents\Ambiente\Beaver\backend\empresa\target\generated-sources\openapi\src\main\java\com\dasad\empresa\model\SubCategoriaRequest.java

@@ -3,7 +3,7 @@ package controller;
 import com.dasad.empresa.controller.CategoriaController;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
-import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.StatusCategoria;
 import com.dasad.empresa.service.CategoriaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,11 +56,6 @@ class CategoriaControllerTest {
         categoriaRequest = new CategoriaRequest();
         categoriaRequest.setNome("Eletrônicos");
 
-        // Remover a inicialização incorreta do StatusServico
-        // statusServico1 = new StatusServico(); // INCORRETO
-        // statusServico1.setDescricao("Ativo"); // INCORRETO
-        // statusServico2 = new StatusServico(); // INCORRETO
-        // statusServico2.setDescricao("Inativo"); // INCORRETO
     }
 
     @Test
@@ -132,7 +127,7 @@ class CategoriaControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(1, response.getBody().size());
-        assertEquals(expectedList.get(0).getNome(), response.getBody().get(0).getNome());
+        assertEquals(expectedList.getFirst().getNome(), response.getBody().getFirst().getNome());
         verify(categoriaService, times(1)).find(categoriaRequest);
     }
 
@@ -149,17 +144,15 @@ class CategoriaControllerTest {
         verify(categoriaService, times(1)).find(categoriaRequest);
     }
 
-    // --- TESTES CORRIGIDOS PARA StatusServico ENUM ---
-
     @Test
     @DisplayName("Deve encontrar status de serviço com sucesso e retornar status OK")
-    void findStatusServico_Success() {
+    void findCategoriaSuccess() {
         // Arrange: Usar as constantes do enum diretamente
-        List<StatusServico> expectedList = Arrays.asList(StatusServico.ATIVO, StatusServico.INATIVO);
+        List<StatusCategoria> expectedList = Arrays.asList(StatusCategoria.ATIVO, StatusCategoria.INATIVO);
         when(categoriaService.getStatus()).thenReturn(Optional.of(expectedList));
 
         // Act: Chama o método do controller
-        ResponseEntity<List<StatusServico>> response = categoriaController.findStatusServico();
+        ResponseEntity<List<StatusCategoria>> response = categoriaController.findStatusCategoria();
 
         // Assert: Verifica os resultados
         assertNotNull(response);
@@ -168,8 +161,8 @@ class CategoriaControllerTest {
         assertEquals(2, response.getBody().size()); // Verifica o tamanho da lista
 
         // Verifica se os enums retornados são os esperados
-        assertTrue(response.getBody().contains(StatusServico.ATIVO));
-        assertTrue(response.getBody().contains(StatusServico.INATIVO));
+        assertTrue(response.getBody().contains(StatusCategoria.ATIVO));
+        assertTrue(response.getBody().contains(StatusCategoria.INATIVO));
 
 
         // Verifica se o método getStatus do serviço foi chamado
@@ -178,12 +171,12 @@ class CategoriaControllerTest {
 
     @Test
     @DisplayName("Deve retornar Not Found quando nenhum status de serviço for encontrado")
-    void findStatusServico_NotFound() {
+    void findStatusCategoria_NotFound() {
         // Arrange: Configura o mock do serviço para retornar Optional vazio
         when(categoriaService.getStatus()).thenReturn(Optional.empty());
 
         // Act: Chama o método do controller
-        ResponseEntity<List<StatusServico>> response = categoriaController.findStatusServico();
+        ResponseEntity<List<StatusCategoria>> response = categoriaController.findStatusCategoria();
 
         // Assert: Verifica os resultados
         assertNotNull(response);
@@ -193,9 +186,6 @@ class CategoriaControllerTest {
         // Verifica se o método getStatus do serviço foi chamado
         verify(categoriaService, times(1)).getStatus();
     }
-
-    // --- FIM DOS TESTES CORRIGIDOS PARA StatusServico ENUM ---
-
 
     @Test
     @DisplayName("Deve retornar null para updateCategoria conforme implementação atual")

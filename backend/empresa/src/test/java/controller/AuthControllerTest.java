@@ -135,6 +135,7 @@ class AuthControllerTest {
             assertEquals(ResponseEntity.badRequest().build().getStatusCode(), response.getStatusCode());
         }
     }
+
     @Nested
     class RegisterTests {
 
@@ -171,17 +172,13 @@ class AuthControllerTest {
             revokeTokenRequest.setToken(null);
 
             // Act & Assert
-            assertThrows(IllegalArgumentException.class, () -> {
-                authController.revokeToken(revokeTokenRequest);
-            });
+            assertThrows(IllegalArgumentException.class, () -> authController.revokeToken(revokeTokenRequest));
 
             // Arrange
             revokeTokenRequest.setToken("");
 
             // Act & Assert
-            assertThrows(IllegalArgumentException.class, () -> {
-                authController.revokeToken(revokeTokenRequest);
-            });
+            assertThrows(IllegalArgumentException.class, () -> authController.revokeToken(revokeTokenRequest));
         }
     }
 }

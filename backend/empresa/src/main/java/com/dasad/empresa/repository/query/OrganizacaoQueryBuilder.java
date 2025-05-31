@@ -76,27 +76,25 @@ public class OrganizacaoQueryBuilder {
     }
 
     public CompletableFuture<List<OrganizacaoModel>> build() {
-        return CompletableFuture.supplyAsync(() -> {
-            return this.query.fetch().stream().collect(Collectors.groupingBy(
-                    record -> record.get(Usuario.USUARIO.ID),
-                    Collectors.mapping(record -> record, Collectors.toList())
-            )).values().stream().map(records -> {
-                Record11<Integer, String, String, String, String, String, String, String, String, String, LocalDate> record = records.getFirst();
-                OrganizacaoModel organizacao = new OrganizacaoModel();
-                organizacao.setId(record.get(Organizacao.ORGANIZACAO.ID));
-                organizacao.setNome(record.get(Organizacao.ORGANIZACAO.NOME));
-                organizacao.setNif(record.get(Organizacao.ORGANIZACAO.NIF));
-                organizacao.setEmail(record.get(Organizacao.ORGANIZACAO.EMAIL));
-                organizacao.setWebsite(record.get(Organizacao.ORGANIZACAO.WEBSITE));
-                organizacao.setSetorAtividade(record.get(Organizacao.ORGANIZACAO.SETOR_ATIVIDADE));
-                organizacao.setMissao(record.get(Organizacao.ORGANIZACAO.MISSAO));
-                organizacao.setRepresentanteLegal(record.get(Organizacao.ORGANIZACAO.REPRESENTANTE_LEGAL));
-                organizacao.setCargo(record.get(Organizacao.ORGANIZACAO.CARGO));
-                organizacao.setNumeroRegistoComercial(record.get(Organizacao.ORGANIZACAO.NUMERO_REGISTO_COMERCIAL));
-                organizacao.setDataRegisto(record.get(Organizacao.ORGANIZACAO.DATA_REGISTO));
-                return organizacao;
-            }).collect(Collectors.toList());
-        });
+        return CompletableFuture.supplyAsync(() -> this.query.fetch().stream().collect(Collectors.groupingBy(
+                record -> record.get(Usuario.USUARIO.ID),
+                Collectors.mapping(record -> record, Collectors.toList())
+        )).values().stream().map(records -> {
+            Record11<Integer, String, String, String, String, String, String, String, String, String, LocalDate> record = records.getFirst();
+            OrganizacaoModel organizacao = new OrganizacaoModel();
+            organizacao.setId(record.get(Organizacao.ORGANIZACAO.ID));
+            organizacao.setNome(record.get(Organizacao.ORGANIZACAO.NOME));
+            organizacao.setNif(record.get(Organizacao.ORGANIZACAO.NIF));
+            organizacao.setEmail(record.get(Organizacao.ORGANIZACAO.EMAIL));
+            organizacao.setWebsite(record.get(Organizacao.ORGANIZACAO.WEBSITE));
+            organizacao.setSetorAtividade(record.get(Organizacao.ORGANIZACAO.SETOR_ATIVIDADE));
+            organizacao.setMissao(record.get(Organizacao.ORGANIZACAO.MISSAO));
+            organizacao.setRepresentanteLegal(record.get(Organizacao.ORGANIZACAO.REPRESENTANTE_LEGAL));
+            organizacao.setCargo(record.get(Organizacao.ORGANIZACAO.CARGO));
+            organizacao.setNumeroRegistoComercial(record.get(Organizacao.ORGANIZACAO.NUMERO_REGISTO_COMERCIAL));
+            organizacao.setDataRegisto(record.get(Organizacao.ORGANIZACAO.DATA_REGISTO));
+            return organizacao;
+        }).collect(Collectors.toList()));
     }
 
     public CompletableFuture<Integer> calculateTotalPages(Integer limit) {
@@ -105,11 +103,9 @@ public class OrganizacaoQueryBuilder {
     }
 
     public CompletableFuture<Integer> countTotalRecords() {
-        return CompletableFuture.supplyAsync(() -> {
-            return this.dslContext
-                    .selectCount()
-                    .from(Organizacao.ORGANIZACAO)
-                    .fetchOne(0, int.class);
-        });
+        return CompletableFuture.supplyAsync(() -> this.dslContext
+                .selectCount()
+                .from(Organizacao.ORGANIZACAO)
+                .fetchOne(0, int.class));
     }
 }

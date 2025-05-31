@@ -65,7 +65,7 @@ public class OrganizacaoContextFilter extends OncePerRequestFilter {
 
                 // Define a organização atual como a primeira da lista, se existir
                 if (!organizacoes.isEmpty()) {
-                    context.setOrganizacaoAtual(organizacoes.get(0));
+                    context.setOrganizacaoAtual(organizacoes.getFirst());
                 }
 
 //                // Extrair flag de admin

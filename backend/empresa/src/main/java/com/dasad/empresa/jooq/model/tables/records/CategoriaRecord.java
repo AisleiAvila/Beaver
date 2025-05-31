@@ -4,7 +4,7 @@
 package com.dasad.empresa.jooq.model.tables.records;
 
 
-import com.dasad.empresa.jooq.model.enums.StatusServico;
+import com.dasad.empresa.jooq.model.enums.StatusCategoria;
 import com.dasad.empresa.jooq.model.tables.Categoria;
 
 import java.math.BigDecimal;
@@ -65,59 +65,45 @@ public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
     }
 
     /**
-     * Setter for <code>public.categoria.status</code>.
-     */
-    public void setStatus(StatusServico value) {
-        set(3, value);
-    }
-
-    /**
-     * Getter for <code>public.categoria.status</code>.
-     */
-    public StatusServico getStatus() {
-        return (StatusServico) get(3);
-    }
-
-    /**
      * Setter for <code>public.categoria.requer_certificacao</code>.
      */
     public void setRequerCertificacao(Boolean value) {
-        set(4, value);
+        set(3, value);
     }
 
     /**
      * Getter for <code>public.categoria.requer_certificacao</code>.
      */
     public Boolean getRequerCertificacao() {
-        return (Boolean) get(4);
+        return (Boolean) get(3);
     }
 
     /**
      * Setter for <code>public.categoria.tipo_certificacao</code>.
      */
     public void setTipoCertificacao(String value) {
-        set(5, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>public.categoria.tipo_certificacao</code>.
      */
     public String getTipoCertificacao() {
-        return (String) get(5);
+        return (String) get(4);
     }
 
     /**
      * Setter for <code>public.categoria.experiencia_minima_meses</code>.
      */
     public void setExperienciaMinimaMeses(Integer value) {
-        set(6, value);
+        set(5, value);
     }
 
     /**
      * Getter for <code>public.categoria.experiencia_minima_meses</code>.
      */
     public Integer getExperienciaMinimaMeses() {
-        return (Integer) get(6);
+        return (Integer) get(5);
     }
 
     /**
@@ -130,7 +116,7 @@ public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
      */
     @Deprecated
     public void setNivelRisco(Object value) {
-        set(7, value);
+        set(6, value);
     }
 
     /**
@@ -143,147 +129,161 @@ public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
      */
     @Deprecated
     public Object getNivelRisco() {
-        return get(7);
+        return get(6);
     }
 
     /**
      * Setter for <code>public.categoria.seguro_obrigatorio</code>.
      */
     public void setSeguroObrigatorio(Boolean value) {
-        set(8, value);
+        set(7, value);
     }
 
     /**
      * Getter for <code>public.categoria.seguro_obrigatorio</code>.
      */
     public Boolean getSeguroObrigatorio() {
-        return (Boolean) get(8);
+        return (Boolean) get(7);
     }
 
     /**
      * Setter for <code>public.categoria.valor_base_hora</code>.
      */
     public void setValorBaseHora(BigDecimal value) {
-        set(9, value);
+        set(8, value);
     }
 
     /**
      * Getter for <code>public.categoria.valor_base_hora</code>.
      */
     public BigDecimal getValorBaseHora() {
-        return (BigDecimal) get(9);
+        return (BigDecimal) get(8);
     }
 
     /**
      * Setter for <code>public.categoria.data_criacao</code>.
      */
     public void setDataCriacao(LocalDateTime value) {
-        set(10, value);
+        set(9, value);
     }
 
     /**
      * Getter for <code>public.categoria.data_criacao</code>.
      */
     public LocalDateTime getDataCriacao() {
-        return (LocalDateTime) get(10);
+        return (LocalDateTime) get(9);
     }
 
     /**
      * Setter for <code>public.categoria.data_atualizacao</code>.
      */
     public void setDataAtualizacao(LocalDateTime value) {
-        set(11, value);
+        set(10, value);
     }
 
     /**
      * Getter for <code>public.categoria.data_atualizacao</code>.
      */
     public LocalDateTime getDataAtualizacao() {
-        return (LocalDateTime) get(11);
+        return (LocalDateTime) get(10);
     }
 
     /**
      * Setter for <code>public.categoria.url_imagem</code>.
      */
     public void setUrlImagem(String value) {
-        set(12, value);
+        set(11, value);
     }
 
     /**
      * Getter for <code>public.categoria.url_imagem</code>.
      */
     public String getUrlImagem() {
-        return (String) get(12);
+        return (String) get(11);
     }
 
     /**
      * Setter for <code>public.categoria.palavras_chave</code>.
      */
     public void setPalavrasChave(String[] value) {
-        set(13, value);
+        set(12, value);
     }
 
     /**
      * Getter for <code>public.categoria.palavras_chave</code>.
      */
     public String[] getPalavrasChave() {
-        return (String[]) get(13);
+        return (String[]) get(12);
     }
 
     /**
      * Setter for <code>public.categoria.horas_minimas_agendamento</code>.
      */
     public void setHorasMinimasAgendamento(Integer value) {
-        set(14, value);
+        set(13, value);
     }
 
     /**
      * Getter for <code>public.categoria.horas_minimas_agendamento</code>.
      */
     public Integer getHorasMinimasAgendamento() {
-        return (Integer) get(14);
+        return (Integer) get(13);
     }
 
     /**
      * Setter for <code>public.categoria.horas_cancelamento_gratis</code>.
      */
     public void setHorasCancelamentoGratis(Integer value) {
-        set(15, value);
+        set(14, value);
     }
 
     /**
      * Getter for <code>public.categoria.horas_cancelamento_gratis</code>.
      */
     public Integer getHorasCancelamentoGratis() {
-        return (Integer) get(15);
+        return (Integer) get(14);
     }
 
     /**
      * Setter for <code>public.categoria.percentual_comissao</code>.
      */
     public void setPercentualComissao(BigDecimal value) {
-        set(16, value);
+        set(15, value);
     }
 
     /**
      * Getter for <code>public.categoria.percentual_comissao</code>.
      */
     public BigDecimal getPercentualComissao() {
-        return (BigDecimal) get(16);
+        return (BigDecimal) get(15);
     }
 
     /**
      * Setter for <code>public.categoria.documentos_necessarios</code>.
      */
     public void setDocumentosNecessarios(String[] value) {
-        set(17, value);
+        set(16, value);
     }
 
     /**
      * Getter for <code>public.categoria.documentos_necessarios</code>.
      */
     public String[] getDocumentosNecessarios() {
-        return (String[]) get(17);
+        return (String[]) get(16);
+    }
+
+    /**
+     * Setter for <code>public.categoria.status</code>.
+     */
+    public void setStatus(StatusCategoria value) {
+        set(17, value);
+    }
+
+    /**
+     * Getter for <code>public.categoria.status</code>.
+     */
+    public StatusCategoria getStatus() {
+        return (StatusCategoria) get(17);
     }
 
     // -------------------------------------------------------------------------
@@ -309,13 +309,12 @@ public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
     /**
      * Create a detached, initialised CategoriaRecord
      */
-    public CategoriaRecord(Integer id, String nome, String descricao, StatusServico status, Boolean requerCertificacao, String tipoCertificacao, Integer experienciaMinimaMeses, Object nivelRisco, Boolean seguroObrigatorio, BigDecimal valorBaseHora, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao, String urlImagem, String[] palavrasChave, Integer horasMinimasAgendamento, Integer horasCancelamentoGratis, BigDecimal percentualComissao, String[] documentosNecessarios) {
+    public CategoriaRecord(Integer id, String nome, String descricao, Boolean requerCertificacao, String tipoCertificacao, Integer experienciaMinimaMeses, Object nivelRisco, Boolean seguroObrigatorio, BigDecimal valorBaseHora, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao, String urlImagem, String[] palavrasChave, Integer horasMinimasAgendamento, Integer horasCancelamentoGratis, BigDecimal percentualComissao, String[] documentosNecessarios, StatusCategoria status) {
         super(Categoria.CATEGORIA);
 
         setId(id);
         setNome(nome);
         setDescricao(descricao);
-        setStatus(status);
         setRequerCertificacao(requerCertificacao);
         setTipoCertificacao(tipoCertificacao);
         setExperienciaMinimaMeses(experienciaMinimaMeses);
@@ -330,6 +329,7 @@ public class CategoriaRecord extends UpdatableRecordImpl<CategoriaRecord> {
         setHorasCancelamentoGratis(horasCancelamentoGratis);
         setPercentualComissao(percentualComissao);
         setDocumentosNecessarios(documentosNecessarios);
+        setStatus(status);
         resetTouchedOnNotNull();
     }
 }

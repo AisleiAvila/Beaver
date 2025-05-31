@@ -27,6 +27,8 @@ tags:
     description: Operações relacionadas a produtos
   - name: Senha
     description: Operações relacionadas a senha de acesso do usuário
+  - name: Serviço
+    description: Operações relacionadas a serviços
   - name: Subcategoria
     description: Operações relacionadas a subcategorias
   - name: Usuario
@@ -979,11 +981,28 @@ paths:
                   $ref: '#/components/schemas/SubCategoriaModel'
   /categoria/status:
     get:
-      summary: Busca Status de Serviço
+      summary: Busca Status de Categoria/SubCategoria
       security:
         - bearerAuth: [ ]
       tags:
         - Categoria
+      operationId: findStatusCategoria
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatusCategoria'
+  /servico/status:
+    get:
+      summary: Busca Status de Serviço
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - Serviço
       operationId: findStatusServico
       responses:
         '200':
@@ -994,6 +1013,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/StatusServico'
+
+
   /perfil/find:
     get:
       summary: Busca Perfis
@@ -1341,7 +1362,7 @@ components:
         status:
           type: array
           items:
-            $ref: '#/components/schemas/StatusServico'
+            $ref: '#/components/schemas/StatusCategoria'
         requer_certificacao:
           type: boolean
         tipo_certificacao:
@@ -1632,7 +1653,7 @@ components:
         descricao:
           type: string
         status:
-          $ref: '#/components/schemas/StatusServico'
+          $ref: '#/components/schemas/StatusCategoria'
         #              type: string
         requer_certificacao:
           type: boolean
@@ -1699,11 +1720,19 @@ components:
         data_atualizacao:
           type: string
           format: date-time
-    StatusServico:
+    StatusCategoria:
       type: string
       enum:
         - ATIVO
         - INATIVO
         - SUSPENSO
+    StatusServico:
+      type: string
+      enum:
+        - AGENDADO
+        - EM ANDAMENTO
+        - CONCLUÍDO
+        - CANCELADO
+
 
 

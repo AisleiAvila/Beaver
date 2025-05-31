@@ -7,7 +7,7 @@ package com.dasad.empresa.api;
 
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
-import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.StatusCategoria;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-05T12:52:25.659801500+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-31T09:26:11.793249200+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 @Validated
 @Tag(name = "Categoria", description = "Operações relacionadas a categorias")
 public interface CategoriaApi {
@@ -129,17 +129,17 @@ public interface CategoriaApi {
 
 
     /**
-     * GET /categoria/status : Busca Status de Serviço
+     * GET /categoria/status : Busca Status de Categoria/SubCategoria
      *
      * @return Sucesso (status code 200)
      */
     @Operation(
-        operationId = "findStatusServico",
-        summary = "Busca Status de Serviço",
+        operationId = "findStatusCategoria",
+        summary = "Busca Status de Categoria/SubCategoria",
         tags = { "Categoria" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Sucesso", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = StatusServico.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = StatusCategoria.class)))
             })
         },
         security = {
@@ -152,7 +152,7 @@ public interface CategoriaApi {
         produces = { "application/json" }
     )
     
-    ResponseEntity<List<StatusServico>> findStatusServico(
+    ResponseEntity<List<StatusCategoria>> findStatusCategoria(
         
     );
 

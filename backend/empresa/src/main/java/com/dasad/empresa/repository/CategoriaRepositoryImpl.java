@@ -4,7 +4,7 @@ package com.dasad.empresa.repository;
 import com.dasad.empresa.jooq.model.tables.Categoria;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
-import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.StatusCategoria;
 import com.dasad.empresa.repository.query.CategoriaQueryBuilder;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
                 .withExperienciaMinimaMeses(categoriarequest.getExperienciaMinimaMeses())
                 .withStatus(categoriarequest.getStatus() != null ?
                         categoriarequest.getStatus().stream()
-                                .map(status -> StatusServico.valueOf(status.name()))
+                                .map(status -> StatusCategoria.valueOf(status.name()))
                                 .toList()
                         : null)
                 .withRequerCertificacao(categoriarequest.getRequerCertificacao())
@@ -50,7 +50,7 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
                     CategoriaModel result = dsl.insertInto(Categoria.CATEGORIA)
                             .set(Categoria.CATEGORIA.NOME, categoriaModel.getNome())
                             .set(Categoria.CATEGORIA.EXPERIENCIA_MINIMA_MESES, categoriaModel.getExperienciaMinimaMeses())
-                            .set(Categoria.CATEGORIA.STATUS, com.dasad.empresa.jooq.model.enums.StatusServico.valueOf(categoriaModel.getStatus().name()))
+                            .set(Categoria.CATEGORIA.STATUS, com.dasad.empresa.jooq.model.enums.StatusCategoria.valueOf(categoriaModel.getStatus().name()))
                             .set(Categoria.CATEGORIA.REQUER_CERTIFICACAO, categoriaModel.getRequerCertificacao())
                             .set(Categoria.CATEGORIA.NIVEL_RISCO, categoriaModel.getNivelRisco())
                             .set(Categoria.CATEGORIA.TIPO_CERTIFICACAO, categoriaModel.getTipoCertificacao())

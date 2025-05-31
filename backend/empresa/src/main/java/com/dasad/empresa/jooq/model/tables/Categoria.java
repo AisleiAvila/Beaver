@@ -7,7 +7,7 @@ package com.dasad.empresa.jooq.model.tables;
 import com.dasad.empresa.jooq.model.Indexes;
 import com.dasad.empresa.jooq.model.Keys;
 import com.dasad.empresa.jooq.model.Public;
-import com.dasad.empresa.jooq.model.enums.StatusServico;
+import com.dasad.empresa.jooq.model.enums.StatusCategoria;
 import com.dasad.empresa.jooq.model.tables.CategoriaEquipamentos.CategoriaEquipamentosPath;
 import com.dasad.empresa.jooq.model.tables.Subcategoria.SubcategoriaPath;
 import com.dasad.empresa.jooq.model.tables.records.CategoriaRecord;
@@ -80,11 +80,6 @@ public class Categoria extends TableImpl<CategoriaRecord> {
      * The column <code>public.categoria.descricao</code>.
      */
     public final TableField<CategoriaRecord, String> DESCRICAO = createField(DSL.name("descricao"), SQLDataType.CLOB, this, "");
-
-    /**
-     * The column <code>public.categoria.status</code>.
-     */
-    public final TableField<CategoriaRecord, StatusServico> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR.nullable(false).defaultValue(DSL.field(DSL.raw("'ATIVO'::status_servico"), SQLDataType.VARCHAR)).asEnumDataType(StatusServico.class), this, "");
 
     /**
      * The column <code>public.categoria.requer_certificacao</code>.
@@ -161,6 +156,11 @@ public class Categoria extends TableImpl<CategoriaRecord> {
      * The column <code>public.categoria.documentos_necessarios</code>.
      */
     public final TableField<CategoriaRecord, String[]> DOCUMENTOS_NECESSARIOS = createField(DSL.name("documentos_necessarios"), SQLDataType.CLOB.array().defaultValue(DSL.field(DSL.raw("'{}'::text[]"), SQLDataType.CLOB.array())), this, "");
+
+    /**
+     * The column <code>public.categoria.status</code>.
+     */
+    public final TableField<CategoriaRecord, StatusCategoria> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR.defaultValue(DSL.field(DSL.raw("'ATIVO'::status_categoria"), SQLDataType.VARCHAR)).asEnumDataType(StatusCategoria.class), this, "");
 
     private Categoria(Name alias, Table<CategoriaRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

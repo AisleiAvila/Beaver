@@ -59,7 +59,7 @@ public class ChatController implements ChatApi {
                     llamaUrl,
                     HttpMethod.POST,
                     httpRequest,
-                    new ParameterizedTypeReference<Map<String, Object>>() {
+                    new ParameterizedTypeReference<>() {
                     }
             );
 

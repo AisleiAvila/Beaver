@@ -3,7 +3,7 @@ package com.dasad.empresa.repository.query;
 import com.dasad.empresa.jooq.model.tables.Categoria;
 import com.dasad.empresa.jooq.model.tables.Subcategoria;
 import com.dasad.empresa.model.CategoriaModel;
-import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.StatusCategoria;
 import com.dasad.empresa.model.SubCategoriaModel;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class CategoriaQueryBuilder {
-    private @NotNull SelectConditionStep<Record18<Integer, String, String, com.dasad.empresa.jooq.model.enums.StatusServico, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]>> query;
-    private @NotNull SelectConditionStep<Record12<Integer, Integer, String, String, com.dasad.empresa.jooq.model.enums.StatusServico, Integer, Object, BigDecimal, Object, String[], LocalDateTime, LocalDateTime>> querySubcategoria;
+    private @NotNull SelectConditionStep<Record18<Integer, String, String, com.dasad.empresa.jooq.model.enums.StatusCategoria, Boolean, String, Integer, Object, Boolean, BigDecimal, LocalDateTime, LocalDateTime, String, String[], Integer, Integer, BigDecimal, String[]>> query;
+    private @NotNull SelectConditionStep<Record12<Integer, Integer, String, String, com.dasad.empresa.jooq.model.enums.StatusCategoria, Integer, Object, BigDecimal, Object, String[], LocalDateTime, LocalDateTime>> querySubcategoria;
     private static final Integer DEFAULT_LIMIT = 10;
     private final DSLContext dslContext;
     private Boolean returnSubcategorias = false;
@@ -87,7 +87,7 @@ public class CategoriaQueryBuilder {
         return this;
     }
 
-    public CategoriaQueryBuilder withStatus(List<StatusServico> status) {
+    public CategoriaQueryBuilder withStatus(List<StatusCategoria> status) {
         if (status != null && !status.isEmpty()) {
             this.query = this.query.and(Categoria.CATEGORIA.STATUS.in(status));
         }
@@ -143,7 +143,7 @@ public class CategoriaQueryBuilder {
                     categoria.setId(registro.get(Categoria.CATEGORIA.ID));
                     categoria.setNome(registro.get(Categoria.CATEGORIA.NOME));
                     categoria.setDescricao(registro.get(Categoria.CATEGORIA.DESCRICAO));
-                    categoria.setStatus(StatusServico.valueOf(registro.get(Categoria.CATEGORIA.STATUS).toString()));
+                    categoria.setStatus(StatusCategoria.valueOf(registro.get(Categoria.CATEGORIA.STATUS).toString()));
                     categoria.setRequerCertificacao(registro.get(Categoria.CATEGORIA.REQUER_CERTIFICACAO));
                     categoria.setTipoCertificacao(registro.get(Categoria.CATEGORIA.TIPO_CERTIFICACAO));
                     categoria.setExperienciaMinimaMeses(registro.get(Categoria.CATEGORIA.EXPERIENCIA_MINIMA_MESES));
@@ -166,7 +166,7 @@ public class CategoriaQueryBuilder {
                 .thenCompose(categorias -> {
                     if (Boolean.TRUE.equals(this.returnSubcategorias) && categorias != null && !categorias.isEmpty()) {
                         List<CompletableFuture<Void>> futures = categorias.stream().map(categoria ->
-                                getSubcategorias(categoria.getId()).thenAccept(subs -> categoria.setSubcategorias(subs))
+                                getSubcategorias(categoria.getId()).thenAccept(categoria::setSubcategorias)
                         ).toList();
                         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                                 .exceptionally(ex -> {
@@ -205,7 +205,7 @@ public class CategoriaQueryBuilder {
                     subcategoria.setId(registro.get(Subcategoria.SUBCATEGORIA.ID));
                     subcategoria.setNome(registro.get(Subcategoria.SUBCATEGORIA.NOME));
                     subcategoria.setDescricao(registro.get(Subcategoria.SUBCATEGORIA.DESCRICAO));
-                    subcategoria.setStatus(StatusServico.valueOf(registro.get(Subcategoria.SUBCATEGORIA.STATUS).toString()).name());
+                    subcategoria.setStatus(StatusCategoria.valueOf(registro.get(Subcategoria.SUBCATEGORIA.STATUS).toString()).name());
                     subcategoria.setTempoMedioMinutos(registro.get(Subcategoria.SUBCATEGORIA.TEMPO_MEDIO_MINUTOS));
                     subcategoria.setNivelComplexidade(registro.get(Subcategoria.SUBCATEGORIA.NIVEL_COMPLEXIDADE).toString());
                     subcategoria.setPrecoBase(registro.get(Subcategoria.SUBCATEGORIA.PRECO_BASE));

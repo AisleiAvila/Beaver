@@ -3,7 +3,7 @@ package com.dasad.empresa.controller;
 import com.dasad.empresa.api.CategoriaApi;
 import com.dasad.empresa.model.CategoriaModel;
 import com.dasad.empresa.model.CategoriaRequest;
-import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.StatusCategoria;
 import com.dasad.empresa.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -62,7 +62,7 @@ public class CategoriaController implements CategoriaApi {
 
     @Override
     @GetMapping("/status")
-    public ResponseEntity<List<StatusServico>> findStatusServico() {
+    public ResponseEntity<List<StatusCategoria>> findStatusCategoria() {
         return this.categoriaService.getStatus().map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 

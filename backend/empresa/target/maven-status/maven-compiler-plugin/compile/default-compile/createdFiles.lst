@@ -34,6 +34,7 @@ com\dasad\empresa\repository\SubCategoriaRepository.class
 com\dasad\empresa\model\Createendereco500Response.class
 com\dasad\empresa\jooq\model\tables\Categoria.class
 com\dasad\empresa\jooq\model\tables\records\PedidoRecord.class
+com\dasad\empresa\repository\StatusCategoriaRepositoryImpl.class
 com\dasad\empresa\repository\query\OrganizacaoQueryBuilder.class
 com\dasad\empresa\model\UsuarioSubcategoriaRequest.class
 com\dasad\empresa\jooq\model\tables\records\ProdutoFornecedorRecord.class
@@ -125,6 +126,7 @@ com\dasad\empresa\jooq\model\Keys.class
 com\dasad\empresa\jooq\model\tables\records\UsuarioSubcategoriaRecord.class
 com\dasad\empresa\controller\ChatController.class
 com\dasad\empresa\jooq\model\tables\Regioes.class
+com\dasad\empresa\jooq\model\enums\StatusCategoria.class
 com\dasad\empresa\jooq\model\tables\UsuarioPerfil$UsuarioPerfilPath.class
 com\dasad\empresa\jooq\model\tables\records\ClienteRecord.class
 com\dasad\empresa\model\ValidarResetToken404Response.class
@@ -158,6 +160,7 @@ com\dasad\empresa\repository\EnderecoRepository.class
 com\dasad\empresa\jooq\model\tables\CategoriaEquipamentos$CategoriaEquipamentosPath.class
 com\dasad\empresa\jooq\model\tables\Pedido.class
 com\dasad\empresa\model\ChatRequestDTO.class
+com\dasad\empresa\repository\StatusCategoriaRepository.class
 com\dasad\empresa\repository\UsuarioSubCategoriaRepository.class
 com\dasad\empresa\controller\CategoriaController.class
 com\dasad\empresa\jooq\model\tables\records\EstoqueRecord.class
@@ -173,7 +176,9 @@ com\dasad\empresa\model\RecuperarSenha404Response.class
 com\dasad\empresa\repository\CidadeRepository.class
 com\dasad\empresa\repository\OrganizacaoRepository.class
 com\dasad\empresa\repository\query\SubCategoriaQueryBuilder.class
+com\dasad\empresa\api\ServicoApi.class
 com\dasad\empresa\jooq\model\tables\ItemPedido$ItemPedidoPath.class
+com\dasad\empresa\service\ServicoService.class
 com\dasad\empresa\jooq\model\tables\Desconto.class
 com\dasad\empresa\repository\SenhaRepository.class
 com\dasad\empresa\service\EstadoService.class
@@ -211,6 +216,7 @@ com\dasad\empresa\model\ProdutoModel.class
 com\dasad\empresa\jooq\model\tables\Subcategoria$SubcategoriaPath.class
 com\dasad\empresa\model\Login400Response.class
 com\dasad\empresa\jooq\model\Indexes.class
+com\dasad\empresa\controller\ServicoController.class
 com\dasad\empresa\jooq\model\tables\Subcategoria.class
 com\dasad\empresa\jooq\model\tables\UsuarioFoto$UsuarioFotoPath.class
 com\dasad\empresa\jooq\model\tables\ItemPedido.class
@@ -228,5 +234,6 @@ com\dasad\empresa\infra\security\SecurityConfig.class
 com\dasad\empresa\jooq\model\tables\Cliente$ClientePath.class
 com\dasad\empresa\jooq\model\tables\Produto.class
 com\dasad\empresa\repository\EnderecoRepositoryImpl.class
+com\dasad\empresa\model\StatusCategoria.class
 com\dasad\empresa\jooq\model\tables\records\UsuarioPerfilRecord.class
 com\dasad\empresa\repository\query\CategoriaQueryBuilder.class

@@ -20,14 +20,16 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Gets or Sets StatusServico
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-05T12:52:25.659801500+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-31T09:26:11.793249200+01:00[Europe/Lisbon]", comments = "Generator version: 7.12.0")
 public enum StatusServico {
   
-  ATIVO("ATIVO"),
+  AGENDADO("AGENDADO"),
   
-  INATIVO("INATIVO"),
+  EM_ANDAMENTO("EM ANDAMENTO"),
   
-  SUSPENSO("SUSPENSO");
+  CONCLU_DO("CONCLUÍDO"),
+  
+  CANCELADO("CANCELADO");
 
   private String value;
 

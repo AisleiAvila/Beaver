@@ -1,12 +1,12 @@
 package com.dasad.empresa.repository;
 
-import com.dasad.empresa.model.StatusServico;
+import com.dasad.empresa.model.StatusCategoria;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface StatusServicoRepository {
+public interface StatusCategoriaRepository {
 
-    Optional<List<StatusServico>> findAll();
+    Optional<List<StatusCategoria>> findAll();
 
 }

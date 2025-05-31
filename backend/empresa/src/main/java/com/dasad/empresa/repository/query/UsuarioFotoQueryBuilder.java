@@ -52,30 +52,28 @@ public class UsuarioFotoQueryBuilder {
     }
 
     public CompletableFuture<List<UsuarioFotoModel>> build() {
-        return CompletableFuture.supplyAsync(() -> {
-            return this.query
-                    .orderBy(UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO.desc())
-                    .limit(limit)
-                    .fetch()
-                    .stream()
-                    .collect(Collectors.groupingBy(
-                            record -> record.get(UsuarioFoto.USUARIO_FOTO.USUARIO_ID),
-                            Collectors.mapping(record -> record, Collectors.toList())
-                    ))
-                    .values()
-                    .stream()
-                    .map(records -> {
-                        Record6<Integer, Integer, byte[], LocalDateTime, LocalDateTime, Boolean> record = records.get(0);
-                        UsuarioFotoModel usuarioFoto = new UsuarioFotoModel();
-                        usuarioFoto.setId(record.get(UsuarioFoto.USUARIO_FOTO.ID));
-                        usuarioFoto.setUsuarioId(record.get(UsuarioFoto.USUARIO_FOTO.USUARIO_ID));
-                        usuarioFoto.setFoto(record.get(UsuarioFoto.USUARIO_FOTO.FOTO));
-                        usuarioFoto.setDataCriacao(OffsetDateTime.from(record.get(UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO).toLocalDate()));
-                        usuarioFoto.setDataAtualizacao(OffsetDateTime.from(record.get(UsuarioFoto.USUARIO_FOTO.DATA_ATUALIZACAO).toLocalDate()));
-                        usuarioFoto.setAtivo(record.get(UsuarioFoto.USUARIO_FOTO.ATIVO));
-                        return usuarioFoto;
-                    })
-                    .toList();
-        });
+        return CompletableFuture.supplyAsync(() -> this.query
+                .orderBy(UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO.desc())
+                .limit(limit)
+                .fetch()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        record -> record.get(UsuarioFoto.USUARIO_FOTO.USUARIO_ID),
+                        Collectors.mapping(record -> record, Collectors.toList())
+                ))
+                .values()
+                .stream()
+                .map(records -> {
+                    Record6<Integer, Integer, byte[], LocalDateTime, LocalDateTime, Boolean> record = records.getFirst();
+                    UsuarioFotoModel usuarioFoto = new UsuarioFotoModel();
+                    usuarioFoto.setId(record.get(UsuarioFoto.USUARIO_FOTO.ID));
+                    usuarioFoto.setUsuarioId(record.get(UsuarioFoto.USUARIO_FOTO.USUARIO_ID));
+                    usuarioFoto.setFoto(record.get(UsuarioFoto.USUARIO_FOTO.FOTO));
+                    usuarioFoto.setDataCriacao(OffsetDateTime.from(record.get(UsuarioFoto.USUARIO_FOTO.DATA_CRIACAO).toLocalDate()));
+                    usuarioFoto.setDataAtualizacao(OffsetDateTime.from(record.get(UsuarioFoto.USUARIO_FOTO.DATA_ATUALIZACAO).toLocalDate()));
+                    usuarioFoto.setAtivo(record.get(UsuarioFoto.USUARIO_FOTO.ATIVO));
+                    return usuarioFoto;
+                })
+                .toList());
     }
 }

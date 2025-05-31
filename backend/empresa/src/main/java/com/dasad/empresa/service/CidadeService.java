@@ -2,7 +2,6 @@ package com.dasad.empresa.service;
 
 import com.dasad.empresa.model.CidadeModel;
 import com.dasad.empresa.repository.CidadeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,10 +9,10 @@ import java.util.Optional;
 
 @Service
 public class CidadeService {
-    @Autowired
-    private CidadeRepository cidadeRepository;
+    private final CidadeRepository cidadeRepository;
 
-    public CidadeService() {
+    public CidadeService(CidadeRepository cidadeRepository) {
+        this.cidadeRepository = cidadeRepository;
     }
 
     public List<CidadeModel> findAll(String nome, Integer estadoId) {

@@ -56,9 +56,7 @@ class CustomUserDetailServiceTest {
 
         when(usuarioRepository.findByEmail(username)).thenReturn(Optional.empty());
 
-        UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> {
-            customUserDetailService.loadUserByUsername(username);
-        });
+        UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () -> customUserDetailService.loadUserByUsername(username));
 
         assertEquals("Usuário não encontrado", exception.getMessage());
         verify(usuarioRepository, times(1)).findByEmail(username);

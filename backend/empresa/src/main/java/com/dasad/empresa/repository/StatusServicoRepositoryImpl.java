@@ -5,10 +5,9 @@ import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class StatusServicoRepositoryImpl implements StatusServicoRepository {
@@ -21,9 +20,11 @@ public class StatusServicoRepositoryImpl implements StatusServicoRepository {
 
     @Override
     public Optional<List<com.dasad.empresa.model.StatusServico>> findAll() {
-        List<com.dasad.empresa.model.StatusServico> statusList = Arrays.stream(StatusServico.values())
-                .map(status -> com.dasad.empresa.model.StatusServico.valueOf(status.name()))
-                .collect(Collectors.toList());
+        List<StatusServico> statusList = new ArrayList<>();
+        for (StatusServico status : StatusServico.values()) {
+            StatusServico statusServico = StatusServico.valueOf(status.name());
+            statusList.add(statusServico);
+        }
         return Optional.ofNullable(statusList.isEmpty() ? null : statusList);
     }
 }
